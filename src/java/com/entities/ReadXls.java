@@ -4,6 +4,7 @@
  */
  package com.entities;
 
+import com.ejb.SB_Planilla_horas;
 import javax.faces.bean.ManagedBean;
 
 import java.io.File;
@@ -11,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -28,6 +30,8 @@ import org.primefaces.event.FileUploadEvent;
 @ManagedBean(name = "readXls")
 @ViewScoped
 public class ReadXls {
+    @EJB
+    private SB_Planilla_horas sB_Planilla_horas;
 
     /**
      * Creates a new instance of ReadXls
@@ -54,23 +58,7 @@ public String inputFile;
       // Get the first sheet
       Sheet sheet = w.getSheet(0);
       // Loop over first 10 column and lines
-for (int i = 0; i < sheet.getRows(); i++) {
-      for (int j = 0; j < sheet.getColumns(); j++) {
-        
-          Cell cell = sheet.getCell(j, i);
-          CellType type = cell.getType();
-          if (type == CellType.LABEL) {
-            System.out.println("I got a label "
-                + cell.getContents());
-          }
-
-          if (type == CellType.NUMBER) {
-            System.out.println("I got a number "
-                + cell.getContents());
-          }
-
-        }
-      }
+     sB_Planilla_horas.uploadXls(sheet);
     } catch (BiffException e) {
       e.printStackTrace();
     }
