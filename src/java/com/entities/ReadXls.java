@@ -55,10 +55,10 @@ public String inputFile;
     Workbook w;
     try {
       w = Workbook.getWorkbook(inputWorkbook);
-      // Get the first sheet
+      
       Sheet sheet = w.getSheet(0);
-      // Loop over first 10 column and lines
-sB_Planilla_horas.uploadXls(sheet);
+      
+        sB_Planilla_horas.uploadXls(sheet);
     } catch (BiffException e) {
       e.printStackTrace();
     }
