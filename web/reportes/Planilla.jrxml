@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34cb187e-6412-4050-be54-86cc7ded95f4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="mas" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[select * from planilla p, empleados e, resumen_asistencia r where 
+p.cod_cia= e.cod_cia
+and p.cod_emp = e.cod_emp
+and p.cod_cia= r.cod_cia
+and p.secuencia = r.secuencia
+and p.cod_emp = r.cod_emp
+and p.secuencia = $P{mas}]]>
+	</queryString>
+	<field name="COD_CIA" class="java.math.BigDecimal"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="COD_EMP" class="java.math.BigDecimal"/>
+	<field name="COD_DEPTO" class="java.math.BigDecimal"/>
+	<field name="DEDUCCIONES" class="java.math.BigDecimal"/>
+	<field name="PRESTACIONES" class="java.math.BigDecimal"/>
+	<field name="DEVENGADO" class="java.math.BigDecimal"/>
+	<field name="LIQUIDO" class="java.math.BigDecimal"/>
+	<field name="USUARIO" class="java.lang.String"/>
+	<field name="FECHA_REG" class="java.sql.Timestamp"/>
+	<field name="APELLIDOS" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="AP_CASADA" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="TELEFONOS" class="java.lang.String"/>
+	<field name="FECHA_NAC" class="java.sql.Timestamp"/>
+	<field name="NUM_IGSS" class="java.lang.String"/>
+	<field name="NUM_IRTRA" class="java.lang.String"/>
+	<field name="NUM_NIT" class="java.lang.String"/>
+	<field name="COD_PUESTO" class="java.math.BigDecimal"/>
+	<field name="FEC_INGRESO" class="java.sql.Timestamp"/>
+	<field name="FEC_SALIDA" class="java.sql.Timestamp"/>
+	<field name="MOT_SALIDA" class="java.lang.String"/>
+	<field name="OBSERVACION" class="java.lang.String"/>
+	<field name="STATUS" class="java.lang.String"/>
+	<field name="TIPO_CONTRA" class="java.lang.String"/>
+	<field name="SALARIO" class="java.math.BigDecimal"/>
+	<field name="PROMEDIO" class="java.math.BigDecimal"/>
+	<field name="BONIFICACION" class="java.math.BigDecimal"/>
+	<field name="SALARIO_BASE" class="java.math.BigDecimal"/>
+	<field name="AVISAR_A" class="java.lang.String"/>
+	<field name="CEDULA" class="java.lang.String"/>
+	<field name="CHEQUE_DEP" class="java.lang.String"/>
+	<field name="CTA_BANCARIA" class="java.lang.String"/>
+	<field name="COM_SPROD" class="java.lang.String"/>
+	<field name="COM_SOBRA" class="java.lang.String"/>
+	<field name="VAL_ISR" class="java.math.BigDecimal"/>
+	<field name="SEXO" class="java.math.BigDecimal"/>
+	<field name="TIPO_CTA" class="java.lang.String"/>
+	<field name="NUP_AFP" class="java.lang.String"/>
+	<field name="COD_AFP" class="java.math.BigDecimal"/>
+	<field name="NUM_HIJOS" class="java.math.BigDecimal"/>
+	<field name="ESTADO_CIVIL" class="java.lang.String"/>
+	<field name="COD_EMPREF" class="java.lang.String"/>
+	<field name="NOMBRE_ISSS" class="java.lang.String"/>
+	<field name="COD_ISSS" class="java.math.BigDecimal"/>
+	<field name="COMISION" class="java.lang.String"/>
+	<field name="FECHA_INGRESO_HIST" class="java.sql.Timestamp"/>
+	<field name="MARCACION_TARJETA" class="java.lang.String"/>
+	<field name="BENEFICIARIO" class="java.lang.String"/>
+	<field name="NOMBRE_NIT" class="java.lang.String"/>
+	<field name="VACACIONES" class="java.math.BigDecimal"/>
+	<field name="PRE_ID" class="java.math.BigDecimal"/>
+	<field name="COD_DEPARTAMENTO" class="java.math.BigDecimal"/>
+	<field name="COD_ZONA" class="java.math.BigDecimal"/>
+	<field name="COD_MUNI" class="java.math.BigDecimal"/>
+	<field name="COD_SEGURIDAD" class="java.math.BigDecimal"/>
+	<field name="COD_PROFESION" class="java.math.BigDecimal"/>
+	<field name="F_EXT_DOC" class="java.sql.Timestamp"/>
+	<field name="COD_PAIS" class="java.math.BigDecimal"/>
+	<field name="FEC_REGISTRO" class="java.sql.Timestamp"/>
+	<field name="COD_BANCO" class="java.lang.String"/>
+	<field name="COD_AREA" class="java.math.BigDecimal"/>
+	<field name="PASSWORD" class="java.lang.String"/>
+	<field name="DIAS" class="java.lang.String"/>
+	<variable name="Tliquido" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{LIQUIDO}]]></variableExpression>
+	</variable>
+	<variable name="Tcodemp" class="java.lang.Short" calculation="Count">
+		<variableExpression><![CDATA[$F{COD_EMP}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="fbc68254-cd32-42ce-8f1e-628aaee8bec4" x="0" y="0" width="278" height="25"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[INDUSTRIAS CARICIA S.A. DE C.V.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="dcba62eb-3611-43eb-bf2c-a69a6c5d5588" x="232" y="10" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Reporte Planilla]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="f2c730b7-4397-44b6-8eb7-b04bbdbce42e" x="361" y="10" width="161" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5fdb0085-8e98-4694-8e68-2097e3bec57b" x="0" y="2" width="61" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COD_EMP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="27b21a7d-5d80-4d72-846f-5ad4f330cda0" x="278" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEVENGADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d02561f-7c23-4a62-8b94-a799b9154501" x="652" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LIQUIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="69d468fb-e51f-48fd-adcd-728ae3504b50" x="387" y="2" width="100" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRESTACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2858f994-5b3c-439b-b3eb-a3e7e72e9ac9" x="506" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEDUCCIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b0ce2c9a-4e71-4cc8-bcd9-b7277bc9b2aa" x="61" y="2" width="100" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE_NIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e56b24c5-7c79-4e38-bb6d-7003bfbc43f7" x="230" y="2" width="30" height="20"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIAS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="64ce2db6-8811-4ed8-88d3-b5d5bcfb5613" x="0" y="0" width="61" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COD_EMP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3c76b25d-751f-42d9-86b9-b267722dcae6" x="278" y="2" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DEVENGADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b019f3b8-4054-4131-9480-74ff3ca4a138" x="387" y="2" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRESTACIONES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0e7a78ef-fbf4-4b9c-84f6-544aad94e32a" x="652" y="2" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LIQUIDO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7bbec250-736d-4ca7-897f-ae73a4fe5c0a" x="506" y="2" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DEDUCCIONES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="97bfbab7-3d59-4fa6-8ab4-fb03f898e5d9" x="61" y="0" width="171" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRE_NIT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="22f99c74-34c0-427c-867c-2fa1815f6c2a" x="232" y="0" width="46" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{DIAS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="28" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="29" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a5eae1e3-b775-44a1-aaa6-30f03a9d2333" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cant:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4ef92b34-017c-402a-8a19-d1e6bf2535ca" x="31" y="0" width="30" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Tcodemp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0.00">
+				<reportElement uuid="b29e5eb5-d4eb-4e88-bfb7-12a9bd285bca" x="636" y="0" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Tliquido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

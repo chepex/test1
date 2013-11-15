@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillaEditDlg" widgetVar="PlanillaEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditPlanillaTitle}">
+
+            <h:form id="PlanillaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{planillaController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaLabel_deducciones}" for="deducciones" />
+                        <p:inputText id="deducciones" value="#{planillaController.selected.deducciones}" title="#{myBundle.EditPlanillaTitle_deducciones}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaLabel_prestaciones}" for="prestaciones" />
+                        <p:inputText id="prestaciones" value="#{planillaController.selected.prestaciones}" title="#{myBundle.EditPlanillaTitle_prestaciones}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaLabel_devengado}" for="devengado" />
+                        <p:inputText id="devengado" value="#{planillaController.selected.devengado}" title="#{myBundle.EditPlanillaTitle_devengado}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaLabel_liquido}" for="liquido" />
+                        <p:inputText id="liquido" value="#{planillaController.selected.liquido}" title="#{myBundle.EditPlanillaTitle_liquido}" />
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaLabel_programacionPla}" for="programacionPla" />
+                        <h:outputText id="programacionPla" value="#{planillaController.selected.programacionPla.programacionPlaPK}"/>
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaLabel_empleados}" for="empleados" />
+                        <h:outputText id="empleados" value="#{planillaController.selected.empleados.empleadosPK}"/>
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaLabel_departamentos}" for="departamentos" />
+                        <p:selectOneMenu id="departamentos" value="#{planillaController.selected.departamentos}" required="true" requiredMessage="#{myBundle.EditPlanillaRequiredMessage_departamentos}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{departamentosController.items}"
+                                           var="departamentosItem"
+                                           itemValue="#{departamentosItem}"
+                                           itemLabel="#{departamentosItem.departamentosPK.toString()}"
+					   />
+                            <f:converter binding="#{departamentosConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planillaController.save}" value="#{myBundle.Save}" update="display,:PlanillaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PlanillaEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PlanillaEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

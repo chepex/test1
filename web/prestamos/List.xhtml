@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PrestamosListForm">
+	<p:panelGrid columns="6" >
+	    Estado
+	    <p:selectOneMenu id="estado" value="#{prestamosController.estado }" 
+				       filter="true">
+			    <f:selectItem itemLabel="Selecione un status"/>
+                            <f:selectItem itemLabel="Pagados" itemValue="P"/>			    
+			    <f:selectItem itemLabel="Pendiente" itemValue="A"/>
+			    
+                        </p:selectOneMenu>
+			<p:commandButton id="btn-consultar"   icon="ui-icon-refresh"  value="Consultar" actionListener="#{prestamosController.consultar() }" update="@form :growl" />	    
+	</p:panelGrid>
+	<p:panel header="#{myBundle.ListPrestamosTitle}">
+
+	    <p:dataTable id="datalist" value="#{prestamosController.items}" var="item"
+			 selectionMode="single" selection="#{prestamosController.selected}"
+			 rowKey="#{item.prestamosPK}"
+			 paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 >
+
+		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+		<p:column sortBy="#{item.empleados.nombreNit}" filterBy="#{item.empleados.nombreNit}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPrestamosTitle_empleados}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleados.nombreNit}"/>
+		</p:column>
+		<p:column sortBy="#{item.deducPresta.descripcion}" filterBy="#{item.deducPresta.descripcion}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPrestamosTitle_deducPresta}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.deducPresta.descripcion}"/>
+		</p:column>	
+		<p:column sortBy="#{item.frecuencia}" >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPrestamosTitle_frecuencia}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.frecuencia}"/>
+		</p:column>		
+		<p:column sortBy="#{item.numRef}" filterBy="#{item.numRef}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPrestamosTitle_numRef}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.numRef}"/>
+		</p:column>
+		<p:column sortBy="#{item.monto}" >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPrestamosTitle_monto}"/>
+		    </f:facet>
+		    <h:outputText value="$ #{item.monto}"/>
+		</p:column>
+		<p:column sortBy="#{item.cuotas}" >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPrestamosTitle_cuotas}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.cuotas}"/>
+		</p:column>		
+		<p:column sortBy="#{item.saldo}" >
+		    <f:facet name="header">
+			<h:outputText value=" #{myBundle.ListPrestamosTitle_saldo}"/>
+		    </f:facet>
+		    <h:outputText value="$ #{item.saldo}"/>
+		</p:column>
+		<p:column sortBy="#{item.cuotasP}" >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPrestamosTitle_cuotasP}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.cuotasP}"/>
+		</p:column>
+
+
+
+		<f:facet name="footer">
+		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{prestamosController.prepareCreate}" update=":PrestamosCreateForm" oncomplete="PrestamosCreateDialog.show()"/>
+		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PrestamosViewForm" oncomplete="PrestamosViewDialog.show()" disabled="#{empty prestamosController.selected}"/>
+		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PrestamosEditForm" oncomplete="PrestamosEditDialog.show()" disabled="#{empty prestamosController.selected}"/>
+		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{prestamosController.delete}" update=":growl,datalist" disabled="#{empty prestamosController.selected}"/>
+		</f:facet>
+
+	    </p:dataTable>
+
+	</p:panel>
+
+    </h:form>
+
+</ui:composition>

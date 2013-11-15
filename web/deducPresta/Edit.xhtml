@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeducPrestaEditDlg" widgetVar="DeducPrestaEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditDeducPrestaTitle}">
+
+            <h:form id="DeducPrestaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{deducPrestaController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditDeducPrestaLabel_deducPrestaPK_codDp}" for="deducPrestaPK_codDp" />
+                        <h:outputText id="deducPrestaPK_codDp" value="#{deducPrestaController.selected.deducPrestaPK.codDp}" />
+
+
+
+                        <p:outputLabel value="#{myBundle.EditDeducPrestaLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{deducPrestaController.selected.descripcion}" title="#{myBundle.EditDeducPrestaTitle_descripcion}" />
+
+                        <p:outputLabel value="#{myBundle.EditDeducPrestaLabel_sumaResta}" for="sumaResta" />
+                        <p:inputText id="sumaResta" value="#{deducPrestaController.selected.sumaResta}" title="#{myBundle.EditDeducPrestaTitle_sumaResta}" />
+
+                        <p:outputLabel value="#{myBundle.EditDeducPrestaLabel_afp}" for="afp" />
+                        <p:inputText id="afp" value="#{deducPrestaController.selected.afp}" title="#{myBundle.EditDeducPrestaTitle_afp}" />
+
+                        <p:outputLabel value="#{myBundle.EditDeducPrestaLabel_factor}" for="factor" />
+                        <p:inputText id="factor" value="#{deducPrestaController.selected.factor}" title="#{myBundle.EditDeducPrestaTitle_factor}" />
+
+                        <p:outputLabel value="#{myBundle.EditDeducPrestaLabel_tope}" for="factor" />
+                        <p:inputText id="tope" value="#{deducPrestaController.selected.tope}" title="#{myBundle.EditDeducPrestaTitle_tope}" />                        
+
+                        <p:outputLabel value="#{myBundle.EditDeducPrestaLabel_proceso}" for="proceso" />
+                        <p:inputText id="proceso" value="#{deducPrestaController.selected.proceso}" title="#{myBundle.EditDeducPrestaTitle_proceso}" />
+
+  <p:outputLabel value="#{myBundle.EditDeducPrestaLabel_prioridad}" for="prioridad" />
+                        <p:inputText id="prioridad" value="#{deducPrestaController.selected.prioridad}" title="#{myBundle.EditDeducPrestaTitle_prioridad}" />                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{deducPrestaController.save}" value="#{myBundle.Save}" update="display,:DeducPrestaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DeducPrestaEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DeducPrestaEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

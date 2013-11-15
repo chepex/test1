@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ResumenAsistenciaListForm">
+	<p:panelGrid columns="6" >
+	    Estado
+	    <p:selectOneMenu id="estado" value="#{resumenAsistenciaController.estado }" 
+				       filter="true">
+			    <f:selectItem itemLabel="Selecione un status"/>
+                            <f:selectItem itemLabel="Programada" itemValue="P"/>			    
+			    <f:selectItem itemLabel="Cerrada" itemValue="C"/>
+                           <p:ajax update="@form" listener="#{resumenAsistenciaController.ChangeEstadoPlanilla}" />    
+                        </p:selectOneMenu>
+	    
+	    Planillas Programada
+		      <p:selectOneMenu id="programacionPla" value="#{resumenAsistenciaController.programacionpla }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_programacionPla}"
+				       filter="true">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{resumenAsistenciaController.programacionplas}"
+                                           var="programacionPlaItem"
+                                           itemValue="#{programacionPlaItem}"
+                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "					   
+					   
+					   />
+                            <f:converter binding="#{programacionPlaConverter}"/>
+                        </p:selectOneMenu>
+			<p:commandButton id="btn-generar"   icon="ui-icon-refresh"  value="Generar" actionListener="#{resumenAsistenciaController.generar() }" update="@form :growl" />
+			<p:commandButton id="btn-eliminar"  icon="ui-icon-transferthick-e-w"  value="Eliminar" actionListener="#{resumenAsistenciaController.eliminar() }" update="@form :growl" />
+			
+	</p:panelGrid>
+	    
+	<p:panel header="#{myBundle.ListResumenAsistenciaTitle}">
+
+	    <p:dataTable id="datalist" value="#{resumenAsistenciaController.items}" var="item"
+			 selection="#{resumenAsistenciaController.selected}"
+			  selectionMode="single"
+			 rowKey="#{item.resumenAsistenciaPK}"
+			paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 editable="true" editMode="cell" 
+			 
+			 >
+		<p:ajax event="cellEdit" listener="#{resumenAsistenciaController.onCellEdit}" update=":growl" />  
+		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+		
+		
+		<p:column sortBy="#{item.empleados.nombreIsss}" filterBy="#{item.empleados.nombreIsss}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListResumenAsistenciaTitle_nombre}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleados.nombreIsss }"/>
+		</p:column>
+		
+		<p:column  filterBy="#{item.empleados.departamentos.nomDepto }">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListResumenAsistenciaTitle_departamento}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleados.departamentos.nomDepto }"/>
+		</p:column>			
+		<p:column  filterBy="#{item.empleados.empleadosPK.codEmp}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListResumenAsistenciaTitle_codigo}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleados.empleadosPK.codEmp}"/>
+		</p:column>
+           <p:column  filterBy="#{item.programacionPla.mes}">
+                <f:facet name="header">
+			<h:outputText value="#{myBundle.ListResumenAsistenciaTitle_mes}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.programacionPla.mes }"/>
+           </p:column>		
+		    
+    
+		    
+           <p:column headerText="Dias" style="width:25%">  
+            <p:cellEditor>  
+                <f:facet name="output"><h:outputText  value="#{item.dias}" /></f:facet>  
+                <f:facet name="input"><p:inputText  value="#{item.dias}" style="width:96%" label="Dias">			
+		    </p:inputText>
+		</f:facet>  
+            </p:cellEditor>  
+        </p:column> 
+		
+		
+		<p:column sortBy="#{item.observacion}" filterBy="#{item.observacion}">
+            <p:cellEditor>  
+                <f:facet name="output"><h:outputText  value="#{item.observacion}" /></f:facet>  
+                <f:facet name="input"><p:inputText  value="#{item.observacion}" style="width:96%" label="Observacion">			
+		    </p:inputText>
+		</f:facet>  
+            </p:cellEditor>  
+		</p:column>
+		
+
+		<f:facet name="footer">
+		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{resumenAsistenciaController.prepareCreate}" update=":ResumenAsistenciaCreateForm" oncomplete="ResumenAsistenciaCreateDialog.show()"/>
+		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":ResumenAsistenciaViewForm" oncomplete="ResumenAsistenciaViewDialog.show()" disabled="#{empty resumenAsistenciaController.selected}"/>
+		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ResumenAsistenciaEditForm" oncomplete="ResumenAsistenciaEditDialog.show()" disabled="#{empty resumenAsistenciaController.selected}"/>
+		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{resumenAsistenciaController.delete}" update=":growl,datalist" disabled="#{empty resumenAsistenciaController.selected}"/>
+		    
+		    
+		</f:facet>
+
+	    </p:dataTable>
+
+	</p:panel>
+                     
+
+		
+    </h:form>
+
+</ui:composition>

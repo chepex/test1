@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProgramacionPlaCreateDlg" widgetVar="ProgramacionPlaCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateProgramacionPlaTitle}">
+
+            <h:form id="ProgramacionPlaCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{programacionPlaController.selected != null}">
+
+                        
+
+                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_frecuencia}" for="frecuencia" />
+                            <p:selectOneMenu id="frecuencia" value="#{programacionPlaController.selected.frecuencia }" 
+				       >
+			    <f:selectItem itemLabel="Selecione frecuencia"/>
+                            <f:selectItem itemLabel="Quincenal" itemValue="1"/>			    
+			    <f:selectItem itemLabel="Mensual" itemValue="2"/>
+                            <f:selectItem itemLabel="Semanal" itemValue="3"/>                           
+                        </p:selectOneMenu>
+            
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_status}" for="status" />
+                        <p:inputText id="status" value="#{programacionPlaController.selected.status}" title="#{myBundle.CreateProgramacionPlaTitle_status}" required="true" requiredMessage="#{myBundle.CreateProgramacionPlaRequiredMessage_status}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_fechaPago}" for="fechaPago" />
+                        <p:calendar id="fechaPago" pattern="MM/dd/yyyy HH:mm:ss" value="#{programacionPlaController.selected.fechaPago}" title="#{myBundle.EditProgramacionPlaTitle_fechaPago}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_fechaCorte}" for="fechaCorte" />
+                        <p:calendar id="fechaCorte" pattern="MM/dd/yyyy HH:mm:ss" value="#{programacionPlaController.selected.fechaCorte}" title="#{myBundle.EditProgramacionPlaTitle_fechaCorte}"  showOn="button"/>			
+
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_numPlanilla}" for="numPlanilla" />
+                        <p:inputText id="numPlanilla" value="#{programacionPlaController.selected.numPlanilla}" title="#{myBundle.CreateProgramacionPlaTitle_numPlanilla}" />
+
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_anio}" for="anio" />
+                        <p:inputText id="anio" value="#{programacionPlaController.selected.anio}" title="#{myBundle.CreateProgramacionPlaTitle_anio}" />
+
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_mes}" for="mes" />
+                        <p:inputText id="mes" value="#{programacionPlaController.selected.mes}" title="#{myBundle.CreateProgramacionPlaTitle_mes}" />
+
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_tiposPlanilla}" for="tiposPlanilla" />
+                        <p:selectOneMenu id="tiposPlanilla" value="#{programacionPlaController.selected.tiposPlanilla}" required="true" requiredMessage="#{myBundle.EditProgramacionPlaRequiredMessage_tiposPlanilla}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tiposPlanillaController.items}"
+                                           var="tiposPlanillaItem"
+                                           itemValue="#{tiposPlanillaItem}"
+                                           itemLabel="#{tiposPlanillaItem.nomTipopla.toString()}"
+					   />
+                            <f:converter binding="#{tiposPlanillaConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{programacionPlaController.saveNew}" value="#{myBundle.Save}" update="display,:ProgramacionPlaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ProgramacionPlaCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ProgramacionPlaCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

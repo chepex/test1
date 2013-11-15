@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PrestamosViewDlg" widgetVar="PrestamosViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewPrestamosTitle}">
+
+            <h:form id="PrestamosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{prestamosController.selected != null}">
+			
+                        <h:outputText value="#{myBundle.ViewPrestamosLabel_empleados}"/>
+                        <h:outputText value="#{prestamosController.selected.empleados.nombreNit}"/>
+
+                        <h:outputText value="#{myBundle.ViewPrestamosLabel_deducPresta}"/>
+                        <h:outputText value="#{prestamosController.selected.deducPresta.descripcion}"/>			
+
+                        <h:outputText value="#{myBundle.ViewPrestamosLabel_prestamosPK_codPresta}"/>
+                        <h:outputText value="#{prestamosController.selected.prestamosPK.codPresta }" title="#{myBundle.ViewPrestamosTitle_prestamosPK_codPresta}"/>
+			
+                        <h:outputText value="#{myBundle.ViewPrestamosLabel_frecuencia}"/>
+                        <h:outputText value="#{prestamosController.selected.frecuencia}" title="#{myBundle.ViewPrestamosTitle_frecuencia}"/>
+			
+			
+                        <h:outputText value="#{myBundle.ViewPrestamosLabel_cuotas}"/>
+                        <h:outputText value="#{prestamosController.selected.cuotas}" title="#{myBundle.ViewPrestamosTitle_cuotas}"/>
+
+			                        <h:outputText value="#{myBundle.ViewPrestamosLabel_vCuota} $"/>
+                        <h:outputText value="#{prestamosController.selected.vcuota} " title="#{myBundle.ViewPrestamosTitle_vCuota}"/>
+			
+                        <h:outputText value="#{myBundle.ViewPrestamosLabel_monto} $"/>
+                        <h:outputText value="#{prestamosController.selected.monto} " title="#{myBundle.ViewPrestamosTitle_monto}"/>
+			
+
+                        <h:outputText value="#{myBundle.ViewPrestamosLabel_cuotasP}"/>
+                        <h:outputText value="#{prestamosController.selected.cuotasP}" title="#{myBundle.ViewPrestamosTitle_cuotasP}"/>			
+			
+
+                        <h:outputText value="#{myBundle.ViewPrestamosLabel_saldo} $"/>
+                        <h:outputText value="#{prestamosController.selected.saldo} " title="#{myBundle.ViewPrestamosTitle_saldo}"/>
+
+
+
+
+
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PrestamosViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

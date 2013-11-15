@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="OtrosMovDpListForm">
+
+	<p:panel header="#{myBundle.ListOtrosMovDpTitle}">
+
+	    <p:dataTable id="datalist" value="#{otrosMovDpController.items}" var="item"
+			 selectionMode="single" selection="#{otrosMovDpController.selected}"
+			 rowKey="#{item.otrosMovDpPK}"
+			 paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 >
+
+		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+		<p:column sortBy="#{item.valor}" filterBy="#{item.valor}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListOtrosMovDpTitle_valor}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.valor}"/>
+		</p:column>
+		<p:column sortBy="#{item.programacionPla.programacionPlaPK}" filterBy="#{item.programacionPla.programacionPlaPK}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListOtrosMovDpTitle_programacionPla}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.programacionPla.programacionPlaPK.secuencia}"/>
+		</p:column>
+		<p:column sortBy="#{item.empleados.empleadosPK}" filterBy="#{item.empleados.empleadosPK}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListOtrosMovDpTitle_empleados}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleados.nombres}"/>
+		</p:column>
+		<p:column sortBy="#{item.deducPresta.descripcion}" filterBy="#{item.deducPresta.descripcion}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListOtrosMovDpTitle_deducPresta}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.deducPresta.descripcion}"/>
+		</p:column>
+		<f:facet name="footer">
+		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{otrosMovDpController.prepareCreate}" update=":OtrosMovDpCreateForm" oncomplete="OtrosMovDpCreateDialog.show()"/>
+		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":OtrosMovDpViewForm" oncomplete="OtrosMovDpViewDialog.show()" disabled="#{empty otrosMovDpController.selected}"/>
+		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":OtrosMovDpEditForm" oncomplete="OtrosMovDpEditDialog.show()" disabled="#{empty otrosMovDpController.selected}"/>
+		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{otrosMovDpController.delete}" update=":growl,datalist" disabled="#{empty otrosMovDpController.selected}"/>
+		</f:facet>
+
+	    </p:dataTable>
+
+	</p:panel>
+
+    </h:form>
+
+</ui:composition>

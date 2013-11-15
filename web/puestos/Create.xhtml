@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PuestosCreateDlg" widgetVar="PuestosCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreatePuestosTitle}">
+
+            <h:form id="PuestosCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{puestosController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreatePuestosLabel_puestosPK_codPuesto}" for="puestosPK_codPuesto" />
+                        <p:inputText id="puestosPK_codPuesto" value="#{puestosController.selected.puestosPK.codPuesto}" title="#{myBundle.CreatePuestosTitle_puestosPK_codPuesto}" required="true" requiredMessage="#{myBundle.CreatePuestosRequiredMessage_puestosPK_codPuesto}"/>
+
+
+                        <p:outputLabel value="#{myBundle.CreatePuestosLabel_nomPuesto}" for="nomPuesto" />
+                        <p:inputText id="nomPuesto" value="#{puestosController.selected.nomPuesto}" title="#{myBundle.CreatePuestosTitle_nomPuesto}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePuestosLabel_salMaximo}" for="salMaximo" />
+                        <p:inputText id="salMaximo" value="#{puestosController.selected.salMaximo}" title="#{myBundle.CreatePuestosTitle_salMaximo}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePuestosLabel_salMinimo}" for="salMinimo" />
+                        <p:inputText id="salMinimo" value="#{puestosController.selected.salMinimo}" title="#{myBundle.CreatePuestosTitle_salMinimo}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePuestosLabel_rol}" for="rol" />
+                        <p:inputText id="rol" value="#{puestosController.selected.rol}" title="#{myBundle.CreatePuestosTitle_rol}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{puestosController.saveNew}" value="#{myBundle.Save}" update="display,:PuestosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PuestosCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PuestosCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -68,7 +68,9 @@ public class SB_Planilla_horas {
 	    msg.setMensajes("Aun no ha caducado la fecha de corte");
 	}
 	if(msg.getTitulo().equals("ok")){
+            
 	  msg= trasladar(planillahoras);  
+          
 	} 
 	return  msg;   
     }   

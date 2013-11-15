@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RentaListForm">
+
+        <p:panel header="#{myBundle.ListRentaTitle}">
+
+            <p:dataTable id="datalist" value="#{rentaController.items}" var="item"
+                         selectionMode="single" selection="#{rentaController.selected}"
+                         rowKey="#{item.rentaPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.rentaPK.id}" filterBy="#{item.rentaPK.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRentaTitle_rentaPK_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rentaPK.id}"/>
+                </p:column>
+                <p:column sortBy="#{item.rentaPK.secuencia}" filterBy="#{item.rentaPK.secuencia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRentaTitle_rentaPK_secuencia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rentaPK.secuencia}"/>
+                </p:column>
+                <p:column sortBy="#{item.rentaPK.codCia}" filterBy="#{item.rentaPK.codCia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRentaTitle_rentaPK_codCia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rentaPK.codCia}"/>
+                </p:column>
+                <p:column sortBy="#{item.del}" filterBy="#{item.del}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRentaTitle_del}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.del}"/>
+                </p:column>
+                <p:column sortBy="#{item.al}" filterBy="#{item.al}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRentaTitle_al}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.al}"/>
+                </p:column>
+                <p:column sortBy="#{item.valorFijo}" filterBy="#{item.valorFijo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRentaTitle_valorFijo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.valorFijo}"/>
+                </p:column>
+                <p:column sortBy="#{item.porcentaje}" filterBy="#{item.porcentaje}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRentaTitle_porcentaje}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.porcentaje}"/>
+                </p:column>
+                <p:column sortBy="#{item.exceso}" filterBy="#{item.exceso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRentaTitle_exceso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.exceso}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{rentaController.prepareCreate}" update=":RentaCreateForm" oncomplete="RentaCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":RentaViewForm" oncomplete="RentaViewDialog.show()" disabled="#{empty rentaController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RentaEditForm" oncomplete="RentaEditDialog.show()" disabled="#{empty rentaController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{rentaController.delete}" update=":growl,datalist" disabled="#{empty rentaController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

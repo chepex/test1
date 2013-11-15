@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ParametrosCreateDlg" widgetVar="ParametrosCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateParametrosTitle}">
+
+            <h:form id="ParametrosCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{parametrosController.selected != null}">
+
+
+                        <p:outputLabel value="#{myBundle.CreateParametrosLabel_parametrosPK_id}" for="parametrosPK_id" />
+                        <p:inputText id="parametrosPK_id" value="#{parametrosController.selected.parametrosPK.id}" title="#{myBundle.CreateParametrosTitle_parametrosPK_id}" required="true" requiredMessage="#{myBundle.CreateParametrosRequiredMessage_parametrosPK_id}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateParametrosLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{parametrosController.selected.nombre}" title="#{myBundle.CreateParametrosTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateParametrosRequiredMessage_nombre}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateParametrosLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{parametrosController.selected.descripcion}" title="#{myBundle.CreateParametrosTitle_descripcion}" />
+
+                        <p:outputLabel value="#{myBundle.CreateParametrosLabel_valorTxt}" for="valorTxt" />
+                        <p:inputText id="valorTxt" value="#{parametrosController.selected.valorTxt}" title="#{myBundle.CreateParametrosTitle_valorTxt}" />
+
+                        <p:outputLabel value="#{myBundle.CreateParametrosLabel_valorInt}" for="valorInt" />
+                        <p:inputText id="valorInt" value="#{parametrosController.selected.valorInt}" title="#{myBundle.CreateParametrosTitle_valorInt}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{parametrosController.saveNew}" value="#{myBundle.Save}" update="display,:ParametrosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ParametrosCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ParametrosCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

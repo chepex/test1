@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PrestamosCreateDlg" widgetVar="PrestamosCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreatePrestamosTitle}">
+
+            <h:form id="PrestamosCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{prestamosController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreatePrestamosLabel_numRef}" for="prestamos_numRef" />
+                        <p:inputText id="prestamos_numRef" value="#{prestamosController.selected.numRef}" title="#{myBundle.CreatePrestamosTitle_prestamos_numRef}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePrestamosLabel_empleados}" for="empleados" />
+
+			
+                        <p:selectOneMenu  id="empleados" value="#{prestamosController.selected.empleados}"  required="true" requiredMessage="#{myBundle.EditPrestamosRequiredMessage_empleados}"
+					   filter="true" >
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadosController.activos}"
+                                           var="empleadosItem"
+                                           itemValue="#{empleadosItem}"
+                                           itemLabel="#{  empleadosItem.nombreNit }"
+					   />
+                            <f:converter binding="#{empleadosConverter}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreatePrestamosLabel_deducPresta}" for="deducPresta" />
+                        <p:selectOneMenu id="deducPresta" value="#{prestamosController.selected.deducPresta}" required="true"  filter="true" requiredMessage="#{myBundle.EditPrestamosRequiredMessage_deducPresta}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{deducPrestaController.items}"
+                                           var="deducPrestaItem"
+                                           itemValue="#{deducPrestaItem}"
+                                           itemLabel="#{deducPrestaItem.descripcion.toString()}"
+					   />
+                            <f:converter binding="#{deducPrestaConverter}"/>
+                        </p:selectOneMenu>
+			
+			<p:outputLabel id="frecuencia" value="#{myBundle.CreatePrestamosLabel_frecuencia}" for="frecuencia" title="#{myBundle.CreatePrestamosTitle_frecuencia}"  />			
+			<p:selectOneMenu value="#{prestamosController.selected.frecuencia}">  
+				  <f:selectItem itemLabel="Selecione" itemValue="" />  
+				  <f:selectItem itemLabel="Quincena 1" itemValue="1" />  
+				  <f:selectItem itemLabel="Quincena 2" itemValue="2" />  
+				  <f:selectItem itemLabel="Ambas" itemValue="3" />  
+			      </p:selectOneMenu>
+			
+                        
+                        
+			
+                        <p:outputLabel value="#{myBundle.CreatePrestamosLabel_cuotas}" for="cuotas" />
+                        <p:inputText id="cuotas" value="#{prestamosController.selected.cuotas}" title="#{myBundle.CreatePrestamosTitle_cuotas}" />
+			
+                
+			<p:outputLabel value="#{myBundle.CreatePrestamosLabel_vCuota}" for="vCuota" />
+                        <p:inputText id="vCuota" value="#{prestamosController.selected.vcuota }" title="#{myBundle.CreatePrestamosTitle_vCuota}" />
+			
+			
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{prestamosController.saveNew}" value="#{myBundle.Save}" update="display,:PrestamosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PrestamosCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PrestamosCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

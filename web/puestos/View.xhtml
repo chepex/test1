@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PuestosViewDlg" widgetVar="PuestosViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewPuestosTitle}">
+
+            <h:form id="PuestosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{puestosController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPuestosLabel_puestosPK_codPuesto}"/>
+                        <h:outputText value="#{puestosController.selected.puestosPK.codPuesto}" title="#{myBundle.ViewPuestosTitle_puestosPK_codPuesto}"/>
+
+                        <h:outputText value="#{myBundle.ViewPuestosLabel_puestosPK_codCia}"/>
+                        <h:outputText value="#{puestosController.selected.puestosPK.codCia}" title="#{myBundle.ViewPuestosTitle_puestosPK_codCia}"/>
+
+                        <h:outputText value="#{myBundle.ViewPuestosLabel_nomPuesto}"/>
+                        <h:outputText value="#{puestosController.selected.nomPuesto}" title="#{myBundle.ViewPuestosTitle_nomPuesto}"/>
+
+                        <h:outputText value="#{myBundle.ViewPuestosLabel_salMaximo}"/>
+                        <h:outputText value="#{puestosController.selected.salMaximo}" title="#{myBundle.ViewPuestosTitle_salMaximo}"/>
+
+                        <h:outputText value="#{myBundle.ViewPuestosLabel_salMinimo}"/>
+                        <h:outputText value="#{puestosController.selected.salMinimo}" title="#{myBundle.ViewPuestosTitle_salMinimo}"/>
+
+                        <h:outputText value="#{myBundle.ViewPuestosLabel_rol}"/>
+                        <h:outputText value="#{puestosController.selected.rol}" title="#{myBundle.ViewPuestosTitle_rol}"/>
+
+                        <h:outputText value="#{myBundle.ViewPuestosLabel_empleadosList}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PuestosViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

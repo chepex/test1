@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EmpleadosListForm">
+
+	<p:panel header="#{myBundle.ListEmpleadosTitle}">
+
+	    <p:dataTable id="datalist" value="#{empleadosController.items}" var="item"
+			 selectionMode="single" selection="#{empleadosController.selected}"
+			 rowKey="#{item.empleadosPK}"
+			 paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 >
+
+		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+		<p:column sortBy="#{item.empleadosPK.codEmp}" filterBy="#{item.empleadosPK.codEmp}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_empleadosPK_codEmp}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleadosPK.codEmp}"/>
+		</p:column>
+		<p:column sortBy="#{item.apellidos}" filterBy="#{item.apellidos}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_apellidos}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.apellidos}"/>
+		</p:column>
+		<p:column sortBy="#{item.nombres}" filterBy="#{item.nombres}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_nombres}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.nombres}"/>
+		</p:column>
+		<p:column sortBy="#{item.departamentos.departamentosPK}" filterBy="#{item.departamentos.departamentosPK}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_departamentos}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.departamentos.nomDepto }"/>
+		</p:column>		
+		<!--<p:column sortBy="#{item.apCasada}" filterBy="#{item.apCasada}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_apCasada}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.apCasada}"/>
+		</p:column>
+		<p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_direccion}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.direccion}"/>
+		</p:column>
+		<p:column sortBy="#{item.telefonos}" filterBy="#{item.telefonos}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_telefonos}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.telefonos}"/>
+		</p:column>
+		<p:column sortBy="#{item.fechaNac}" filterBy="#{item.fechaNac}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_fechaNac}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.fechaNac}">
+			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+		    </h:outputText>
+		</p:column>
+		<p:column sortBy="#{item.numIgss}" filterBy="#{item.numIgss}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_numIgss}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.numIgss}"/>
+		</p:column>
+		<p:column sortBy="#{item.numIrtra}" filterBy="#{item.numIrtra}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_numIrtra}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.numIrtra}"/>
+		</p:column>
+		<p:column sortBy="#{item.numNit}" filterBy="#{item.numNit}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_numNit}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.numNit}"/>
+		</p:column>
+		<p:column sortBy="#{item.fecIngreso}" filterBy="#{item.fecIngreso}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_fecIngreso}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.fecIngreso}">
+			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+		    </h:outputText>
+		</p:column>
+		<p:column sortBy="#{item.fecSalida}" filterBy="#{item.fecSalida}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_fecSalida}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.fecSalida}">
+			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+		    </h:outputText>
+		</p:column>
+		<p:column sortBy="#{item.motSalida}" filterBy="#{item.motSalida}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_motSalida}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.motSalida}"/>
+		</p:column>
+		<p:column sortBy="#{item.observacion}" filterBy="#{item.observacion}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_observacion}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.observacion}"/>
+		</p:column>
+		<p:column sortBy="#{item.status}" filterBy="#{item.status}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_status}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.status}"/>
+		</p:column>
+		<p:column sortBy="#{item.tipoContra}" filterBy="#{item.tipoContra}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_tipoContra}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.tipoContra}"/>
+		</p:column>
+		<p:column sortBy="#{item.salario}" filterBy="#{item.salario}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_salario}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.salario}"/>
+		</p:column>
+		<p:column sortBy="#{item.promedio}" filterBy="#{item.promedio}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_promedio}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.promedio}"/>
+		</p:column>
+		<p:column sortBy="#{item.bonificacion}" filterBy="#{item.bonificacion}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_bonificacion}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.bonificacion}"/>
+		</p:column>
+		<p:column sortBy="#{item.salarioBase}" filterBy="#{item.salarioBase}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_salarioBase}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.salarioBase}"/>
+		</p:column>
+		<p:column sortBy="#{item.avisarA}" filterBy="#{item.avisarA}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_avisarA}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.avisarA}"/>
+		</p:column>
+		<p:column sortBy="#{item.cedula}" filterBy="#{item.cedula}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_cedula}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.cedula}"/>
+		</p:column>
+		<p:column sortBy="#{item.chequeDep}" filterBy="#{item.chequeDep}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_chequeDep}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.chequeDep}"/>
+		</p:column>
+		<p:column sortBy="#{item.ctaBancaria}" filterBy="#{item.ctaBancaria}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_ctaBancaria}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.ctaBancaria}"/>
+		</p:column>
+		<p:column sortBy="#{item.comSprod}" filterBy="#{item.comSprod}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_comSprod}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.comSprod}"/>
+		</p:column>
+		<p:column sortBy="#{item.comSobra}" filterBy="#{item.comSobra}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_comSobra}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.comSobra}"/>
+		</p:column>
+		<p:column sortBy="#{item.valIsr}" filterBy="#{item.valIsr}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_valIsr}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.valIsr}"/>
+		</p:column>
+		<p:column sortBy="#{item.sexo}" filterBy="#{item.sexo}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_sexo}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.sexo}"/>
+		</p:column>
+		<p:column sortBy="#{item.tipoCta}" filterBy="#{item.tipoCta}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_tipoCta}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.tipoCta}"/>
+		</p:column>
+		<p:column sortBy="#{item.nupAfp}" filterBy="#{item.nupAfp}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_nupAfp}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.nupAfp}"/>
+		</p:column>
+		<p:column sortBy="#{item.codAfp}" filterBy="#{item.codAfp}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codAfp}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codAfp}"/>
+		</p:column>
+		<p:column sortBy="#{item.numHijos}" filterBy="#{item.numHijos}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_numHijos}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.numHijos}"/>
+		</p:column>
+		<p:column sortBy="#{item.estadoCivil}" filterBy="#{item.estadoCivil}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_estadoCivil}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.estadoCivil}"/>
+		</p:column>
+		<p:column sortBy="#{item.codEmpref}" filterBy="#{item.codEmpref}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codEmpref}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codEmpref}"/>
+		</p:column>
+		<p:column sortBy="#{item.nombreIsss}" filterBy="#{item.nombreIsss}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_nombreIsss}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.nombreIsss}"/>
+		</p:column>
+		<p:column sortBy="#{item.codIsss}" filterBy="#{item.codIsss}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codIsss}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codIsss}"/>
+		</p:column>
+		<p:column sortBy="#{item.comision}" filterBy="#{item.comision}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_comision}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.comision}"/>
+		</p:column>
+		<p:column sortBy="#{item.fechaIngresoHist}" filterBy="#{item.fechaIngresoHist}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_fechaIngresoHist}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.fechaIngresoHist}">
+			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+		    </h:outputText>
+		</p:column>
+		<p:column sortBy="#{item.marcacionTarjeta}" filterBy="#{item.marcacionTarjeta}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_marcacionTarjeta}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.marcacionTarjeta}"/>
+		</p:column>
+		<p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_usuario}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.usuario}"/>
+		</p:column>
+		<p:column sortBy="#{item.fechaReg}" filterBy="#{item.fechaReg}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_fechaReg}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.fechaReg}">
+			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+		    </h:outputText>
+		</p:column>
+		<p:column sortBy="#{item.beneficiario}" filterBy="#{item.beneficiario}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_beneficiario}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.beneficiario}"/>
+		</p:column>
+		<p:column sortBy="#{item.nombreNit}" filterBy="#{item.nombreNit}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_nombreNit}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.nombreNit}"/>
+		</p:column>
+		<p:column sortBy="#{item.vacaciones}" filterBy="#{item.vacaciones}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_vacaciones}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.vacaciones}"/>
+		</p:column>
+		<p:column sortBy="#{item.preId}" filterBy="#{item.preId}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_preId}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.preId}"/>
+		</p:column>
+		<p:column sortBy="#{item.codDepartamento}" filterBy="#{item.codDepartamento}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codDepartamento}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codDepartamento}"/>
+		</p:column>
+		<p:column sortBy="#{item.codZona}" filterBy="#{item.codZona}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codZona}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codZona}"/>
+		</p:column>
+		<p:column sortBy="#{item.codMuni}" filterBy="#{item.codMuni}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codMuni}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codMuni}"/>
+		</p:column>
+		<p:column sortBy="#{item.codSeguridad}" filterBy="#{item.codSeguridad}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codSeguridad}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codSeguridad}"/>
+		</p:column>
+		<p:column sortBy="#{item.FExtDoc}" filterBy="#{item.FExtDoc}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_FExtDoc}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.FExtDoc}">
+			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+		    </h:outputText>
+		</p:column>
+		<p:column sortBy="#{item.codPais}" filterBy="#{item.codPais}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codPais}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codPais}"/>
+		</p:column>
+		<p:column sortBy="#{item.fecRegistro}" filterBy="#{item.fecRegistro}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_fecRegistro}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.fecRegistro}">
+			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+		    </h:outputText>
+		</p:column>
+		<p:column sortBy="#{item.codBanco}" filterBy="#{item.codBanco}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codBanco}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codBanco}"/>
+		</p:column>
+		<p:column sortBy="#{item.codArea}" filterBy="#{item.codArea}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codArea}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codArea}"/>
+		</p:column>
+		<p:column sortBy="#{item.password}" filterBy="#{item.password}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_password}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.password}"/>
+		</p:column>
+		<p:column sortBy="#{item.puestos.puestosPK}" filterBy="#{item.puestos.puestosPK}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_puestos}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.puestos.puestosPK}"/>
+		</p:column>
+		<p:column sortBy="#{item.codProfesion.descripcion}" filterBy="#{item.codProfesion.descripcion}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codProfesion}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codProfesion.descripcion}"/>
+		</p:column>
+		-->
+		<f:facet name="footer">
+		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{empleadosController.prepareCreate}" update=":EmpleadosCreateForm" oncomplete="EmpleadosCreateDialog.show()"/>
+		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":EmpleadosViewForm" oncomplete="EmpleadosViewDialog.show()" disabled="#{empty empleadosController.selected}"/>
+		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EmpleadosEditForm" oncomplete="EmpleadosEditDialog.show()" disabled="#{empty empleadosController.selected}"/>
+		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empleadosController.delete}" update=":growl,datalist" disabled="#{empty empleadosController.selected}"/>
+		</f:facet>
+
+	    </p:dataTable>
+
+	</p:panel>
+
+    </h:form>
+
+</ui:composition>

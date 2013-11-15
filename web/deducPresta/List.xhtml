@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DeducPrestaListForm">
+
+	<p:panel header="#{myBundle.ListDeducPrestaTitle}">
+
+	    <p:dataTable id="datalist" value="#{deducPrestaController.items}" var="item"
+			 selectionMode="single" selection="#{deducPrestaController.selected}"
+			 rowKey="#{item.deducPrestaPK}"
+			 paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 >
+
+		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+		<p:column sortBy="#{item.deducPrestaPK.codDp}" filterBy="#{item.deducPrestaPK.codDp}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListDeducPrestaTitle_deducPrestaPK_codDp}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.deducPrestaPK.codDp}"/>
+		</p:column>
+
+		<p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListDeducPrestaTitle_descripcion}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.descripcion}"/>
+		</p:column>
+		<p:column sortBy="#{item.sumaResta}" filterBy="#{item.sumaResta}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListDeducPrestaTitle_sumaResta}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.sumaResta}"/>
+		</p:column>
+		<p:column sortBy="#{item.afp}" filterBy="#{item.afp}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListDeducPrestaTitle_afp}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.afp}"/>
+		</p:column>
+		<p:column sortBy="#{item.factor}" filterBy="#{item.factor}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListDeducPrestaTitle_factor}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.factor}"/>
+		</p:column>
+		<p:column sortBy="#{item.deducPrestaPK.tope}" filterBy="#{item.deducPrestaPK.tope}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListDeducPrestaTitle_tope}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.tope}"/>
+		</p:column>                
+		<p:column sortBy="#{item.proceso}" filterBy="#{item.proceso}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListDeducPrestaTitle_proceso}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.proceso}"/>
+		</p:column>
+		<f:facet name="footer">
+		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{deducPrestaController.prepareCreate}" update=":DeducPrestaCreateForm" oncomplete="DeducPrestaCreateDialog.show()"/>
+		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":DeducPrestaViewForm" oncomplete="DeducPrestaViewDialog.show()" disabled="#{empty deducPrestaController.selected}"/>
+		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DeducPrestaEditForm" oncomplete="DeducPrestaEditDialog.show()" disabled="#{empty deducPrestaController.selected}"/>
+		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{deducPrestaController.delete}" update=":growl,datalist" disabled="#{empty deducPrestaController.selected}"/>
+		</f:facet>
+
+	    </p:dataTable>
+
+	</p:panel>
+
+    </h:form>
+
+</ui:composition>

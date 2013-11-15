@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResumenAsistenciaCreateDlg" widgetVar="ResumenAsistenciaCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateResumenAsistenciaTitle}">
+
+            <h:form id="ResumenAsistenciaCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{resumenAsistenciaController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateResumenAsistenciaLabel_dias}" for="dias" />
+                        <p:inputText id="dias" value="#{resumenAsistenciaController.selected.dias}" title="#{myBundle.CreateResumenAsistenciaTitle_dias}" />
+
+                        <p:outputLabel value="#{myBundle.CreateResumenAsistenciaLabel_observacion}" for="observacion" />
+                        <p:inputText id="observacion" value="#{resumenAsistenciaController.selected.observacion}" title="#{myBundle.CreateResumenAsistenciaTitle_observacion}" />
+
+                        
+
+                        <p:outputLabel value="#{myBundle.CreateResumenAsistenciaLabel_empleados}" for="empleados" />
+                        <p:selectOneMenu  filter="true" id="empleados" value="#{resumenAsistenciaController.selected.empleados }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_empleados}"
+					 >
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadosController.activos}"
+                                           var="empleadosItem"					   
+                                           itemValue="#{empleadosItem}"
+                                           itemLabel="#{empleadosItem.nombreNit}"
+					   />
+                            <f:converter binding="#{empleadosConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{resumenAsistenciaController.saveNew}" value="#{myBundle.Save}" update="display,:ResumenAsistenciaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ResumenAsistenciaCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ResumenAsistenciaCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="MovDpListForm">
+
+	<p:panel header="#{myBundle.ListMovDpTitle}">
+
+	    <p:dataTable id="datalist" value="#{movDpController.items}" var="item"
+			 selectionMode="single" selection="#{movDpController.selected}"
+			 rowKey="#{item.movDpPK}"
+			 paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 >
+
+		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+		<p:column sortBy="#{item.programacionPla.programacionPlaPK.secuencia}" filterBy="#{item.programacionPla.programacionPlaPK.secuencia}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListMovDpTitle_programacionPla}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.programacionPla.programacionPlaPK.secuencia}"/>
+		</p:column>
+		<p:column sortBy="#{item.empleados.nombreNit}" filterBy="#{item.empleados.nombreNit}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListMovDpTitle_empleados}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleados.nombreNit}"/>
+		</p:column>	
+		<p:column sortBy="#{item.deducPresta.descripcion}" filterBy="#{item.deducPresta.descripcion}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListMovDpTitle_deducPresta}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.deducPresta.descripcion}"/>
+		</p:column>		
+		<p:column sortBy="#{item.valor}" filterBy="#{item.valor}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListMovDpTitle_valor}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.valor}"/>
+		</p:column>
+
+
+
+		<f:facet name="footer">
+		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{movDpController.prepareCreate}" update=":MovDpCreateForm" oncomplete="MovDpCreateDialog.show()"/>
+		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":MovDpViewForm" oncomplete="MovDpViewDialog.show()" disabled="#{empty movDpController.selected}"/>
+		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":MovDpEditForm" oncomplete="MovDpEditDialog.show()" disabled="#{empty movDpController.selected}"/>
+		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{movDpController.delete}" update=":growl,datalist" disabled="#{empty movDpController.selected}"/>
+		</f:facet>
+
+	    </p:dataTable>
+
+	</p:panel>
+
+    </h:form>
+
+</ui:composition>

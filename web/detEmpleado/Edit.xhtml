@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetEmpleadoEditDlg" widgetVar="DetEmpleadoEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditDetEmpleadoTitle}">
+
+            <h:form id="DetEmpleadoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{detEmpleadoController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditDetEmpleadoLabel_detEmpleadoPK_codEmp}" for="detEmpleadoPK_codEmp" />
+                        <h:outputText id="detEmpleadoPK_codEmp" value="#{detEmpleadoController.selected.detEmpleadoPK.codEmp}" />
+
+                        <h:outputLabel value="#{myBundle.EditDetEmpleadoLabel_detEmpleadoPK_codDp}" for="detEmpleadoPK_codDp" />
+                        <h:outputText id="detEmpleadoPK_codDp" value="#{detEmpleadoController.selected.deducPresta.descripcion}" />
+
+                      
+
+                        <p:outputLabel value="#{myBundle.EditDetEmpleadoLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{detEmpleadoController.selected.usuario}" title="#{myBundle.EditDetEmpleadoTitle_usuario}" />
+
+                        <p:outputLabel value="#{myBundle.EditDetEmpleadoLabel_fechaReg}" for="fechaReg" />
+                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{detEmpleadoController.selected.fechaReg}" title="#{myBundle.EditDetEmpleadoTitle_fechaReg}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detEmpleadoController.save}" value="#{myBundle.Save}" update="display,:DetEmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DetEmpleadoEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DetEmpleadoEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

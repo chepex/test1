@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RentaViewDlg" widgetVar="RentaViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewRentaTitle}">
+
+            <h:form id="RentaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{rentaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewRentaLabel_rentaPK_secuencia}"/>
+                        <h:outputText value="#{rentaController.selected.rentaPK.secuencia}" title="#{myBundle.ViewRentaTitle_rentaPK_secuencia}"/>
+
+                        <h:outputText value="#{myBundle.ViewRentaLabel_rentaPK_id}"/>
+                        <h:outputText value="#{rentaController.selected.rentaPK.id}" title="#{myBundle.ViewRentaTitle_rentaPK_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewRentaLabel_rentaPK_codCia}"/>
+                        <h:outputText value="#{rentaController.selected.rentaPK.codCia}" title="#{myBundle.ViewRentaTitle_rentaPK_codCia}"/>
+
+                        <h:outputText value="#{myBundle.ViewRentaLabel_del}"/>
+                        <h:outputText value="#{rentaController.selected.del}" title="#{myBundle.ViewRentaTitle_del}"/>
+
+                        <h:outputText value="#{myBundle.ViewRentaLabel_al}"/>
+                        <h:outputText value="#{rentaController.selected.al}" title="#{myBundle.ViewRentaTitle_al}"/>
+
+                        <h:outputText value="#{myBundle.ViewRentaLabel_valorFijo}"/>
+                        <h:outputText value="#{rentaController.selected.valorFijo}" title="#{myBundle.ViewRentaTitle_valorFijo}"/>
+
+                        <h:outputText value="#{myBundle.ViewRentaLabel_porcentaje}"/>
+                        <h:outputText value="#{rentaController.selected.porcentaje}" title="#{myBundle.ViewRentaTitle_porcentaje}"/>
+
+                        <h:outputText value="#{myBundle.ViewRentaLabel_exceso}"/>
+                        <h:outputText value="#{rentaController.selected.exceso}" title="#{myBundle.ViewRentaTitle_exceso}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="RentaViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

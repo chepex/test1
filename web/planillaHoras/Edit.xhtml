@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillaHorasEditDlg" widgetVar="PlanillaHorasEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditPlanillaHorasTitle}">
+
+            <h:form id="PlanillaHorasEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{planillaHorasController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaHorasLabel_valor}" for="valor" />
+                        <p:inputText id="valor" value="#{planillaHorasController.selected.valor}" title="#{myBundle.EditPlanillaHorasTitle_valor}" />
+
+                        
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaHorasLabel_empleados}" for="empleados" />
+                        <h:outputText id="empleados" value="#{planillaHorasController.selected.empleados.nombreIsss}"/>
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaHorasLabel_deducPresta}" for="deducPresta" />
+                        <h:outputText id="deducPresta" value="#{planillaHorasController.selected.deducPresta.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planillaHorasController.save}" value="#{myBundle.Save}" update="display,:PlanillaHorasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PlanillaHorasEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PlanillaHorasEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

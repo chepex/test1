@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillaViewDlg" widgetVar="PlanillaViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewPlanillaTitle}">
+
+            <h:form id="PlanillaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planillaController.selected != null}">
+                        
+                        <h:outputText value="#{myBundle.ViewPlanillaLabel_programacionPla}"/>
+                        <h:outputText value="#{planillaController.selected.programacionPla.programacionPlaPK.secuencia}"/>
+                        
+                        <h:outputText value="#{myBundle.ViewPlanillaLabel_empleados}"/>
+                        <h:outputText value="#{planillaController.selected.empleados.nombreNit}"/>                        
+
+                        <h:outputText value="#{myBundle.ViewPlanillaLabel_departamentos}"/>
+                        <h:outputText value="#{planillaController.selected.departamentos.nomDepto}"/>
+                        
+                        <h:outputText value="#{myBundle.ViewPlanillaLabel_devengado}"/>
+                        <h:outputText value="#{planillaController.selected.devengado}" title="#{myBundle.ViewPlanillaTitle_devengado}"/>
+
+                        <h3>Deduciones</h3>  
+                        <p:dataList value="#{planillaController.deduciones}" var="mov" itemType="circle">  
+                            #{mov.deducPresta.descripcion } =  $ #{mov.valor}  
+                        </p:dataList>                         
+                        
+                        <h:outputText value="#{myBundle.ViewPlanillaLabel_deducciones}"/>
+                        <h:outputText value="#{planillaController.selected.deducciones}" title="#{myBundle.ViewPlanillaTitle_deducciones}"/>
+
+                        <h3>Prestaciones</h3>  
+                        <p:dataList value="#{planillaController.prestaciones}" var="mov" itemType="circle">  
+                            #{mov.deducPresta.descripcion }=  $ #{mov.valor}  
+                        </p:dataList>                         
+
+                        <h:outputText value="#{myBundle.ViewPlanillaLabel_prestaciones}"/>
+                        <h:outputText value="#{planillaController.selected.prestaciones}" title="#{myBundle.ViewPlanillaTitle_prestaciones}"/>
+
+
+                        <h:outputText value="#{myBundle.ViewPlanillaLabel_liquido}"/>
+                        <h:outputText value="#{planillaController.selected.liquido}" title="#{myBundle.ViewPlanillaTitle_liquido}"/>
+
+
+
+
+
+                        
+                        
+
+
+
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PlanillaViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetEmpleadoViewDlg" widgetVar="DetEmpleadoViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewDetEmpleadoTitle}">
+
+            <h:form id="DetEmpleadoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detEmpleadoController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewDetEmpleadoLabel_detEmpleadoPK_codEmp}"/>
+                        <h:outputText value="#{detEmpleadoController.selected.detEmpleadoPK.codEmp}" title="#{myBundle.ViewDetEmpleadoTitle_detEmpleadoPK_codEmp}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetEmpleadoLabel_detEmpleadoPK_codDp}"/>
+                        <h:outputText value="#{detEmpleadoController.selected.deducPresta.descripcion }" title="#{myBundle.ViewDetEmpleadoTitle_detEmpleadoPK_codDp}"/>
+
+                        
+
+                        <h:outputText value="#{myBundle.ViewDetEmpleadoLabel_usuario}"/>
+                        <h:outputText value="#{detEmpleadoController.selected.usuario}" title="#{myBundle.ViewDetEmpleadoTitle_usuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewDetEmpleadoLabel_fechaReg}"/>
+                        <h:outputText value="#{detEmpleadoController.selected.fechaReg}" title="#{myBundle.ViewDetEmpleadoTitle_fechaReg}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="DetEmpleadoViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

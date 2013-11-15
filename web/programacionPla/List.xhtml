@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProgramacionPlaListForm">
+
+	<p:panel header="#{myBundle.ListProgramacionPlaTitle}">
+
+	    <p:dataTable id="datalist" value="#{programacionPlaController.items}" var="item"
+			 selectionMode="single" selection="#{programacionPlaController.selected}"
+			 rowKey="#{item.programacionPlaPK}"
+			 paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 >
+
+		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+		<p:column sortBy="#{item.programacionPlaPK.secuencia}" filterBy="#{item.programacionPlaPK.secuencia}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_programacionPlaPK_secuencia}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.programacionPlaPK.secuencia}"/>
+		</p:column>
+		<p:column sortBy="#{item.status}" filterBy="#{item.status}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_status}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.status}"/>
+		</p:column>
+		<p:column sortBy="#{item.fechaCorte}" filterBy="#{item.fechaCorte}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_fechaCorte}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.fechaCorte}">
+			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+		    </h:outputText>
+		</p:column>		
+
+		<p:column sortBy="#{item.numPlanilla}" filterBy="#{item.numPlanilla}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_numPlanilla}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.numPlanilla}"/>
+		</p:column>
+		<p:column sortBy="#{item.anio}" filterBy="#{item.anio}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_anio}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.anio}"/>
+		</p:column>
+		<p:column sortBy="#{item.mes}" filterBy="#{item.mes}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_mes}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.mes}"/>
+		</p:column>
+		<p:column sortBy="#{item.tiposPlanilla.tiposPlanillaPK}" filterBy="#{item.tiposPlanilla.tiposPlanillaPK}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_tiposPlanilla}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.tiposPlanilla.nomTipopla}"/>
+		</p:column>
+		<f:facet name="footer">
+		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{programacionPlaController.prepareCreate}" update=":ProgramacionPlaCreateForm" oncomplete="ProgramacionPlaCreateDialog.show()"/>
+		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":ProgramacionPlaViewForm" oncomplete="ProgramacionPlaViewDialog.show()" disabled="#{empty programacionPlaController.selected}"/>
+		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ProgramacionPlaEditForm" oncomplete="ProgramacionPlaEditDialog.show()" disabled="#{empty programacionPlaController.selected}"/>
+		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{programacionPlaController.delete}" update=":growl,datalist" disabled="#{empty programacionPlaController.selected}"/>
+		</f:facet>
+
+	    </p:dataTable>
+
+	</p:panel>
+
+    </h:form>
+
+</ui:composition>

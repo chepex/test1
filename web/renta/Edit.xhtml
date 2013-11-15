@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RentaEditDlg" widgetVar="RentaEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditRentaTitle}">
+
+            <h:form id="RentaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{rentaController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditRentaLabel_rentaPK_secuencia}" for="rentaPK_secuencia" />
+                        <h:outputText id="rentaPK_secuencia" value="#{rentaController.selected.rentaPK.secuencia}" />
+
+                        <h:outputLabel value="#{myBundle.EditRentaLabel_rentaPK_id}" for="rentaPK_id" />
+                        <h:outputText id="rentaPK_id" value="#{rentaController.selected.rentaPK.id}" />
+
+                        <h:outputLabel value="#{myBundle.EditRentaLabel_rentaPK_codCia}" for="rentaPK_codCia" />
+                        <h:outputText id="rentaPK_codCia" value="#{rentaController.selected.rentaPK.codCia}" />
+
+                        <p:outputLabel value="#{myBundle.EditRentaLabel_del}" for="del" />
+                        <p:inputText id="del" value="#{rentaController.selected.del}" title="#{myBundle.EditRentaTitle_del}" required="true" requiredMessage="#{myBundle.EditRentaRequiredMessage_del}"/>
+
+                        <p:outputLabel value="#{myBundle.EditRentaLabel_al}" for="al" />
+                        <p:inputText id="al" value="#{rentaController.selected.al}" title="#{myBundle.EditRentaTitle_al}" required="true" requiredMessage="#{myBundle.EditRentaRequiredMessage_al}"/>
+
+                        <p:outputLabel value="#{myBundle.EditRentaLabel_valorFijo}" for="valorFijo" />
+                        <p:inputText id="valorFijo" value="#{rentaController.selected.valorFijo}" title="#{myBundle.EditRentaTitle_valorFijo}" required="true" requiredMessage="#{myBundle.EditRentaRequiredMessage_valorFijo}"/>
+
+                        <p:outputLabel value="#{myBundle.EditRentaLabel_porcentaje}" for="porcentaje" />
+                        <p:inputText id="porcentaje" value="#{rentaController.selected.porcentaje}" title="#{myBundle.EditRentaTitle_porcentaje}" required="true" requiredMessage="#{myBundle.EditRentaRequiredMessage_porcentaje}"/>
+
+                        <p:outputLabel value="#{myBundle.EditRentaLabel_exceso}" for="exceso" />
+                        <p:inputText id="exceso" value="#{rentaController.selected.exceso}" title="#{myBundle.EditRentaTitle_exceso}" required="true" requiredMessage="#{myBundle.EditRentaRequiredMessage_exceso}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{rentaController.save}" value="#{myBundle.Save}" update="display,:RentaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,RentaEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="RentaEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

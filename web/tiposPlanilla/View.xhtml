@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TiposPlanillaViewDlg" widgetVar="TiposPlanillaViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewTiposPlanillaTitle}">
+
+            <h:form id="TiposPlanillaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tiposPlanillaController.selected != null}">
+
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_tiposPlanillaPK_codTipopla}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.tiposPlanillaPK.codTipopla}" title="#{myBundle.ViewTiposPlanillaTitle_tiposPlanillaPK_codTipopla}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_nomTipopla}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.nomTipopla}" title="#{myBundle.ViewTiposPlanillaTitle_nomTipopla}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_status}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.status}" title="#{myBundle.ViewTiposPlanillaTitle_status}"/>
+                        
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_codDp}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.codDp}" title="#{myBundle.ViewTiposPlanillaTitle_codDp}"/>                        
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_programacionPlaList}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="TiposPlanillaViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

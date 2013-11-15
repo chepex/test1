@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PlanillaListForm">
+        <p:dialog id="mas" widgetVar="statusDialog" header="Status"  >  
+                <p:graphicImage value="/resources/img/loading.gif" />  
+        </p:dialog>  
+        
+	<p:panelGrid columns="6" >
+	    Anio
+            <p:inputText id="anio" value="#{planillaController.anio}"  />	    
+	    Mes		     
+            <p:inputText id="mes" value="#{planillaController.mes}"  />	    	            
+            
+            <p:commandButton id="btn-consultar"   icon="ui-icon-refresh"  value="Consultar" actionListener="#{planillaController.consultar() }" update="@form :growl" />
+		
+			
+	</p:panelGrid>
+        
+	<p:panel header="#{myBundle.ListPlanillaTitle}">
+
+	    <p:dataTable id="datalist" value="#{planillaController.items}" var="item"
+			 selectionMode="single" selection="#{planillaController.selected}"
+			 rowKey="#{item.planillaPK}"
+			 paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 >
+
+		<p:ajax event="rowSelect"   update="viewButton"/>
+		<p:ajax event="rowUnselect" update="viewButton"/>
+		<p:column sortBy="#{item.empleados.nombreNit}" filterBy="#{item.empleados.nombreNit}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPlanillaTitle_empleados}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleados.nombreNit} "/>
+		</p:column>
+		<p:column sortBy="#{item.departamentos.nomDepto}" filterBy="#{item.departamentos.nomDepto}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPlanillaTitle_departamentos}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.departamentos.nomDepto}"/>
+		</p:column>                
+		<p:column sortBy="#{item.programacionPla.programacionPlaPK}" filterBy="#{item.programacionPla.programacionPlaPK}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPlanillaTitle_programacionPla}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.programacionPla.programacionPlaPK.secuencia}"/>
+		</p:column>  
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPlanillaTitle_dias}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.resumenAsistencia.dias}"/>
+		</p:column>                  
+		<p:column  >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPlanillaTitle_devengado}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.devengado}"/>
+		</p:column> 
+		<p:column  >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPlanillaTitle_prestaciones}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.prestaciones}"/>
+		</p:column>                
+		<p:column  >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPlanillaTitle_deducciones}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.deducciones}"/>
+		</p:column>
+		<p:column  >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPlanillaTitle_liquido}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.liquido}"/>
+		</p:column>
+
+
+
+		<f:facet name="footer">		  
+		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PlanillaViewForm" oncomplete="PlanillaViewDialog.show()" disabled="#{empty planillaController.selected}"/>		    
+                    <p:commandButton id="btn-generar"   icon="ui-icon-shuffle"  value="Generar" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()"   actionListener="#{planillaController.generar() }" update="@form :growl" />                                        
+                    <p:commandButton id="pdfButton" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.reportePlanilla()}" ajax="false" value="Generar Pdf" update="PlanillaListForm" oncomplete="ProductoPdfDialog.show()"/>                    
+                    
+                    
+		</f:facet>
+
+	    </p:dataTable>
+
+	</p:panel>
+
+    </h:form>
+
+</ui:composition>

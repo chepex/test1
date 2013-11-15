@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DetEmpleadoCreateDlg" widgetVar="DetEmpleadoCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateDetEmpleadoTitle}">
+
+            <h:form id="DetEmpleadoCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{detEmpleadoController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateDetEmpleadoLabel_detEmpleadoPK_codEmp}" for="detEmpleadoPK_codEmp" />
+                        <p:inputText id="detEmpleadoPK_codEmp" value="#{detEmpleadoController.selected.detEmpleadoPK.codEmp}" title="#{myBundle.CreateDetEmpleadoTitle_detEmpleadoPK_codEmp}" required="true" requiredMessage="#{myBundle.CreateDetEmpleadoRequiredMessage_detEmpleadoPK_codEmp}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDetEmpleadoLabel_detEmpleadoPK_codDp}" for="detEmpleadoPK_codDp" />
+                        <p:inputText id="detEmpleadoPK_codDp" value="#{detEmpleadoController.selected.detEmpleadoPK.codDp}" title="#{myBundle.CreateDetEmpleadoTitle_detEmpleadoPK_codDp}" required="true" requiredMessage="#{myBundle.CreateDetEmpleadoRequiredMessage_detEmpleadoPK_codDp}"/>
+
+                        
+
+                        <p:outputLabel value="#{myBundle.CreateDetEmpleadoLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{detEmpleadoController.selected.usuario}" title="#{myBundle.CreateDetEmpleadoTitle_usuario}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDetEmpleadoLabel_fechaReg}" for="fechaReg" />
+                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{detEmpleadoController.selected.fechaReg}" title="#{myBundle.EditDetEmpleadoTitle_fechaReg}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{detEmpleadoController.saveNew}" value="#{myBundle.Save}" update="display,:DetEmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DetEmpleadoCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DetEmpleadoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeducPrestaCreateDlg" widgetVar="DeducPrestaCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateDeducPrestaTitle}">
+
+            <h:form id="DeducPrestaCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{deducPrestaController.selected != null}">
+
+
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{deducPrestaController.selected.descripcion}" title="#{myBundle.CreateDeducPrestaTitle_descripcion}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_sumaResta}" for="sumaResta" />
+                        <p:inputText id="sumaResta" value="#{deducPrestaController.selected.sumaResta}" title="#{myBundle.CreateDeducPrestaTitle_sumaResta}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_afp}" for="afp" />
+                        <p:inputText id="afp" value="#{deducPrestaController.selected.afp}" title="#{myBundle.CreateDeducPrestaTitle_afp}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_factor}" for="factor" />
+                        <p:inputText id="factor" value="#{deducPrestaController.selected.factor}" title="#{myBundle.CreateDeducPrestaTitle_factor}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_proceso}" for="proceso" />
+                        <p:inputText id="proceso" value="#{deducPrestaController.selected.proceso}" title="#{myBundle.CreateDeducPrestaTitle_proceso}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_tope}" for="tope" />
+                        <p:inputText id="tope" value="#{deducPrestaController.selected.tope}" title="#{myBundle.CreateDeducPrestaTitle_tope}" />                        
+                        
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_prioridad}" for="prioridad" />
+                        <p:inputText id="prioridad" value="#{deducPrestaController.selected.prioridad}" title="#{myBundle.CreateDeducPrestaTitle_prioridad}" />                                                
+                    </p:panelGrid>
+                    <h:commandButton actionListener="#{deducPrestaController.saveNew}" value="#{myBundle.Save}" />
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DeducPrestaCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

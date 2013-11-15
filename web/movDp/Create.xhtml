@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MovDpCreateDlg" widgetVar="MovDpCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateMovDpTitle}">
+
+            <h:form id="MovDpCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{movDpController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateMovDpLabel_valor}" for="valor" />
+                        <p:inputText id="valor" value="#{movDpController.selected.valor}" title="#{myBundle.CreateMovDpTitle_valor}" />
+
+                        <p:outputLabel value="#{myBundle.CreateMovDpLabel_numRef}" for="numRef" />
+                        <p:inputText id="numRef" value="#{movDpController.selected.numRef}" title="#{myBundle.CreateMovDpTitle_numRef}" />
+			
+			
+                        <p:outputLabel value="#{myBundle.CreateMovDpLabel_programacionPla}" for="programacionPla" />
+                        <p:selectOneMenu id="programacionPla" value="#{movDpController.selected.programacionPla}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_programacionPla}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{programacionPlaController.items}"
+                                           var="programacionPlaItem"
+                                           itemValue="#{programacionPlaItem}"
+                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "
+					   />
+                            <f:converter binding="#{programacionPlaConverter}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateMovDpLabel_empleados}" for="empleados" />
+                        <p:selectOneMenu id="empleados" value="#{movDpController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_empleados}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadosController.activos}"
+                                           var="empleadosItem"
+                                           itemValue="#{empleadosItem}"
+                                           itemLabel="#{empleadosItem.nombreNit }"
+					   />
+                            <f:converter binding="#{empleadosConverter}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateMovDpLabel_deducPresta}" for="deducPresta" />
+                        <p:selectOneMenu id="deducPresta" value="#{movDpController.selected.deducPresta}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_deducPresta}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{deducPrestaController.items}"
+                                           var="deducPrestaItem"
+                                           itemValue="#{deducPrestaItem}"
+                                           itemLabel="#{deducPrestaItem.descripcion.toString()}"
+					   />
+                            <f:converter binding="#{deducPrestaConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{movDpController.saveNew}" value="#{myBundle.Save}" update="display,:MovDpListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MovDpCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="MovDpCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

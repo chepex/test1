@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DepartamentosViewDlg" widgetVar="DepartamentosViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewDepartamentosTitle}">
+
+            <h:form id="DepartamentosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{departamentosController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_departamentosPK_codDepto}"/>
+                        <h:outputText value="#{departamentosController.selected.departamentosPK.codDepto}" title="#{myBundle.ViewDepartamentosTitle_departamentosPK_codDepto}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_departamentosPK_codCia}"/>
+                        <h:outputText value="#{departamentosController.selected.departamentosPK.codCia}" title="#{myBundle.ViewDepartamentosTitle_departamentosPK_codCia}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_nomDepto}"/>
+                        <h:outputText value="#{departamentosController.selected.nomDepto}" title="#{myBundle.ViewDepartamentosTitle_nomDepto}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_empleados}"/>
+                        <h:outputText value="#{departamentosController.selected.empleados}" title="#{myBundle.ViewDepartamentosTitle_empleados}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_bcta1}"/>
+                        <h:outputText value="#{departamentosController.selected.bcta1}" title="#{myBundle.ViewDepartamentosTitle_bcta1}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_bcta2}"/>
+                        <h:outputText value="#{departamentosController.selected.bcta2}" title="#{myBundle.ViewDepartamentosTitle_bcta2}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_bcta3}"/>
+                        <h:outputText value="#{departamentosController.selected.bcta3}" title="#{myBundle.ViewDepartamentosTitle_bcta3}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_bcta4}"/>
+                        <h:outputText value="#{departamentosController.selected.bcta4}" title="#{myBundle.ViewDepartamentosTitle_bcta4}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_bcta5}"/>
+                        <h:outputText value="#{departamentosController.selected.bcta5}" title="#{myBundle.ViewDepartamentosTitle_bcta5}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_ecta1}"/>
+                        <h:outputText value="#{departamentosController.selected.ecta1}" title="#{myBundle.ViewDepartamentosTitle_ecta1}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_ecta2}"/>
+                        <h:outputText value="#{departamentosController.selected.ecta2}" title="#{myBundle.ViewDepartamentosTitle_ecta2}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_ecta3}"/>
+                        <h:outputText value="#{departamentosController.selected.ecta3}" title="#{myBundle.ViewDepartamentosTitle_ecta3}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_ecta4}"/>
+                        <h:outputText value="#{departamentosController.selected.ecta4}" title="#{myBundle.ViewDepartamentosTitle_ecta4}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_ecta5}"/>
+                        <h:outputText value="#{departamentosController.selected.ecta5}" title="#{myBundle.ViewDepartamentosTitle_ecta5}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_cta1}"/>
+                        <h:outputText value="#{departamentosController.selected.cta1}" title="#{myBundle.ViewDepartamentosTitle_cta1}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_cta2}"/>
+                        <h:outputText value="#{departamentosController.selected.cta2}" title="#{myBundle.ViewDepartamentosTitle_cta2}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_cta3}"/>
+                        <h:outputText value="#{departamentosController.selected.cta3}" title="#{myBundle.ViewDepartamentosTitle_cta3}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_cta4}"/>
+                        <h:outputText value="#{departamentosController.selected.cta4}" title="#{myBundle.ViewDepartamentosTitle_cta4}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_cta5}"/>
+                        <h:outputText value="#{departamentosController.selected.cta5}" title="#{myBundle.ViewDepartamentosTitle_cta5}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_contable}"/>
+                        <h:outputText value="#{departamentosController.selected.contable}" title="#{myBundle.ViewDepartamentosTitle_contable}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_codTipopla}"/>
+                        <h:outputText value="#{departamentosController.selected.codTipopla}" title="#{myBundle.ViewDepartamentosTitle_codTipopla}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_proyecto}"/>
+                        <h:outputText value="#{departamentosController.selected.proyecto}" title="#{myBundle.ViewDepartamentosTitle_proyecto}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_codEquivalencia}"/>
+                        <h:outputText value="#{departamentosController.selected.codEquivalencia}" title="#{myBundle.ViewDepartamentosTitle_codEquivalencia}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_usuario}"/>
+                        <h:outputText value="#{departamentosController.selected.usuario}" title="#{myBundle.ViewDepartamentosTitle_usuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_fechaReg}"/>
+                        <h:outputText value="#{departamentosController.selected.fechaReg}" title="#{myBundle.ViewDepartamentosTitle_fechaReg}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_distrito}"/>
+                        <h:outputText value="#{departamentosController.selected.distrito}" title="#{myBundle.ViewDepartamentosTitle_distrito}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_firmaDoc}"/>
+                        <h:outputText value="#{departamentosController.selected.firmaDoc}" title="#{myBundle.ViewDepartamentosTitle_firmaDoc}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_VSecuencia}"/>
+                        <h:outputText value="#{departamentosController.selected.VSecuencia}" title="#{myBundle.ViewDepartamentosTitle_VSecuencia}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_planillaList}"/>
+
+                        <h:outputText value="#{myBundle.ViewDepartamentosLabel_empleadosList}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="DepartamentosViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

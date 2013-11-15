@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RentaCreateDlg" widgetVar="RentaCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateRentaTitle}">
+
+            <h:form id="RentaCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{rentaController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateRentaLabel_rentaPK_secuencia}" for="rentaPK_secuencia" />
+                        <p:inputText id="rentaPK_secuencia" value="#{rentaController.selected.rentaPK.secuencia}" title="#{myBundle.CreateRentaTitle_rentaPK_secuencia}" required="true" requiredMessage="#{myBundle.CreateRentaRequiredMessage_rentaPK_secuencia}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRentaLabel_rentaPK_id}" for="rentaPK_id" />
+                        <p:inputText id="rentaPK_id" value="#{rentaController.selected.rentaPK.id}" title="#{myBundle.CreateRentaTitle_rentaPK_id}" required="true" requiredMessage="#{myBundle.CreateRentaRequiredMessage_rentaPK_id}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRentaLabel_rentaPK_codCia}" for="rentaPK_codCia" />
+                        <p:inputText id="rentaPK_codCia" value="#{rentaController.selected.rentaPK.codCia}" title="#{myBundle.CreateRentaTitle_rentaPK_codCia}" required="true" requiredMessage="#{myBundle.CreateRentaRequiredMessage_rentaPK_codCia}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRentaLabel_del}" for="del" />
+                        <p:inputText id="del" value="#{rentaController.selected.del}" title="#{myBundle.CreateRentaTitle_del}" required="true" requiredMessage="#{myBundle.CreateRentaRequiredMessage_del}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRentaLabel_al}" for="al" />
+                        <p:inputText id="al" value="#{rentaController.selected.al}" title="#{myBundle.CreateRentaTitle_al}" required="true" requiredMessage="#{myBundle.CreateRentaRequiredMessage_al}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRentaLabel_valorFijo}" for="valorFijo" />
+                        <p:inputText id="valorFijo" value="#{rentaController.selected.valorFijo}" title="#{myBundle.CreateRentaTitle_valorFijo}" required="true" requiredMessage="#{myBundle.CreateRentaRequiredMessage_valorFijo}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRentaLabel_porcentaje}" for="porcentaje" />
+                        <p:inputText id="porcentaje" value="#{rentaController.selected.porcentaje}" title="#{myBundle.CreateRentaTitle_porcentaje}" required="true" requiredMessage="#{myBundle.CreateRentaRequiredMessage_porcentaje}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRentaLabel_exceso}" for="exceso" />
+                        <p:inputText id="exceso" value="#{rentaController.selected.exceso}" title="#{myBundle.CreateRentaTitle_exceso}" required="true" requiredMessage="#{myBundle.CreateRentaRequiredMessage_exceso}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{rentaController.saveNew}" value="#{myBundle.Save}" update="display,:RentaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,RentaCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="RentaCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

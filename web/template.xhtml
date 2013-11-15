@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="pfcrud.css"/>
+        <h:outputScript library="scripts" name="pfcrud.js"/>
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true" >
+            
+                <p:layoutUnit id="top" position="north" size="80"  header="#{myBundle.AppName}">
+                <ui:include src="/appmenu.xhtml"/>       
+		  
+                </p:layoutUnit>
+                <p:layoutUnit id="bottom" position="south" size="60">
+                         <h:form id="frmAnagPersonName"></h:form>
+                </p:layoutUnit>
+                <p:layoutUnit id="right" position="east" size="375" header="Herramientas" resizable="true" closable="true" collapsible="true"
+                              style="text-align:center">
+		    <p:accordionPanel rendered="#{request.getUserPrincipal() != null}">
+                        <p:tab title="Empleados" >                            
+		    <h:form id="fEmpleado">
+			 <p:panelGrid columns="2">
+			    
+			    <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_empleadosPK_codEmp}" for="empleadosPK_codCia" />
+			    <p:inputText id="empleadosPK_codCia" value="#{empleadosController.emp}" title="#{myBundle.CreateEmpleadosTitle_empleadosPK_codCia}"/>
+			    <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_apellidos}" for="apellidos" />
+			    <p:inputText   id="apellidos" value="#{empleadosController.apel}" title="#{myBundle.CreateEmpleadosTitle_apellidos}"/>		   
+			    <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_nombres}" for="nombres" />
+			    <p:inputText   id="nombres" value="#{empleadosController.nomb}" title="#{myBundle.CreateEmpleadosTitle_nombres}"  />		   
+			    <p:commandButton  actionListener="#{empleadosController.Buscar}" value="#{myBundle.Find}" update="basicList"  />				
+			 </p:panelGrid>
+			       <br/>
+			       <br/>
+	   	<p:dataTable id="basicList" value="#{empleadosController.items2}" var="item"
+			 selectionMode="single" selection="#{empleadosController.selected2}"
+			 rowKey="#{item.empleadosPK}"
+			 paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 >
+			 <f:facet name="caption">Resultados</f:facet>  				   
+				<p:column style="width:50%;"  >
+				    #{item.apellidos}
+				</p:column>				
+				<p:column style="width:20%;">
+				    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":EmpleadosViewForm2" oncomplete="EmpleadosViewDialog2.show()" disabled="#{empty empleadosController.selected}"/>
+				</p:column>
+			</p:dataTable>	
+		    </h:form>
+                        </p:tab>
+			
+			    <p:tab title="Calendario" >
+				 <center>
+				    <br />
+				    <p:calendar mode="inline" navigator="none"/>
+				    <br />
+				</center>
+                        </p:tab>
+
+                        <p:tab title="Movimientos">
+                            <h:outputText value="Menu 3 Content" />
+                        </p:tab>
+                        <p:tab title="Recibos">
+                           
+                        </p:tab>
+			 
+		  
+                    </p:accordionPanel>
+			<ui:include src="/empleados/View2.xhtml"/>     		    
+				<p:dialog id="CiachangeDlg" widgetVar="cambioCompDialog" modal="true" resizable="false" 
+				appendToBody="true" header="Cambiar compañia">
+			   <h:form>
+			       <p:panelGrid  columns="2">
+
+				   <p:selectOneMenu id="puestos" value="#{loginBean.codCia1 }">
+				      <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+				      <f:selectItems value="#{ciasController.items}"
+						     var="item" 
+						      itemLabel="#{item.nomComercial }"
+						     itemValue="#{items}"
+				      />
+				      <f:converter binding="#{ciasConverter}"/>
+				  </p:selectOneMenu>
+
+			       </p:panelGrid>
+			       <p:commandButton     value="Guardar"  actionListener="#{loginBean.changecia }"  ajax="false"    />		  
+			  </h:form>
+		      </p:dialog> 
+		    
+                </p:layoutUnit>
+
+                <p:layoutUnit id="center" position="center">	    		    		     
+	             <p:growl id="growl" life="6000" showDetail="true" sticky="true" />
+		     
+		    <ui:insert name="body" id="bbody">		    			
+		    </ui:insert>
+
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+    
+
+	
+	
+    </h:body>
+
+</html>

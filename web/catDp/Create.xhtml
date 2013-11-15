@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CatDpCreateDlg" widgetVar="CatDpCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateCatDpTitle}">
+
+            <h:form id="CatDpCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{catDpController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateCatDpLabel_catDpPK_codCat}" for="catDpPK_codCat" />
+                        <p:inputText id="catDpPK_codCat" value="#{catDpController.selected.catDpPK.codCat}" title="#{myBundle.CreateCatDpTitle_catDpPK_codCat}" required="true" requiredMessage="#{myBundle.CreateCatDpRequiredMessage_catDpPK_codCat}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCatDpLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{catDpController.selected.descripcion}" title="#{myBundle.CreateCatDpTitle_descripcion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{catDpController.saveNew}" value="#{myBundle.Save}" update="display,:CatDpListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,CatDpCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="CatDpCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

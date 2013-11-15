@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProfesionesCreateDlg" widgetVar="ProfesionesCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateProfesionesTitle}">
+
+            <h:form id="ProfesionesCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{profesionesController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateProfesionesLabel_codProfesion}" for="codProfesion" />
+                        <p:inputText id="codProfesion" value="#{profesionesController.selected.codProfesion}" title="#{myBundle.CreateProfesionesTitle_codProfesion}" required="true" requiredMessage="#{myBundle.CreateProfesionesRequiredMessage_codProfesion}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateProfesionesLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{profesionesController.selected.descripcion}" title="#{myBundle.CreateProfesionesTitle_descripcion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{profesionesController.saveNew}" value="#{myBundle.Save}" update="display,:ProfesionesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ProfesionesCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ProfesionesCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

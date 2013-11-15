@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TiposPlanillaEditDlg" widgetVar="TiposPlanillaEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditTiposPlanillaTitle}">
+
+            <h:form id="TiposPlanillaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{tiposPlanillaController.selected != null}">
+                        
+                        <h:outputLabel value="#{myBundle.EditTiposPlanillaLabel_tiposPlanillaPK_codTipopla}" for="tiposPlanillaPK_codTipopla" />
+                        <h:outputText id="tiposPlanillaPK_codTipopla" value="#{tiposPlanillaController.selected.tiposPlanillaPK.codTipopla}" />
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_nomTipopla}" for="nomTipopla" />
+                        <p:inputText id="nomTipopla" value="#{tiposPlanillaController.selected.nomTipopla}" title="#{myBundle.EditTiposPlanillaTitle_nomTipopla}" required="true" requiredMessage="#{myBundle.EditTiposPlanillaRequiredMessage_nomTipopla}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_status}" for="status" />
+                        <p:inputText id="status" value="#{tiposPlanillaController.selected.status}" title="#{myBundle.EditTiposPlanillaTitle_status}" />
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_codDp}" for="codDp" />
+                        <p:selectOneMenu id="codDp" value="#{tiposPlanillaController.selected.deducPresta}"  >
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{deducPrestaController.items}"
+                                           var="deducPrestaItem"
+                                           itemValue="#{deducPrestaItem}"
+                                           itemLabel="#{deducPrestaItem.descripcion.toString() }"
+					   />
+                            <f:converter binding="#{deducPrestaConverter}"/>
+                        </p:selectOneMenu>
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tiposPlanillaController.save}" value="#{myBundle.Save}" update="display,:TiposPlanillaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TiposPlanillaEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="TiposPlanillaEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+</html>

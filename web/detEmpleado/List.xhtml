@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DetEmpleadoListForm">
+
+        <p:panel header="#{myBundle.ListDetEmpleadoTitle}">
+
+            <p:dataTable id="datalist" value="#{detEmpleadoController.items}" var="item"
+                         selectionMode="single" selection="#{detEmpleadoController.selected}"
+                         rowKey="#{item.detEmpleadoPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.detEmpleadoPK.codDp}" filterBy="#{item.detEmpleadoPK.codDp}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetEmpleadoTitle_detEmpleadoPK_codDp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.deducPresta.descripcion}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.empleados.nombreNit}" filterBy="#{item.empleados.nombreNit}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetEmpleadoTitle_detEmpleadoPK_codEmp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleados.nombreNit}"/>
+                </p:column>
+                <p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetEmpleadoTitle_usuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuario}"/>
+                </p:column>
+                <p:column sortBy="#{item.fechaReg}" filterBy="#{item.fechaReg}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetEmpleadoTitle_fechaReg}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaReg}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{detEmpleadoController.prepareCreate}" update=":DetEmpleadoCreateForm" oncomplete="DetEmpleadoCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":DetEmpleadoViewForm" oncomplete="DetEmpleadoViewDialog.show()" disabled="#{empty detEmpleadoController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DetEmpleadoEditForm" oncomplete="DetEmpleadoEditDialog.show()" disabled="#{empty detEmpleadoController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{detEmpleadoController.delete}" update=":growl,datalist" disabled="#{empty detEmpleadoController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

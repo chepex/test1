@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ParametrosViewDlg" widgetVar="ParametrosViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewParametrosTitle}">
+
+            <h:form id="ParametrosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{parametrosController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewParametrosLabel_parametrosPK_codCia}"/>
+                        <h:outputText value="#{parametrosController.selected.parametrosPK.codCia}" title="#{myBundle.ViewParametrosTitle_parametrosPK_codCia}"/>
+
+                        <h:outputText value="#{myBundle.ViewParametrosLabel_parametrosPK_id}"/>
+                        <h:outputText value="#{parametrosController.selected.parametrosPK.id}" title="#{myBundle.ViewParametrosTitle_parametrosPK_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewParametrosLabel_nombre}"/>
+                        <h:outputText value="#{parametrosController.selected.nombre}" title="#{myBundle.ViewParametrosTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewParametrosLabel_descripcion}"/>
+                        <h:outputText value="#{parametrosController.selected.descripcion}" title="#{myBundle.ViewParametrosTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewParametrosLabel_valorTxt}"/>
+                        <h:outputText value="#{parametrosController.selected.valorTxt}" title="#{myBundle.ViewParametrosTitle_valorTxt}"/>
+
+                        <h:outputText value="#{myBundle.ViewParametrosLabel_valorInt}"/>
+                        <h:outputText value="#{parametrosController.selected.valorInt}" title="#{myBundle.ViewParametrosTitle_valorInt}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="ParametrosViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

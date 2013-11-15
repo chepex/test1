@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DepartamentosCreateDlg" widgetVar="DepartamentosCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateDepartamentosTitle}">
+
+            <h:form id="DepartamentosCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="4" rendered="#{departamentosController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_departamentosPK_codDepto}" for="departamentosPK_codDepto" />
+                        <p:inputText id="departamentosPK_codDepto" value="#{departamentosController.selected.departamentosPK.codDepto}" title="#{myBundle.CreateDepartamentosTitle_departamentosPK_codDepto}" required="true" requiredMessage="#{myBundle.CreateDepartamentosRequiredMessage_departamentosPK_codDepto}"/>
+
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_nomDepto}" for="nomDepto" />
+                        <p:inputText id="nomDepto" value="#{departamentosController.selected.nomDepto}" title="#{myBundle.CreateDepartamentosTitle_nomDepto}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_empleados}" for="empleados" />
+                        <p:inputText id="empleados" value="#{departamentosController.selected.empleados}" title="#{myBundle.CreateDepartamentosTitle_empleados}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_bcta1}" for="bcta1" />
+                        <p:inputText id="bcta1" value="#{departamentosController.selected.bcta1}" title="#{myBundle.CreateDepartamentosTitle_bcta1}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_bcta2}" for="bcta2" />
+                        <p:inputText id="bcta2" value="#{departamentosController.selected.bcta2}" title="#{myBundle.CreateDepartamentosTitle_bcta2}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_bcta3}" for="bcta3" />
+                        <p:inputText id="bcta3" value="#{departamentosController.selected.bcta3}" title="#{myBundle.CreateDepartamentosTitle_bcta3}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_bcta4}" for="bcta4" />
+                        <p:inputText id="bcta4" value="#{departamentosController.selected.bcta4}" title="#{myBundle.CreateDepartamentosTitle_bcta4}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_bcta5}" for="bcta5" />
+                        <p:inputText id="bcta5" value="#{departamentosController.selected.bcta5}" title="#{myBundle.CreateDepartamentosTitle_bcta5}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_ecta1}" for="ecta1" />
+                        <p:inputText id="ecta1" value="#{departamentosController.selected.ecta1}" title="#{myBundle.CreateDepartamentosTitle_ecta1}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_ecta2}" for="ecta2" />
+                        <p:inputText id="ecta2" value="#{departamentosController.selected.ecta2}" title="#{myBundle.CreateDepartamentosTitle_ecta2}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_ecta3}" for="ecta3" />
+                        <p:inputText id="ecta3" value="#{departamentosController.selected.ecta3}" title="#{myBundle.CreateDepartamentosTitle_ecta3}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_ecta4}" for="ecta4" />
+                        <p:inputText id="ecta4" value="#{departamentosController.selected.ecta4}" title="#{myBundle.CreateDepartamentosTitle_ecta4}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_ecta5}" for="ecta5" />
+                        <p:inputText id="ecta5" value="#{departamentosController.selected.ecta5}" title="#{myBundle.CreateDepartamentosTitle_ecta5}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_cta1}" for="cta1" />
+                        <p:inputText id="cta1" value="#{departamentosController.selected.cta1}" title="#{myBundle.CreateDepartamentosTitle_cta1}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_cta2}" for="cta2" />
+                        <p:inputText id="cta2" value="#{departamentosController.selected.cta2}" title="#{myBundle.CreateDepartamentosTitle_cta2}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_cta3}" for="cta3" />
+                        <p:inputText id="cta3" value="#{departamentosController.selected.cta3}" title="#{myBundle.CreateDepartamentosTitle_cta3}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_cta4}" for="cta4" />
+                        <p:inputText id="cta4" value="#{departamentosController.selected.cta4}" title="#{myBundle.CreateDepartamentosTitle_cta4}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_cta5}" for="cta5" />
+                        <p:inputText id="cta5" value="#{departamentosController.selected.cta5}" title="#{myBundle.CreateDepartamentosTitle_cta5}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_contable}" for="contable" />
+                        <p:inputText id="contable" value="#{departamentosController.selected.contable}" title="#{myBundle.CreateDepartamentosTitle_contable}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_codTipopla}" for="codTipopla" />
+                        <p:inputText id="codTipopla" value="#{departamentosController.selected.codTipopla}" title="#{myBundle.CreateDepartamentosTitle_codTipopla}" required="true" requiredMessage="#{myBundle.CreateDepartamentosRequiredMessage_codTipopla}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_proyecto}" for="proyecto" />
+                        <p:inputText id="proyecto" value="#{departamentosController.selected.proyecto}" title="#{myBundle.CreateDepartamentosTitle_proyecto}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_codEquivalencia}" for="codEquivalencia" />
+                        <p:inputText id="codEquivalencia" value="#{departamentosController.selected.codEquivalencia}" title="#{myBundle.CreateDepartamentosTitle_codEquivalencia}" />
+
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_distrito}" for="distrito" />
+                        <p:inputText id="distrito" value="#{departamentosController.selected.distrito}" title="#{myBundle.CreateDepartamentosTitle_distrito}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_firmaDoc}" for="firmaDoc" />
+                        <p:inputText id="firmaDoc" value="#{departamentosController.selected.firmaDoc}" title="#{myBundle.CreateDepartamentosTitle_firmaDoc}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_VSecuencia}" for="VSecuencia" />
+                        <p:inputText id="VSecuencia" value="#{departamentosController.selected.VSecuencia}" title="#{myBundle.CreateDepartamentosTitle_VSecuencia}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{departamentosController.saveNew}" value="#{myBundle.Save}" update="display,:DepartamentosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DepartamentosCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DepartamentosCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

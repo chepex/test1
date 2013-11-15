@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PrestamosEditDlg" widgetVar="PrestamosEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditPrestamosTitle}">
+
+            <h:form id="PrestamosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{prestamosController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreatePrestamosLabel_numRef}" for="prestamos_numRef" />
+                        <p:inputText id="prestamos_numRef" value="#{prestamosController.selected.numRef}" title="#{myBundle.CreatePrestamosTitle_prestamos_numRef}" />
+
+                        <h:outputLabel value="#{myBundle.EditPrestamosLabel_prestamosPK_codPresta}" for="prestamosPK_codPresta"  />
+                        <h:outputText id="prestamosPK_codPresta" value="#{prestamosController.selected.prestamosPK.codPresta}"  />
+
+                        <p:outputLabel value=" #{myBundle.EditPrestamosLabel_monto} $" for="monto" />
+                        <p:inputText id="monto" value="#{prestamosController.selected.monto}" title="#{myBundle.EditPrestamosTitle_monto}" />
+
+                        <p:outputLabel value=" #{myBundle.EditPrestamosLabel_saldo} $" for="saldo" />
+                        <p:inputText id="saldo" value="#{prestamosController.selected.saldo}" title="#{myBundle.EditPrestamosTitle_saldo}"  />
+
+                        <p:outputLabel value="#{myBundle.EditPrestamosLabel_cuotasP}" for="cuotasP" />
+                        <p:inputText id="cuotasP" value="#{prestamosController.selected.cuotasP}" title="#{myBundle.EditPrestamosTitle_cuotasP}" />
+			
+                        <p:outputLabel value="#{myBundle.EditPrestamosLabel_frecuencia}" for="frecuencia" />
+                        <p:inputText id="frecuencia" value="#{prestamosController.selected.frecuencia}" title="#{myBundle.EditPrestamosTitle_frecuencia}" />
+			
+                        <p:outputLabel value="#{myBundle.EditPrestamosLabel_cuotas}" for="cuotas" />
+                        <p:inputText id="cuotas" value="#{prestamosController.selected.cuotas}" title="#{myBundle.EditPrestamosTitle_cuotas}" />
+			
+			<p:outputLabel value="#{myBundle.CreatePrestamosLabel_vCuota} $" for="vCuota" />
+                        <p:inputText id="vCuota" value="#{prestamosController.selected.vcuota }" title="#{myBundle.CreatePrestamosTitle_vCuota}" />
+			
+
+
+                        <h:outputLabel value="#{myBundle.EditPrestamosLabel_empleados}" for="empleados" />
+                        <h:outputText id="empleados" value="#{prestamosController.selected.empleados.nombreNit} "/>
+
+                        <h:outputLabel value="#{myBundle.EditPrestamosLabel_deducPresta}" for="deducPresta" />
+                        <h:outputText id="deducPresta" value="#{prestamosController.selected.deducPresta.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{prestamosController.save}" value="#{myBundle.Save}" update="display,:PrestamosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PrestamosEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PrestamosEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

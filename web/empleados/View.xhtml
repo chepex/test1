@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleadosViewDlg" widgetVar="EmpleadosViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewEmpleadosTitle}">
+
+            <h:form id="EmpleadosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{empleadosController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_empleadosPK_codEmp}"/>
+                        <h:outputText value="#{empleadosController.selected.empleadosPK.codEmp}" title="#{myBundle.ViewEmpleadosTitle_empleadosPK_codEmp}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_apellidos}"/>
+                        <h:outputText value="#{empleadosController.selected.apellidos}" title="#{myBundle.ViewEmpleadosTitle_apellidos}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_nombres}"/>
+                        <h:outputText value="#{empleadosController.selected.nombres}" title="#{myBundle.ViewEmpleadosTitle_nombres}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_apCasada}"/>
+                        <h:outputText value="#{empleadosController.selected.apCasada}" title="#{myBundle.ViewEmpleadosTitle_apCasada}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_direccion}"/>
+                        <h:outputText value="#{empleadosController.selected.direccion}" title="#{myBundle.ViewEmpleadosTitle_direccion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_telefonos}"/>
+                        <h:outputText value="#{empleadosController.selected.telefonos}" title="#{myBundle.ViewEmpleadosTitle_telefonos}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_fechaNac}"/>
+                        <h:outputText value="#{empleadosController.selected.fechaNac}" title="#{myBundle.ViewEmpleadosTitle_fechaNac}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_numIgss}"/>
+                        <h:outputText value="#{empleadosController.selected.numIgss}" title="#{myBundle.ViewEmpleadosTitle_numIgss}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_numIrtra}"/>
+                        <h:outputText value="#{empleadosController.selected.numIrtra}" title="#{myBundle.ViewEmpleadosTitle_numIrtra}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_numNit}"/>
+                        <h:outputText value="#{empleadosController.selected.numNit}" title="#{myBundle.ViewEmpleadosTitle_numNit}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_fecIngreso}"/>
+                        <h:outputText value="#{empleadosController.selected.fecIngreso}" title="#{myBundle.ViewEmpleadosTitle_fecIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_fecSalida}"/>
+                        <h:outputText value="#{empleadosController.selected.fecSalida}" title="#{myBundle.ViewEmpleadosTitle_fecSalida}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_motSalida}"/>
+                        <h:outputText value="#{empleadosController.selected.motSalida}" title="#{myBundle.ViewEmpleadosTitle_motSalida}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_observacion}"/>
+                        <h:outputText value="#{empleadosController.selected.observacion}" title="#{myBundle.ViewEmpleadosTitle_observacion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_status}"/>
+                        <h:outputText value="#{empleadosController.selected.status}" title="#{myBundle.ViewEmpleadosTitle_status}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_tipoContra}"/>
+                        <h:outputText value="#{empleadosController.selected.tipoContra}" title="#{myBundle.ViewEmpleadosTitle_tipoContra}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_salario}"/>
+                        <h:outputText value="#{empleadosController.selected.salario}" title="#{myBundle.ViewEmpleadosTitle_salario}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_promedio}"/>
+                        <h:outputText value="#{empleadosController.selected.promedio}" title="#{myBundle.ViewEmpleadosTitle_promedio}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_bonificacion}"/>
+                        <h:outputText value="#{empleadosController.selected.bonificacion}" title="#{myBundle.ViewEmpleadosTitle_bonificacion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_salarioBase}"/>
+                        <h:outputText value="#{empleadosController.selected.salarioBase}" title="#{myBundle.ViewEmpleadosTitle_salarioBase}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_avisarA}"/>
+                        <h:outputText value="#{empleadosController.selected.avisarA}" title="#{myBundle.ViewEmpleadosTitle_avisarA}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_cedula}"/>
+                        <h:outputText value="#{empleadosController.selected.cedula}" title="#{myBundle.ViewEmpleadosTitle_cedula}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_chequeDep}"/>
+                        <h:outputText value="#{empleadosController.selected.chequeDep}" title="#{myBundle.ViewEmpleadosTitle_chequeDep}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_ctaBancaria}"/>
+                        <h:outputText value="#{empleadosController.selected.ctaBancaria}" title="#{myBundle.ViewEmpleadosTitle_ctaBancaria}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_comSprod}"/>
+                        <h:outputText value="#{empleadosController.selected.comSprod}" title="#{myBundle.ViewEmpleadosTitle_comSprod}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_comSobra}"/>
+                        <h:outputText value="#{empleadosController.selected.comSobra}" title="#{myBundle.ViewEmpleadosTitle_comSobra}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_valIsr}"/>
+                        <h:outputText value="#{empleadosController.selected.valIsr}" title="#{myBundle.ViewEmpleadosTitle_valIsr}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_sexo}"/>
+                        <h:outputText value="#{empleadosController.selected.sexo}" title="#{myBundle.ViewEmpleadosTitle_sexo}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_tipoCta}"/>
+                        <h:outputText value="#{empleadosController.selected.tipoCta}" title="#{myBundle.ViewEmpleadosTitle_tipoCta}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_nupAfp}"/>
+                        <h:outputText value="#{empleadosController.selected.nupAfp}" title="#{myBundle.ViewEmpleadosTitle_nupAfp}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codAfp}"/>
+                        <h:outputText value="#{empleadosController.selected.codAfp}" title="#{myBundle.ViewEmpleadosTitle_codAfp}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_numHijos}"/>
+                        <h:outputText value="#{empleadosController.selected.numHijos}" title="#{myBundle.ViewEmpleadosTitle_numHijos}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_estadoCivil}"/>
+                        <h:outputText value="#{empleadosController.selected.estadoCivil}" title="#{myBundle.ViewEmpleadosTitle_estadoCivil}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codEmpref}"/>
+                        <h:outputText value="#{empleadosController.selected.codEmpref}" title="#{myBundle.ViewEmpleadosTitle_codEmpref}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_nombreIsss}"/>
+                        <h:outputText value="#{empleadosController.selected.nombreIsss}" title="#{myBundle.ViewEmpleadosTitle_nombreIsss}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codIsss}"/>
+                        <h:outputText value="#{empleadosController.selected.codIsss}" title="#{myBundle.ViewEmpleadosTitle_codIsss}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_comision}"/>
+                        <h:outputText value="#{empleadosController.selected.comision}" title="#{myBundle.ViewEmpleadosTitle_comision}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_fechaIngresoHist}"/>
+                        <h:outputText value="#{empleadosController.selected.fechaIngresoHist}" title="#{myBundle.ViewEmpleadosTitle_fechaIngresoHist}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_marcacionTarjeta}"/>
+                        <h:outputText value="#{empleadosController.selected.marcacionTarjeta}" title="#{myBundle.ViewEmpleadosTitle_marcacionTarjeta}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_usuario}"/>
+                        <h:outputText value="#{empleadosController.selected.usuario}" title="#{myBundle.ViewEmpleadosTitle_usuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_fechaReg}"/>
+                        <h:outputText value="#{empleadosController.selected.fechaReg}" title="#{myBundle.ViewEmpleadosTitle_fechaReg}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_beneficiario}"/>
+                        <h:outputText value="#{empleadosController.selected.beneficiario}" title="#{myBundle.ViewEmpleadosTitle_beneficiario}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_nombreNit}"/>
+                        <h:outputText value="#{empleadosController.selected.nombreNit}" title="#{myBundle.ViewEmpleadosTitle_nombreNit}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_vacaciones}"/>
+                        <h:outputText value="#{empleadosController.selected.vacaciones}" title="#{myBundle.ViewEmpleadosTitle_vacaciones}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_preId}"/>
+                        <h:outputText value="#{empleadosController.selected.preId}" title="#{myBundle.ViewEmpleadosTitle_preId}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codDepartamento}"/>
+                        <h:outputText value="#{empleadosController.selected.codDepartamento}" title="#{myBundle.ViewEmpleadosTitle_codDepartamento}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codZona}"/>
+                        <h:outputText value="#{empleadosController.selected.codZona}" title="#{myBundle.ViewEmpleadosTitle_codZona}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codMuni}"/>
+                        <h:outputText value="#{empleadosController.selected.codMuni}" title="#{myBundle.ViewEmpleadosTitle_codMuni}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codSeguridad}"/>
+                        <h:outputText value="#{empleadosController.selected.codSeguridad}" title="#{myBundle.ViewEmpleadosTitle_codSeguridad}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_FExtDoc}"/>
+                        <h:outputText value="#{empleadosController.selected.FExtDoc}" title="#{myBundle.ViewEmpleadosTitle_FExtDoc}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codPais}"/>
+                        <h:outputText value="#{empleadosController.selected.codPais}" title="#{myBundle.ViewEmpleadosTitle_codPais}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_fecRegistro}"/>
+                        <h:outputText value="#{empleadosController.selected.fecRegistro}" title="#{myBundle.ViewEmpleadosTitle_fecRegistro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codBanco}"/>
+                        <h:outputText value="#{empleadosController.selected.codBanco}" title="#{myBundle.ViewEmpleadosTitle_codBanco}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codArea}"/>
+                        <h:outputText value="#{empleadosController.selected.codArea}" title="#{myBundle.ViewEmpleadosTitle_codArea}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_password}"/>
+                        <h:outputText value="#{empleadosController.selected.password}" title="#{myBundle.ViewEmpleadosTitle_password}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_planillaHorasList}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_otrosMovDpList}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_movDpList}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_prestamosList}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_resumenAsistenciaList}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_planillaList}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_puestos}"/>
+                        <h:outputText value="#{empleadosController.selected.puestos.puestosPK}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_codProfesion}"/>
+                        <h:outputText value="#{empleadosController.selected.codProfesion.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEmpleadosLabel_departamentos}"/>
+                        <h:outputText value="#{empleadosController.selected.departamentos.departamentosPK}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="EmpleadosViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

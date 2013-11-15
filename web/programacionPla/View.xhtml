@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProgramacionPlaViewDlg" widgetVar="ProgramacionPlaViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewProgramacionPlaTitle}">
+
+            <h:form id="ProgramacionPlaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{programacionPlaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_programacionPlaPK_secuencia}"/>
+                        <h:outputText value="#{programacionPlaController.selected.programacionPlaPK.secuencia}" title="#{myBundle.ViewProgramacionPlaTitle_programacionPlaPK_secuencia}"/>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_status}"/>
+                        <h:outputText value="#{programacionPlaController.selected.status}" title="#{myBundle.ViewProgramacionPlaTitle_status}"/>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_fechaPago}"/>
+                        <h:outputText value="#{programacionPlaController.selected.fechaPago}" title="#{myBundle.ViewProgramacionPlaTitle_fechaPago}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_numPlanilla}"/>
+                        <h:outputText value="#{programacionPlaController.selected.numPlanilla}" title="#{myBundle.ViewProgramacionPlaTitle_numPlanilla}"/>
+
+                        
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_frecuencia}"/>
+                        <h:outputText value="#{programacionPlaController.selected.frecuencia}" title="#{myBundle.ViewProgramacionPlaTitle_frecuencia}"/>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_anio}"/>
+                        <h:outputText value="#{programacionPlaController.selected.anio}" title="#{myBundle.ViewProgramacionPlaTitle_anio}"/>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_mes}"/>
+                        <h:outputText value="#{programacionPlaController.selected.mes}" title="#{myBundle.ViewProgramacionPlaTitle_mes}"/>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_planillaHorasList}"/>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_otrosMovDpList}"/>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_movDpList}"/>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_resumenAsistenciaList}"/>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_tiposPlanilla}"/>
+                        <h:outputText value="#{programacionPlaController.selected.tiposPlanilla.nomTipopla}"/>
+
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_planillaList}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="ProgramacionPlaViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
