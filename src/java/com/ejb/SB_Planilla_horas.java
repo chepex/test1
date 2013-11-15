@@ -12,6 +12,9 @@ import com.entities.PlanillaHoras;
 
 
 import com.entities.ProgramacionPla;
+import com.entities.ReadXls;
+import java.io.File;
+import java.io.IOException;
 
 import java.util.Calendar;
 import java.util.List;
@@ -23,6 +26,8 @@ import javax.script.ScriptException;
 import jxl.Cell;
 import jxl.CellType;
 import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 /**
  *
@@ -33,6 +38,15 @@ public class SB_Planilla_horas {
 
     @EJB
     private MovDpFacade movDpFacade;
+    public String inputFile;
+File inputWorkbook;
+    public String getInputFile() {
+        return inputFile;
+    }
+
+    public void setInputFile(String inputFile) {
+        this.inputFile = inputFile;
+    }
     
     Mensaje msg = new Mensaje();
 
@@ -110,7 +124,13 @@ public class SB_Planilla_horas {
 
     }
     
-public void uploadXls(  Sheet sheet){
+public void uploadXls(  Sheet sheet) throws IOException  {
+    
+         
+     
+      
+    try {
+      
     for (int i = 0; i < sheet.getRows(); i++) {
       for (int j = 0; j < sheet.getColumns(); j++) {
         /*secuencia,cod_cia,cod_emp,cod_dp,valor*/
@@ -120,16 +140,16 @@ public void uploadXls(  Sheet sheet){
           if(j==0){
               System.out.println("Secuencia: "+ cell.getContents());
           }
-          if(j==0){
+          if(j==1){
               System.out.println("cod_cia: "+ cell.getContents());
           }          
-          if(j==0){
+          if(j==2){
               System.out.println("cod_emp: "+ cell.getContents());
           }          
-          if(j==0){
+          if(j==3){
               System.out.println("cod_dp: "+ cell.getContents());
           }          
-          if(j==0){
+          if(j==4){
               System.out.println("valor: "+ cell.getContents());
           }                    
           
@@ -138,8 +158,46 @@ public void uploadXls(  Sheet sheet){
         }
       }
     
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 }    
     
+
+
   
+  public void read(String mas) throws IOException  {  
+       this.setInputFile(mas);
+  this.inputWorkbook= new File(this.getInputFile());     
+    try {
+     Workbook w=null;
+      w = Workbook.getWorkbook(inputWorkbook);     
+      Sheet sheet = w.getSheet(0);      
+      for (int i = 1; i < sheet.getRows(); i++) {
+      for (int j = 0; j < sheet.getColumns(); j++) {
+        /*secuencia,cod_cia,cod_emp,cod_dp,valor*/
+          Cell cell = sheet.getCell(j, i);
+          if(j==0){
+              System.out.println("Secuencia: "+ cell.getContents());
+          }
+          if(j==1){
+              System.out.println("cod_cia: "+ cell.getContents());
+          }          
+          if(j==2){
+              System.out.println("cod_emp: "+ cell.getContents());
+          }          
+          if(j==3){
+              System.out.println("cod_dp: "+ cell.getContents());
+          }          
+          if(j==4){
+              System.out.println("valor: "+ cell.getContents());
+          }                    
+        }
+      }
+    
+    } catch (BiffException e) {
+      e.printStackTrace();
+    }
+  }
 }
 

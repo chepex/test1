@@ -2,15 +2,20 @@ package com.entities;
 
 import com.ejb.SB_Planilla_horas;
 import com.entities.util.JsfUtil;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import org.primefaces.event.FileUploadEvent;
 
 @ManagedBean(name = "planillaHorasController")
 @ViewScoped
@@ -31,7 +36,20 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
     ProgramacionPla programacionpla;
     List <ProgramacionPla> programacionplas;
     public  List <MovDp> MovDps;
+    @ManagedProperty("#{controllerB}")
+    private ReadXls readXls;
+    
     public MovDp selectMovDp;
+
+    public ReadXls getReadXls() {
+        return readXls;
+    }
+
+    public void setReadXls(ReadXls readXls) {
+        this.readXls = readXls;
+    }
+    
+    
     public MovDp getSelectMovDp() {
 	return selectMovDp;
     }
@@ -208,6 +226,26 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
 	
     }  
     
+ public void upload(FileUploadEvent event) throws IOException {  
+    
+      ReadXls a = new ReadXls();
+        FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+           
+        String destination = "/opt/lib/"+event.getFile().getFileName();
+        try {
+            a.copyFile(event.getFile().getFileName(), event.getFile().getInputstream());            
+            this.sB_Planilla_horas.read(destination);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+ 
+    
+ 
+ 
     @Override      
     public void delete(ActionEvent event) {
 	msg = sB_Planilla_horas.validar_planilla_horas(programacionpla);

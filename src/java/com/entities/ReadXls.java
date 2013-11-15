@@ -32,7 +32,7 @@ import org.primefaces.event.FileUploadEvent;
 public class ReadXls {
     @EJB
     private SB_Planilla_horas sB_Planilla_horas;
-
+File inputWorkbook;
     /**
      * Creates a new instance of ReadXls
      */
@@ -50,38 +50,29 @@ public String inputFile;
     this.inputFile = inputFile;
   }
 
-  public void read() throws IOException  {
-    File inputWorkbook = new File(this.getInputFile());
-    Workbook w;
-    try {
-      w = Workbook.getWorkbook(inputWorkbook);
-      
-      Sheet sheet = w.getSheet(0);
-      
-        sB_Planilla_horas.uploadXls(sheet);
-    } catch (BiffException e) {
-      e.printStackTrace();
-    }
-  }
+  
 
- /* public static void main(String[] args) throws IOException {
-    ReadXls test = new ReadXls();
-    test.setInputFile("/opt/lib/mas1.xls");
-    test.read();
-  }*/
+  public  void read2(String mas) throws IOException {
+    
+    destination = destination +mas;
+    
+   this.sB_Planilla_horas.read(destination);
+    
+  }
+  
 public void handleFileUpload(FileUploadEvent event) throws IOException {  
     this.setInputFile(event.getFile().getInputstream().toString());
-    read();
+   
         FacesMessage msg = new FacesMessage("bien", event.getFile().getFileName() + " is subida.");  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }      
 
 
     public void upload(FileUploadEvent event) {  
-        System.out.print("aaaaa");
+      
         FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        // Do what you want with the file        
+           
         try {
             copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
         } catch (IOException e) {
@@ -93,21 +84,16 @@ public void handleFileUpload(FileUploadEvent event) throws IOException {
     public void copyFile(String fileName, InputStream in) {
            try {
              
-             
-                // write the inputStream to a FileOutputStream
-                OutputStream out = new FileOutputStream(new File(destination + fileName));
-             
+                OutputStream out = new FileOutputStream(new File(destination + fileName));             
                 int read = 0;
-                byte[] bytes = new byte[1024];
-             
+                byte[] bytes = new byte[1024];             
                 while ((read = in.read(bytes)) != -1) {
                     out.write(bytes, 0, read);
-                }
-             
+                }             
                 in.close();
                 out.flush();
                 out.close();
-             
+               // read2(fileName);             
                 System.out.println("New file created!");
                 } catch (IOException e) {
                 System.out.println(e.getMessage());
