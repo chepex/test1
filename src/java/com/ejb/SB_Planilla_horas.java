@@ -20,6 +20,9 @@ import javax.ejb.Stateless;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import jxl.Cell;
+import jxl.CellType;
+import jxl.Sheet;
 
 /**
  *
@@ -106,6 +109,27 @@ public class SB_Planilla_horas {
 	}
 
     }
+    
+public void uploadXls(  Sheet sheet){
+    for (int i = 0; i < sheet.getRows(); i++) {
+      for (int j = 0; j < sheet.getColumns(); j++) {
+        
+          Cell cell = sheet.getCell(j, i);
+          CellType type = cell.getType();
+          if (type == CellType.LABEL) {
+            System.out.println("I got a label "
+                + cell.getContents());
+          }
+
+          if (type == CellType.NUMBER) {
+            System.out.println("I got a number "
+                + cell.getContents());
+          }
+
+        }
+      }
+    
+}    
     
   
 }
