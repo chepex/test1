@@ -89,6 +89,10 @@ public abstract class AbstractController<T> {
         }
         return items;
     }
+    
+         
+ 
+
 
     public void save(ActionEvent event) {
         String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
@@ -148,7 +152,8 @@ public abstract class AbstractController<T> {
                 if (persistAction != AbstractController.PersistAction.DELETE) {
                     this.ejbFacade.edit(selected);
                 } else {
-                    this.ejbFacade.remove(selected);
+                    
+                    this.ejbFacade.remove(selected);                  
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {

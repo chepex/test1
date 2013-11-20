@@ -31,6 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PlanillaHoras.findAll", query = "SELECT p FROM PlanillaHoras p"),
     @NamedQuery(name = "PlanillaHoras.findBySecuencia", query = "SELECT p FROM PlanillaHoras p WHERE p.planillaHorasPK.secuencia = :secuencia"),
     @NamedQuery(name = "PlanillaHoras.findByFiltro", query = "SELECT p FROM PlanillaHoras p WHERE p.planillaHorasPK.codCia = :codCia and p.usuario like :usuario and p.planillaHorasPK.secuencia = :secuencia"),
+    @NamedQuery(name = "PlanillaHoras.findByPK", query = "SELECT p FROM PlanillaHoras p WHERE p.planillaHorasPK.codCia = :codCia and p.planillaHorasPK.secuencia = :secuencia and  p.planillaHorasPK.codEmp = :codEmp and  p.planillaHorasPK.codDp = :codDp"),    
+    
     @NamedQuery(name = "PlanillaHoras.findByFiltroSum", query = "SELECT p.planillaHorasPK.codCia, "
 	+ "p.planillaHorasPK.codDp, "
 	+ "p.planillaHorasPK.secuencia,"	

@@ -15,7 +15,7 @@
 <filter-mapping>
 <filter-name>PrimeFaces FileUpload Filter</filter-name>
 <servlet-name>Faces Servlet</servlet-name>
-</filter-mapping>    
+</filter-mapping>   
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Production</param-value>
