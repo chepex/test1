@@ -1,18 +1,13 @@
+
 package com.entities;
-
-
-
-import com.ejb.SB_Planilla_horas;
 import javax.faces.bean.ManagedBean;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-
-import javax.ejb.EJB;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -24,11 +19,9 @@ import org.primefaces.event.FileUploadEvent;
 @ManagedBean(name = "readXls")
 @ViewScoped
 public class ReadXls {
-    @EJB
-    private SB_Planilla_horas sB_Planilla_horas;
 
 File inputWorkbook;
- 
+ List<PlanillaHoras> lista =new ArrayList<PlanillaHoras>();
 private String destination="/opt/lib/";
 public String inputFile;
 
@@ -38,16 +31,10 @@ public String getInputFile() {
 
   public void setInputFile(String inputFile) {
     this.inputFile = inputFile;
-  }
-
- /* public static void main(String[] args) throws IOException {
-    ReadXls test = new ReadXls();
-    test.setInputFile("/opt/lib/mas1.xls");
-    test.read();
-  }*/
-public void handleFileUpload(FileUploadEvent event) throws IOException {  
-    this.setInputFile(event.getFile().getInputstream().toString());
-
+  }  
+  
+    public void handleFileUpload(FileUploadEvent event) throws IOException {  
+        this.setInputFile(event.getFile().getInputstream().toString());   
         FacesMessage msg = new FacesMessage("bien", event.getFile().getFileName() + " is subida.");  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }      
@@ -90,5 +77,4 @@ public void handleFileUpload(FileUploadEvent event) throws IOException {
 
       
 }
-
 
