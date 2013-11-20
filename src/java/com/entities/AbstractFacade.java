@@ -23,20 +23,53 @@ public abstract class AbstractFacade<T> {
 
     public void create(T entity) {
 	getEntityManager().persist(entity);
-        
+        //getEntityManager().flush();
     }
 
+    
+ 
     public void edit(T entity) {  
         
         
 	getEntityManager().merge(entity);
         
-    
+    //getEntityManager().refresh(entity);
     }
-
+    
+    public void clear() {  
+        
+        
+	getEntityManager().clear();
+        
+    //getEntityManager().refresh(entity);
+    }
+    
+    public T merge(T entity) {  
+        
+        
+	T M= getEntityManager().merge(entity);
+        return M;
+    //getEntityManager().refresh(entity);
+    }
+    
+    public void refresh(T entity) {  
+	
+        
+    getEntityManager().refresh(entity);
+    }
+    
+    public void flush() {  
+	
+        
+    getEntityManager().flush();
+    }    
+    
     public void remove(T entity) {
+        
+//        getEntityManager().detach(entity);
 	getEntityManager().remove(getEntityManager().merge(entity));
-       // getEntityManager().flush();
+        getEntityManager().flush();
+        
     }
 
     public T find(Object id) {

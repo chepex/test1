@@ -93,7 +93,7 @@ public class Calculos {
     
   /**
     * ejecuta los procesos de los movimientos de ley relacionados a el empleado
-    * ejemplo: 
+    * ejemplo: <br>
     *   emp:2526 
     *       movimientos a ejecutar y crear en la tabla mov_dp
     *       isss:1
@@ -365,7 +365,7 @@ public class Calculos {
 	        
        }catch(Exception ex){
            this.msg.setTitulo("error");
-            this.msg.setDescripcion("funcion: prestaciones | empleado: "+this.empleado.getEmpleadosPK().getCodEmp());         
+           this.msg.setDescripcion("funcion: prestaciones | empleado: "+this.empleado.getEmpleadosPK().getCodEmp());         
          	
        }
       return valor;	

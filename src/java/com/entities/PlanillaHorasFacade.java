@@ -56,5 +56,21 @@ public class PlanillaHorasFacade extends AbstractFacade<PlanillaHoras> {
     
     } 
 
+    public PlanillaHoras findByPK(PlanillaHoras planillaHoras){
+	 TypedQuery<PlanillaHoras> q;
+	 try{
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+	    
+		 q = em.createNamedQuery("PlanillaHoras.findByPK", PlanillaHoras.class )		    
+		    .setParameter("codCia",  codCia )		    
+		    .setParameter("secuencia",  planillaHoras.getPlanillaHorasPK().getSecuencia() )
+                    .setParameter("codDp",  planillaHoras.getPlanillaHorasPK().getCodDp() )
+                    .setParameter("codEmp",  planillaHoras.getPlanillaHorasPK().getCodEmp() );
+         return q.getSingleResult();
+         }catch(Exception ex){
+             return null;
+         }
+    }     
     
 }
