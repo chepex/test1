@@ -1,28 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
- package com.entities;
 
-import com.ejb.SB_Planilla_horas;
+package com.entities;
 import javax.faces.bean.ManagedBean;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import javax.ejb.EJB;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
-import jxl.Cell;
-import jxl.CellType;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.read.biff.BiffException;
-import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.FileUploadEvent; 
 /**
  *
  * @author mmixco
@@ -30,49 +19,29 @@ import org.primefaces.event.FileUploadEvent;
 @ManagedBean(name = "readXls")
 @ViewScoped
 public class ReadXls {
-    @EJB
-    private SB_Planilla_horas sB_Planilla_horas;
-File inputWorkbook;
-    /**
-     * Creates a new instance of ReadXls
-     */
-    public ReadXls() {
-    }
 
+File inputWorkbook;
+ List<PlanillaHoras> lista =new ArrayList<PlanillaHoras>();
 private String destination="/opt/lib/";
 public String inputFile;
 
-    public String getInputFile() {
-        return inputFile;
-    }
+public String getInputFile() {
+    return inputFile;
+}
 
   public void setInputFile(String inputFile) {
     this.inputFile = inputFile;
-  }
-
+  }  
   
-
-  public  void read2(String mas) throws IOException {
-    
-    destination = destination +mas;
-    
-   this.sB_Planilla_horas.read(destination);
-    
-  }
-  
-public void handleFileUpload(FileUploadEvent event) throws IOException {  
-    this.setInputFile(event.getFile().getInputstream().toString());
-   
+    public void handleFileUpload(FileUploadEvent event) throws IOException {  
+        this.setInputFile(event.getFile().getInputstream().toString());   
         FacesMessage msg = new FacesMessage("bien", event.getFile().getFileName() + " is subida.");  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }      
 
-
-    public void upload(FileUploadEvent event) {  
-      
+    public void upload(FileUploadEvent event) {        
         FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-           
+        FacesContext.getCurrentInstance().addMessage(null, msg);           
         try {
             copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
         } catch (IOException e) {
@@ -93,10 +62,20 @@ public void handleFileUpload(FileUploadEvent event) throws IOException {
                 in.close();
                 out.flush();
                 out.close();
-               // read2(fileName);             
+                         
                 System.out.println("New file created!");
                 } catch (IOException e) {
                 System.out.println(e.getMessage());
                 }
     }
+    
+    
+      
+      
+      
+ 
+
+      
 }
+
+

@@ -9,12 +9,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+
 import javax.faces.event.ActionEvent;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import jxl.read.biff.BiffException;
 import org.primefaces.event.FileUploadEvent;
 
 @ManagedBean(name = "planillaHorasController")
@@ -29,17 +35,22 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
     @EJB
     private DepartamentosFacade departamentosFacade;    
     @EJB
-    private EmpleadosFacade empleadosFacade;
-    List<Empleados> empPuestos;
+    private EmpleadosFacade empleadosFacade;    
     @EJB
     private PlanillaHorasFacade ejbFacade;
-    ProgramacionPla programacionpla;
-    List <ProgramacionPla> programacionplas;
-    public  List <MovDp> MovDps;
+    private List<Empleados> empPuestos;    
+    private ProgramacionPla programacionpla;    
+    private List <ProgramacionPla> programacionplas;    
+    private List <MovDp> MovDps;
+    private MovDp selectMovDp;    
+    private List <PlanillaHoras> tplanillaHoras;
+    private String estado;
+    private Mensaje msg= new Mensaje();    
+    
     @ManagedProperty("#{controllerB}")
     private ReadXls readXls;
     
-    public MovDp selectMovDp;
+
 
     public ReadXls getReadXls() {
         return readXls;
@@ -64,9 +75,8 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
     public void setMovDps(List<MovDp> MovDps) {
 	this.MovDps = MovDps;
     }
-    List <PlanillaHoras> tplanillaHoras;
-    String estado;
-    Mensaje msg= new Mensaje();
+    
+    
     public ProgramacionPla getProgramacionpla() {
 	return programacionpla;
     }
@@ -102,12 +112,7 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
 
     @Override
     protected void setEmbeddableKeys() {
-	/*
-	this.getSelected().getPlanillaHorasPK().setCodDp(this.getSelected().getDeducPresta().getDeducPrestaPK().getCodDp());
-	this.getSelected().getPlanillaHorasPK().setCodEmp(this.getSelected().getEmpleados().getEmpleadosPK().getCodEmp());
-	this.getSelected().getPlanillaHorasPK().setCodCia(this.getSelected().getDeducPresta().getDeducPrestaPK().getCodCia());
-	this.getSelected().getPlanillaHorasPK().setSecuencia(programacionpla.getProgramacionPlaPK().getSecuencia());
-*/
+
     }
 
     @Override
@@ -115,18 +120,16 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
 	PlanillaHorasPK mas= new com.entities.PlanillaHorasPK();
 	if(programacionpla != null ){
 	mas.setSecuencia(programacionpla.getProgramacionPlaPK().getSecuencia() );
-	}
-		
+	}		
 	this.getSelected().setPlanillaHorasPK(mas);
-	//listaEmpsPuesto();
+	
 	
     }
     
     public void listaEmpsPuesto(){            
 	    List<Departamentos> deptos= departamentosFacade.findByPuesto(); 
 	    this.empPuestos =  empleadosFacade.findbyDeptos(deptos);  
-	    this.getSelected().setProgramacionPla(programacionpla);
-	   
+	    this.getSelected().setProgramacionPla(programacionpla);	   
     }
 
     public List<Empleados> getEmpPuestos() {	
@@ -179,9 +182,7 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
 	    newItem = itemClass.newInstance();
 	    this.setSelected(newItem);
 	    listaEmpsPuesto();
-	    /*LoginBean lb= new LoginBean();	
-	    String user = lb.ssuser();
-	    this.getSelected().setUsuario(user);*/
+
 	    this.inicializar();
 	    
 	    initializeEmbeddableKey();
@@ -226,24 +227,42 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
 	
     }  
     
- public void upload(FileUploadEvent event) throws IOException {  
+ public void upload(FileUploadEvent event) throws IOException, BiffException  {  
     
+ 
+     msg = sB_Planilla_horas.validar_planilla_horas(programacionpla);
+     msg.setDescripcion("0");
+     if(msg.getTitulo().equals("ok")){
       ReadXls a = new ReadXls();
-        FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-           
         String destination = "/opt/lib/"+event.getFile().getFileName();
-        try {
-            a.copyFile(event.getFile().getFileName(), event.getFile().getInputstream());            
-            this.sB_Planilla_horas.read(destination);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       
+       
+               a.copyFile(event.getFile().getFileName(), event.getFile().getInputstream());  
+               sB_Planilla_horas.read(destination,this.getProgramacionpla());
+               //sB_Planilla_horas.guardar(lista,this.getProgramacionpla());
+               
+               
+      
+            //sB_Planilla_horas.read(event.getFile().getFileName(),programacionpla);
+       
+           
+          
+           
+       
+        
+         if(msg.getTitulo().equals("ok")){
+                consultar();
+            }  
+     }
+     
+     
+     JsfUtil.addSuccessMessage( msg);  
+     
 
     }
 
  
-    
+
  
  
     @Override      
@@ -251,12 +270,18 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
 	msg = sB_Planilla_horas.validar_planilla_horas(programacionpla);
 	msg.setDescripcion( this.getSelected().getEmpleados().getNombreNit());	    
 	if (msg.getTitulo().equals("ok")){
-	    msg.setMensajes("Registro Eliminado Correctamente empleado:");	    	    
-	    
+	    msg.setMensajes("Registro Eliminado Correctamente empleado:");	    	    	    
 	    persist(AbstractController.PersistAction.DELETE, msg);
 	    consultar();
 	}else{
 	     JsfUtil.addSuccessMessage( msg);
 	}
     }    
+
+  
+    
+
+      
+    
+  
 }
