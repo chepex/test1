@@ -39,7 +39,7 @@ import javax.ejb.Stateless;
 * @deprecated	El método ha sido reemplazado por otro
  */
 @Stateless
-public class Calculos {
+public class SB_Calculos {
     @EJB
     private PlanillaFacade planillaFacade;
     @EJB

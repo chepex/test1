@@ -27,7 +27,7 @@ import net.sf.jasperreports.engine.JasperPrint;
  * @author mmixco
  */
 @Stateless
-public class Reportes {
+public class SB_Reportes {
     
     public String GenerarReporte(String rep, HashMap params) throws NamingException, SQLException, JRException, IOException {
         String reporPath = "";          

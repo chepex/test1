@@ -27,7 +27,7 @@ import javax.ejb.Stateless;
  * @author mmixco
  */
 @Stateless
-public class SBPlanilla {
+public class SB_Planilla {
     @EJB
     private MovDpFacade movDpFacade;
     
@@ -42,7 +42,7 @@ public class SBPlanilla {
     @EJB
     private SB_ProgramacionPla sB_ProgramacionPla;
     @EJB
-    private Calculos calculos;    
+    private SB_Calculos calculos;    
     @EJB
     private ResumenAsistenciaFacade resumenAsistenciaFacade;
     

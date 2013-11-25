@@ -1,8 +1,8 @@
 package com.entities;
 
 
-import com.ejb.Reportes;
-import com.ejb.SBPlanilla;
+import com.ejb.SB_Reportes;
+import com.ejb.SB_Planilla;
 import com.entities.util.JsfUtil;
 import java.io.IOException;
 
@@ -25,9 +25,9 @@ public class PlanillaController extends AbstractController<Planilla> implements 
     @EJB
     private MovDpFacade movDpFacade;
     @EJB
-    private Reportes reportes;    
+    private SB_Reportes reportes;    
     @EJB
-    private SBPlanilla sBPlanilla;
+    private SB_Planilla sBPlanilla;
     
     List <MovDp> deduciones;
     List <MovDp> prestaciones;
