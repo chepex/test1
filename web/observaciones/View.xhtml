@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ObservacionesViewDlg" widgetVar="ObservacionesViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewObservacionesTitle}">
+
+            <h:form id="ObservacionesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{observacionesController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewObservacionesLabel_observacionesPK_codCia}"/>
+                        <h:outputText value="#{observacionesController.selected.observacionesPK.codCia}" title="#{myBundle.ViewObservacionesTitle_observacionesPK_codCia}"/>
+
+                        <h:outputText value="#{myBundle.ViewObservacionesLabel_observacionesPK_id}"/>
+                        <h:outputText value="#{observacionesController.selected.observacionesPK.id}" title="#{myBundle.ViewObservacionesTitle_observacionesPK_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewObservacionesLabel_descripcion}"/>
+                        <h:outputText value="#{observacionesController.selected.descripcion}" title="#{myBundle.ViewObservacionesTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewObservacionesLabel_afp}"/>
+                        <h:outputText value="#{observacionesController.selected.afp}" title="#{myBundle.ViewObservacionesTitle_afp}"/>
+
+                        <h:outputText value="#{myBundle.ViewObservacionesLabel_isss}"/>
+                        <h:outputText value="#{observacionesController.selected.isss}" title="#{myBundle.ViewObservacionesTitle_isss}"/>
+
+                        <h:outputText value="#{myBundle.ViewObservacionesLabel_resumenAsistenciaList}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="ObservacionesViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

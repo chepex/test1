@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.ejb.EJBException;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -41,8 +41,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ResumenAsistencia.findByEmp", query = "SELECT r FROM ResumenAsistencia r WHERE r.resumenAsistenciaPK.codCia = :codCia and r.resumenAsistenciaPK.secuencia = :secuencia and r.resumenAsistenciaPK.codEmp = :codEmp"),
     @NamedQuery(name = "ResumenAsistencia.findBySecuencia", query = "SELECT r FROM ResumenAsistencia  r WHERE r.resumenAsistenciaPK.codCia = :codCia and  r.resumenAsistenciaPK.secuencia = :secuencia"),
     @NamedQuery(name = "ResumenAsistencia.findByCodEmp", query = "SELECT r FROM ResumenAsistencia r WHERE r.resumenAsistenciaPK.codEmp = :codEmp"),
-    @NamedQuery(name = "ResumenAsistencia.findByDias", query = "SELECT r FROM ResumenAsistencia r WHERE r.dias = :dias"),
-    @NamedQuery(name = "ResumenAsistencia.findByObservacion", query = "SELECT r FROM ResumenAsistencia r WHERE r.observacion = :observacion")})
+    @NamedQuery(name = "ResumenAsistencia.findByDias", query = "SELECT r FROM ResumenAsistencia r WHERE r.dias = :dias")
+    })
 public class ResumenAsistencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -51,8 +51,6 @@ public class ResumenAsistencia implements Serializable {
     @Column(name = "DIAS")
     private String dias;
     @Size(max = 1)
-    @Column(name = "OBSERVACION")
-    private String observacion;
     @JoinColumns({
         @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
         @JoinColumn(name = "SECUENCIA", referencedColumnName = "SECUENCIA", insertable = false, updatable = false)})
@@ -62,8 +60,14 @@ public class ResumenAsistencia implements Serializable {
         @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
         @JoinColumn(name = "COD_EMP", referencedColumnName = "COD_EMP", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
-  
     private Empleados empleados;
+    @JoinColumns({
+        @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
+        @JoinColumn(name = "OBSERVACION", referencedColumnName = "ID", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Observaciones observaciones;    
+    
+    
         @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenAsistencia")
     private List<Planilla> planilla;  
     @Column(name = "USUARIO")
@@ -108,6 +112,15 @@ public class ResumenAsistencia implements Serializable {
 	
     }
 
+    public Observaciones getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(Observaciones observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    
     public String getDias() {
 	return dias;
     }
@@ -116,13 +129,8 @@ public class ResumenAsistencia implements Serializable {
 	this.dias = dias;
     }
 
-    public String getObservacion() {
-	return observacion;
-    }
 
-    public void setObservacion(String observacion) {
-	this.observacion = observacion;
-    }
+    
 
     public ProgramacionPla getProgramacionPla() {
 	return programacionPla;

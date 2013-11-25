@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ObservacionesEditDlg" widgetVar="ObservacionesEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditObservacionesTitle}">
+
+            <h:form id="ObservacionesEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{observacionesController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditObservacionesLabel_observacionesPK_codCia}" for="observacionesPK_codCia" />
+                        <h:outputText id="observacionesPK_codCia" value="#{observacionesController.selected.observacionesPK.codCia}" />
+
+                        <h:outputLabel value="#{myBundle.EditObservacionesLabel_observacionesPK_id}" for="observacionesPK_id" />
+                        <h:outputText id="observacionesPK_id" value="#{observacionesController.selected.observacionesPK.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditObservacionesLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{observacionesController.selected.descripcion}" title="#{myBundle.EditObservacionesTitle_descripcion}" />
+
+                        <p:outputLabel value="#{myBundle.EditObservacionesLabel_afp}" for="afp" />
+                        <p:inputText id="afp" value="#{observacionesController.selected.afp}" title="#{myBundle.EditObservacionesTitle_afp}" />
+
+                        <p:outputLabel value="#{myBundle.EditObservacionesLabel_isss}" for="isss" />
+                        <p:inputText id="isss" value="#{observacionesController.selected.isss}" title="#{myBundle.EditObservacionesTitle_isss}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{observacionesController.save}" value="#{myBundle.Save}" update="display,:ObservacionesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ObservacionesEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ObservacionesEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
