@@ -47,10 +47,8 @@ public class ResumenAsistencia implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ResumenAsistenciaPK resumenAsistenciaPK;
-    @Size(max = 3)
     @Column(name = "DIAS")
     private String dias;
-    @Size(max = 1)
     @JoinColumns({
         @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
         @JoinColumn(name = "SECUENCIA", referencedColumnName = "SECUENCIA", insertable = false, updatable = false)})
@@ -63,7 +61,7 @@ public class ResumenAsistencia implements Serializable {
     private Empleados empleados;
     @JoinColumns({
         @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
-        @JoinColumn(name = "OBSERVACION", referencedColumnName = "ID", insertable = false, updatable = false)})
+        @JoinColumn(name = "OBSERVACION", referencedColumnName = "ID")})
     @ManyToOne(optional = false)
     private Observaciones observaciones;    
     

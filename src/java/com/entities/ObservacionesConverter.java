@@ -1,6 +1,7 @@
 package com.entities;
 
 import com.entities.Observaciones;
+import com.entities.ObservacionesFacade;
 import com.entities.util.JsfUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;

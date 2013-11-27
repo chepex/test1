@@ -32,7 +32,7 @@ public abstract class AbstractFacade<T> {
         
         
 	getEntityManager().merge(entity);
-        
+       // getEntityManager().flush();
     //getEntityManager().refresh(entity);
     }
     

@@ -7,9 +7,11 @@ package com.entities;
 
 import com.entities.AbstractFacade;
 import com.entities.Observaciones;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,5 +30,19 @@ public class ObservacionesFacade extends AbstractFacade<Observaciones> {
     public ObservacionesFacade() {
         super(Observaciones.class);
     }
+    
+    @Override
+    public List<Observaciones> findAll(){
+	 TypedQuery<Observaciones> q;
+	 
+	   
+            LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+		 q = em.createNamedQuery("Observaciones.findByCodCia", Observaciones.class )		    
+		    .setParameter("codCia",  codCia );		    
+         return q.getResultList();
+    
+    }      
+    
     
 }

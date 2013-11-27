@@ -87,16 +87,15 @@
 		</f:facet>  
             </p:cellEditor>  
         </p:column> 
+	
+       <p:column sortBy="#{item.observaciones.descripcion}" filterBy="#{item.observaciones.descripcion}">
+            <f:facet name="header">
+                <h:outputText value="#{myBundle.ListResumenAsistenciaTitle_observaciones}"/>
+            </f:facet>
+            <h:outputText value="#{item.observaciones.descripcion}"/>
+        </p:column>
+               
 		
-		
-		<p:column sortBy="#{item.observacion}" filterBy="#{item.observacion}">
-            <p:cellEditor>  
-                <f:facet name="output"><h:outputText  value="#{item.observacion}" /></f:facet>  
-                <f:facet name="input"><p:inputText  value="#{item.observacion}" style="width:96%" label="Observacion">			
-		    </p:inputText>
-		</f:facet>  
-            </p:cellEditor>  
-		</p:column>
 		
 
 		<f:facet name="footer">
