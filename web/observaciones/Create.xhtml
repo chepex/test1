@@ -15,8 +15,7 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{observacionesController.selected != null}">
 
-                        <p:outputLabel value="#{myBundle.CreateObservacionesLabel_observacionesPK_codCia}" for="observacionesPK_codCia" />
-                        <p:inputText id="observacionesPK_codCia" value="#{observacionesController.selected.observacionesPK.codCia}" title="#{myBundle.CreateObservacionesTitle_observacionesPK_codCia}" required="true" requiredMessage="#{myBundle.CreateObservacionesRequiredMessage_observacionesPK_codCia}"/>
+                        
 
                         <p:outputLabel value="#{myBundle.CreateObservacionesLabel_observacionesPK_id}" for="observacionesPK_id" />
                         <p:inputText id="observacionesPK_id" value="#{observacionesController.selected.observacionesPK.id}" title="#{myBundle.CreateObservacionesTitle_observacionesPK_id}" required="true" requiredMessage="#{myBundle.CreateObservacionesRequiredMessage_observacionesPK_id}"/>

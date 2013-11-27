@@ -27,25 +27,19 @@
                     </f:facet>
                     <h:outputText value="#{item.observacionesPK.id}"/>
                 </p:column>
-                <p:column sortBy="#{item.observacionesPK.codCia}" filterBy="#{item.observacionesPK.codCia}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListObservacionesTitle_observacionesPK_codCia}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.observacionesPK.codCia}"/>
-                </p:column>
                 <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListObservacionesTitle_descripcion}"/>
                     </f:facet>
                     <h:outputText value="#{item.descripcion}"/>
                 </p:column>
-                <p:column sortBy="#{item.afp}" filterBy="#{item.afp}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListObservacionesTitle_afp}"/>
                     </f:facet>
                     <h:outputText value="#{item.afp}"/>
                 </p:column>
-                <p:column sortBy="#{item.isss}" filterBy="#{item.isss}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListObservacionesTitle_isss}"/>
                     </f:facet>

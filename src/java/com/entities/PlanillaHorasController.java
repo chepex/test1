@@ -168,9 +168,10 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
     
     
     public void trasladar (){		
-	this.setMovDps(movDpFacade.findAll());
+	this.setMovDps(movDpFacade.findSecuenciaGenerado(this.programacionpla,"N"));
 	msg =sB_Planilla_horas.validar_traslado(programacionpla, items) ;
 	 JsfUtil.addSuccessMessage( msg);
+         
 	 	    
     }
     

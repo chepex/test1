@@ -21,7 +21,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import jxl.read.biff.BiffException;
-
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import jxl.Cell;
@@ -118,7 +117,8 @@ public class SB_Planilla_horas {
             movdp.setUsuario(lb.ssuser() );
             movdp.setFechaReg( lb.sdate());    
             movdp.setGenerado("N");  
-	    movDpFacade.edit(movdp );			
+	    movDpFacade.edit(movdp );	
+            movDpFacade.flush();
 	}	
 	msg.setTitulo("ok");
 	msg.setMensajes("Informacion traslada correctamente");

@@ -21,12 +21,7 @@
 		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
 		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-		<p:column sortBy="#{item.codDp}" filterBy="#{item.codDp}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListTiposPlanillaTitle_codDp}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.deducPresta.descripcion }"/>
-		</p:column>
+
 		<p:column sortBy="#{item.movDp.codTipopla}" filterBy="#{item.tiposPlanillaPK.codTipopla}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListTiposPlanillaTitle_tiposPlanillaPK_codTipopla}"/>
@@ -45,6 +40,12 @@
 		    </f:facet>
 		    <h:outputText value="#{item.status}"/>
 		</p:column>
+		<p:column sortBy="#{item.codDp}" filterBy="#{item.codDp}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListTiposPlanillaTitle_codDp}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.deducPresta.descripcion }"/>
+		</p:column>                
 		<f:facet name="footer">
 		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tiposPlanillaController.prepareCreate}" update=":TiposPlanillaCreateForm" oncomplete="TiposPlanillaCreateDialog.show()"/>
 		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":TiposPlanillaViewForm" oncomplete="TiposPlanillaViewDialog.show()" disabled="#{empty tiposPlanillaController.selected}"/>

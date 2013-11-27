@@ -33,7 +33,7 @@
 		    </f:facet>
 		    <h:outputText value="#{item.status}"/>
 		</p:column>
-		<p:column sortBy="#{item.fechaCorte}" filterBy="#{item.fechaCorte}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_fechaCorte}"/>
 		    </f:facet>
@@ -42,25 +42,25 @@
 		    </h:outputText>
 		</p:column>		
 
-		<p:column sortBy="#{item.numPlanilla}" filterBy="#{item.numPlanilla}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_numPlanilla}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.numPlanilla}"/>
 		</p:column>
-		<p:column sortBy="#{item.anio}" filterBy="#{item.anio}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_anio}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.anio}"/>
 		</p:column>
-		<p:column sortBy="#{item.mes}" filterBy="#{item.mes}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_mes}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.mes}"/>
 		</p:column>
-		<p:column sortBy="#{item.tiposPlanilla.tiposPlanillaPK}" filterBy="#{item.tiposPlanilla.tiposPlanillaPK}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListProgramacionPlaTitle_tiposPlanilla}"/>
 		    </f:facet>

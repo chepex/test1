@@ -72,12 +72,7 @@
 		    </f:facet>
 		    <h:outputText value="#{item.valor}"/>
 		</p:column>		
-<p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListPlanillaHorasTitle_valor}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.usuario}"/>
-		</p:column>		                
+                		                
 		<f:facet name="footer">
 		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{planillaHorasController.prepareCreate}" update=":PlanillaHorasCreateForm" oncomplete="PlanillaHorasCreateDialog.show()"/>
 		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PlanillaHorasViewForm" oncomplete="PlanillaHorasViewDialog.show()" disabled="#{empty planillaHorasController.selected}"/>

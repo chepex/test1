@@ -27,12 +27,7 @@
 		    </f:facet>
 		    <h:outputText value="#{item.parametrosPK.id}"/>
 		</p:column>
-		<p:column sortBy="#{item.parametrosPK.codCia}" filterBy="#{item.parametrosPK.codCia}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListParametrosTitle_parametrosPK_codCia}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.parametrosPK.codCia}"/>
-		</p:column>
+
 		<p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListParametrosTitle_nombre}"/>

@@ -27,31 +27,26 @@
 		    </f:facet>
 		    <h:outputText value="#{item.puestosPK.codPuesto}"/>
 		</p:column>
-		<p:column sortBy="#{item.puestosPK.codCia}" filterBy="#{item.puestosPK.codCia}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListPuestosTitle_puestosPK_codCia}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.puestosPK.codCia}"/>
-		</p:column>
+
 		<p:column sortBy="#{item.nomPuesto}" filterBy="#{item.nomPuesto}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListPuestosTitle_nomPuesto}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.nomPuesto}"/>
 		</p:column>
-		<p:column sortBy="#{item.salMaximo}" filterBy="#{item.salMaximo}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListPuestosTitle_salMaximo}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.salMaximo}"/>
 		</p:column>
-		<p:column sortBy="#{item.salMinimo}" filterBy="#{item.salMinimo}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListPuestosTitle_salMinimo}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.salMinimo}"/>
 		</p:column>
-		<p:column sortBy="#{item.rol}" filterBy="#{item.rol}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListPuestosTitle_rol}"/>
 		    </f:facet>

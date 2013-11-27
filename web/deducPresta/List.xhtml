@@ -21,7 +21,7 @@
 		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
 		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-		<p:column sortBy="#{item.deducPrestaPK.codDp}" filterBy="#{item.deducPrestaPK.codDp}">
+		<p:column filterBy="#{item.deducPrestaPK.codDp}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListDeducPrestaTitle_deducPrestaPK_codDp}"/>
 		    </f:facet>
@@ -34,31 +34,37 @@
 		    </f:facet>
 		    <h:outputText value="#{item.descripcion}"/>
 		</p:column>
-		<p:column sortBy="#{item.sumaResta}" filterBy="#{item.sumaResta}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListDeducPrestaTitle_sumaResta}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.sumaResta}"/>
 		</p:column>
-		<p:column sortBy="#{item.afp}" filterBy="#{item.afp}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListDeducPrestaTitle_afp}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.afp}"/>
 		</p:column>
-		<p:column sortBy="#{item.factor}" filterBy="#{item.factor}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListDeducPrestaTitle_factor}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.factor}"/>
 		</p:column>
-		<p:column sortBy="#{item.deducPrestaPK.tope}" filterBy="#{item.deducPrestaPK.tope}">
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListDeducPrestaTitle_tope}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.tope}"/>
 		</p:column>                
-		<p:column sortBy="#{item.proceso}" filterBy="#{item.proceso}">
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListDeducPrestaTitle_prioridad}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.prioridad}"/>
+		</p:column>                 
+		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListDeducPrestaTitle_proceso}"/>
 		    </f:facet>

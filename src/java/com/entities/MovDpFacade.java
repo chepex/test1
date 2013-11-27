@@ -77,6 +77,23 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
          return q.getResultList();
        
     }  
+    
+    public  List<MovDp>  findSecuenciaGenerado(ProgramacionPla programacionPla, String generado){
+	 
+	 TypedQuery<MovDp> q;
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	
+		 q = em.createNamedQuery("MovDp.findBySecuencia", MovDp.class )		    
+		    .setParameter("secuencia",  programacionPla.getProgramacionPlaPK().getSecuencia() )
+                    .setParameter("generado",  generado )
+                    .setParameter("codCia",  codCia );
+                 
+                 
+         return q.getResultList();
+       
+    }     
   
     public List<MovDp> findByTotal(Empleados empleado, String sumaResta,ProgramacionPla programacionPla){
 	 	
