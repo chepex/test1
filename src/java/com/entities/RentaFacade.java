@@ -44,6 +44,7 @@ public class RentaFacade extends AbstractFacade<Renta> {
     
 
     public Renta findByValor(float devengado,short id ){
+        try{
 	 TypedQuery<Renta> q;
 	 
 	    LoginBean lb= new LoginBean();	
@@ -55,6 +56,10 @@ public class RentaFacade extends AbstractFacade<Renta> {
 		    .setParameter("codCia",  codCia );
                     
          return q.getSingleResult();
+         }
+        catch(Exception ex){
+            return null;
+        }
     
     } 
     

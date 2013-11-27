@@ -16,6 +16,8 @@ import com.entities.ResumenAsistencia;
 import com.entities.ResumenAsistenciaFacade;
 import com.entities.ResumenAsistenciaPK;
 import com.entities.LoginBean;
+import com.entities.Renta;
+import com.entities.RentaFacade;
 import com.entities.util.JsfUtil;
 import com.entities.util.ManejadorFechas;
 import java.util.Calendar;
@@ -31,6 +33,8 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class SB_Asistencia {
+    @EJB
+    private RentaFacade rentaFacade;
     @EJB
     private DeducPrestaFacade deducPrestaFacade;
     
@@ -203,7 +207,7 @@ public class SB_Asistencia {
             msg.setDescripcion("Total de Registros 0");
             msg.setTitulo( "ok");        
             }catch(Exception ex){
-            msg.setDescripcion("surgio un error en "+this.getClass().getName()+".normal" );
+            msg.setDescripcion("surgio un error en "+this.getClass().getName()+".agui" );
             msg.setTitulo( "error");                
             }
     }
@@ -252,15 +256,10 @@ public class SB_Asistencia {
     }      
    
    public String diasAgui(ProgramacionPla programacionpla,Empleados e){
-       
-      Date FechaIngreso = e.getFecIngreso();
-      int año = 2013; int mes = 12; int dia = 12;
-      Calendar calendar = new GregorianCalendar(año, mes-1, dia); 
-      Date fechaAguinaldo=calendar.getTime();        
-      int  c_d_agu  = ManejadorFechas.diferenciasDeFechas(FechaIngreso, fechaAguinaldo);
-      int dias_pago ;
+       int dias_pago = 0 ;
+     
       
-        if (c_d_agu >= 365 && c_d_agu < 1095){
+       /* if (c_d_agu >= 365 && c_d_agu < 1095){
            c_d_agu   = 365;
            dias_pago = 10;
         }else if( c_d_agu >= 1095 && c_d_agu < 3650){ 
@@ -271,11 +270,28 @@ public class SB_Asistencia {
         }
         else{
            dias_pago = (10*c_d_agu)/365;
-        }
-        
-        String Dias = Integer.toString(dias_pago);
+        }*/
+      try{
+            Date FechaIngreso = e.getFecIngreso();
+            int año = 2013; int mes = 12; int dia = 12;
+            Calendar calendar = new GregorianCalendar(año, mes-1, dia); 
+            Date fechaAguinaldo=calendar.getTime();        
+            int  c_d_agu  = ManejadorFechas.diferenciasDeFechas(FechaIngreso, fechaAguinaldo);
+   
+           Renta r = rentaFacade.findByValor(c_d_agu, (short)3);
+            if(r == null){
+                dias_pago = (10*c_d_agu)/365;
+            }else{
+                dias_pago=  r.getValorFijo().intValue();
+            }
+            
+            
+      }
+      catch(Exception ex){
+          ex.toString();
+      }
+      String Dias = Integer.toString(dias_pago);
     return Dias;
-    
     }  
    
 

@@ -19,8 +19,16 @@
                         <p:inputText id="dias" value="#{resumenAsistenciaController.selected.dias}" title="#{myBundle.EditResumenAsistenciaTitle_dias}" />
 
                         <p:outputLabel value="#{myBundle.EditResumenAsistenciaLabel_observacion}" for="observacion" />
-                        <p:inputText id="observacion" value="#{resumenAsistenciaController.selected.observacion}" title="#{myBundle.EditResumenAsistenciaTitle_observacion}" />
-
+                         <p:selectOneMenu  filter="true" id="observacion" value="#{resumenAsistenciaController.selected.observaciones}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{observacionesController.obs }"
+                                           var="observacionesItem"					   
+                                           itemValue="#{observacionesItem}"
+                                           itemLabel="#{observacionesItem.descripcion}"
+					   />
+                              <f:converter binding="#{observacionesConverter}"/>
+                        </p:selectOneMenu>
+                        
                         <h:outputLabel value="#{myBundle.EditResumenAsistenciaLabel_programacionPla}" for="programacionPla" />
                         <h:outputText id="programacionPla" value="#{resumenAsistenciaController.selected.programacionPla.programacionPlaPK.secuencia}"/>
 
