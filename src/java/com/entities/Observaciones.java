@@ -4,6 +4,7 @@
  */
 package com.entities;
 
+import com.entities.ResumenAsistencia;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,10 +20,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author dromero
+ * @author mmixco
  */
 @Entity
 @Table(name = "OBSERVACIONES")
@@ -33,9 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Observaciones.findById", query = "SELECT o FROM Observaciones o WHERE o.observacionesPK.id = :id"),
     @NamedQuery(name = "Observaciones.findByDescripcion", query = "SELECT o FROM Observaciones o WHERE o.descripcion = :descripcion"),
     @NamedQuery(name = "Observaciones.findByAfp", query = "SELECT o FROM Observaciones o WHERE o.afp = :afp"),
-    @NamedQuery(name = "Observaciones.findByIsss", query = "SELECT o FROM Observaciones o WHERE o.isss = :isss"),
-    @NamedQuery(name = "Observaciones.findByUsuario", query = "SELECT o FROM Observaciones o WHERE o.usuario = :usuario"),
-    @NamedQuery(name = "Observaciones.findByFechaReg", query = "SELECT o FROM Observaciones o WHERE o.fechaReg = :fechaReg")})
+    @NamedQuery(name = "Observaciones.findByIsss", query = "SELECT o FROM Observaciones o WHERE o.isss = :isss")})
 public class Observaciones implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "observaciones")
     private List<ResumenAsistencia> resumenAsistenciaList;
@@ -98,22 +98,6 @@ public class Observaciones implements Serializable {
         this.isss = isss;
     }
 
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public Date getFechaReg() {
-        return fechaReg;
-    }
-
-    public void setFechaReg(Date fechaReg) {
-        this.fechaReg = fechaReg;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -134,17 +118,18 @@ public class Observaciones implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "com.entities.Observaciones[ observacionesPK=" + observacionesPK + " ]";
+        }
+
+    @XmlTransient
     public List<ResumenAsistencia> getResumenAsistenciaList() {
         return resumenAsistenciaList;
     }
 
     public void setResumenAsistenciaList(List<ResumenAsistencia> resumenAsistenciaList) {
         this.resumenAsistenciaList = resumenAsistenciaList;
-    }
-
-    @Override
-    public String toString() {
-        return "com.entities.Observaciones[ observacionesPK=" + observacionesPK + " ]";
     }
     
 }

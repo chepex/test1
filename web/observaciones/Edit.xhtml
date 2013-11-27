@@ -14,6 +14,10 @@
 
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" rendered="#{observacionesController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditObservacionesLabel_observacionesPK_codCia}" for="observacionesPK_codCia" />
+                        <h:outputText id="observacionesPK_codCia" value="#{observacionesController.selected.observacionesPK.codCia}" />
+
                         <h:outputLabel value="#{myBundle.EditObservacionesLabel_observacionesPK_id}" for="observacionesPK_id" />
                         <h:outputText id="observacionesPK_id" value="#{observacionesController.selected.observacionesPK.id}" />
 

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author dromero
+ * @author mmixco
  */
 @Embeddable
 public class ObservacionesPK implements Serializable {
@@ -75,7 +75,7 @@ public class ObservacionesPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.entities.ObservacionesPK[ codCia=" + codCia + ", id=" + id + " ]";
+        return "com.pruebas.ObservacionesPK[ codCia=" + codCia + ", id=" + id + " ]";
     }
     
 }
