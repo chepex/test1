@@ -74,118 +74,83 @@ public class SB_Planilla {
                 if(e.getTiposPlanilla().getCodDp()>0 ){
                     DeducPresta deduc = deducPrestaFacade.findByTipoPla(e.getTiposPlanilla());
                    if(deduc.getProceso().equals("vacc")) {
-                        msg1 = PlanillaVacColectiva(e);   
+                        PlanillaVacColectiva(e);   
                     }
                     if(deduc.getProceso().equals("vaca")) {
-                        msg1 = PlanillaVacAnual(e);   
+                        PlanillaVacAnual(e);   
                     }
                     if(deduc.getProceso().equals("agui")) {
-                        msg1 = PlanillaAguilado(e);                     
+                        PlanillaAguilado(e);                     
                     } 
                 }else{
-                    msg1 = PlanillaNormal(e);                       
+                    PlanillaNormal(e);                       
                 }
                 
-                if(msg1.getTitulo().equals("error")){
-                    return msg1;
-                }else{
+               
                     msg1.setMensajes("Planillas generadas correctamente");
                     totales += e.getTiposPlanilla().getNomTipopla()+msg1.getDescripcion();
-                }                
+               
               }
             msg1.setDescripcion(totales);
          return msg1;
      }	
     
     
-    public Mensaje PlanillaNormal(ProgramacionPla programacionPlax){
+    public void PlanillaNormal(ProgramacionPla programacionPlax){
             
 
             List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
 
               for( ResumenAsistencia ra : iterator ){ 
-              msg1 =  calculos.CalcularLey(ra);
-                if(msg1.getTitulo().equals("ok")){
-                  msg1 = calculos.CalcularPrestamos(ra);  
-                }
-                if(msg1.getTitulo().equals("ok")){
-                  msg1 = calculos.CalcularLiqRecibir(ra);  
-                }              
-                if(msg1.getTitulo().equals("error")){
-                  return msg1;     
-                }              
+                calculos.CalcularLey(ra);                
+                calculos.CalcularPrestamos(ra);  
+                calculos.CalcularLiqRecibir(ra); 
               }
-              msg1.setDescripcion(": "+iterator.size()  );
-              return msg1;    
+              
              
               
               
     }
     
-    public Mensaje PlanillaVacAnual(ProgramacionPla programacionPlax){
+    public void PlanillaVacAnual(ProgramacionPla programacionPlax){
             Borar(programacionPlax);
             List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
             for( ResumenAsistencia ra : iterator ){         
-                msg1 =  calculos.CalcularEspecial(ra);
-                if(msg1.getTitulo().equals("ok")){
-                  msg1 =  calculos.CalcularLey(ra);
-                }
-                if(msg1.getTitulo().equals("ok")){
-                  msg1 = calculos.CalcularPrestamos(ra);  
-                }
-                if(msg1.getTitulo().equals("ok")){
-                  msg1 = calculos.CalcularLiqRecibir(ra);  
-                }              
-                if(msg1.getTitulo().equals("error")){
-                  return msg1;     
-                }              
+                calculos.CalcularEspecial(ra);
+               
+                  calculos.CalcularLey(ra);
+                  calculos.CalcularPrestamos(ra);  
+                  calculos.CalcularLiqRecibir(ra);  
+               
               }
-              msg1.setDescripcion(": "+iterator.size()  );
-              return msg1;  
+            
     }
    
-    public Mensaje PlanillaVacColectiva(ProgramacionPla programacionPlax){
+    public void PlanillaVacColectiva(ProgramacionPla programacionPlax){
             Borar(programacionPlax);
             List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
             for( ResumenAsistencia ra : iterator ){         
-                msg1 =  calculos.CalcularEspecial(ra);
-                if(msg1.getTitulo().equals("ok")){
-                  msg1 =  calculos.CalcularLey(ra);
-                }
-                if(msg1.getTitulo().equals("ok")){
-                  msg1 = calculos.CalcularPrestamos(ra);  
-                }
-                if(msg1.getTitulo().equals("ok")){
-                  msg1 = calculos.CalcularLiqRecibir(ra);  
-                }              
-                if(msg1.getTitulo().equals("error")){
-                  return msg1;     
-                }              
+             calculos.CalcularEspecial(ra);
+             
+                  calculos.CalcularLey(ra);
+                  calculos.CalcularPrestamos(ra);  
+                  calculos.CalcularLiqRecibir(ra); 
               }
-              msg1.setDescripcion(": "+iterator.size()  );
-              return msg1;   
+               
     }    
   
-    public Mensaje PlanillaAguilado(ProgramacionPla programacionPlax){
+    public void PlanillaAguilado(ProgramacionPla programacionPlax){
             Borar(programacionPlax);
             List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
             for( ResumenAsistencia ra : iterator ){         
-              //  msg1 =  calculos.CalcularEspecial(ra);
-                //if(msg1.getTitulo().equals("ok")){
-                  msg1 =  calculos.CalcularLey(ra);
-                //}
-                if(msg1.getTitulo().equals("ok")){
-                  msg1 = calculos.CalcularPrestamos(ra);  
-                }
-                if(msg1.getTitulo().equals("ok")){
-                  msg1 = calculos.CalcularLiqRecibir(ra);  
-                }              
-                if(msg1.getTitulo().equals("error")){
-                  return msg1;     
-                }              
+              
+                
+                  calculos.CalcularLey(ra);
+                  calculos.CalcularPrestamos(ra);                 
+                  calculos.CalcularLiqRecibir(ra);  
+                
               }
-              msg1.setDescripcion(": "+iterator.size()  );
-              return msg1;   
+                
     }      
     
     public void Borar(ProgramacionPla programacionPla){

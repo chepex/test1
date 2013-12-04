@@ -102,7 +102,7 @@ public class SB_Calculos {
     * @author       Mario J. Mixco
     * @version      1.0
     */
-    public Mensaje CalcularLey(ResumenAsistencia resumenAsistenciax)    {    
+    public void CalcularLey(ResumenAsistencia resumenAsistenciax)    {    
        inicializar(resumenAsistenciax);
       try {  
           this.msg.setTitulo("ok");
@@ -119,11 +119,11 @@ public class SB_Calculos {
                this.msg.setMensajes("Surgio un error en calculos de ley");
           }
           
-          return msg;
+          
        } catch (  NullPointerException | NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {                       
             this.msg.setTitulo("error");
             this.msg.setMensajes("Surgio1 un error en el proceso CalcularLey empleado:"+this.empleado.getEmpleadosPK().getCodEmp());            
-            return msg;
+          
        }
        
     }
@@ -137,7 +137,7 @@ public class SB_Calculos {
     * @author       Mario J. Mixco
     * @version      1.0
     */
-    public Mensaje CalcularEspecial(ResumenAsistencia resumenAsistenciax)    {       
+    public void CalcularEspecial(ResumenAsistencia resumenAsistenciax)    {       
       try {  
           inicializar(resumenAsistenciax);          
           this.deducPresta = programacionPla.getTiposPlanilla().getDeducPresta();
@@ -150,11 +150,11 @@ public class SB_Calculos {
                this.msg.setMensajes("Surgio un error en CalcularEspecial");
           }
           
-          return msg;
+          
        } catch (  NullPointerException | NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {                       
             this.msg.setTitulo("error");
             this.msg.setMensajes("Surgio un error en el proceso CalcularLey empleado:"+this.empleado.getEmpleadosPK().getCodEmp());            
-            return msg;
+           
        }
        
     }
@@ -174,7 +174,7 @@ public class SB_Calculos {
     * @version      1.0    
     * @exception    Indica la excepción que puede generar            
      */
-    public Mensaje CalcularPrestamos(ResumenAsistencia resumenAsistenciax)   { 
+    public void CalcularPrestamos(ResumenAsistencia resumenAsistenciax)   { 
         try{
             inicializar(resumenAsistenciax);
           List<Prestamos>   iterador =   prestamosFacade.findByEmpleado(this.empleado);
@@ -187,13 +187,13 @@ public class SB_Calculos {
           }else{
               this.msg.setMensajes("Surgio un error en Prestamos");
           }          
-          return msg;  
+        
           
         }catch(Exception ex){
             JsfUtil.excepcion(ex, this.getClass().getSimpleName()+".CalcularPrestamos."+this.empleado.getEmpleadosPK().getCodEmp() );
           this.msg.setTitulo("error");
           this.msg.setMensajes("Surgio un error en el proceso Prstamos Empelado: "+this.empleado.getEmpleadosPK().getCodEmp() );
-          return msg;              
+        
         }
     }    
 
@@ -204,7 +204,7 @@ public class SB_Calculos {
     * @version      1.0    
     * @exception    Indica la excepción que puede generar            
      */
-    public Mensaje CalcularLiqRecibir(ResumenAsistencia resumenAsistenciax)   { 
+    public void CalcularLiqRecibir(ResumenAsistencia resumenAsistenciax)   { 
         try{
             if(this.empleado.getEmpleadosPK().getCodEmp()==2526){
                 this.msg.setDescripcion("a");
@@ -224,11 +224,11 @@ public class SB_Calculos {
           }else{
             this.msg.setMensajes("Surgio un error en crear planilla");
           }
-          return msg;            
+         
         }catch(Exception ex){ 
           this.msg.setTitulo("error");
           this.msg.setMensajes("Surgio un error en el proceso CalcularLiqRecibir Empleado: "+this.empleado.getEmpleadosPK().getCodEmp()+"Planilla + "+this.resumenAsistencia.getResumenAsistenciaPK().getSecuencia() );
-          return msg;               
+         
         }
     }    
   
@@ -660,7 +660,7 @@ public class SB_Calculos {
         float   dev = devengado();
         float presta = prestaciones();
         
-          BigDecimal vv= new BigDecimal(dev);
+        BigDecimal vv= new BigDecimal(dev);
         LoginBean lb= new LoginBean();		
         Planilla planillak = new Planilla();
         PlanillaPK planillapk = new PlanillaPK();
@@ -674,14 +674,17 @@ public class SB_Calculos {
         planillak.setDeducciones(BigDecimal.valueOf(deduc) );
         planillak.setCodDepto(this.empleado.getDepartamentos().getDepartamentosPK().getCodDepto());
         planillak.setUsuario(lb.ssuser() );
-        planillak.setFechaReg( lb.sdate());                
-        this.planillaFacade.create(planillak);
-        this.msg.setTitulo("ok");      
+        planillak.setFechaReg( lb.sdate()); 
+        
+        
+        savePlanilla(planillak);
+        
+        
+        
         }catch(Exception ex){
-            this.msg.setTitulo("error");            
-            if(this.msg.getDescripcion().isEmpty()){
-                this.msg.setDescripcion("funcion: crear_planilla | empleado: "+this.empleado.getEmpleadosPK().getCodEmp()+"mensage" + ex.toString() );        
-            }
+            this.msg.setTitulo("error");                        
+            this.msg.setDescripcion("funcion: crear_planilla | empleado: "+this.empleado.getEmpleadosPK().getCodEmp()+"mensage" + ex.toString() );        
+            
             
             
             
@@ -692,7 +695,13 @@ public class SB_Calculos {
     
 
     
-
+public void savePlanilla(Planilla planillak){
+    
+    this.planillaFacade.create(planillak);
+    this.planillaFacade.flush();
+    this.planillaFacade.refresh(planillak);
+    
+}
     
     /**
     * retorna el valor por horas devengado por un empleado
