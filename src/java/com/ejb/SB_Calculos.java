@@ -694,7 +694,12 @@ public class SB_Calculos {
     }    
     
 
-    
+      /**
+    * inserta los datos de liquido  a recibir, total devengado entre otros en la tabla de planilla   
+    * @author       Mario J. Mixco
+    * @version      1.0    
+    * @exception    Indica la excepción que puede generar 
+     */  
 public void savePlanilla(Planilla planillak){
     
     this.planillaFacade.create(planillak);
