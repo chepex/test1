@@ -28,5 +28,18 @@ public class CatDpFacade extends AbstractFacade<CatDp> {
         super(CatDp.class);
     }
     
+    @Override
+    public List<CatDp> findAll(){
+	 TypedQuery<CatDp> q;
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	
+		 q = em.createNamedQuery("CatDp.findByCodCia", CatDp.class )		    
+		    .setParameter("codCia",  codCia );
+         return q.getResultList();
+    
+    }  
+    
      
 }

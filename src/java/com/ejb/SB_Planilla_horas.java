@@ -2,6 +2,7 @@
 package com.ejb;
 
 import com.entities.DeducPresta;
+import com.entities.DeducPrestaFacade;
 import com.entities.Empleados;
 import com.entities.EmpleadosFacade;
 import com.entities.LoginBean;
@@ -13,6 +14,7 @@ import com.entities.PlanillaHoras;
 import com.entities.PlanillaHorasFacade;
 import com.entities.PlanillaHorasPK;
 import com.entities.ProgramacionPla;
+import com.entities.ResumenAsistenciaFacade;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -35,13 +37,16 @@ import jxl.Workbook;
 
 public class SB_Planilla_horas {
     @EJB
+    private DeducPrestaFacade deducPrestaFacade;
+    @EJB
     private EmpleadosFacade empleadosFacade;
 
     @EJB
     private PlanillaHorasFacade planillaHorasFacade;
     @EJB
     private MovDpFacade movDpFacade;        
-    
+    @EJB
+    private ResumenAsistenciaFacade resumenAsistenciaFacade;    
       
     private File inputWorkbook;        
     private Mensaje msg = new Mensaje();
@@ -111,7 +116,8 @@ public class SB_Planilla_horas {
 	    MovDpPK  movdppk = new MovDpPK(e.getPlanillaHorasPK().getCodCia(), 
 		    e.getProgramacionPla().getProgramacionPlaPK().getSecuencia(),
 		    e.getEmpleados().getEmpleadosPK().getCodEmp(),
-		    e.getDeducPresta().getDeducPrestaPK().getCodDp() );	
+		    e.getDeducPresta().getDeducPrestaPK().getCodDp(),0 );	
+                    
 	    MovDp movdp = new MovDp(movdppk);	    
 	    movdp.setValor(e.getValor());
             movdp.setUsuario(lb.ssuser() );
@@ -151,11 +157,11 @@ public class SB_Planilla_horas {
            PlanillaHoras ph = new PlanillaHoras(); 
            phpk.setSecuencia(programacionPla.getProgramacionPlaPK().getSecuencia());           
            phpk.setCodCia(lb.sscia());
+           
             for (int j = 0; j < sheet.getColumns(); j++) {              
                 /*secuencia,cod_cia,cod_emp,cod_dp,valor*/
                 Cell cell = sheet.getCell(j, i);
-                if(j==0){
-                  
+                if(j==0){                  
                     
                     phpk.setCodEmp( Integer.parseInt(cell.getContents()));
                 }          
@@ -175,12 +181,15 @@ public class SB_Planilla_horas {
           ph.setValor(valor);
           Empleados emp  = empleadosFacade.findbyCodemp(phpk.getCodEmp());
           ProgramacionPla Vpla  = new ProgramacionPla(lb.sscia(),ph.getPlanillaHorasPK().getSecuencia());
-          DeducPresta dp = new DeducPresta(lb.sscia(),ph.getPlanillaHorasPK().getCodDp());
-          ph.setEmpleados(emp); 
-          ph.setDeducPresta(dp);
-          ph.setProgramacionPla(Vpla);   
-          
-          planillaHorasFacade.create(ph); 
+          DeducPresta dp = deducPrestaFacade.findCodDeduc(phpk.getCodDp());
+          if (dp!=null){
+              if (resumenAsistenciaFacade.ByEmp(ph)!=null ){
+                    ph.setEmpleados(emp); 
+                    ph.setDeducPresta(dp);
+                    ph.setProgramacionPla(Vpla); 
+                    planillaHorasFacade.create(ph); 
+              }
+          }
       }   
       }catch(Exception ex){
           

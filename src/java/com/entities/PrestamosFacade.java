@@ -79,6 +79,24 @@ public class PrestamosFacade extends AbstractFacade<Prestamos> {
 		 
          return q.getResultList();
     
-    }      
+    }     
+    
+    public Prestamos findByPk(MovDp movdp){
+	 TypedQuery<Prestamos> q;
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+	    
+	    
+		q = em.createNamedQuery("Prestamos.findByPK", Prestamos.class )		    
+                    .setParameter("codPresta", movdp.getMovDpPK().getCodPresta() )                    
+                    .setParameter("codDp",  movdp.getMovDpPK().getCodDp() )                    
+                    .setParameter("codEmp", movdp.getMovDpPK().getCodEmp() )                    
+		    .setParameter("codCia", codCia );
+	    
+		 
+         return q.getSingleResult();
+    
+    }     
 
 }

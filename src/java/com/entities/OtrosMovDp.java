@@ -30,6 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "OtrosMovDp.findAll", query = "SELECT o FROM OtrosMovDp o"),
     @NamedQuery(name = "OtrosMovDp.findByCodCia", query = "SELECT o FROM OtrosMovDp o WHERE o.otrosMovDpPK.codCia = :codCia"),
+    @NamedQuery(name = "OtrosMovDp.findByCat", query = "SELECT m FROM OtrosMovDp m WHERE  m.otrosMovDpPK.codCia = :codCia and m.otrosMovDpPK.codEmp = :codEmp and m.otrosMovDpPK.secuencia = :secuencia and m.deducPresta.catDp.descripcion = :categoria "),            
+    @NamedQuery(name = "OtrosMovDp.findByRentaT", query = "SELECT m FROM OtrosMovDp m WHERE m.otrosMovDpPK.codCia = :codCia and  m.otrosMovDpPK.codEmp = :codEmp and m.programacionPla.anio =:anio and m.deducPresta.renta = 'S'  "),
     @NamedQuery(name = "OtrosMovDp.findBySecuencia", query = "SELECT o FROM OtrosMovDp o WHERE o.otrosMovDpPK.secuencia = :secuencia"),
     @NamedQuery(name = "OtrosMovDp.findByCodEmp", query = "SELECT o FROM OtrosMovDp o WHERE o.otrosMovDpPK.codEmp = :codEmp"),
     @NamedQuery(name = "OtrosMovDp.findByCodDp", query = "SELECT o FROM OtrosMovDp o WHERE o.otrosMovDpPK.codDp = :codDp"),

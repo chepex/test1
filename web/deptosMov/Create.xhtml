@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeptosMovCreateDlg" widgetVar="DeptosMovCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateDeptosMovTitle}">
+
+            <h:form id="DeptosMovCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{deptosMovController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateDeptosMovLabel_bcta1}" for="bcta1" />
+                        <p:inputText id="bcta1" value="#{deptosMovController.selected.bcta1}" title="#{myBundle.CreateDeptosMovTitle_bcta1}" required="true" requiredMessage="#{myBundle.CreateDeptosMovRequiredMessage_bcta1}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDeptosMovLabel_bcta2}" for="bcta2" />
+                        <p:inputText id="bcta2" value="#{deptosMovController.selected.bcta2}" title="#{myBundle.CreateDeptosMovTitle_bcta2}" required="true" requiredMessage="#{myBundle.CreateDeptosMovRequiredMessage_bcta2}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDeptosMovLabel_bcta3}" for="bcta3" />
+                        <p:inputText id="bcta3" value="#{deptosMovController.selected.bcta3}" title="#{myBundle.CreateDeptosMovTitle_bcta3}" required="true" requiredMessage="#{myBundle.CreateDeptosMovRequiredMessage_bcta3}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDeptosMovLabel_bcta4}" for="bcta4" />
+                        <p:inputText id="bcta4" value="#{deptosMovController.selected.bcta4}" title="#{myBundle.CreateDeptosMovTitle_bcta4}" required="true" requiredMessage="#{myBundle.CreateDeptosMovRequiredMessage_bcta4}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDeptosMovLabel_bcta5}" for="bcta5" />
+                        <p:inputText id="bcta5" value="#{deptosMovController.selected.bcta5}" title="#{myBundle.CreateDeptosMovTitle_bcta5}" required="true" requiredMessage="#{myBundle.CreateDeptosMovRequiredMessage_bcta5}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDeptosMovLabel_departamentos}" for="departamentos" />
+                        <p:selectOneMenu id="departamentos" value="#{deptosMovController.selected.departamentos}" required="true" requiredMessage="#{myBundle.EditDeptosMovRequiredMessage_departamentos}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{departamentosController.items}"
+                                           var="departamentosItem"
+                                           itemValue="#{departamentosItem}"
+                                           itemLabel="#{departamentosItem.nomDepto.toString()}"
+                                           />
+                            <f:converter binding="#{departamentosConverter}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateDeptosMovLabel_catDp}" for="catDp" />
+                        <p:selectOneMenu id="catDp" value="#{deptosMovController.selected.catDp}" required="true" requiredMessage="#{myBundle.EditDeptosMovRequiredMessage_catDp}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{catDpController.items}"
+                                           var="catDpItem"
+                                           itemValue="#{catDpItem}"
+                                           itemLabel="#{catDpItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{catDpConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{deptosMovController.saveNew}" value="#{myBundle.Save}" update="display,:DeptosMovListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DeptosMovCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DeptosMovCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

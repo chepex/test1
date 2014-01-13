@@ -28,7 +28,7 @@ public class ResumenAsistenciaController extends AbstractController<ResumenAsist
     private SB_Asistencia sB_Asistencia;
     @EJB
     private ResumenAsistenciaFacade ejbFacade;
-    Mensaje msg;    
+    String msg;    
     ProgramacionPla programacionpla;
     List <ProgramacionPla> programacionplas;
     String estado;
@@ -89,9 +89,9 @@ public class ResumenAsistenciaController extends AbstractController<ResumenAsist
     
     public String generar (){	
     try { 
-	Mensaje Msg =sB_Asistencia.Validar_existe_asistencia( this.getProgramacionpla() ) ; 
+	 msg =sB_Asistencia.Validar_existe_asistencia( this.getProgramacionpla() ) ; 
 	consultar();
-	JsfUtil.addSuccessMessage(Msg);
+	
     }     catch (EJBException ex) {
         JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/MyBundle").getString("PersistenceErrorOccured"));
     }
@@ -114,7 +114,7 @@ public class ResumenAsistenciaController extends AbstractController<ResumenAsist
     */    
    public void eliminar (){	
 	 msg =sB_ProgramacionPla.validarEstado(programacionpla);   
-        if (msg.getTitulo().equals("ok")  ){
+        if (msg.equals("ok")  ){
 	    msg =sB_Asistencia.eliminar_Asistencia(this.getProgramacionpla() ) ;	    
 	    JsfUtil.addSuccessMessage(msg);    
 	    consultar();
@@ -128,10 +128,8 @@ public class ResumenAsistenciaController extends AbstractController<ResumenAsist
     */      
     public void onCellEdit(CellEditEvent event) {         
 	 msg = sB_ProgramacionPla.validarEstado(programacionpla);
-	 msg.setDescripcion( this.getSelected().getEmpleados().getNombreNit());	    
-	if (msg.getTitulo().equals("ok")  ){	
-	    msg.setMensajes("Registro Modificado Correctamente");	    
-	    
+
+	if (msg.equals("ok")  ){		    
 	    persist(AbstractController.PersistAction.UPDATE, msg);        	          
 	    }else{
 		JsfUtil.addSuccessMessage(msg);          
@@ -149,10 +147,8 @@ public class ResumenAsistenciaController extends AbstractController<ResumenAsist
     @Override  
     public void save(ActionEvent event) {	
      msg = sB_ProgramacionPla.validarEstado(programacionpla);   
-     msg.setDescripcion( this.getSelected().getEmpleados().getNombreNit());	    
-     if (msg.getTitulo().equals("ok")  ){
-	    msg.setMensajes("Registro Modificado Correctamente");	    	    
-	    
+     
+     if (msg.equals("ok")  ){
 	    persist(AbstractController.PersistAction.UPDATE, msg);
 	    consultar();        
      }else{	
@@ -163,10 +159,9 @@ public class ResumenAsistenciaController extends AbstractController<ResumenAsist
     @Override      
     public void saveNew(ActionEvent event) {
 	 msg = sB_ProgramacionPla.validarEstado(programacionpla);     
-	 msg.setDescripcion( this.getSelected().getEmpleados().getNombreNit());	
+
 	 this.getSelected().setProgramacionPla(programacionpla);
-     if (msg.getTitulo().equals("ok")  ){
-	    msg.setMensajes("Registro Modificado Correctamente");	    	    
+     if (msg.equals("ok")  ){	    	    
 	    
 	    persist(AbstractController.PersistAction.CREATE, msg);
 	    consultar();        
@@ -179,9 +174,9 @@ public class ResumenAsistenciaController extends AbstractController<ResumenAsist
     @Override      
     public void delete(ActionEvent event) {
 	 msg = sB_ProgramacionPla.validarEstado(programacionpla);
-	 msg.setDescripcion( this.getSelected().getEmpleados().getNombreNit());	    
-        if (msg.getTitulo().equals("ok")  ){
-	    msg.setMensajes("Registro Eliminado Correctamente ");	        
+
+        if (msg.equals("ok")  ){
+
 	    
 	    persist(AbstractController.PersistAction.DELETE, msg);
 	    consultar();

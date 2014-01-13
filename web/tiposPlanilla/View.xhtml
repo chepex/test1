@@ -15,7 +15,6 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{tiposPlanillaController.selected != null}">
 
-
                         <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_tiposPlanillaPK_codTipopla}"/>
                         <h:outputText value="#{tiposPlanillaController.selected.tiposPlanillaPK.codTipopla}" title="#{myBundle.ViewTiposPlanillaTitle_tiposPlanillaPK_codTipopla}"/>
 
@@ -24,9 +23,35 @@
 
                         <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_status}"/>
                         <h:outputText value="#{tiposPlanillaController.selected.status}" title="#{myBundle.ViewTiposPlanillaTitle_status}"/>
-                        
-                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_codDp}"/>
-                        <h:outputText value="#{tiposPlanillaController.selected.codDp}" title="#{myBundle.ViewTiposPlanillaTitle_codDp}"/>                        
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_usuario}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.usuario}" title="#{myBundle.ViewTiposPlanillaTitle_usuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_fechaReg}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.fechaReg}" title="#{myBundle.ViewTiposPlanillaTitle_fechaReg}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_ley}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.ley}" title="#{myBundle.ViewTiposPlanillaTitle_ley}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_frecuencia}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.frecuencia}" title="#{myBundle.ViewTiposPlanillaTitle_frecuencia}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_prestamos}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.prestamos}" title="#{myBundle.ViewTiposPlanillaTitle_prestamos}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_liquido}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.liquido}" title="#{myBundle.ViewTiposPlanillaTitle_liquido}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_adicional}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.adicional}" title="#{myBundle.ViewTiposPlanillaTitle_adicional}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_promedio}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.promedio}" title="#{myBundle.ViewTiposPlanillaTitle_promedio}"/>
+
+                        <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_deducPresta}"/>
+                        <h:outputText value="#{tiposPlanillaController.selected.deducPresta.descripcion}"/>
 
                         <h:outputText value="#{myBundle.ViewTiposPlanillaLabel_programacionPlaList}"/>
                     </p:panelGrid>

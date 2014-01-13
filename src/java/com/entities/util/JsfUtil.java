@@ -1,5 +1,6 @@
 package com.entities.util;
 
+import com.ejb.SB_Planilla;
 import com.entities.Mensaje;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItem;
 import javax.faces.context.FacesContext;
+import javax.print.attribute.standard.Severity;
 
 public class JsfUtil {
  private static Logger LOGGER ;
@@ -142,5 +144,31 @@ public static double Redondear(double numero,int digitos)
       int cifras=(int) Math.pow(10,digitos);
       return Math.rint(numero*cifras)/cifras;
 }
+
+public static void logs(Exception ex,String summary , String detail, Class cl, String level){    
+    if(level.equals("ERROR")){
+        Logger.getLogger(cl.getName()).log(Level.SEVERE, detail, ex);                              
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL ,summary, detail));                
+    }
+    if(level.equals("ALERT")){
+        Logger.getLogger(cl.getName()).log(Level.WARNING, detail, ex);                                  
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,summary, detail));
+    }
+    if(level.equals("INFO")){
+        Logger.getLogger(cl.getName()).log(Level.INFO, detail, ex);                                          
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,summary, detail));
+    }  
+    
+    System.out.print("error "+summary);
+    
+                          
+}
+
+public static String truncate(String value, int length)
+{
+  if (value != null && value.length() > length)
+    value = value.substring(0, length);
+  return value;
+}    
 
 }

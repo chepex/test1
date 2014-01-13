@@ -21,12 +21,16 @@
                         <h:outputText value="#{myBundle.ViewDeducPrestaLabel_descripcion}"/>
                         <h:outputText value="#{deducPrestaController.selected.descripcion}" title="#{myBundle.ViewDeducPrestaTitle_descripcion}"/>
 
-                        <h:outputText value="#{myBundle.ViewDeducPrestaLabel_sumaResta}"/>
-                        <h:outputText value="#{deducPrestaController.selected.sumaResta}" title="#{myBundle.ViewDeducPrestaTitle_sumaResta}"/>
 
                         <h:outputText value="#{myBundle.ViewDeducPrestaLabel_afp}"/>
                         <h:outputText value="#{deducPrestaController.selected.afp}" title="#{myBundle.ViewDeducPrestaTitle_afp}"/>
 
+                        <h:outputText value="#{myBundle.ViewDeducPrestaLabel_renta}"/>
+                        <h:outputText value="#{deducPrestaController.selected.renta}" title="#{myBundle.ViewDeducPrestaTitle_renta}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeducPrestaLabel_isss}"/>
+                        <h:outputText value="#{deducPrestaController.selected.isss}" title="#{myBundle.ViewDeducPrestaTitle_isss}"/>
+                        
                         <h:outputText value="#{myBundle.ViewDeducPrestaLabel_factor}"/>
                         <h:outputText value="#{deducPrestaController.selected.factor}" title="#{myBundle.ViewDeducPrestaTitle_factor}"/>
 
@@ -38,6 +42,29 @@
 
                         <h:outputText value="#{myBundle.ViewDeducPrestaLabel_prioridad}"/>
                         <h:outputText value="#{deducPrestaController.selected.prioridad}" title="#{myBundle.ViewDeducPrestaTitle_prioridad}"/>                                                
+                        
+                        <h:outputText value="#{myBundle.ViewDeducPrestaLabel_catDp}"/>
+                        <h:outputText value="#{deducPrestaController.selected.catDp.descripcion}" title="#{myBundle.ViewDeducPrestaTitle_catDp}"/>                                                
+                        
+                        <h:outputText value="#{myBundle.ViewDeducPrestaLabel_cta1}"/>
+                        <h:outputText value="#{deducPrestaController.selected.cta1}" title="#{myBundle.ViewDeducPrestaTitle_cta1}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeducPrestaLabel_cta2}"/>
+                        <h:outputText value="#{deducPrestaController.selected.cta2}" title="#{myBundle.ViewDeducPrestaTitle_cta2}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeducPrestaLabel_cta3}"/>
+                        <h:outputText value="#{deducPrestaController.selected.cta3}" title="#{myBundle.ViewDeducPrestaTitle_cta3}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeducPrestaLabel_cta4}"/>
+                        <h:outputText value="#{deducPrestaController.selected.cta4}" title="#{myBundle.ViewDeducPrestaTitle_cta4}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeducPrestaLabel_cta5}"/>
+                        <h:outputText value="#{deducPrestaController.selected.cta5}" title="#{myBundle.ViewDeducPrestaTitle_cta5}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeducPrestaLabel_catDp}"/>
+                        <h:outputText value="#{deducPrestaController.selected.catDp.descripcion}"/>
+
+                        
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="DeducPrestaViewDialog.hide()"/>
                 </h:panelGroup>

@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DeducPresta.findAll", query = "SELECT d FROM DeducPresta d"),
     @NamedQuery(name = "DeducPresta.findByCodCia", query = "SELECT d FROM DeducPresta d WHERE d.deducPrestaPK.codCia = :codCia"),
     @NamedQuery(name = "DeducPresta.findByCatDp", query = "SELECT d FROM DeducPresta d WHERE d.deducPrestaPK.codCia = :codCia and d.catDp.descripcion like :catDp "        ),
+    @NamedQuery(name = "DeducPresta.findByCatNull", query = "SELECT d FROM DeducPresta d WHERE d.deducPrestaPK.codCia = :codCia and d.catDp is null "        ),
     @NamedQuery(name = "DeducPresta.findByTipoPla", query = "SELECT d FROM DeducPresta d WHERE d.deducPrestaPK.codCia = :codCia and d.tiposPlanilla.tiposPlanillaPK.codTipopla = :codTipopla  "        ),    
     @NamedQuery(name = "DeducPresta.findByCodDp", query = "SELECT d FROM DeducPresta d WHERE  d.deducPrestaPK.codCia = :codCia and d.deducPrestaPK.codDp = :codDp"),
-    @NamedQuery(name = "DeducPresta.findByDescripcion", query = "SELECT d FROM DeducPresta d WHERE d.descripcion = :descripcion"),
-    @NamedQuery(name = "DeducPresta.findBySumaResta", query = "SELECT d FROM DeducPresta d WHERE d.sumaResta = :sumaResta"),
+    @NamedQuery(name = "DeducPresta.findByDescripcion", query = "SELECT d FROM DeducPresta d WHERE d.descripcion = :descripcion"),    
     @NamedQuery(name = "DeducPresta.findByLey", query = "SELECT d FROM DeducPresta d WHERE d.afp = :afp"),
     @NamedQuery(name = "DeducPresta.findByFactor", query = "SELECT d FROM DeducPresta d WHERE d.factor = :factor"),
     @NamedQuery(name = "DeducPresta.findByProceso", query = "SELECT d FROM DeducPresta d WHERE d.proceso = :proceso")})
@@ -47,12 +47,11 @@ public class DeducPresta implements Serializable {
         @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
         @JoinColumn(name = "COD_CAT", referencedColumnName = "COD_CAT")})
     @ManyToOne(optional = false)
-    private CatDp catDp;
-    
+    private CatDp catDp;    
     @JoinColumns({
-        @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
+        @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA",insertable = false, updatable = false),
         @JoinColumn(name = "COD_DP", referencedColumnName = "COD_DP", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false)    
     private TiposPlanilla tiposPlanilla;    
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -61,11 +60,14 @@ public class DeducPresta implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @Size(max = 1)
-    @Column(name = "SUMA_RESTA")
-    private String sumaResta;
+    @Column(name = "RENTA")
+    private String renta;    
     @Size(max = 1)
     @Column(name = "AFP")
     private String afp;
+    @Size(max = 1)
+    @Column(name = "ISSS")
+    private String isss;    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "FACTOR")
     private BigDecimal factor;
@@ -84,7 +86,16 @@ public class DeducPresta implements Serializable {
     private List<MovDp> movDpList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deducPresta")
     private List<Prestamos> prestamosList;
-
+    @Column(name = "CTA_1")
+    private Short cta1;
+    @Column(name = "CTA_2")
+    private Short cta2;
+    @Column(name = "CTA_3")
+    private Short cta3;
+    @Column(name = "CTA_4")
+    private Short cta4;
+    @Column(name = "CTA_5")
+    private Short cta5;
     @Column(name = "USUARIO")
     private String usuario;    
     @Column(name = "FECHA_REG")
@@ -96,6 +107,64 @@ public class DeducPresta implements Serializable {
     public DeducPresta() {
     }
 
+    public String getRenta() {
+        return renta;
+    }
+
+    public String getIsss() {
+        return isss;
+    }
+
+    public void setIsss(String isss) {
+        this.isss = isss;
+    }
+
+    
+    public void setRenta(String renta) {
+        this.renta = renta;
+    }
+    
+    public Short getCta1() {
+        return cta1;
+    }
+
+    public void setCta1(Short cta1) {
+        this.cta1 = cta1;
+    }
+
+    public Short getCta2() {
+        return cta2;
+    }
+
+    public void setCta2(Short cta2) {
+        this.cta2 = cta2;
+    }
+
+    public Short getCta3() {
+        return cta3;
+    }
+
+    public void setCta3(Short cta3) {
+        this.cta3 = cta3;
+    }
+
+    public Short getCta4() {
+        return cta4;
+    }
+
+    public void setCta4(Short cta4) {
+        this.cta4 = cta4;
+    }
+
+    public Short getCta5() {
+        return cta5;
+    }
+
+    public void setCta5(Short cta5) {
+        this.cta5 = cta5;
+    }
+
+    
     public short getPrioridad() {
         return prioridad;
     }
@@ -145,14 +214,7 @@ public class DeducPresta implements Serializable {
         this.tope = tope;
     }
 
-    
-    public String getSumaResta() {
-	return sumaResta;
-    }
 
-    public void setSumaResta(String sumaResta) {
-	this.sumaResta = sumaResta;
-    }
 
     public String getAfp() {
         return afp;

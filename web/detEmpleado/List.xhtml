@@ -20,7 +20,12 @@
 
                 <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                 <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
+                <p:column sortBy="#{item.empleados.nombreNit}" filterBy="#{item.empleados.nombreNit}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDetEmpleadoTitle_detEmpleadoPK_codEmp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleados.nombreNit}"/>
+                </p:column>
                 <p:column sortBy="#{item.detEmpleadoPK.codDp}" filterBy="#{item.detEmpleadoPK.codDp}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListDetEmpleadoTitle_detEmpleadoPK_codDp}"/>
@@ -28,26 +33,8 @@
                     <h:outputText value="#{item.deducPresta.descripcion}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.empleados.nombreNit}" filterBy="#{item.empleados.nombreNit}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListDetEmpleadoTitle_detEmpleadoPK_codEmp}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.empleados.nombreNit}"/>
-                </p:column>
-                <p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListDetEmpleadoTitle_usuario}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.usuario}"/>
-                </p:column>
-                <p:column sortBy="#{item.fechaReg}" filterBy="#{item.fechaReg}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListDetEmpleadoTitle_fechaReg}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.fechaReg}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
+
+
                 <f:facet name="footer">
                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{detEmpleadoController.prepareCreate}" update=":DetEmpleadoCreateForm" oncomplete="DetEmpleadoCreateDialog.show()"/>
                     <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":DetEmpleadoViewForm" oncomplete="DetEmpleadoViewDialog.show()" disabled="#{empty detEmpleadoController.selected}"/>
@@ -58,7 +45,8 @@
             </p:dataTable>
 
         </p:panel>
-
+<br/><br/>
+Define las deduciones de ley que posee cada empleado
     </h:form>
 
 </ui:composition>

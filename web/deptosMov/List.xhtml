@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="DeptosMovListForm">
+
+        <p:panel header="#{myBundle.ListDeptosMovTitle}">
+
+            <p:dataTable id="datalist" value="#{deptosMovController.items}" var="item"
+                         selectionMode="single" selection="#{deptosMovController.selected}"
+                         rowKey="#{item.deptosMovPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                <p:column sortBy="#{item.departamentos.nomDepto}" filterBy="#{item.departamentos.nomDepto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDeptosMovTitle_departamentos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.departamentos.nomDepto}"/>
+                </p:column>
+                <p:column sortBy="#{item.catDp.descripcion}" filterBy="#{item.catDp.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDeptosMovTitle_catDp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.catDp.descripcion}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.bcta1}" filterBy="#{item.bcta1}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDeptosMovTitle_bcta1}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.bcta1}"/>
+                </p:column>
+                <p:column sortBy="#{item.bcta2}" filterBy="#{item.bcta2}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDeptosMovTitle_bcta2}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.bcta2}"/>
+                </p:column>
+                <p:column sortBy="#{item.bcta3}" filterBy="#{item.bcta3}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDeptosMovTitle_bcta3}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.bcta3}"/>
+                </p:column>
+                <p:column sortBy="#{item.bcta4}" filterBy="#{item.bcta4}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDeptosMovTitle_bcta4}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.bcta4}"/>
+                </p:column>
+                <p:column sortBy="#{item.bcta5}" filterBy="#{item.bcta5}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListDeptosMovTitle_bcta5}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.bcta5}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{deptosMovController.prepareCreate}" update=":DeptosMovCreateForm" oncomplete="DeptosMovCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":DeptosMovViewForm" oncomplete="DeptosMovViewDialog.show()" disabled="#{empty deptosMovController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":DeptosMovEditForm" oncomplete="DeptosMovEditDialog.show()" disabled="#{empty deptosMovController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{deptosMovController.delete}" update=":growl,datalist" disabled="#{empty deptosMovController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+<br/><br/>
+    Define las cuentas contables para cada categoria de deducciones o prestaciones
+    </h:form>
+
+</ui:composition>

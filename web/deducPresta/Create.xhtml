@@ -20,12 +20,17 @@
                         <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{deducPrestaController.selected.descripcion}" title="#{myBundle.CreateDeducPrestaTitle_descripcion}" />
 
-                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_sumaResta}" for="sumaResta" />
-                        <p:inputText id="sumaResta" value="#{deducPrestaController.selected.sumaResta}" title="#{myBundle.CreateDeducPrestaTitle_sumaResta}" />
 
                         <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_afp}" for="afp" />
                         <p:inputText id="afp" value="#{deducPrestaController.selected.afp}" title="#{myBundle.CreateDeducPrestaTitle_afp}" />
 
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_renta}" for="renta" />
+                        <p:inputText id="renta" value="#{deducPrestaController.selected.renta}" title="#{myBundle.CreateDeducPrestaTitle_renta}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_isss}" for="isss" />
+                        <p:inputText id="isss" value="#{deducPrestaController.selected.isss}" title="#{myBundle.CreateDeducPrestaTitle_isss}" />
+
+                        
                         <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_factor}" for="factor" />
                         <p:inputText id="factor" value="#{deducPrestaController.selected.factor}" title="#{myBundle.CreateDeducPrestaTitle_factor}" />
 
@@ -37,6 +42,34 @@
                         
                         <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_prioridad}" for="prioridad" />
                         <p:inputText id="prioridad" value="#{deducPrestaController.selected.prioridad}" title="#{myBundle.CreateDeducPrestaTitle_prioridad}" />                                                
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_catDp}" for="catDp" />
+                        <p:selectOneMenu id="catDp" value="#{deducPrestaController.selected.catDp}" >
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{catDpController.items}"
+                                           var="catDpItem"
+                                           itemValue="#{catDpItem}"
+                                           itemLabel="#{catDpItem.descripcion}"
+					   />
+                            <f:converter binding="#{catDpConverter}"/>
+                        </p:selectOneMenu>                        
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_cta1}" for="cta1" />
+                        <p:inputText id="cta1" value="#{deducPrestaController.selected.cta1}" title="#{myBundle.CreateDeducPrestaTitle_cta1}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_cta2}" for="cta2" />
+                        <p:inputText id="cta2" value="#{deducPrestaController.selected.cta2}" title="#{myBundle.CreateDeducPrestaTitle_cta2}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_cta3}" for="cta3" />
+                        <p:inputText id="cta3" value="#{deducPrestaController.selected.cta3}" title="#{myBundle.CreateDeducPrestaTitle_cta3}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_cta4}" for="cta4" />
+                        <p:inputText id="cta4" value="#{deducPrestaController.selected.cta4}" title="#{myBundle.CreateDeducPrestaTitle_cta4}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_cta5}" for="cta5" />
+                        <p:inputText id="cta5" value="#{deducPrestaController.selected.cta5}" title="#{myBundle.CreateDeducPrestaTitle_cta5}" />
+
+                        
                     </p:panelGrid>
                     <h:commandButton actionListener="#{deducPrestaController.saveNew}" value="#{myBundle.Save}" />
                     <p:commandButton value="#{myBundle.Cancel}" onclick="DeducPrestaCreateDialog.hide()"/>

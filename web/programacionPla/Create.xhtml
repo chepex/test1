@@ -15,25 +15,11 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{programacionPlaController.selected != null}">
 
-                        
 
-                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_frecuencia}" for="frecuencia" />
-                            <p:selectOneMenu id="frecuencia" value="#{programacionPlaController.selected.frecuencia }" 
-				       >
-			    <f:selectItem itemLabel="Selecione frecuencia"/>
-                            <f:selectItem itemLabel="Quincenal" itemValue="1"/>			    
-			    <f:selectItem itemLabel="Mensual" itemValue="2"/>
-                            <f:selectItem itemLabel="Semanal" itemValue="3"/>                           
-                        </p:selectOneMenu>
-            
-                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_status}" for="status" />
-                        <p:inputText id="status" value="#{programacionPlaController.selected.status}" title="#{myBundle.CreateProgramacionPlaTitle_status}" required="true" requiredMessage="#{myBundle.CreateProgramacionPlaRequiredMessage_status}"/>
+
 
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_fechaPago}" for="fechaPago" />
                         <p:calendar id="fechaPago" pattern="MM/dd/yyyy HH:mm:ss" value="#{programacionPlaController.selected.fechaPago}" title="#{myBundle.EditProgramacionPlaTitle_fechaPago}"  showOn="button"/>
-
-                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_fechaCorte}" for="fechaCorte" />
-                        <p:calendar id="fechaCorte" pattern="MM/dd/yyyy HH:mm:ss" value="#{programacionPlaController.selected.fechaCorte}" title="#{myBundle.EditProgramacionPlaTitle_fechaCorte}"  showOn="button"/>			
 
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_numPlanilla}" for="numPlanilla" />
                         <p:inputText id="numPlanilla" value="#{programacionPlaController.selected.numPlanilla}" title="#{myBundle.CreateProgramacionPlaTitle_numPlanilla}" />
@@ -44,6 +30,12 @@
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_mes}" for="mes" />
                         <p:inputText id="mes" value="#{programacionPlaController.selected.mes}" title="#{myBundle.CreateProgramacionPlaTitle_mes}" />
 
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_fechaCorte}" for="fechaCorte" />
+                        <p:calendar id="fechaCorte" pattern="MM/dd/yyyy HH:mm:ss" value="#{programacionPlaController.selected.fechaCorte}" title="#{myBundle.EditProgramacionPlaTitle_fechaCorte}"  showOn="button"/>
+
+
+                       
+
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_tiposPlanilla}" for="tiposPlanilla" />
                         <p:selectOneMenu id="tiposPlanilla" value="#{programacionPlaController.selected.tiposPlanilla}" required="true" requiredMessage="#{myBundle.EditProgramacionPlaRequiredMessage_tiposPlanilla}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
@@ -51,9 +43,12 @@
                                            var="tiposPlanillaItem"
                                            itemValue="#{tiposPlanillaItem}"
                                            itemLabel="#{tiposPlanillaItem.nomTipopla.toString()}"
-					   />
+                                           />
                             <f:converter binding="#{tiposPlanillaConverter}"/>
                         </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_recalculo}" for="recalculo" />
+                        <p:inputText id="recalculo" value="#{programacionPlaController.selected.recalculo}" title="#{myBundle.CreateProgramacionPlaTitle_recalculo}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{programacionPlaController.saveNew}" value="#{myBundle.Save}" update="display,:ProgramacionPlaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ProgramacionPlaCreateDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="ProgramacionPlaCreateDialog.hide()"/>

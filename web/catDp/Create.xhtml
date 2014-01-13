@@ -20,6 +20,10 @@
 
                         <p:outputLabel value="#{myBundle.CreateCatDpLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{catDpController.selected.descripcion}" title="#{myBundle.CreateCatDpTitle_descripcion}" />
+
+                        <p:outputLabel value="#{myBundle.CreateCatDpLabel_sumaResta}" for="sumaResta" />
+                        <p:inputText id="sumaResta" value="#{catDpController.selected.sumaResta}" title="#{myBundle.CreateCatDpTitle_sumaResta}" />
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{catDpController.saveNew}" value="#{myBundle.Save}" update="display,:CatDpListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,CatDpCreateDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="CatDpCreateDialog.hide()"/>

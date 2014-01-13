@@ -15,11 +15,11 @@
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" rendered="#{departamentosController.selected != null}">
 
-                        <h:outputLabel value="#{myBundle.EditDepartamentosLabel_departamentosPK_codDepto}" for="departamentosPK_codDepto" />
-                        <h:outputText id="departamentosPK_codDepto" value="#{departamentosController.selected.departamentosPK.codDepto}" />
-
                         <h:outputLabel value="#{myBundle.EditDepartamentosLabel_departamentosPK_codCia}" for="departamentosPK_codCia" />
                         <h:outputText id="departamentosPK_codCia" value="#{departamentosController.selected.departamentosPK.codCia}" />
+
+                        <h:outputLabel value="#{myBundle.EditDepartamentosLabel_departamentosPK_codDepto}" for="departamentosPK_codDepto" />
+                        <h:outputText id="departamentosPK_codDepto" value="#{departamentosController.selected.departamentosPK.codDepto}" />
 
                         <p:outputLabel value="#{myBundle.EditDepartamentosLabel_nomDepto}" for="nomDepto" />
                         <p:inputText id="nomDepto" value="#{departamentosController.selected.nomDepto}" title="#{myBundle.EditDepartamentosTitle_nomDepto}" />
@@ -27,50 +27,35 @@
                         <p:outputLabel value="#{myBundle.EditDepartamentosLabel_empleados}" for="empleados" />
                         <p:inputText id="empleados" value="#{departamentosController.selected.empleados}" title="#{myBundle.EditDepartamentosTitle_empleados}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_bcta1}" for="bcta1" />
-                        <p:inputText id="bcta1" value="#{departamentosController.selected.bcta1}" title="#{myBundle.EditDepartamentosTitle_bcta1}" />
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_scta1}" for="scta1" />
+                        <p:inputText id="scta1" value="#{departamentosController.selected.scta1}" title="#{myBundle.EditDepartamentosTitle_scta1}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_bcta2}" for="bcta2" />
-                        <p:inputText id="bcta2" value="#{departamentosController.selected.bcta2}" title="#{myBundle.EditDepartamentosTitle_bcta2}" />
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_scta2}" for="scta2" />
+                        <p:inputText id="scta2" value="#{departamentosController.selected.scta2}" title="#{myBundle.EditDepartamentosTitle_scta2}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_bcta3}" for="bcta3" />
-                        <p:inputText id="bcta3" value="#{departamentosController.selected.bcta3}" title="#{myBundle.EditDepartamentosTitle_bcta3}" />
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_scta3}" for="scta3" />
+                        <p:inputText id="scta3" value="#{departamentosController.selected.scta3}" title="#{myBundle.EditDepartamentosTitle_scta3}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_bcta4}" for="bcta4" />
-                        <p:inputText id="bcta4" value="#{departamentosController.selected.bcta4}" title="#{myBundle.EditDepartamentosTitle_bcta4}" />
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_scta4}" for="scta4" />
+                        <p:inputText id="scta4" value="#{departamentosController.selected.scta4}" title="#{myBundle.EditDepartamentosTitle_scta4}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_bcta5}" for="bcta5" />
-                        <p:inputText id="bcta5" value="#{departamentosController.selected.bcta5}" title="#{myBundle.EditDepartamentosTitle_bcta5}" />
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_scta5}" for="scta5" />
+                        <p:inputText id="scta5" value="#{departamentosController.selected.scta5}" title="#{myBundle.EditDepartamentosTitle_scta5}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_ecta1}" for="ecta1" />
-                        <p:inputText id="ecta1" value="#{departamentosController.selected.ecta1}" title="#{myBundle.EditDepartamentosTitle_ecta1}" />
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_lcta1}" for="lcta1" />
+                        <p:inputText id="lcta1" value="#{departamentosController.selected.lcta1}" title="#{myBundle.EditDepartamentosTitle_lcta1}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_ecta2}" for="ecta2" />
-                        <p:inputText id="ecta2" value="#{departamentosController.selected.ecta2}" title="#{myBundle.EditDepartamentosTitle_ecta2}" />
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_lcta2}" for="lcta2" />
+                        <p:inputText id="lcta2" value="#{departamentosController.selected.lcta2}" title="#{myBundle.EditDepartamentosTitle_lcta2}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_ecta3}" for="ecta3" />
-                        <p:inputText id="ecta3" value="#{departamentosController.selected.ecta3}" title="#{myBundle.EditDepartamentosTitle_ecta3}" />
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_lcta3}" for="lcta3" />
+                        <p:inputText id="lcta3" value="#{departamentosController.selected.lcta3}" title="#{myBundle.EditDepartamentosTitle_lcta3}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_ecta4}" for="ecta4" />
-                        <p:inputText id="ecta4" value="#{departamentosController.selected.ecta4}" title="#{myBundle.EditDepartamentosTitle_ecta4}" />
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_lcta4}" for="lcta4" />
+                        <p:inputText id="lcta4" value="#{departamentosController.selected.lcta4}" title="#{myBundle.EditDepartamentosTitle_lcta4}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_ecta5}" for="ecta5" />
-                        <p:inputText id="ecta5" value="#{departamentosController.selected.ecta5}" title="#{myBundle.EditDepartamentosTitle_ecta5}" />
-
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_cta1}" for="cta1" />
-                        <p:inputText id="cta1" value="#{departamentosController.selected.cta1}" title="#{myBundle.EditDepartamentosTitle_cta1}" />
-
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_cta2}" for="cta2" />
-                        <p:inputText id="cta2" value="#{departamentosController.selected.cta2}" title="#{myBundle.EditDepartamentosTitle_cta2}" />
-
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_cta3}" for="cta3" />
-                        <p:inputText id="cta3" value="#{departamentosController.selected.cta3}" title="#{myBundle.EditDepartamentosTitle_cta3}" />
-
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_cta4}" for="cta4" />
-                        <p:inputText id="cta4" value="#{departamentosController.selected.cta4}" title="#{myBundle.EditDepartamentosTitle_cta4}" />
-
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_cta5}" for="cta5" />
-                        <p:inputText id="cta5" value="#{departamentosController.selected.cta5}" title="#{myBundle.EditDepartamentosTitle_cta5}" />
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_lcta5}" for="lcta5" />
+                        <p:inputText id="lcta5" value="#{departamentosController.selected.lcta5}" title="#{myBundle.EditDepartamentosTitle_lcta5}" />
 
                         <p:outputLabel value="#{myBundle.EditDepartamentosLabel_contable}" for="contable" />
                         <p:inputText id="contable" value="#{departamentosController.selected.contable}" title="#{myBundle.EditDepartamentosTitle_contable}" />
@@ -84,11 +69,6 @@
                         <p:outputLabel value="#{myBundle.EditDepartamentosLabel_codEquivalencia}" for="codEquivalencia" />
                         <p:inputText id="codEquivalencia" value="#{departamentosController.selected.codEquivalencia}" title="#{myBundle.EditDepartamentosTitle_codEquivalencia}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{departamentosController.selected.usuario}" title="#{myBundle.EditDepartamentosTitle_usuario}" />
-
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_fechaReg}" for="fechaReg" />
-                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{departamentosController.selected.fechaReg}" title="#{myBundle.EditDepartamentosTitle_fechaReg}"  showOn="button"/>
 
                         <p:outputLabel value="#{myBundle.EditDepartamentosLabel_distrito}" for="distrito" />
                         <p:inputText id="distrito" value="#{departamentosController.selected.distrito}" title="#{myBundle.EditDepartamentosTitle_distrito}" />

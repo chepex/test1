@@ -34,10 +34,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Planilla.findByAnioMes", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes"),    
     @NamedQuery(name = "Planilla.findByPk", query = "SELECT p  FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.planillaPK.secuencia = :secuencia"),
     @NamedQuery(name = "Planilla.findBySecuencia", query = "SELECT p FROM Planilla p WHERE p.planillaPK.secuencia = :secuencia"),
-    @NamedQuery(name = "Planilla.findByCodEmp", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codEmp = :codEmp"),
-    @NamedQuery(name = "Planilla.findByDeducciones", query = "SELECT p FROM Planilla p WHERE p.deducciones = :deducciones"),
-    @NamedQuery(name = "Planilla.findByPrestaciones", query = "SELECT p FROM Planilla p WHERE p.prestaciones = :prestaciones"),
-    @NamedQuery(name = "Planilla.findByDevengado", query = "SELECT p FROM Planilla p WHERE p.devengado = :devengado"),
+    @NamedQuery(name = "Planilla.findByEmpt", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codEmp = :codEmp and p.planillaPK.codCia= :codCia and p.programacionPla.anio = :anio"),        
+    @NamedQuery(name = "Planilla.findByEmp", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codEmp = :codEmp and p.planillaPK.secuencia = :secuencia and p.planillaPK.codCia= :codCia"),        
+    @NamedQuery(name = "Planilla.findByCodEmp", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codEmp = :codEmp and p.planillaPK.secuencia = :secuencia and p.planillaPK.codCia= :codCia"),
+    @NamedQuery(name = "Planilla.findByDeducciones", query = "SELECT p FROM Planilla p WHERE p.deducciones = :deducciones"),        
     @NamedQuery(name = "Planilla.findByLiquido", query = "SELECT p FROM Planilla p WHERE p.liquido = :liquido")})
 public class Planilla implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -45,12 +45,17 @@ public class Planilla implements Serializable {
     protected PlanillaPK planillaPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
 
+
+    @Column(name = "BRUTO")
+    private BigDecimal bruto;
+    @Column(name = "HORASEXTRAS")
+    private BigDecimal horasExtras;    
+    @Column(name = "BONOS")
+    private BigDecimal bonos;    
+    @Column(name = "NETO")
+    private BigDecimal neto;        
     @Column(name = "DEDUCCIONES")
-    private BigDecimal deducciones;
-    @Column(name = "PRESTACIONES")
-    private BigDecimal prestaciones;
-    @Column(name = "DEVENGADO")
-    private BigDecimal devengado;
+    private BigDecimal deducciones;    
     @Column(name = "LIQUIDO")
     private BigDecimal liquido;
     @Column(name = "COD_DEPTO")
@@ -111,9 +116,38 @@ public class Planilla implements Serializable {
         this.fechaReg = fechaReg;
     }
 
+    public BigDecimal getBruto() {
+        return bruto;
+    }
 
+    public void setBruto(BigDecimal bruto) {
+        this.bruto = bruto;
+    }
 
-    
+    public BigDecimal getHorasExtras() {
+        return horasExtras;
+    }
+
+    public void setHorasExtras(BigDecimal horasExtras) {
+        this.horasExtras = horasExtras;
+    }
+
+    public BigDecimal getBonos() {
+        return bonos;
+    }
+
+    public void setBonos(BigDecimal bonos) {
+        this.bonos = bonos;
+    }
+
+    public BigDecimal getNeto() {
+        return neto;
+    }
+
+    public void setNeto(BigDecimal neto) {
+        this.neto = neto;
+    }
+
     public short getCodDepto() {
         return codDepto;
     }
@@ -146,21 +180,7 @@ public class Planilla implements Serializable {
 	this.deducciones = deducciones;
     }
 
-    public BigDecimal getPrestaciones() {
-	return prestaciones;
-    }
-
-    public void setPrestaciones(BigDecimal prestaciones) {
-	this.prestaciones = prestaciones;
-    }
-
-    public BigDecimal getDevengado() {
-	return devengado;
-    }
-
-    public void setDevengado(BigDecimal devengado) {
-	this.devengado = devengado;
-    }
+    
 
     public BigDecimal getLiquido() {
 	return liquido;

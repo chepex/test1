@@ -36,16 +36,22 @@
 		</p:column>
 		<p:column >
 		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListDeducPrestaTitle_sumaResta}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.sumaResta}"/>
-		</p:column>
-		<p:column >
-		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListDeducPrestaTitle_afp}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.afp}"/>
 		</p:column>
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListDeducPrestaTitle_isss}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.isss}"/>
+		</p:column>
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListDeducPrestaTitle_renta}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.renta}"/>
+		</p:column>                
 		<p:column >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListDeducPrestaTitle_factor}"/>
@@ -80,7 +86,18 @@
 	    </p:dataTable>
 
 	</p:panel>
+<br/><br/>
+        <br/>
+        <br/>
 
+
+Afp = "S" es una deduccion de afp<br/>
+Isss= "S" es una deduccion de isss<br/>
+Renta= "S" es una deduccion de renta<br/>
+Factor= Es el valor por el cual se opera en el proceso de la deduccion<br/>
+Tope = Es el valor maximo que puede tener la deduccion <br/>
+Prioridad: Este campo sirve para establecer una proridad de deduciones a descontar automaticamente cuando un empleado esta en negativo<br/>
+Proceso = Es el nombre del proceso que se ejecuta en el sistema<br/>
     </h:form>
 
 </ui:composition>

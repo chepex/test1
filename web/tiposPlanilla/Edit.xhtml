@@ -14,7 +14,7 @@
 
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" rendered="#{tiposPlanillaController.selected != null}">
-                        
+
                         <h:outputLabel value="#{myBundle.EditTiposPlanillaLabel_tiposPlanillaPK_codTipopla}" for="tiposPlanillaPK_codTipopla" />
                         <h:outputText id="tiposPlanillaPK_codTipopla" value="#{tiposPlanillaController.selected.tiposPlanillaPK.codTipopla}" />
 
@@ -24,17 +24,40 @@
                         <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_status}" for="status" />
                         <p:inputText id="status" value="#{tiposPlanillaController.selected.status}" title="#{myBundle.EditTiposPlanillaTitle_status}" />
 
-                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_codDp}" for="codDp" />
-                        <p:selectOneMenu id="codDp" value="#{tiposPlanillaController.selected.deducPresta}"  >
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{tiposPlanillaController.selected.usuario}" title="#{myBundle.EditTiposPlanillaTitle_usuario}" />
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_fechaReg}" for="fechaReg" />
+                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{tiposPlanillaController.selected.fechaReg}" title="#{myBundle.EditTiposPlanillaTitle_fechaReg}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_ley}" for="ley" />
+                        <p:inputText id="ley" value="#{tiposPlanillaController.selected.ley}" title="#{myBundle.EditTiposPlanillaTitle_ley}" required="true" requiredMessage="#{myBundle.EditTiposPlanillaRequiredMessage_ley}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_frecuencia}" for="frecuencia" />
+                        <p:inputText id="frecuencia" value="#{tiposPlanillaController.selected.frecuencia}" title="#{myBundle.EditTiposPlanillaTitle_frecuencia}" required="true" requiredMessage="#{myBundle.EditTiposPlanillaRequiredMessage_frecuencia}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_prestamos}" for="prestamos" />
+                        <p:inputText id="prestamos" value="#{tiposPlanillaController.selected.prestamos}" title="#{myBundle.EditTiposPlanillaTitle_prestamos}" required="true" requiredMessage="#{myBundle.EditTiposPlanillaRequiredMessage_prestamos}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_liquido}" for="liquido" />
+                        <p:inputText id="liquido" value="#{tiposPlanillaController.selected.liquido}" title="#{myBundle.EditTiposPlanillaTitle_liquido}" required="true" requiredMessage="#{myBundle.EditTiposPlanillaRequiredMessage_liquido}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_adicional}" for="adicional" />
+                        <p:inputText id="adicional" value="#{tiposPlanillaController.selected.adicional}" title="#{myBundle.EditTiposPlanillaTitle_adicional}" required="true" requiredMessage="#{myBundle.EditTiposPlanillaRequiredMessage_adicional}"/>
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_promedio}" for="promedio" />
+                        <p:inputText id="promedio" value="#{tiposPlanillaController.selected.promedio}" title="#{myBundle.EditTiposPlanillaTitle_promedio}" />
+
+                        <p:outputLabel value="#{myBundle.EditTiposPlanillaLabel_deducPresta}" for="deducPresta" />
+                        <p:selectOneMenu id="deducPresta" value="#{tiposPlanillaController.selected.deducPresta}" required="true" requiredMessage="#{myBundle.EditTiposPlanillaRequiredMessage_deducPresta}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{deducPrestaController.items}"
                                            var="deducPrestaItem"
                                            itemValue="#{deducPrestaItem}"
-                                           itemLabel="#{deducPrestaItem.descripcion.toString() }"
-					   />
+                                           itemLabel="#{deducPrestaItem.descripcion.toString()}"
+                                           />
                             <f:converter binding="#{deducPrestaConverter}"/>
                         </p:selectOneMenu>
-                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{tiposPlanillaController.save}" value="#{myBundle.Save}" update="display,:TiposPlanillaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TiposPlanillaEditDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="TiposPlanillaEditDialog.hide()"/>
@@ -45,4 +68,5 @@
         </p:dialog>
 
     </ui:composition>
+
 </html>

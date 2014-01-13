@@ -44,7 +44,36 @@ public class DeducPrestaFacade extends AbstractFacade<DeducPresta> {
     }    
     
     
+    public List<DeducPresta> findCatNull(){
+	 TypedQuery<DeducPresta> q;
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	
+		 q = em.createNamedQuery("DeducPresta.CatNull", DeducPresta.class )		    
+		    .setParameter("codCia",  codCia );
+         return q.getResultList();
+    
+    }    
+    
     public DeducPresta findCodDeduc(MovDp movdp){
+	 TypedQuery<DeducPresta> q;
+	 try{
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	
+		 q = em.createNamedQuery("DeducPresta.findByCodDp", DeducPresta.class )		    
+		    .setParameter("codCia",  codCia )
+                 .setParameter("codDp",  movdp.getMovDpPK().getCodDp() );
+                  q.getSingleResult();/*para q de error si es nulo*/
+         }catch(Exception ex){
+             return null;
+         }
+         return q.getSingleResult();
+    
+    }  
+   
+    public DeducPresta findCodDeduc(short movdp){
 	 TypedQuery<DeducPresta> q;
 	 
 	    LoginBean lb= new LoginBean();	
@@ -52,11 +81,11 @@ public class DeducPrestaFacade extends AbstractFacade<DeducPresta> {
 	
 		 q = em.createNamedQuery("DeducPresta.findByCodDp", DeducPresta.class )		    
 		    .setParameter("codCia",  codCia )
-                 .setParameter("codDp",  movdp.getMovDpPK().getCodDp() );
+                 .setParameter("codDp",  movdp );
          return q.getSingleResult();
     
     }  
-   
+    
     public List<DeducPresta> findByCat(String catDp){
 	 TypedQuery<DeducPresta> q;
 	 

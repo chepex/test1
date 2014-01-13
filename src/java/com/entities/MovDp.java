@@ -30,11 +30,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "MovDp.findAll", query = "SELECT m FROM MovDp m"),
     @NamedQuery(name = "MovDp.findByPk", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codDp = :codDp and  m.movDpPK.codEmp = :codEmp and  m.movDpPK.secuencia = :secuencia"),
+    @NamedQuery(name = "MovDp.findByFiltro", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.secuencia = :secuencia"),
+    
     @NamedQuery(name = "MovDp.findByCodCia", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia"),
-    @NamedQuery(name = "MovDp.findBySR", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia and m.movDpPK.codEmp = :codEmp and m.movDpPK.secuencia = :secuencia and m.deducPresta.sumaResta = :sumaResta"),    
-    @NamedQuery(name = "MovDp.findBySRPrioridad", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia and m.movDpPK.codEmp = :codEmp and m.movDpPK.secuencia = :secuencia and m.deducPresta.sumaResta = :sumaResta and  m.deducPresta.prioridad > 0 Order by m.deducPresta.prioridad DESC"),        
+    @NamedQuery(name = "MovDp.findBySR", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia and m.movDpPK.codEmp = :codEmp and m.movDpPK.secuencia = :secuencia and m.deducPresta.catDp.sumaResta = :sumaResta"),    
+    @NamedQuery(name = "MovDp.findBySRPrioridad", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia and m.movDpPK.codEmp = :codEmp and m.movDpPK.secuencia = :secuencia and m.deducPresta.catDp.sumaResta = :sumaResta and  m.deducPresta.prioridad > 0 Order by m.deducPresta.prioridad DESC"),        
+    @NamedQuery(name = "MovDp.findByCat", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia and m.movDpPK.codEmp = :codEmp and m.movDpPK.secuencia = :secuencia and m.deducPresta.catDp.descripcion = :categoria "),            
     @NamedQuery(name = "MovDp.findBySecuencia", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and m.movDpPK.secuencia = :secuencia and m.generado = :generado"),
-    @NamedQuery(name = "MovDp.findByCodEmp", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codEmp = :codEmp and m.deducPresta.sumaResta = :sumaResta"),
+    @NamedQuery(name = "MovDp.findByPK2", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and m.movDpPK.secuencia = :secuencia and m.movDpPK.codEmp = :codEmp and m.deducPresta.renta = 'S' "),    
+    @NamedQuery(name = "MovDp.findByCodEmp", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codEmp = :codEmp and m.deducPresta.catDp.sumaResta = :sumaResta"),
+    @NamedQuery(name = "MovDp.findByCodEmp2", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codEmp = :codEmp and m.movDpPK.secuencia = :secuencia"),
+    @NamedQuery(name = "MovDp.findByRentaT", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codEmp = :codEmp and m.programacionPla.anio =:anio and m.deducPresta.renta = 'S'  "),
+    @NamedQuery(name = "MovDp.findByAfpT", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codEmp = :codEmp and m.programacionPla.anio =:anio and m.deducPresta.afp = 'S'  "),
     @NamedQuery(name = "MovDp.findByCodDp", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codDp = :codDp  "),
     @NamedQuery(name = "MovDp.findByValor", query = "SELECT m FROM MovDp m WHERE m.valor = :valor")})
 public class MovDp implements Serializable {
@@ -70,8 +77,7 @@ public class MovDp implements Serializable {
     @Column(name = "FECHA_REG")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaReg;
-    @Column(name = "NUM_REF")    
-    private String numRef;   
+
     
     public MovDp() {
     }
@@ -97,8 +103,8 @@ public class MovDp implements Serializable {
         this.generado = generado;
     }
 
-    public MovDp(short codCia, long secuencia, int codEmp, short codDp) {
-	this.movDpPK = new MovDpPK(codCia, secuencia, codEmp, codDp);
+    public MovDp(short codCia, long secuencia, int codEmp, short codDp, int codPresta) {
+        this.movDpPK = new MovDpPK(codCia, secuencia, codEmp, codDp, codPresta);
     }
 
     public MovDpPK getMovDpPK() {
@@ -109,13 +115,7 @@ public class MovDp implements Serializable {
 	this.movDpPK = movDpPK;
     }
 
-    public String getNumRef() {
-	return numRef;
-    }
 
-    public void setNumRef(String numRef) {
-	this.numRef = numRef;
-    }
 
     
     public BigDecimal getValor() {

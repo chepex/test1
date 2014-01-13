@@ -52,18 +52,17 @@ public class ProgramacionPla implements Serializable {
     @Size(min = 1, max = 1)
     @Column(name = "STATUS")
     private String status;
+    @Column(name = "RECALCULO")
+    private String recalculo;    
     @Column(name = "FECHA_PAGO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPago;
     @Column(name = "FECHA_CORTE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCorte;    
-    @Column(name = "FRECUENCIA")
-    private short frecuencia;   
     public Date getFechaCorte() {
 	return fechaCorte;
     }
-
     public void setFechaCorte(Date fechaCorte) {
 	this.fechaCorte = fechaCorte;
     }
@@ -96,19 +95,36 @@ public class ProgramacionPla implements Serializable {
     private Date fechaReg;
     
     
-    public ProgramacionPla() {
+    public ProgramacionPla() {	
 	
-	
     }
 
-    public short getFrecuencia() {
-        return frecuencia;
+    public String getRecalculo() {
+        return recalculo;
     }
 
-    public void setFrecuencia(short frecuencia) {
-        this.frecuencia = frecuencia;
+    public void setRecalculo(String recalculo) {
+        this.recalculo = recalculo;
     }
 
+    
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public Date getFechaReg() {
+        return fechaReg;
+    }
+
+    public void setFechaReg(Date fechaReg) {
+        this.fechaReg = fechaReg;
+    }
+
+    
     public ProgramacionPla(ProgramacionPlaPK programacionPlaPK) {
 	this.programacionPlaPK = programacionPlaPK;
     }

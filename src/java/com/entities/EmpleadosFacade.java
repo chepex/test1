@@ -4,6 +4,8 @@
  */
 package com.entities;
 
+import com.ejb.SB_Calculos;
+import com.entities.util.JsfUtil;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +52,7 @@ public  List<Empleados> findbyNameAndPk( int emp,String apellidos,String nombres
     }   
 
 public  Empleados findbyCodemp( int emp){
+    try{
      LoginBean lb= new LoginBean();	
 	    short codCia = lb.sscia();
             
@@ -60,6 +63,11 @@ public  Empleados findbyCodemp( int emp){
 		    .setParameter("codEmp",  emp);
 
          return q.getSingleResult();
+    }catch(Exception ex){
+           JsfUtil.logs(ex , "Surgio un error", "Proceso findbyCodemp",EmpleadosFacade.class,"ERROR");             
+                
+        return null;
+    }
     }  
 
 public  Empleados findbyUsuario(String usuario){

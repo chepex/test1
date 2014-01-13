@@ -17,7 +17,7 @@
 	    Mes		     
             <p:inputText id="mes" value="#{planillaController.mes}"  />	    	            
             
-            <p:commandButton id="btn-consultar"   icon="ui-icon-refresh"  value="Consultar" actionListener="#{planillaController.consultar() }" update="@form :growl" />
+            <p:commandButton id="btn-consultar"   icon="ui-icon-refresh"  value="Consultar" actionListener="#{planillaController.consultar() }" update="@form :growl datalist " />
 		
 			
 	</p:panelGrid>
@@ -46,11 +46,11 @@
 		    </f:facet>
 		    <h:outputText value="#{item.departamentos.nomDepto}"/>
 		</p:column>                
-		<p:column sortBy="#{item.programacionPla.programacionPlaPK}" filterBy="#{item.programacionPla.programacionPlaPK}">
+                <p:column   width="50px" filterBy="#{item.programacionPla.programacionPlaPK.secuencia}">
 		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListPlanillaTitle_programacionPla}"/>
+			<h:outputText   value="#{myBundle.ListPlanillaTitle_programacionPla}"/>
 		    </f:facet>
-		    <h:outputText value="#{item.programacionPla.programacionPlaPK.secuencia}"/>
+		    <h:outputText   value="#{item.programacionPla.programacionPlaPK.secuencia}"/>
 		</p:column>  
 		<p:column >
 		    <f:facet name="header">
@@ -62,13 +62,13 @@
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListPlanillaTitle_devengado}"/>
 		    </f:facet>
-		    <h:outputText value="#{item.devengado}"/>
+		    <h:outputText value="#{item.bruto}"/>
 		</p:column> 
 		<p:column  >
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListPlanillaTitle_prestaciones}"/>
 		    </f:facet>
-		    <h:outputText value="#{item.prestaciones}"/>
+		    <h:outputText value="#{item.neto}"/>
 		</p:column>                
 		<p:column  >
 		    <f:facet name="header">
@@ -86,9 +86,12 @@
 
 
 		<f:facet name="footer">		  
-		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PlanillaViewForm" oncomplete="PlanillaViewDialog.show()" disabled="#{empty planillaController.selected}"/>		    
+		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PlanillaViewForm" oncomplete="PlanillaViewDialog.show()" disabled="#{empty planillaController.selected}"/>		                        
                     <p:commandButton id="btn-generar"   icon="ui-icon-shuffle"  value="Generar" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()"   actionListener="#{planillaController.generar() }" update="@form :growl" />                                        
-                    <p:commandButton id="pdfButton" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.reportePlanilla()}" ajax="false" value="Generar Pdf" update="PlanillaListForm" oncomplete="ProductoPdfDialog.show()"/>                    
+                    <p:commandButton id="btn-cerrar"   icon="ui-icon-shuffle"  value="Cerrar" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()"   actionListener="#{planillaController.cerrar() }" update="@form :growl" />                                                            
+                    <p:commandButton id="pdfButton" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.reportePlanilla()}" ajax="false" value="Generar Pdf" update="PlanillaListForm" oncomplete="ProductoPdfDialog.show()"/>   
+                    <p:commandButton id="CreateCVS" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.Gcvs()}" ajax="false" value="Generar CVS" update="PlanillaListForm" oncomplete="ProductoPdfDialog.show()"/>                    
+                    <p:commandButton id="pdfBoletas" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.GenerarBoletas()}" ajax="false" value="Generar Boletas" update="PlanillaListForm" oncomplete="ProductoPdfDialog.show()"/>   
                     
                     
 		</f:facet>

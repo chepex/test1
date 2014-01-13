@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeptosMovViewDlg" widgetVar="DeptosMovViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewDeptosMovTitle}">
+
+            <h:form id="DeptosMovViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{deptosMovController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewDeptosMovLabel_bcta1}"/>
+                        <h:outputText value="#{deptosMovController.selected.bcta1}" title="#{myBundle.ViewDeptosMovTitle_bcta1}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeptosMovLabel_bcta2}"/>
+                        <h:outputText value="#{deptosMovController.selected.bcta2}" title="#{myBundle.ViewDeptosMovTitle_bcta2}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeptosMovLabel_bcta3}"/>
+                        <h:outputText value="#{deptosMovController.selected.bcta3}" title="#{myBundle.ViewDeptosMovTitle_bcta3}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeptosMovLabel_bcta4}"/>
+                        <h:outputText value="#{deptosMovController.selected.bcta4}" title="#{myBundle.ViewDeptosMovTitle_bcta4}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeptosMovLabel_bcta5}"/>
+                        <h:outputText value="#{deptosMovController.selected.bcta5}" title="#{myBundle.ViewDeptosMovTitle_bcta5}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeptosMovLabel_departamentos}"/>
+                        <h:outputText value="#{deptosMovController.selected.departamentos.nomDepto}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeptosMovLabel_catDp}"/>
+                        <h:outputText value="#{deptosMovController.selected.catDp.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="DeptosMovViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

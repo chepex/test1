@@ -6,6 +6,8 @@ package com.entities;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -79,7 +81,10 @@ public class ResumenAsistenciaFacade extends AbstractFacade<ResumenAsistencia> {
  
       
         public ResumenAsistencia ByEmp(MovDp movdp){
-	 TypedQuery<ResumenAsistencia> q;
+            TypedQuery<ResumenAsistencia> q;
+            try{
+                
+	 
 	 
 	    LoginBean lb= new LoginBean();	
 	    short codCia = lb.sscia();	
@@ -87,9 +92,35 @@ public class ResumenAsistenciaFacade extends AbstractFacade<ResumenAsistencia> {
 		    .setParameter("codCia",  codCia )
                      .setParameter("codEmp",   movdp.getMovDpPK().getCodEmp() )
 		    .setParameter("secuencia",  movdp.getMovDpPK().getSecuencia() );
-         return q.getSingleResult();
+             q.getSingleResult();/*para q de error si es nulo*/
+            }
+            catch(Exception ex){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Surgio un error", "El empleado "+movdp.getMovDpPK().getCodEmp()+" No pertenece a esta planilla"));  
+                return null;
+            }
+        return q.getSingleResult();
     
     }   
+   
+        public ResumenAsistencia ByEmp(PlanillaHoras ph){
+            TypedQuery<ResumenAsistencia> q;
+            try{
+                
+	 
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+		 q = em.createNamedQuery("ResumenAsistencia.findByEmp", ResumenAsistencia.class )		    
+		    .setParameter("codCia",  codCia )
+                     .setParameter("codEmp",   ph.getPlanillaHorasPK().getCodEmp() )
+		    .setParameter("secuencia",  ph.getPlanillaHorasPK().getSecuencia() );
+             q.getSingleResult();/*para q de error si es nulo*/
+            }
+            catch(Exception ex){
+                return null;
+            }
+        return q.getSingleResult();
     
+    }           
    
 }

@@ -7,7 +7,33 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <h:form id="MovDpListForm">
-
+<p:panelGrid columns="6" >
+	    Estado
+	    <p:selectOneMenu id="estado" value="#{movDpController.estado }" 
+				       filter="true">
+			    <f:selectItem itemLabel="Selecione un status"/>
+                            <f:selectItem itemLabel="Programada" itemValue="P"/>			    
+			    <f:selectItem itemLabel="Cerrada" itemValue="C"/>
+                           <p:ajax update="@form" listener="#{movDpController.ChangeEstadoPlanilla}" />    
+                        </p:selectOneMenu>
+	    
+	    Planillas Programada
+		      <p:selectOneMenu id="programacionPla" value="#{movDpController.programacionpla }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_programacionPla}"
+				       filter="true">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{movDpController.programacionplas}"
+                                           var="programacionPlaItem"
+                                           itemValue="#{programacionPlaItem}"
+                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "					   
+					   
+					   />
+                            <f:converter binding="#{programacionPlaConverter}"/>
+                        </p:selectOneMenu>
+			<p:commandButton id="btn-consultar"   icon="ui-icon-refresh"  value="Consultar" actionListener="#{movDpController.consultar() }" update="@form :growl" />
+			
+			
+			
+	</p:panelGrid>
 	<p:panel header="#{myBundle.ListMovDpTitle}">
 
 	    <p:dataTable id="datalist" value="#{movDpController.items}" var="item"
@@ -44,6 +70,13 @@
 		    </f:facet>
 		    <h:outputText value="#{item.valor}"/>
 		</p:column>
+		<p:column sortBy="#{item.movDpPK.codPresta}" filterBy="#{item.movDpPK.codPresta}">
+		    <f:facet name="header">
+			<h:outputText value="Cod presta."/>
+		    </f:facet>
+		    <h:outputText value="#{item.movDpPK.codPresta}"/>
+		</p:column>                
+                
 
 
 
@@ -57,7 +90,16 @@
 	    </p:dataTable>
 
 	</p:panel>
-
+ <p:fileUpload   fileUploadListener="#{movDpController.upload}"  dragDropSupport="false"  
+                   update="@form :growl"   />  
     </h:form>
-
+<br></br>
+PROCESO PARA CARGAR ARCHIVO <br></br>
+1 SELECIONAR SECUENCIA, <br></br>
+2 SELECIONAR ARCHIVO<br></br>
+PRESIONAR BOTON DE CARGAR<br></br>
+FORMATO<br></br>
+COD_EMP, COD_DP, VALOR<br></br>
+    
+    
 </ui:composition>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PlanillahListForm">
+
+        <p:panel header="#{myBundle.ListPlanillahTitle}">
+
+            <p:dataTable id="datalist" value="#{planillahController.items}" var="item"
+                         selectionMode="single" selection="#{planillahController.selected}"
+                         rowKey="#{item.planillahPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.dias}" filterBy="#{item.dias}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_dias}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dias}"/>
+                </p:column>
+                <p:column sortBy="#{item.bruto}" filterBy="#{item.bruto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_bruto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.bruto}"/>
+                </p:column>
+                <p:column sortBy="#{item.horasextras}" filterBy="#{item.horasextras}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_horasextras}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horasextras}"/>
+                </p:column>
+                <p:column sortBy="#{item.bonos}" filterBy="#{item.bonos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_bonos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.bonos}"/>
+                </p:column>
+                <p:column sortBy="#{item.neto}" filterBy="#{item.neto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_neto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.neto}"/>
+                </p:column>
+                <p:column sortBy="#{item.afp}" filterBy="#{item.afp}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_afp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.afp}"/>
+                </p:column>
+                <p:column sortBy="#{item.isss}" filterBy="#{item.isss}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_isss}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.isss}"/>
+                </p:column>
+                <p:column sortBy="#{item.renta}" filterBy="#{item.renta}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_renta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.renta}"/>
+                </p:column>
+                <p:column sortBy="#{item.deducciones}" filterBy="#{item.deducciones}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_deducciones}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.deducciones}"/>
+                </p:column>
+                <p:column sortBy="#{item.liquido}" filterBy="#{item.liquido}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_liquido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.liquido}"/>
+                </p:column>
+                <p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_usuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuario}"/>
+                </p:column>
+                <p:column sortBy="#{item.fechaReg}" filterBy="#{item.fechaReg}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_fechaReg}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaReg}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{item.anio}" filterBy="#{item.anio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_anio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.anio}"/>
+                </p:column>
+                <p:column sortBy="#{item.mes}" filterBy="#{item.mes}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_mes}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.mes}"/>
+                </p:column>
+                <p:column sortBy="#{item.codTipopla}" filterBy="#{item.codTipopla}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_codTipopla}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codTipopla}"/>
+                </p:column>
+                <p:column sortBy="#{item.numPlanilla}" filterBy="#{item.numPlanilla}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_numPlanilla}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numPlanilla}"/>
+                </p:column>
+                <p:column sortBy="#{item.programacionPla.programacionPlaPK}" filterBy="#{item.programacionPla.programacionPlaPK}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_programacionPla}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.programacionPla.programacionPlaPK}"/>
+                </p:column>
+                <p:column sortBy="#{item.empleados.empleadosPK}" filterBy="#{item.empleados.empleadosPK}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_empleados}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleados.empleadosPK}"/>
+                </p:column>
+                <p:column sortBy="#{item.departamentos.departamentosPK}" filterBy="#{item.departamentos.departamentosPK}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillahTitle_departamentos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.departamentos.departamentosPK}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{planillahController.prepareCreate}" update=":PlanillahCreateForm" oncomplete="PlanillahCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PlanillahViewForm" oncomplete="PlanillahViewDialog.show()" disabled="#{empty planillahController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PlanillahEditForm" oncomplete="PlanillahEditDialog.show()" disabled="#{empty planillahController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{planillahController.delete}" update=":growl,datalist" disabled="#{empty planillahController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

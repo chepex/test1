@@ -37,6 +37,8 @@ public class DeducPrestaController extends AbstractController<DeducPresta> imple
       
       @Override     
     public void saveNew(ActionEvent event) {
+          
+         
         short Sequence = ejbFacade.Sequence("DEDUC_PRESTA_SEQ");
         this.getSelected().getDeducPrestaPK().setCodDp(Sequence);
         String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Created");

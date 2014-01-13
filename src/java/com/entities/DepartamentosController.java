@@ -26,4 +26,6 @@ public class DepartamentosController extends AbstractController<Departamentos> i
     protected void initializeEmbeddableKey() {
 	this.getSelected().setDepartamentosPK(new com.entities.DepartamentosPK());
     }
+    
+
 }

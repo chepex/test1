@@ -53,6 +53,10 @@ public class ProgramacionPlaController extends AbstractController<ProgramacionPl
 		 + this.getSelected().getNumPlanilla().toString() ;
 	 long secuencia = Long.parseLong( sc ) ;
 	 getSelected().getProgramacionPlaPK().setSecuencia(secuencia);
+         if(getSelected().getRecalculo().isEmpty()){
+             getSelected().setRecalculo("N");
+         }         
+         getSelected().setStatus("P");
 	 String msg = ResourceBundle.getBundle("/MyBundle").getString(super.itemClass.getSimpleName()  + "Created");
 	 
 	 super.persist(PersistAction.CREATE, msg); 

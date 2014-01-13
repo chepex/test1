@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillahViewDlg" widgetVar="PlanillahViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewPlanillahTitle}">
+
+            <h:form id="PlanillahViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planillahController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_dias}"/>
+                        <h:outputText value="#{planillahController.selected.dias}" title="#{myBundle.ViewPlanillahTitle_dias}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_bruto}"/>
+                        <h:outputText value="#{planillahController.selected.bruto}" title="#{myBundle.ViewPlanillahTitle_bruto}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_horasextras}"/>
+                        <h:outputText value="#{planillahController.selected.horasextras}" title="#{myBundle.ViewPlanillahTitle_horasextras}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_bonos}"/>
+                        <h:outputText value="#{planillahController.selected.bonos}" title="#{myBundle.ViewPlanillahTitle_bonos}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_neto}"/>
+                        <h:outputText value="#{planillahController.selected.neto}" title="#{myBundle.ViewPlanillahTitle_neto}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_afp}"/>
+                        <h:outputText value="#{planillahController.selected.afp}" title="#{myBundle.ViewPlanillahTitle_afp}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_isss}"/>
+                        <h:outputText value="#{planillahController.selected.isss}" title="#{myBundle.ViewPlanillahTitle_isss}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_renta}"/>
+                        <h:outputText value="#{planillahController.selected.renta}" title="#{myBundle.ViewPlanillahTitle_renta}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_deducciones}"/>
+                        <h:outputText value="#{planillahController.selected.deducciones}" title="#{myBundle.ViewPlanillahTitle_deducciones}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_liquido}"/>
+                        <h:outputText value="#{planillahController.selected.liquido}" title="#{myBundle.ViewPlanillahTitle_liquido}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_usuario}"/>
+                        <h:outputText value="#{planillahController.selected.usuario}" title="#{myBundle.ViewPlanillahTitle_usuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_fechaReg}"/>
+                        <h:outputText value="#{planillahController.selected.fechaReg}" title="#{myBundle.ViewPlanillahTitle_fechaReg}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_anio}"/>
+                        <h:outputText value="#{planillahController.selected.anio}" title="#{myBundle.ViewPlanillahTitle_anio}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_mes}"/>
+                        <h:outputText value="#{planillahController.selected.mes}" title="#{myBundle.ViewPlanillahTitle_mes}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_codTipopla}"/>
+                        <h:outputText value="#{planillahController.selected.codTipopla}" title="#{myBundle.ViewPlanillahTitle_codTipopla}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_numPlanilla}"/>
+                        <h:outputText value="#{planillahController.selected.numPlanilla}" title="#{myBundle.ViewPlanillahTitle_numPlanilla}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_programacionPla}"/>
+                        <h:outputText value="#{planillahController.selected.programacionPla.programacionPlaPK}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_empleados}"/>
+                        <h:outputText value="#{planillahController.selected.empleados.empleadosPK}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillahLabel_departamentos}"/>
+                        <h:outputText value="#{planillahController.selected.departamentos.departamentosPK}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PlanillahViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

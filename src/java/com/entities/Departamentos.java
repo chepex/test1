@@ -37,24 +37,19 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Departamentos.findAll", query = "SELECT d FROM Departamentos d"),
     @NamedQuery(name = "Departamentos.findByCodCia", query = "SELECT d FROM Departamentos d WHERE d.departamentosPK.codCia = :codCia"),
     @NamedQuery(name = "Departamentos.findByCodDepto", query = "SELECT d FROM Departamentos d WHERE d.departamentosPK.codDepto = :codDepto"),
-    @NamedQuery(name = "Departamentos.findByPuesto", query = "SELECT d FROM Departamentos d WHERE d.puestosList = :puestosList"),
+    @NamedQuery(name = "Departamentos.findByPuesto", query = "SELECT d FROM Departamentos d WHERE d.puestosList = :puestosList"),    
     @NamedQuery(name = "Departamentos.findByNomDepto", query = "SELECT d FROM Departamentos d WHERE d.nomDepto = :nomDepto"),
     @NamedQuery(name = "Departamentos.findByEmpleados", query = "SELECT d FROM Departamentos d WHERE d.empleados = :empleados"),
-    @NamedQuery(name = "Departamentos.findByBcta1", query = "SELECT d FROM Departamentos d WHERE d.bcta1 = :bcta1"),
-    @NamedQuery(name = "Departamentos.findByBcta2", query = "SELECT d FROM Departamentos d WHERE d.bcta2 = :bcta2"),
-    @NamedQuery(name = "Departamentos.findByBcta3", query = "SELECT d FROM Departamentos d WHERE d.bcta3 = :bcta3"),
-    @NamedQuery(name = "Departamentos.findByBcta4", query = "SELECT d FROM Departamentos d WHERE d.bcta4 = :bcta4"),
-    @NamedQuery(name = "Departamentos.findByBcta5", query = "SELECT d FROM Departamentos d WHERE d.bcta5 = :bcta5"),
-    @NamedQuery(name = "Departamentos.findByEcta1", query = "SELECT d FROM Departamentos d WHERE d.ecta1 = :ecta1"),
-    @NamedQuery(name = "Departamentos.findByEcta2", query = "SELECT d FROM Departamentos d WHERE d.ecta2 = :ecta2"),
-    @NamedQuery(name = "Departamentos.findByEcta3", query = "SELECT d FROM Departamentos d WHERE d.ecta3 = :ecta3"),
-    @NamedQuery(name = "Departamentos.findByEcta4", query = "SELECT d FROM Departamentos d WHERE d.ecta4 = :ecta4"),
-    @NamedQuery(name = "Departamentos.findByEcta5", query = "SELECT d FROM Departamentos d WHERE d.ecta5 = :ecta5"),
-    @NamedQuery(name = "Departamentos.findByCta1", query = "SELECT d FROM Departamentos d WHERE d.cta1 = :cta1"),
-    @NamedQuery(name = "Departamentos.findByCta2", query = "SELECT d FROM Departamentos d WHERE d.cta2 = :cta2"),
-    @NamedQuery(name = "Departamentos.findByCta3", query = "SELECT d FROM Departamentos d WHERE d.cta3 = :cta3"),
-    @NamedQuery(name = "Departamentos.findByCta4", query = "SELECT d FROM Departamentos d WHERE d.cta4 = :cta4"),
-    @NamedQuery(name = "Departamentos.findByCta5", query = "SELECT d FROM Departamentos d WHERE d.cta5 = :cta5"),
+    @NamedQuery(name = "Departamentos.findByLcta1", query = "SELECT d FROM Departamentos d WHERE d.lcta1 = :lcta1"),
+    @NamedQuery(name = "Departamentos.findByLcta2", query = "SELECT d FROM Departamentos d WHERE d.lcta2 = :lcta2"),
+    @NamedQuery(name = "Departamentos.findByLcta3", query = "SELECT d FROM Departamentos d WHERE d.lcta3 = :lcta3"),
+    @NamedQuery(name = "Departamentos.findByLcta4", query = "SELECT d FROM Departamentos d WHERE d.lcta4 = :lcta4"),
+    @NamedQuery(name = "Departamentos.findByLcta5", query = "SELECT d FROM Departamentos d WHERE d.lcta5 = :lcta5"),
+    @NamedQuery(name = "Departamentos.findByScta1", query = "SELECT d FROM Departamentos d WHERE d.scta1 = :scta1"),
+    @NamedQuery(name = "Departamentos.findByScta2", query = "SELECT d FROM Departamentos d WHERE d.scta2 = :scta2"),
+    @NamedQuery(name = "Departamentos.findByScta3", query = "SELECT d FROM Departamentos d WHERE d.scta3 = :scta3"),
+    @NamedQuery(name = "Departamentos.findByScta4", query = "SELECT d FROM Departamentos d WHERE d.scta4 = :scta4"),
+    @NamedQuery(name = "Departamentos.findByScta5", query = "SELECT d FROM Departamentos d WHERE d.scta5 = :scta5"),
     @NamedQuery(name = "Departamentos.findByContable", query = "SELECT d FROM Departamentos d WHERE d.contable = :contable"),
     @NamedQuery(name = "Departamentos.findByCodTipopla", query = "SELECT d FROM Departamentos d WHERE d.codTipopla = :codTipopla"),
     @NamedQuery(name = "Departamentos.findByProyecto", query = "SELECT d FROM Departamentos d WHERE d.proyecto = :proyecto"),
@@ -83,36 +78,27 @@ public class Departamentos implements Serializable {
     private String nomDepto;
     @Column(name = "EMPLEADOS")
     private Integer empleados;
-    @Column(name = "BCTA_1")
-    private Short bcta1;
-    @Column(name = "BCTA_2")
-    private Short bcta2;
-    @Column(name = "BCTA_3")
-    private Short bcta3;
-    @Column(name = "BCTA_4")
-    private Short bcta4;
-    @Column(name = "BCTA_5")
-    private Short bcta5;
-    @Column(name = "ECTA_1")
-    private Short ecta1;
-    @Column(name = "ECTA_2")
-    private Short ecta2;
-    @Column(name = "ECTA_3")
-    private Short ecta3;
-    @Column(name = "ECTA_4")
-    private Short ecta4;
-    @Column(name = "ECTA_5")
-    private Short ecta5;
-    @Column(name = "CTA_1")
-    private Short cta1;
-    @Column(name = "CTA_2")
-    private Short cta2;
-    @Column(name = "CTA_3")
-    private Short cta3;
-    @Column(name = "CTA_4")
-    private Short cta4;
-    @Column(name = "CTA_5")
-    private Short cta5;
+    @Column(name = "LCTA_1")
+    private Short lcta1;
+    @Column(name = "LCTA_2")
+    private Short lcta2;
+    @Column(name = "LCTA_3")
+    private Short lcta3;
+    @Column(name = "LCTA_4")
+    private Short lcta4;
+    @Column(name = "LCTA_5")
+    private Short lcta5;
+    @Column(name = "SCTA_1")
+    private Short scta1;
+    @Column(name = "SCTA_2")
+    private Short scta2;
+    @Column(name = "SCTA_3")
+    private Short scta3;
+    @Column(name = "SCTA_4")
+    private Short scta4;
+    @Column(name = "SCTA_5")
+    private Short scta5;
+      
     @Size(max = 1)
     @Column(name = "CONTABLE")
     private String contable;
@@ -186,125 +172,86 @@ public class Departamentos implements Serializable {
 	this.empleados = empleados;
     }
 
-    public Short getBcta1() {
-	return bcta1;
+    public Short getLcta1() {
+        return lcta1;
     }
 
-    public void setBcta1(Short bcta1) {
-	this.bcta1 = bcta1;
+    public void setLcta1(Short lcta1) {
+        this.lcta1 = lcta1;
     }
 
-    public Short getBcta2() {
-	return bcta2;
+    public Short getLcta2() {
+        return lcta2;
     }
 
-    public void setBcta2(Short bcta2) {
-	this.bcta2 = bcta2;
+    public void setLcta2(Short lcta2) {
+        this.lcta2 = lcta2;
     }
 
-    public Short getBcta3() {
-	return bcta3;
+    public Short getLcta3() {
+        return lcta3;
     }
 
-    public void setBcta3(Short bcta3) {
-	this.bcta3 = bcta3;
+    public void setLcta3(Short lcta3) {
+        this.lcta3 = lcta3;
     }
 
-    public Short getBcta4() {
-	return bcta4;
+    public Short getLcta4() {
+        return lcta4;
     }
 
-    public void setBcta4(Short bcta4) {
-	this.bcta4 = bcta4;
+    public void setLcta4(Short lcta4) {
+        this.lcta4 = lcta4;
     }
 
-    public Short getBcta5() {
-	return bcta5;
+    public Short getLcta5() {
+        return lcta5;
     }
 
-    public void setBcta5(Short bcta5) {
-	this.bcta5 = bcta5;
+    public void setLcta5(Short lcta5) {
+        this.lcta5 = lcta5;
     }
 
-    public Short getEcta1() {
-	return ecta1;
+    public Short getScta1() {
+        return scta1;
     }
 
-    public void setEcta1(Short ecta1) {
-	this.ecta1 = ecta1;
+    public void setScta1(Short scta1) {
+        this.scta1 = scta1;
     }
 
-    public Short getEcta2() {
-	return ecta2;
+    public Short getScta2() {
+        return scta2;
     }
 
-    public void setEcta2(Short ecta2) {
-	this.ecta2 = ecta2;
+    public void setScta2(Short scta2) {
+        this.scta2 = scta2;
     }
 
-    public Short getEcta3() {
-	return ecta3;
+    public Short getScta3() {
+        return scta3;
     }
 
-    public void setEcta3(Short ecta3) {
-	this.ecta3 = ecta3;
+    public void setScta3(Short scta3) {
+        this.scta3 = scta3;
     }
 
-    public Short getEcta4() {
-	return ecta4;
+    public Short getScta4() {
+        return scta4;
     }
 
-    public void setEcta4(Short ecta4) {
-	this.ecta4 = ecta4;
+    public void setScta4(Short scta4) {
+        this.scta4 = scta4;
     }
 
-    public Short getEcta5() {
-	return ecta5;
+    public Short getScta5() {
+        return scta5;
     }
 
-    public void setEcta5(Short ecta5) {
-	this.ecta5 = ecta5;
+    public void setScta5(Short scta5) {
+        this.scta5 = scta5;
     }
 
-    public Short getCta1() {
-	return cta1;
-    }
-
-    public void setCta1(Short cta1) {
-	this.cta1 = cta1;
-    }
-
-    public Short getCta2() {
-	return cta2;
-    }
-
-    public void setCta2(Short cta2) {
-	this.cta2 = cta2;
-    }
-
-    public Short getCta3() {
-	return cta3;
-    }
-
-    public void setCta3(Short cta3) {
-	this.cta3 = cta3;
-    }
-
-    public Short getCta4() {
-	return cta4;
-    }
-
-    public void setCta4(Short cta4) {
-	this.cta4 = cta4;
-    }
-
-    public Short getCta5() {
-	return cta5;
-    }
-
-    public void setCta5(Short cta5) {
-	this.cta5 = cta5;
-    }
 
     public String getContable() {
 	return contable;

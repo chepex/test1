@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeptosMovEditDlg" widgetVar="DeptosMovEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditDeptosMovTitle}">
+
+            <h:form id="DeptosMovEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{deptosMovController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.EditDeptosMovLabel_bcta1}" for="bcta1" />
+                        <p:inputText id="bcta1" value="#{deptosMovController.selected.bcta1}" title="#{myBundle.EditDeptosMovTitle_bcta1}" required="true" requiredMessage="#{myBundle.EditDeptosMovRequiredMessage_bcta1}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDeptosMovLabel_bcta2}" for="bcta2" />
+                        <p:inputText id="bcta2" value="#{deptosMovController.selected.bcta2}" title="#{myBundle.EditDeptosMovTitle_bcta2}" required="true" requiredMessage="#{myBundle.EditDeptosMovRequiredMessage_bcta2}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDeptosMovLabel_bcta3}" for="bcta3" />
+                        <p:inputText id="bcta3" value="#{deptosMovController.selected.bcta3}" title="#{myBundle.EditDeptosMovTitle_bcta3}" required="true" requiredMessage="#{myBundle.EditDeptosMovRequiredMessage_bcta3}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDeptosMovLabel_bcta4}" for="bcta4" />
+                        <p:inputText id="bcta4" value="#{deptosMovController.selected.bcta4}" title="#{myBundle.EditDeptosMovTitle_bcta4}" required="true" requiredMessage="#{myBundle.EditDeptosMovRequiredMessage_bcta4}"/>
+
+                        <p:outputLabel value="#{myBundle.EditDeptosMovLabel_bcta5}" for="bcta5" />
+                        <p:inputText id="bcta5" value="#{deptosMovController.selected.bcta5}" title="#{myBundle.EditDeptosMovTitle_bcta5}" required="true" requiredMessage="#{myBundle.EditDeptosMovRequiredMessage_bcta5}"/>
+
+                        <h:outputLabel value="#{myBundle.EditDeptosMovLabel_departamentos}" for="departamentos" />
+                        <h:outputText id="departamentos" value="#{deptosMovController.selected.departamentos.nomDepto}"/>
+
+                        <h:outputLabel value="#{myBundle.EditDeptosMovLabel_catDp}" for="catDp" />
+                        <h:outputText id="catDp" value="#{deptosMovController.selected.catDp.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{deptosMovController.save}" value="#{myBundle.Save}" update="display,:DeptosMovListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DeptosMovEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DeptosMovEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

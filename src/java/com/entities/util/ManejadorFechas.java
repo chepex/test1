@@ -11,10 +11,10 @@ import java.util.GregorianCalendar;
 public class ManejadorFechas {
 
     //Metodo usado para obtener la fecha actual
-    //@return Retorna un <b>STRING</b> con la fecha actual formato "dd-MM-yyyy"
+    //@return Retorna un <b>STRING</b> con la fecha actual formato "dd/MM/yyyy"
     public static String getFechaActual() {
         Date ahora = new Date();
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
         return formateador.format(ahora);
     }
 
@@ -78,7 +78,7 @@ public class ManejadorFechas {
     //@param La fecha a convertir a formato date
     //@return Retorna la fecha en formato Date
     public static synchronized java.util.Date deStringToDate(String fecha) {
-        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaEnviar = null;
         try {
             fechaEnviar = formatoDelTexto.parse(fecha);
@@ -88,4 +88,24 @@ public class ManejadorFechas {
             return null;
         }
     }
+    
+
+    //Devuele un java.util.Date desde un String en formato dd-MM-yyyy
+    //@param La fecha a convertir a formato date
+    //@return Retorna la fecha en formato Date
+    public static synchronized java.util.Date NowDate() {
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+        Date now = new Date();
+        Date fechaEnviar = null;
+        try {
+            String  nowFormateado  = formatoDelTexto.format(now);
+            fechaEnviar = formatoDelTexto.parse(nowFormateado);
+            return fechaEnviar;
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    
 }

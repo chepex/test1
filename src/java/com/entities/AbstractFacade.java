@@ -7,6 +7,7 @@ package com.entities;
 import com.entities.util.JsfUtil;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.validation.ConstraintViolationException;
 
 /**
  *
@@ -22,18 +23,15 @@ public abstract class AbstractFacade<T> {
     protected abstract EntityManager getEntityManager();
 
     public void create(T entity) {
-	getEntityManager().persist(entity);
-        //getEntityManager().flush();
+       
+            getEntityManager().persist(entity);      
+ 	
     }
 
     
  
-    public void edit(T entity) {  
-        
-        
-	getEntityManager().merge(entity);
-       // getEntityManager().flush();
-    //getEntityManager().refresh(entity);
+    public void edit(T entity) {          
+	getEntityManager().merge(entity);      
     }
     
     public void clear() {  

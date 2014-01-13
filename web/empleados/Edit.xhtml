@@ -186,7 +186,7 @@
                             <f:selectItems value="#{puestosController.items}"
                                            var="puestosItem"
                                            itemValue="#{puestosItem}"
-                                           itemLabel="#{puestosItem.puestosPK.toString()}"
+                                           itemLabel="#{puestosItem.nomPuesto.toString()}"
 					   />
                             <f:converter binding="#{puestosConverter}"/>
                         </p:selectOneMenu>
@@ -208,7 +208,7 @@
                             <f:selectItems value="#{departamentosController.items}"
                                            var="departamentosItem"
                                            itemValue="#{departamentosItem}"
-                                           itemLabel="#{departamentosItem.departamentosPK.toString()}"
+                                           itemLabel="#{departamentosItem.nomDepto.toString()}"
 					   />
                             <f:converter binding="#{departamentosConverter}"/>
                         </p:selectOneMenu>

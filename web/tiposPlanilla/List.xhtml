@@ -8,54 +8,90 @@
 
     <h:form id="TiposPlanillaListForm">
 
-	<p:panel header="#{myBundle.ListTiposPlanillaTitle}">
+        <p:panel header="#{myBundle.ListTiposPlanillaTitle}">
 
-	    <p:dataTable id="datalist" value="#{tiposPlanillaController.items}" var="item"
-			 selectionMode="single" selection="#{tiposPlanillaController.selected}"
-			 rowKey="#{item.tiposPlanillaPK}"
-			 paginator="true"
-			 rows="10"
-			 rowsPerPageTemplate="10,20,30"
-			 >
+            <p:dataTable id="datalist" value="#{tiposPlanillaController.items}" var="item"
+                         selectionMode="single" selection="#{tiposPlanillaController.selected}"
+                         rowKey="#{item.tiposPlanillaPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
 
-		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
+                <p:column sortBy="#{item.tiposPlanillaPK.codTipopla}" filterBy="#{item.tiposPlanillaPK.codTipopla}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTiposPlanillaTitle_tiposPlanillaPK_codTipopla}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tiposPlanillaPK.codTipopla}"/>
+                </p:column>
+                <p:column sortBy="#{item.nomTipopla}" filterBy="#{item.nomTipopla}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTiposPlanillaTitle_nomTipopla}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nomTipopla}"/>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTiposPlanillaTitle_status}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.status}"/>
+                </p:column>
+              
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTiposPlanillaTitle_ley}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ley}"/>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTiposPlanillaTitle_frecuencia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.frecuencia}"/>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTiposPlanillaTitle_prestamos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.prestamos}"/>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTiposPlanillaTitle_liquido}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.liquido}"/>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTiposPlanillaTitle_adicional}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.adicional}"/>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTiposPlanillaTitle_promedio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.promedio}"/>
+                </p:column>
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTiposPlanillaTitle_deducPresta}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.deducPresta.descripcion}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tiposPlanillaController.prepareCreate}" update=":TiposPlanillaCreateForm" oncomplete="TiposPlanillaCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":TiposPlanillaViewForm" oncomplete="TiposPlanillaViewDialog.show()" disabled="#{empty tiposPlanillaController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TiposPlanillaEditForm" oncomplete="TiposPlanillaEditDialog.show()" disabled="#{empty tiposPlanillaController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tiposPlanillaController.delete}" update=":growl,datalist" disabled="#{empty tiposPlanillaController.selected}"/>
+                </f:facet>
 
-		<p:column sortBy="#{item.movDp.codTipopla}" filterBy="#{item.tiposPlanillaPK.codTipopla}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListTiposPlanillaTitle_tiposPlanillaPK_codTipopla}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.tiposPlanillaPK.codTipopla}"/>
-		</p:column>
-		<p:column sortBy="#{item.nomTipopla}" filterBy="#{item.nomTipopla}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListTiposPlanillaTitle_nomTipopla}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.nomTipopla}"/>
-		</p:column>
-		<p:column sortBy="#{item.status}" filterBy="#{item.status}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListTiposPlanillaTitle_status}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.status}"/>
-		</p:column>
-		<p:column sortBy="#{item.codDp}" filterBy="#{item.codDp}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListTiposPlanillaTitle_codDp}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.deducPresta.descripcion }"/>
-		</p:column>                
-		<f:facet name="footer">
-		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tiposPlanillaController.prepareCreate}" update=":TiposPlanillaCreateForm" oncomplete="TiposPlanillaCreateDialog.show()"/>
-		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":TiposPlanillaViewForm" oncomplete="TiposPlanillaViewDialog.show()" disabled="#{empty tiposPlanillaController.selected}"/>
-		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TiposPlanillaEditForm" oncomplete="TiposPlanillaEditDialog.show()" disabled="#{empty tiposPlanillaController.selected}"/>
-		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tiposPlanillaController.delete}" update=":growl,datalist" disabled="#{empty tiposPlanillaController.selected}"/>
-		</f:facet>
+            </p:dataTable>
 
-	    </p:dataTable>
-
-	</p:panel>
+        </p:panel>
 
     </h:form>
 

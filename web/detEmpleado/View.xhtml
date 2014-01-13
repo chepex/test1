@@ -23,13 +23,7 @@
 
                         
 
-                        <h:outputText value="#{myBundle.ViewDetEmpleadoLabel_usuario}"/>
-                        <h:outputText value="#{detEmpleadoController.selected.usuario}" title="#{myBundle.ViewDetEmpleadoTitle_usuario}"/>
-
-                        <h:outputText value="#{myBundle.ViewDetEmpleadoLabel_fechaReg}"/>
-                        <h:outputText value="#{detEmpleadoController.selected.fechaReg}" title="#{myBundle.ViewDetEmpleadoTitle_fechaReg}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                        </h:outputText>
+                       
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="DetEmpleadoViewDialog.hide()"/>
                 </h:panelGroup>

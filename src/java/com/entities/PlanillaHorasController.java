@@ -15,11 +15,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import javax.faces.event.ActionEvent;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
+
 import jxl.read.biff.BiffException;
 import org.primefaces.event.FileUploadEvent;
 
@@ -228,38 +224,19 @@ public class PlanillaHorasController extends AbstractController<PlanillaHoras> i
 	
     }  
     
- public void upload(FileUploadEvent event) throws IOException, BiffException  {  
-    
- 
+ public void upload(FileUploadEvent event) throws IOException, BiffException  {      
      msg = sB_Planilla_horas.validar_planilla_horas(programacionpla);
      msg.setDescripcion("0");
      if(msg.getTitulo().equals("ok")){
-      ReadXls a = new ReadXls();
+        ReadXls a = new ReadXls();
         String destination = "/opt/lib/"+event.getFile().getFileName();
-       
-       
-               a.copyFile(event.getFile().getFileName(), event.getFile().getInputstream());  
-               sB_Planilla_horas.read(destination,this.getProgramacionpla());
-               //sB_Planilla_horas.guardar(lista,this.getProgramacionpla());
-               
-               
-      
-            //sB_Planilla_horas.read(event.getFile().getFileName(),programacionpla);
-       
-           
-          
-           
-       
-        
-         if(msg.getTitulo().equals("ok")){
-                consultar();
-            }  
-     }
-     
-     
+        a.copyFile(event.getFile().getFileName(), event.getFile().getInputstream());  
+        sB_Planilla_horas.read(destination,this.getProgramacionpla());        
+        if(msg.getTitulo().equals("ok")){
+           consultar();
+        }  
+     }          
      JsfUtil.addSuccessMessage( msg);  
-     
-
     }
 
  

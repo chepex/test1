@@ -6,6 +6,7 @@ package com.ejb;
 
 import com.entities.Mensaje;
 import com.entities.ProgramacionPla;
+import com.entities.util.JsfUtil;
 import javax.ejb.Stateless;
 
 /**
@@ -16,14 +17,11 @@ import javax.ejb.Stateless;
 public class SB_ProgramacionPla {
 Mensaje msg = new Mensaje();
 
-    public Mensaje validarEstado(ProgramacionPla programacionPla) {
-	
-	msg.setTitulo("ok");
+    public String validarEstado(ProgramacionPla programacionPla) {
 	if (programacionPla.getStatus().equals("C")){
-	    msg.setMensajes("Una planilla cerrada no puede modificarse");
-	    msg.setTitulo("error");	    
+            JsfUtil.logs(new Exception() , "Surgio un error", "Planilla Cerrada",SB_Asistencia.class,"ALERT");                                                                                 
+	    return "error";             
 	}	
-	return msg;
+	return "ok";
     }  
-
 }

@@ -4,19 +4,22 @@ package com.entities;
 import com.ejb.SB_Reportes;
 import com.ejb.SB_Planilla;
 import com.entities.util.JsfUtil;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 
 @ManagedBean(name = "planillaController")
@@ -108,26 +111,66 @@ public class PlanillaController extends AbstractController<Planilla> implements 
 
     
     
-    public String generar(){
-    
-    this.anio= 0;
-    this.mes = 0;
-         Mensaje msg = sBPlanilla.Generar();
-         consultar();
-	 JsfUtil.addSuccessMessage( msg);
-         
-         return "";
+    public String generar(){    
+        this.anio= 0;
+        this.mes = 0;
+      
+             sBPlanilla.Generar();
+             consultar();
+             JsfUtil.addSuccessMessage( "Planilla generada correctamente");
+          
+     return "";
 	
-   }    
+   }   
+    
+    
+    public String cerrar(){    
+        this.anio= 0;
+        this.mes = 0;    
+        try{
+            sBPlanilla.Cerrar();
+            JsfUtil.addSuccessMessage("Cierre ejecutado con exito");
+        }catch(Exception ex){
+            JsfUtil.addErrorMessage(ex, "Surgio un error al intentar crear el cierre");
+        }      
+        return "";	
+   }       
     
      public String reportePlanilla() throws NamingException, SQLException, JRException, IOException{         
         HashMap params = new HashMap();  
+        long cia= 1;
         long secuencia= 1111;
         params.put("mas",secuencia ); 
+        params.put("cia",cia ); 
         reportes.GenerarReporte("/reportes/Planilla.jasper", params);
         
         return "";           
     }    
+     
+     public String Gcvs()  {                
+        try{
+          FacesContext fc = FacesContext.getCurrentInstance();
+          HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
+          response.setContentType("text/csv"); 
+          fc.responseComplete();         
+          response.setHeader ( "Content-disposition", "attachment; filename=\"Reporting-" + 
+          new Date().getTime() + ".csv\"" );
+          ServletOutputStream output = response.getOutputStream();      
+          String encabezado = sBPlanilla.generarTxt();
+          InputStream is = new ByteArrayInputStream( encabezado.getBytes("UTF-8") );
+          int nextChar;
+           while ((nextChar = is.read()) != -1) 
+           {
+              output.write(nextChar);
+           }
+           output.flush();
+           output.close();
+          } catch ( IOException  e )
+            {           
+                e.printStackTrace();
+            }
+        return "";           
+    }      
      
     public List<Planilla> consultar (){	
         if(this.anio>0 && this.mes >0){            
@@ -143,6 +186,16 @@ public class PlanillaController extends AbstractController<Planilla> implements 
 	return this.items;
     }   
 
+    public String GenerarBoletas() throws NamingException, SQLException, JRException, IOException{         
+        HashMap params = new HashMap();  
+        String STA = "P";
+        String SUMA = "S";
+        String RESTA = "R";
+        params.put("STA",STA ); 
+        params.put("SUMA",SUMA ); 
+        params.put("RESTA",RESTA ); 
+        reportes.GenerarReporte("/reportes/BoletaPago2.jasper", params); 
+        return "";     
+    }
     
-
 }

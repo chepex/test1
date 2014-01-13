@@ -42,6 +42,9 @@ public class CatDp implements Serializable {
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "catDp")
     private List<DeducPresta> deducPrestaList;
+    @Size(max = 1)
+    @Column(name = "SUMA_RESTA")
+    private String sumaResta;    
     @Column(name = "USUARIO")
     private String usuario;    
     @Column(name = "FECHA_REG")
@@ -82,6 +85,14 @@ public class CatDp implements Serializable {
 
     public void setDeducPrestaList(List<DeducPresta> deducPrestaList) {
 	this.deducPrestaList = deducPrestaList;
+    }
+
+    public String getSumaResta() {
+        return sumaResta;
+    }
+
+    public void setSumaResta(String sumaResta) {
+        this.sumaResta = sumaResta;
     }
 
     @Override

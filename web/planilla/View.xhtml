@@ -25,7 +25,7 @@
                         <h:outputText value="#{planillaController.selected.departamentos.nomDepto}"/>
                         
                         <h:outputText value="#{myBundle.ViewPlanillaLabel_devengado}"/>
-                        <h:outputText value="#{planillaController.selected.devengado}" title="#{myBundle.ViewPlanillaTitle_devengado}"/>
+                        <h:outputText value="#{planillaController.selected.bruto}" title="#{myBundle.ViewPlanillaTitle_devengado}"/>
 
                         <h3>Deduciones</h3>  
                         <p:dataList value="#{planillaController.deduciones}" var="mov" itemType="circle">  
@@ -41,20 +41,11 @@
                         </p:dataList>                         
 
                         <h:outputText value="#{myBundle.ViewPlanillaLabel_prestaciones}"/>
-                        <h:outputText value="#{planillaController.selected.prestaciones}" title="#{myBundle.ViewPlanillaTitle_prestaciones}"/>
+                        <h:outputText value="#{planillaController.selected.neto}" title="#{myBundle.ViewPlanillaTitle_prestaciones}"/>
 
 
                         <h:outputText value="#{myBundle.ViewPlanillaLabel_liquido}"/>
                         <h:outputText value="#{planillaController.selected.liquido}" title="#{myBundle.ViewPlanillaTitle_liquido}"/>
-
-
-
-
-
-                        
-                        
-
-
 
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="PlanillaViewDialog.hide()"/>

@@ -23,11 +23,7 @@
 
                         
 
-                        <p:outputLabel value="#{myBundle.CreateDetEmpleadoLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{detEmpleadoController.selected.usuario}" title="#{myBundle.CreateDetEmpleadoTitle_usuario}" />
-
-                        <p:outputLabel value="#{myBundle.CreateDetEmpleadoLabel_fechaReg}" for="fechaReg" />
-                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{detEmpleadoController.selected.fechaReg}" title="#{myBundle.EditDetEmpleadoTitle_fechaReg}"  showOn="button"/>
+                       
                     </p:panelGrid>
                     <p:commandButton actionListener="#{detEmpleadoController.saveNew}" value="#{myBundle.Save}" update="display,:DetEmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DetEmpleadoCreateDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="DetEmpleadoCreateDialog.hide()"/>

@@ -29,28 +29,27 @@
                         <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_numPlanilla}"/>
                         <h:outputText value="#{programacionPlaController.selected.numPlanilla}" title="#{myBundle.ViewProgramacionPlaTitle_numPlanilla}"/>
 
-                        
-                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_frecuencia}"/>
-                        <h:outputText value="#{programacionPlaController.selected.frecuencia}" title="#{myBundle.ViewProgramacionPlaTitle_frecuencia}"/>
-
                         <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_anio}"/>
                         <h:outputText value="#{programacionPlaController.selected.anio}" title="#{myBundle.ViewProgramacionPlaTitle_anio}"/>
 
                         <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_mes}"/>
                         <h:outputText value="#{programacionPlaController.selected.mes}" title="#{myBundle.ViewProgramacionPlaTitle_mes}"/>
 
-                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_planillaHorasList}"/>
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_fechaCorte}"/>
+                        <h:outputText value="#{programacionPlaController.selected.fechaCorte}" title="#{myBundle.ViewProgramacionPlaTitle_fechaCorte}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
 
-                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_otrosMovDpList}"/>
 
-                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_movDpList}"/>
+                      
 
-                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_resumenAsistenciaList}"/>
+
 
                         <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_tiposPlanilla}"/>
                         <h:outputText value="#{programacionPlaController.selected.tiposPlanilla.nomTipopla}"/>
 
-                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_planillaList}"/>
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_recalculo}"/>
+                        <h:outputText value="#{programacionPlaController.selected.recalculo}" title="#{myBundle.ViewProgramacionPlaTitle_recalculo}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="ProgramacionPlaViewDialog.hide()"/>
                 </h:panelGroup>

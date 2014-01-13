@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c0207cca-1aaf-4932-93ad-89bc62bb8b99">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select * from empleados]]>
+	</queryString>
+	<field name="COD_CIA" class="java.math.BigDecimal"/>
+	<field name="COD_EMP" class="java.math.BigDecimal"/>
+	<field name="APELLIDOS" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="AP_CASADA" class="java.lang.String"/>
+	<field name="DIRECCION" class="java.lang.String"/>
+	<field name="TELEFONOS" class="java.lang.String"/>
+	<field name="FECHA_NAC" class="java.sql.Timestamp"/>
+	<field name="NUM_IGSS" class="java.lang.String"/>
+	<field name="NUM_IRTRA" class="java.lang.String"/>
+	<field name="NUM_NIT" class="java.lang.String"/>
+	<field name="COD_DEPTO" class="java.math.BigDecimal"/>
+	<field name="COD_PUESTO" class="java.math.BigDecimal"/>
+	<field name="FEC_INGRESO" class="java.sql.Timestamp"/>
+	<field name="FEC_SALIDA" class="java.sql.Timestamp"/>
+	<field name="MOT_SALIDA" class="java.lang.String"/>
+	<field name="OBSERVACION" class="java.lang.String"/>
+	<field name="STATUS" class="java.lang.String"/>
+	<field name="TIPO_CONTRA" class="java.lang.String"/>
+	<field name="SALARIO" class="java.math.BigDecimal"/>
+	<field name="PROMEDIO" class="java.math.BigDecimal"/>
+	<field name="BONIFICACION" class="java.math.BigDecimal"/>
+	<field name="SALARIO_BASE" class="java.math.BigDecimal"/>
+	<field name="AVISAR_A" class="java.lang.String"/>
+	<field name="CEDULA" class="java.lang.String"/>
+	<field name="CHEQUE_DEP" class="java.lang.String"/>
+	<field name="CTA_BANCARIA" class="java.lang.String"/>
+	<field name="COM_SPROD" class="java.lang.String"/>
+	<field name="COM_SOBRA" class="java.lang.String"/>
+	<field name="VAL_ISR" class="java.math.BigDecimal"/>
+	<field name="SEXO" class="java.math.BigDecimal"/>
+	<field name="TIPO_CTA" class="java.lang.String"/>
+	<field name="NUP_AFP" class="java.lang.String"/>
+	<field name="COD_AFP" class="java.math.BigDecimal"/>
+	<field name="NUM_HIJOS" class="java.math.BigDecimal"/>
+	<field name="ESTADO_CIVIL" class="java.lang.String"/>
+	<field name="COD_EMPREF" class="java.lang.String"/>
+	<field name="NOMBRE_ISSS" class="java.lang.String"/>
+	<field name="COD_ISSS" class="java.math.BigDecimal"/>
+	<field name="COMISION" class="java.lang.String"/>
+	<field name="FECHA_INGRESO_HIST" class="java.sql.Timestamp"/>
+	<field name="MARCACION_TARJETA" class="java.lang.String"/>
+	<field name="USUARIO" class="java.lang.String"/>
+	<field name="FECHA_REG" class="java.sql.Timestamp"/>
+	<field name="BENEFICIARIO" class="java.lang.String"/>
+	<field name="NOMBRE_NIT" class="java.lang.String"/>
+	<field name="VACACIONES" class="java.math.BigDecimal"/>
+	<field name="PRE_ID" class="java.math.BigDecimal"/>
+	<field name="COD_DEPARTAMENTO" class="java.math.BigDecimal"/>
+	<field name="COD_ZONA" class="java.math.BigDecimal"/>
+	<field name="COD_MUNI" class="java.math.BigDecimal"/>
+	<field name="COD_SEGURIDAD" class="java.math.BigDecimal"/>
+	<field name="COD_PROFESION" class="java.math.BigDecimal"/>
+	<field name="F_EXT_DOC" class="java.sql.Timestamp"/>
+	<field name="COD_PAIS" class="java.math.BigDecimal"/>
+	<field name="FEC_REGISTRO" class="java.sql.Timestamp"/>
+	<field name="COD_BANCO" class="java.lang.String"/>
+	<field name="COD_AREA" class="java.math.BigDecimal"/>
+	<field name="PASSWORD" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="da0544c1-bf2d-47dc-8532-f085402aa38a" x="44" y="2" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[COD_EMP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ec551268-52c9-468e-bab5-bdeedef3f673" x="168" y="2" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a931cca-c90d-4e8b-9baf-2159c191ba6b" x="292" y="2" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[APELLIDOS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement uuid="72e9f622-792c-4bed-a7c7-f3b1ba5e46be" x="44" y="32" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{COD_EMP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fd806c2d-dfe6-4ebb-b99a-05eefd4b3d28" x="168" y="39" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9a41cdea-701f-4e8d-aa93-a19488b2b43c" x="292" y="45" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

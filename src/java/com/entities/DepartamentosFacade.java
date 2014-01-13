@@ -54,5 +54,8 @@ public class DepartamentosFacade extends AbstractFacade<Departamentos> {
 		    .setParameter("puestosList", emp.getPuestos() );
          return q.getResultList();
 	
-    }    
+    } 
+    
+    
+     
 }

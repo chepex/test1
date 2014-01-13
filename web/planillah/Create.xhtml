@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillahCreateDlg" widgetVar="PlanillahCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreatePlanillahTitle}">
+
+            <h:form id="PlanillahCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planillahController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_dias}" for="dias" />
+                        <p:inputText id="dias" value="#{planillahController.selected.dias}" title="#{myBundle.CreatePlanillahTitle_dias}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_bruto}" for="bruto" />
+                        <p:inputText id="bruto" value="#{planillahController.selected.bruto}" title="#{myBundle.CreatePlanillahTitle_bruto}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_horasextras}" for="horasextras" />
+                        <p:inputText id="horasextras" value="#{planillahController.selected.horasextras}" title="#{myBundle.CreatePlanillahTitle_horasextras}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_bonos}" for="bonos" />
+                        <p:inputText id="bonos" value="#{planillahController.selected.bonos}" title="#{myBundle.CreatePlanillahTitle_bonos}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_neto}" for="neto" />
+                        <p:inputText id="neto" value="#{planillahController.selected.neto}" title="#{myBundle.CreatePlanillahTitle_neto}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_afp}" for="afp" />
+                        <p:inputText id="afp" value="#{planillahController.selected.afp}" title="#{myBundle.CreatePlanillahTitle_afp}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_isss}" for="isss" />
+                        <p:inputText id="isss" value="#{planillahController.selected.isss}" title="#{myBundle.CreatePlanillahTitle_isss}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_renta}" for="renta" />
+                        <p:inputText id="renta" value="#{planillahController.selected.renta}" title="#{myBundle.CreatePlanillahTitle_renta}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_deducciones}" for="deducciones" />
+                        <p:inputText id="deducciones" value="#{planillahController.selected.deducciones}" title="#{myBundle.CreatePlanillahTitle_deducciones}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_liquido}" for="liquido" />
+                        <p:inputText id="liquido" value="#{planillahController.selected.liquido}" title="#{myBundle.CreatePlanillahTitle_liquido}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{planillahController.selected.usuario}" title="#{myBundle.CreatePlanillahTitle_usuario}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_fechaReg}" for="fechaReg" />
+                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{planillahController.selected.fechaReg}" title="#{myBundle.EditPlanillahTitle_fechaReg}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_anio}" for="anio" />
+                        <p:inputText id="anio" value="#{planillahController.selected.anio}" title="#{myBundle.CreatePlanillahTitle_anio}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_mes}" for="mes" />
+                        <p:inputText id="mes" value="#{planillahController.selected.mes}" title="#{myBundle.CreatePlanillahTitle_mes}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_codTipopla}" for="codTipopla" />
+                        <p:inputText id="codTipopla" value="#{planillahController.selected.codTipopla}" title="#{myBundle.CreatePlanillahTitle_codTipopla}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_numPlanilla}" for="numPlanilla" />
+                        <p:inputText id="numPlanilla" value="#{planillahController.selected.numPlanilla}" title="#{myBundle.CreatePlanillahTitle_numPlanilla}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_programacionPla}" for="programacionPla" />
+                        <p:selectOneMenu id="programacionPla" value="#{planillahController.selected.programacionPla}" required="true" requiredMessage="#{myBundle.EditPlanillahRequiredMessage_programacionPla}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{programacionPlaController.items}"
+                                           var="programacionPlaItem"
+                                           itemValue="#{programacionPlaItem}"
+                                           itemLabel="#{programacionPlaItem.programacionPlaPK.toString()}"
+                                           />
+                            <f:converter binding="#{programacionPlaConverter}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_empleados}" for="empleados" />
+                        <p:selectOneMenu id="empleados" value="#{planillahController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditPlanillahRequiredMessage_empleados}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadosController.items}"
+                                           var="empleadosItem"
+                                           itemValue="#{empleadosItem}"
+                                           itemLabel="#{empleadosItem.empleadosPK.toString()}"
+                                           />
+                            <f:converter binding="#{empleadosConverter}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillahLabel_departamentos}" for="departamentos" />
+                        <p:selectOneMenu id="departamentos" value="#{planillahController.selected.departamentos}" required="true" requiredMessage="#{myBundle.EditPlanillahRequiredMessage_departamentos}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{departamentosController.items}"
+                                           var="departamentosItem"
+                                           itemValue="#{departamentosItem}"
+                                           itemLabel="#{departamentosItem.departamentosPK.toString()}"
+                                           />
+                            <f:converter binding="#{departamentosConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planillahController.saveNew}" value="#{myBundle.Save}" update="display,:PlanillahListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PlanillahCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PlanillahCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

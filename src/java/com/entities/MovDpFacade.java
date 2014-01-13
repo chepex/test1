@@ -38,7 +38,7 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
 	    short codCia = lb.sscia();
 	
 		 q = em.createNamedQuery("MovDp.findByCodCia", MovDp.class )		    
-		    .setParameter("codCia",  codCia );
+		    .setParameter("codCia",  0 );
          return q.getResultList();
     
     }      
@@ -60,7 +60,26 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
        
     }      
   
-        
+    public MovDp  findPk2(MovDp movDp){
+	try{ 
+ 
+	 TypedQuery<MovDp> q;
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	
+		 q = em.createNamedQuery("MovDp.findByPK2", MovDp.class )		    
+		    .setParameter("codCia",  codCia)
+                    .setParameter("codEmp",  movDp.getMovDpPK().getCodEmp())                    
+                    .setParameter("secuencia",  movDp.getMovDpPK().getSecuencia() );
+                 
+         return q.getSingleResult();
+        }catch(Exception ex){
+            return null;
+        }
+    }      
+  
+    
     public  List<MovDp>  findSecuencia(ProgramacionPla programacionPla){
 	 
 	 TypedQuery<MovDp> q;
@@ -78,6 +97,8 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
        
     }  
     
+    
+    
     public  List<MovDp>  findSecuenciaGenerado(ProgramacionPla programacionPla, String generado){
 	 
 	 TypedQuery<MovDp> q;
@@ -94,7 +115,53 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
          return q.getResultList();
        
     }     
-  
+      public List<MovDp> findByCodEmp(ResumenAsistencia resumenAsistencia){
+	 	
+              TypedQuery<MovDp> q;
+	
+           
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	
+                
+		 q = em.createNamedQuery("MovDp.findByCodEmp2", MovDp.class )		    
+		    .setParameter("secuencia",  resumenAsistencia.getResumenAsistenciaPK().getSecuencia() )
+                    .setParameter("codEmp",  resumenAsistencia.getResumenAsistenciaPK().getCodEmp() )                    
+                    .setParameter("codCia",  codCia );
+                 return q.getResultList();
+                
+                
+   }  
+      
+      public List<MovDp> findByRentaT(ResumenAsistencia resumenAsistencia){
+	 	
+              TypedQuery<MovDp> q;
+	
+           
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	
+                
+		 q = em.createNamedQuery("MovDp.findByRentaT", MovDp.class )		    		    
+                    .setParameter("anio",  resumenAsistencia.getProgramacionPla().getAnio() )                    
+                    .setParameter("codEmp",  resumenAsistencia.getResumenAsistenciaPK().getCodEmp() )                    
+                    .setParameter("codCia",  codCia );
+                 return q.getResultList();
+                
+                
+   }  
+      
+      public List<MovDp> findByAfpT(ResumenAsistencia resumenAsistencia){	 	
+            TypedQuery<MovDp> q;
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+            q = em.createNamedQuery("MovDp.findByAfpT", MovDp.class )		    		    
+               .setParameter("anio",  resumenAsistencia.getProgramacionPla().getAnio() )                    
+               .setParameter("codEmp",  resumenAsistencia.getResumenAsistenciaPK().getCodEmp() )                    
+               .setParameter("codCia",  codCia );
+            return q.getResultList();
+   }  
+      
     public List<MovDp> findByTotal(Empleados empleado, String sumaResta,ProgramacionPla programacionPla){
 	 	
               TypedQuery<MovDp> q;
@@ -132,6 +199,27 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
                  return q.getResultList();
    }       
   
+    
+    
+    public List<MovDp> findByCat(String categoria,ResumenAsistencia resumenAsistencia){
+	 	
+              TypedQuery<MovDp> q;
+	
+           
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	
+                
+		 q = em.createNamedQuery("MovDp.findByCat", MovDp.class )		    
+		    .setParameter("secuencia",  resumenAsistencia.getResumenAsistenciaPK().getSecuencia() )
+                    .setParameter("codEmp",  resumenAsistencia.getEmpleados().getEmpleadosPK().getCodEmp() )
+                    .setParameter("categoria", categoria  )
+                    .setParameter("codCia",  codCia );
+
+                 return q.getResultList();
+   } 
+    
+    
     public BigDecimal PromComision(Empleados empleado, ResumenAsistencia resumenAsistencia){
 	 BigDecimal val;
 	 try{
@@ -143,7 +231,7 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
                                                     " and m.cod_dp = d.cod_dp" +
                                                     " and d.cod_cia= c.cod_cia" +
                                                     " and D.COD_CAT = c.cod_cat" +
-                                                    " and C.DESCRIPCION = 'comision'" +                                                    
+                                                    " and C.DESCRIPCION = 'Comision'" +                                                    
                                                     " and P.COD_CIA = m.cod_cia" +
                                                     " and P.SECUENCIA = M.SECUENCIA" +
                                                     " and P.FECHA_PAGO between  add_months( P.FECHA_PAGO,-5) and sysdate" +
@@ -164,6 +252,19 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
             
          }
        return val;
+    
+    }     
+
+    public List<MovDp> findByFiltro(ProgramacionPla programacionPla){
+	 TypedQuery<MovDp> q;
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+	    String user = lb.ssuser();
+		 q = em.createNamedQuery("MovDp.findByFiltro", MovDp.class )		    
+		    .setParameter("codCia",  codCia )		    
+		    .setParameter("secuencia",  programacionPla.getProgramacionPlaPK().getSecuencia() );
+         return q.getResultList();
     
     }     
   

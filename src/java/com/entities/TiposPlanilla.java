@@ -53,6 +53,37 @@ public class TiposPlanilla implements Serializable {
     @Size(max = 1)
     @Column(name = "STATUS")
     private String status;
+    @Size(max = 1)
+    @Basic(optional = false)
+    @NotNull    
+    @Column(name = "LEY")
+    private String ley;
+    @Size(max = 1)
+    @Basic(optional = false)
+    @NotNull    
+    @Column(name = "PROMEDIO")
+    private String promedio;
+    @Size(max = 1)
+    @Basic(optional = false)
+    @NotNull    
+    @Column(name = "Frecuencia")
+    private String frecuencia;    
+    @Size(max = 1)
+    @Basic(optional = false)
+    @NotNull    
+    @Column(name = "PRESTAMOS")
+    private String prestamos;
+    @Size(max = 1)
+    @Basic(optional = false)
+    @NotNull    
+    @Column(name = "LIQUIDO")
+    private String liquido;
+    @Size(max = 1)
+    @Basic(optional = false)
+    @NotNull    
+    @Column(name = "ADICIONAL")
+    private String adicional;  
+  
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tiposPlanilla")
     private List<ProgramacionPla> programacionPlaList;
     @JoinColumns({
@@ -69,6 +100,14 @@ public class TiposPlanilla implements Serializable {
     public TiposPlanilla() {
     }
 
+    public String getFrecuencia() {
+        return frecuencia;
+    }
+
+    public void setFrecuencia(String frecuencia) {
+        this.frecuencia = frecuencia;
+    }
+
     public DeducPresta getDeducPresta() {
         return deducPresta;
     }
@@ -83,6 +122,62 @@ public class TiposPlanilla implements Serializable {
 
     public void setCodDp(short codDp) {
         this.codDp = codDp;
+    }
+
+    public String getLey() {
+        return ley;
+    }
+
+    public void setLey(String ley) {
+        this.ley = ley;
+    }
+
+    public String getPromedio() {
+        return promedio;
+    }
+
+    public void setPromedio(String promedio) {
+        this.promedio = promedio;
+    }
+
+    public String getPrestamos() {
+        return prestamos;
+    }
+
+    public void setPrestamos(String prestamos) {
+        this.prestamos = prestamos;
+    }
+
+    public String getLiquido() {
+        return liquido;
+    }
+
+    public void setLiquido(String liquido) {
+        this.liquido = liquido;
+    }
+
+    public String getAdicional() {
+        return adicional;
+    }
+
+    public void setAdicional(String adicional) {
+        this.adicional = adicional;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public Date getFechaReg() {
+        return fechaReg;
+    }
+
+    public void setFechaReg(Date fechaReg) {
+        this.fechaReg = fechaReg;
     }
 
 

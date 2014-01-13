@@ -53,6 +53,31 @@ public class PlanillaFacade extends AbstractFacade<Planilla> {
     
     } 
     
+    public  Planilla  findByEmp(ResumenAsistencia ra){
+	 TypedQuery<Planilla> q;	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+		 q = em.createNamedQuery("Planilla.findByEmp", Planilla.class )		    
+                    .setParameter("codEmp",  ra.getResumenAsistenciaPK().getCodEmp() )
+                    .setParameter("secuencia",  ra.getResumenAsistenciaPK().getSecuencia() )
+		    .setParameter("codCia",  codCia );
+    return q.getSingleResult();
+    
+    } 
+    
+    
+    public  List<Planilla> findByEmpT(ResumenAsistencia ra){
+	 TypedQuery<Planilla> q;	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+		 q = em.createNamedQuery("Planilla.findByEmpt", Planilla.class )		    
+                    .setParameter("codEmp",  ra.getResumenAsistenciaPK().getCodEmp() )                    
+                    .setParameter("anio",  ra.getProgramacionPla().getAnio() )                                             
+		    .setParameter("codCia",  codCia );
+    return q.getResultList();
+    
+    } 
+    
     public  List<Planilla>  findByStatus(){
 	 TypedQuery<Planilla> q;	 
 	    LoginBean lb= new LoginBean();	

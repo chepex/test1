@@ -1,23 +1,30 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ejb;
-
-import com.entities.DeducPresta;
-import com.entities.DeducPrestaFacade;
-import com.entities.Empleados;
-import com.entities.EmpleadosFacade;
+import com.entities.DeptosMov;
+import com.entities.DeptosMovFacade;
+import com.entities.Dmgdetalle;
+import com.entities.DmgdetalleFacade;
+import com.entities.DmgdetallePK;
+import com.entities.Dmgpoliza;
+import com.entities.DmgpolizaFacade;
+import com.entities.DmgpolizaPK;
+import com.entities.LoginBean;
 import com.entities.Mensaje;
 import com.entities.MovDp;
 import com.entities.MovDpFacade;
 import com.entities.Planilla;
 import com.entities.PlanillaFacade;
+import com.entities.Prestamos;
+import com.entities.PrestamosFacade;
 import com.entities.ProgramacionPla;
 import com.entities.ProgramacionPlaFacade;
 import com.entities.ResumenAsistencia;
 import com.entities.ResumenAsistenciaFacade;
-
+import com.entities.util.JsfUtil;
+import com.entities.util.ManejadorFechas;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -29,139 +36,112 @@ import javax.ejb.Stateless;
 @Stateless
 public class SB_Planilla {
     @EJB
-    private MovDpFacade movDpFacade;
-    
+    private PrestamosFacade prestamosFacade;
     @EJB
-    private DeducPrestaFacade deducPrestaFacade;
-    
+    private DeptosMovFacade deptosMovFacade;
+    @EJB
+    private DmgdetalleFacade dmgdetalleFacade;    
+    @EJB
+    private DmgpolizaFacade dmgpolizaFacade;
+    @EJB
+    private MovDpFacade movDpFacade; 
     @EJB
     private PlanillaFacade planillaFacade;
     @EJB
-    private ProgramacionPlaFacade programacionPlaFacade;
-    
+    private ProgramacionPlaFacade programacionPlaFacade;    
     @EJB
     private SB_ProgramacionPla sB_ProgramacionPla;
     @EJB
     private SB_Calculos calculos;    
     @EJB
-    private ResumenAsistenciaFacade resumenAsistenciaFacade;
+    private ResumenAsistenciaFacade resumenAsistenciaFacade;            
     
-    private EmpleadosFacade empleadosFacade;   
-    Mensaje msg1;
- 
-
-
-    public void Deducciones(Empleados empleados) {
-	/*traer el total de deduciones*/
-	
-    }
-
-    public void DeduccionesLey(Empleados empleados) {
-	/*generar las deducciones de ley */
-	  
-    }
-
-    public Mensaje Generar()  {   
+    Mensaje msg1 = new Mensaje();
+    String mensaje ;
+    Dmgpoliza pl;
+    Dmgdetalle dt;    
+    Short cta1;
+    Short cta2;
+    Short cta3;
+    Short cta4;
+    Short cta5;
+    int correlativo = 0;
+    
+    public String Generar()  {   
         String totales="";
         List<ProgramacionPla> iterador=  programacionPlaFacade.findByEstado("P");        
         if(iterador== null){
-            msg1.setTitulo("ok");
-            msg1.setMensajes("No existen planillas programadas");
-           return  msg1;
+            mensaje = "ok";
+            
+           return  mensaje;
         }
           for( ProgramacionPla e : iterador ){ 
-              Borar(e); 
-                if(e.getTiposPlanilla().getCodDp()>0 ){
-                    DeducPresta deduc = deducPrestaFacade.findByTipoPla(e.getTiposPlanilla());
-                   if(deduc.getProceso().equals("vacc")) {
-                        PlanillaVacColectiva(e);   
-                    }
-                    if(deduc.getProceso().equals("vaca")) {
-                        PlanillaVacAnual(e);   
-                    }
-                    if(deduc.getProceso().equals("agui")) {
-                        PlanillaAguilado(e);                     
-                    } 
-                }else{
-                    PlanillaNormal(e);                       
-                }
-                
-               
-                    msg1.setMensajes("Planillas generadas correctamente");
-                    totales += e.getTiposPlanilla().getNomTipopla()+msg1.getDescripcion();
-               
-              }
-            msg1.setDescripcion(totales);
-         return msg1;
-     }	
-    
-    
-    public void PlanillaNormal(ProgramacionPla programacionPlax){
-            
-
-            List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
+               borrar(e); 
+               List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(e );
 
               for( ResumenAsistencia ra : iterator ){ 
-                calculos.CalcularLey(ra);                
-                calculos.CalcularPrestamos(ra);  
-                calculos.CalcularLiqRecibir(ra); 
+                  if(e.getTiposPlanilla().getLey().equals("S")){
+                     calculos.CalcularLey(ra);                
+                  }                  
+                  if(e.getTiposPlanilla().getPromedio().equals("M")){                      
+                     calculos.promedioMensual(ra);    
+                  } 
+                  if(e.getTiposPlanilla().getPromedio().equals("Q")){
+                     calculos.promedioQuincenal(ra);  
+                  }                  
+                  if(e.getTiposPlanilla().getPrestamos().equals("S")){
+                     calculos.CalcularPrestamos(ra);  
+                  }                                                       
+                  if(e.getTiposPlanilla().getAdicional().equals("S")){
+                     calculos.CalcularEspecial(ra);
+                  }                   
+                  if(e.getTiposPlanilla().getLiquido().equals("S")){
+                     calculos.CalcularLiqRecibir(ra); 
+                  }      
+                  if(e.getRecalculo().equals("S")){
+                     calculos.recalculo(ra); 
+                  } 
+                  System.out.print(ra.getResumenAsistenciaPK().getCodEmp());
+                  mensaje ="ok+";
               }
-              
-             
-              
-              
-    }
-    
-    public void PlanillaVacAnual(ProgramacionPla programacionPlax){
-            Borar(programacionPlax);
-            List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
-            for( ResumenAsistencia ra : iterator ){         
-                calculos.CalcularEspecial(ra);
-               
-                  calculos.CalcularLey(ra);
-                  calculos.CalcularPrestamos(ra);  
-                  calculos.CalcularLiqRecibir(ra);  
+                    mensaje ="ok";
+                    
+                    totales += e.getTiposPlanilla().getNomTipopla();
                
               }
             
-    }
-   
-    public void PlanillaVacColectiva(ProgramacionPla programacionPlax){
-            Borar(programacionPlax);
-            List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
-            for( ResumenAsistencia ra : iterator ){         
-             calculos.CalcularEspecial(ra);
-             
-                  calculos.CalcularLey(ra);
-                  calculos.CalcularPrestamos(ra);  
-                  calculos.CalcularLiqRecibir(ra); 
-              }
-               
-    }    
-  
-    public void PlanillaAguilado(ProgramacionPla programacionPlax){
-            Borar(programacionPlax);
-            List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
-            for( ResumenAsistencia ra : iterator ){         
-              
-                
-                  calculos.CalcularLey(ra);
-                  calculos.CalcularPrestamos(ra);                 
-                  calculos.CalcularLiqRecibir(ra);  
-                
-              }
-                
-    }      
+         return mensaje;
+     }	
     
-    public void Borar(ProgramacionPla programacionPla){
-                msg1 =  sB_ProgramacionPla.validarEstado(programacionPla);
-                if(msg1.getTitulo().equals("ok")){
+    public String Cerrar()  {   
+        
+        List<ProgramacionPla> iterador=  programacionPlaFacade.findByEstado("P");        
+        if(iterador== null){
+            
+           return  "ok";
+        }
+          for( ProgramacionPla e : iterador ){
+              actualizarPrestamos(e);
+              crearPartida(e);
+              //PlanillaHistorial(e);              
+              actualizarStatus(e);
+               
+          }            
+         return "ok";
+     }	    
+    
+         
+    
+    public String borrar(ProgramacionPla programacionPla){
+        try{
+                mensaje =  sB_ProgramacionPla.validarEstado(programacionPla);
+                if(mensaje.equals("ok")){
                     
                     List<Planilla> iterator =  planillaFacade.findByPk(programacionPla);
                     if(iterator != null){
                         for( Planilla p : iterator ){                             
-                            planillaFacade.remove(p);                            
-                            
+                            planillaFacade.remove(p);  
+                            planillaFacade.flush();
                         }
                     } 
                     
@@ -169,14 +149,394 @@ public class SB_Planilla {
                     if(iterator2 != null){
                         for( MovDp p : iterator2 ){                             
                             movDpFacade.remove(p); 
+                            movDpFacade.flush();
                         }
-                    }               
-                    
-                    
-                    
-                }       
+                    }                                   
+                }   
+            return "ok";
+        }catch(Exception ex){
+           JsfUtil.logs(ex , "Surgio un error", "Proceso borrar",SB_Asistencia.class,"ERROR");             
+            return "error";
+            
+        }
     }    
     
+    
+    public String crearPartida(ProgramacionPla programacionPlax){     
+        try{
+            generarPoliza(programacionPlax);                             
+            List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
+            for( ResumenAsistencia ra : iterator ){          
+                    salarios(ra);                    
+                    liquido(ra);                                
+                    mov(ra); 
+              }
+            redondearPartida();
+            return "ok";
+        }catch(Exception ex){
+           JsfUtil.logs(ex , "Surgio un error", "Proceso crearPartida",SB_Asistencia.class,"ERROR");             
+            return "error";            
+            
+        }
+    }        
 
+    public String PlanillaHistorial(ProgramacionPla programacionPlax){                 
+        try{        
+            List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
+            for( ResumenAsistencia ra : iterator ){          
+                   /*1 obtener la planilla*/
+                   /*2 obetner los movimientos de ley*/
+                   /*3 */
+              }
+            return "ok";
+        }catch(Exception ex){
+               JsfUtil.logs(ex , "Surgio un error", "Proceso crearPartida",SB_Asistencia.class,"ERROR");             
+                return "error";      
+        }        
+    }        
+
+    
+    public void generarPoliza(ProgramacionPla programacionPlax) {
+        try{
+        LoginBean lb= new LoginBean();		 
+        Date now = ManejadorFechas.NowDate();
+        short codCia = lb.sscia();
+        short id= dmgpolizaFacade.Sequence("DGMPOLOZA_PLA");            
+        DmgpolizaPK pk= new DmgpolizaPK(codCia, "PL",id ,now);
+        pl = new Dmgpoliza();
+        pl.setDmgpolizaPK(pk);
+        String ref = String.valueOf(programacionPlax.getProgramacionPlaPK().getSecuencia());        
+        pl.setNumReferencia(ref);        
+        pl.setUsuario(lb.ssuser());
+        pl.setFechaCreacion(now);
+        pl.setConcepto("Planilla "+programacionPlax.getTiposPlanilla().getNomTipopla()+" Quincena "+programacionPlax.getNumPlanilla() +" "+now.getMonth()+"/"+now.getYear());
+        savePoliza();    
+        }catch(Exception ex)        
+        {
+         
+        JsfUtil.logs(ex , "Surgio un error", "Proceso generarPoliza",SB_Asistencia.class,"ERROR"); 
+        }
+    }
+    
+
+    
+    public void savePoliza(){
+        dmgpolizaFacade.create(pl);  
+    }
+    
+    public void salarios(ResumenAsistencia ra){
+        try{
+        calculos.inicializar(ra);
+        Planilla pla= planillaFacade.findByEmp(ra);
+        BigDecimal salario = BigDecimal.valueOf(pla.getBruto().floatValue());       
+        if(salario.intValue()>0){
+             cta1= ra.getEmpleados().getDepartamentos().getScta1();
+             cta2= ra.getEmpleados().getDepartamentos().getScta2();
+             cta3= ra.getEmpleados().getDepartamentos().getScta3();
+             cta4= ra.getEmpleados().getDepartamentos().getScta4();
+             cta5= ra.getEmpleados().getDepartamentos().getScta5();
+            String py = ra.getEmpleados().getDepartamentos().getProyecto();                
+            DmgdetallePK pk = new DmgdetallePK(pl.getDmgpolizaPK().getCodCia(),pl.getDmgpolizaPK().getTipoDocto(), pl.getDmgpolizaPK().getNumPoliza(),pl.getDmgpolizaPK().getFecha(), 0);
+            dt = new Dmgdetalle(pk);
+            dt.setCta1(cta1);
+            dt.setCta2(cta2);
+            dt.setCta3(cta3);
+            dt.setCta4(cta4);
+            dt.setCta5(cta5);
+            dt.setProyecto(py);
+            dt.setConcepto(": Salarios Planilla ="+ra.getResumenAsistenciaPK().getSecuencia()  );                
+            dt.setAbono(BigDecimal.ZERO); 
+            dt.setCargo(salario );       
+            validaCuenta(dt);
+        }
+        }catch(Exception ex){
+         
+        JsfUtil.logs(ex , "Surgio un error", "Proceso savePoliza",SB_Asistencia.class,"ERROR"); 
+        }
+    }
+
+  
+   
+    public void liquido(ResumenAsistencia ra){
+        try{
+        Planilla pla= planillaFacade.findByEmp(ra);
+        BigDecimal liquido = BigDecimal.valueOf(pla.getLiquido().floatValue());      
+        if(liquido.intValue()>0){
+             cta1= ra.getEmpleados().getDepartamentos().getLcta1();
+             cta2= ra.getEmpleados().getDepartamentos().getLcta2();
+             cta3= ra.getEmpleados().getDepartamentos().getLcta3();
+             cta4= ra.getEmpleados().getDepartamentos().getLcta4();
+             cta5= ra.getEmpleados().getDepartamentos().getLcta5();
+            String py = ra.getEmpleados().getDepartamentos().getProyecto();                
+            DmgdetallePK pk = new DmgdetallePK(pl.getDmgpolizaPK().getCodCia(),pl.getDmgpolizaPK().getTipoDocto(), pl.getDmgpolizaPK().getNumPoliza(),pl.getDmgpolizaPK().getFecha(),0);
+            dt = new Dmgdetalle(pk);
+            dt.setCta1(cta1);
+            dt.setCta2(cta2);
+            dt.setCta3(cta3);
+            dt.setCta4(cta4);
+            dt.setCta5(cta5);
+            dt.setProyecto(py);
+            dt.setConcepto("Liquido  planilla"+ra.getResumenAsistenciaPK().getSecuencia() );        
+            dt.setAbono(liquido); 
+            dt.setCargo(BigDecimal.ZERO);
+            validaCuenta(dt);
+         }
+        }catch( Exception ex){
+           
+        JsfUtil.logs(ex , "Surgio un error", "Proceso liquido",SB_Asistencia.class,"ERROR"); 
+        }
+        
+    } 
+    
+    public void mov(ResumenAsistencia ra){
+        try{
+        List<MovDp> deduc =  movDpFacade.findByCodEmp(ra);
+         for( MovDp movDp : deduc ){  
+            
+               BigDecimal cargo = BigDecimal.ZERO;
+               BigDecimal abono = BigDecimal.ZERO;
+               BigDecimal valor = movDp.getValor();               
+               if(valor.intValue()>0){                    
+                   if(movDp.getDeducPresta().getCatDp().getSumaResta().equals("R")){
+                        cta1= movDp.getDeducPresta().getCta1();
+                        cta2= movDp.getDeducPresta().getCta2();
+                        cta3= movDp.getDeducPresta().getCta3();
+                        cta4= movDp.getDeducPresta().getCta4();
+                        cta5= movDp.getDeducPresta().getCta5();   
+                        cargo = BigDecimal.ZERO;
+                        abono = valor;
+                        
+                   }                   
+                   if(movDp.getDeducPresta().getCatDp().getSumaResta().equals("S")){
+                        DeptosMov Cuentas= deptosMovFacade.findCatdp( movDp.getDeducPresta().getCatDp(), ra.getEmpleados().getDepartamentos());
+                        cta1= Cuentas.getBcta1();
+                        cta2= Cuentas.getBcta2();
+                        cta3= Cuentas.getBcta3();
+                        cta4= Cuentas.getBcta4();
+                        cta5= Cuentas.getBcta5();
+                        cargo = valor;
+                        abono = BigDecimal.ZERO;         
+                   }
+
+                String py = ra.getEmpleados().getDepartamentos().getProyecto();
+                DmgdetallePK pk = new DmgdetallePK(pl.getDmgpolizaPK().getCodCia(),pl.getDmgpolizaPK().getTipoDocto(), pl.getDmgpolizaPK().getNumPoliza(),pl.getDmgpolizaPK().getFecha(), 0);                
+                dt = new Dmgdetalle(pk);
+                dt.setCta1(cta1);
+                dt.setCta2(cta2);
+                dt.setCta3(cta3);
+                dt.setCta4(cta4);
+                dt.setCta5(cta5);
+                dt.setProyecto(py); 
+                dt.setConcepto("planilla "+ra.getResumenAsistenciaPK().getSecuencia()+"Deducion  "+ movDp.getDeducPresta().getDescripcion() );        
+                dt.setAbono(abono);                
+                dt.setCargo(cargo);                        
+                validaCuenta(dt);   
+               }
+         }    
+        }catch(Exception ex){
+         String  emp =  String.valueOf(ra.getEmpleados().getEmpleadosPK().getCodEmp()) ;
+        JsfUtil.logs(ex , "Surgio un error", "Proceso mov",SB_Asistencia.class,"ERROR"); 
+        }
+    }   
+     
+    
+    public void validaCuenta( Dmgdetalle dt ){   
+        try{
+       Dmgdetalle dtt= dmgdetalleFacade.findByCuenta(dt);
+       BigDecimal a  = new BigDecimal(0);
+       BigDecimal c  = new BigDecimal(0);
+       if (dtt != null){
+           if( dt.getAbono().floatValue()>0 ) {
+               a = new BigDecimal (dt.getAbono().floatValue() + dtt.getAbono().floatValue());              
+               dtt.setAbono(a );  
+           }
+           if(dt.getCargo().floatValue()>0){
+               c = new BigDecimal ( dt.getCargo().floatValue() + dtt.getCargo().floatValue());              
+               dtt.setCargo(c );
+           }  
+          dmgdetalleFacade.edit(dtt);       
+       }else{         
+           correlativo++;
+           dt.getDmgdetallePK().setCorrelat(correlativo);
+           dmgdetalleFacade.create(dt);
+       }
+        }catch(Exception ex){
+          
+        JsfUtil.logs(ex , "Surgio un error", "Proceso validaCuenta",SB_Asistencia.class,"ERROR"); 
+        }
+    }
+    
+    public void redondearPartida(){
+        try{
+            Date now = ManejadorFechas.NowDate();
+            List <Dmgdetalle>  Ldmgdetalle =  dmgdetalleFacade.findByFecha(now);
+            for( Dmgdetalle detalle : Ldmgdetalle ){           
+                BigDecimal  c = new BigDecimal (0);
+                BigDecimal  a = new BigDecimal (0);
+                if(detalle.getAbono().floatValue()>0){
+                    a= detalle.getAbono();
+                    a= a.setScale(2, RoundingMode.CEILING);
+                    detalle.setAbono(a);
+                }
+                if(detalle.getCargo().floatValue()>0){
+                   c= detalle.getCargo();
+                   c= c.setScale(2, RoundingMode.CEILING);
+                   detalle.setCargo(c);
+                }         
+                if(detalle.getCargo().floatValue()>0 || detalle.getAbono().floatValue()>0 ){
+                    dmgdetalleFacade.edit(detalle);
+                }
+
+            }    
+        }catch(Exception ex){     
+        JsfUtil.logs(ex , "Surgio un error", "Proceso redondearPartida",SB_Asistencia.class,"ERROR"); 
+        }
+    }
+    
+    public void actualizarPrestamos(ProgramacionPla prog){
+       List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(prog );
+            for( ResumenAsistencia ra : iterator ){  
+                List<MovDp>  lmdp =  movDpFacade.findByCat("Prestamos", ra);
+                for( MovDp m : lmdp ){
+                    Prestamos p = prestamosFacade.findByPk(m);
+                    short cuotas = (short) (p.getCuotasP()+1) ;
+                    float saldo = p.getSaldo().floatValue() - m.getValor().floatValue();
+                    p.setCuotasP(cuotas);
+                    p.setSaldo( BigDecimal.valueOf(saldo));
+                    prestamosFacade.edit(p);
+                }
+                
+                
+                
+            }                                                        
+    }  
+    
+    public void actualizarStatus(ProgramacionPla prog){
+        prog.setStatus("C");
+        programacionPlaFacade.edit(prog);
+    }    
+    
+    
+    public String generarTxt(){
+        
+          String encabezado="";
+          String Campo="B";
+          String vPlan="4177";
+          String Plan =   vPlan +"0000".substring(vPlan.length());
+          String vCorrelativo= "4";
+          String Correlativo =   "00000".substring(vCorrelativo.length())+vCorrelativo;
+          String vNit= "";
+          String Nit=  "                    ".substring(vNit.length())+vNit;
+          String Id=  "     ";
+          String anio= "2013";
+          String vmes= "4";
+          String mes = "00".substring(vmes.length())+vmes;          
+          String vdias= "2";
+          String dias = "00".substring(vdias.length())+vdias;                              
+          String vmonto= "15000";
+          String monto = "             ".substring(vmonto.length())+vmonto;                    
+          String vtrans = "";
+          String trans  = "     ".substring(vtrans.length())+vtrans; 
+          String vdescripcion = "";
+          String descripcion =  "                              ".substring(vdescripcion.length())+vdescripcion; 
+          String Esp = " ";
+          String vnombre = "";
+          String nombre =  "                              ".substring(vnombre.length())+vnombre; 
+          String vCuenta = "";
+          String Cuenta =  "     ".substring(vCuenta.length())+vCuenta; 
+          encabezado+=Campo;
+          encabezado+=Plan;
+          encabezado+=Correlativo;
+          encabezado+=Nit;
+          encabezado+=trans;
+          encabezado+=anio;
+          encabezado+=mes;
+          encabezado+=dias;
+          encabezado+=monto;
+          encabezado+=Id;          
+          encabezado+=descripcion;
+          encabezado+=Esp;
+          encabezado+=nombre;
+          encabezado+=Cuenta;
+          encabezado+="\n";
+        
+          
+          List<Planilla> lpla= planillaFacade.findByStatus();
+          int cort= 1;
+          String detalle = "";
+           for( Planilla p : lpla ){               
+               try{
+               if (p.getEmpleados().getCodBanco().equals("14")){
+                     detalle += txtDetalle(p,cort++);
+               }
+               
+               }catch(Exception ex){
+                   return "error empleado  ="+p.getEmpleados().getEmpleadosPK().getCodEmp();
+               }
+                   
+                   
+                   
+               
+             
+           }
+        encabezado+=detalle;
+        return encabezado;
+    }
+    
+    public String txtDetalle(Planilla pl,int ct)
+    {
+        
+          float valor= pl.getLiquido().floatValue()*10;
+          DecimalFormat df = new DecimalFormat("###########");
+          
+          
+
+          String detalle="";
+          String Campo="T";
+          String vPlan="4177";
+          String Plan = vPlan +"0000".substring(vPlan.length());
+          String vCorrelativo=  "1" ;
+          String Correlativo =   "00000".substring(vCorrelativo.length())+vCorrelativo;
+          String vNit= pl.getEmpleados().getNumNit();
+          String Nit=  vNit+"                    ".substring(vNit.length());
+          String vtrans = String.valueOf(ct);
+          String trans  = "     ".substring(vtrans.length())+vtrans; 
+          String Id=  "     ";
+          String anio= "2013";
+          String vmes= "4";
+          String mes = "00".substring(vmes.length())+vmes;          
+          String vdias= "2";
+          String dias = "00".substring(vdias.length())+vdias;                              
+          String vmonto= String.valueOf(df.format(valor)) ;
+          String monto = "             ".substring(vmonto.length())+vmonto;                    
+
+          String vdescripcion ="1 quincena junio 2013";
+          vdescripcion = JsfUtil.truncate(vdescripcion,30);
+         
+          String descripcion =  vdescripcion+"                              ".substring(vdescripcion.length()); 
+          String Esp = " ";
+          String vnombre = pl.getEmpleados().getNombres()+pl.getEmpleados().getApellidos();
+          vnombre = JsfUtil.truncate(vnombre,30);
+          String nombre = vnombre+"                              ".substring(vnombre.length()); 
+          String vCuenta = pl.getEmpleados().getCtaBancaria().replace("-","");
+          String Cuenta =  "         ".substring(vCuenta.length())+vCuenta; 
+          detalle+=Campo;
+          detalle+=Plan;
+          detalle+=Correlativo;
+          detalle+=Nit;
+          detalle+=trans;
+          detalle+=anio;
+          detalle+=mes;
+          detalle+=dias;
+          detalle+=monto;
+          detalle+=Id;
+          detalle+=descripcion;
+          detalle+=Esp;
+          detalle+=nombre;
+          detalle+=Cuenta;
+          detalle+="\n";
+          
+        return detalle;
+    }
 
 }
