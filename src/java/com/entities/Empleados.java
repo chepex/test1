@@ -281,6 +281,8 @@ public class Empleados implements Serializable {
     private List<ResumenAsistencia> resumenAsistenciaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleados")
     private List<Planilla> planillaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleados")
+    private List<PlanillaIsss> planillaIsssList;    
     @JoinColumns({
         @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
         @JoinColumn(name = "COD_PUESTO", referencedColumnName = "COD_PUESTO")})
@@ -319,6 +321,15 @@ public class Empleados implements Serializable {
 	this.empleadosPK = new EmpleadosPK(codCia, codEmp);
     }
 
+    public List<PlanillaIsss> getPlanillaIsssList() {
+        return planillaIsssList;
+    }
+
+    public void setPlanillaIsssList(List<PlanillaIsss> planillaIsssList) {
+        this.planillaIsssList = planillaIsssList;
+    }
+
+    
     public EmpleadosPK getEmpleadosPK() {
 	return empleadosPK;
     }

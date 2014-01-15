@@ -15,12 +15,14 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{rentaController.selected != null}">
 
+                        <h:outputText value="#{myBundle.ViewRentaLabel_rentaPK_codCia}"/>
+                        <h:outputText value="#{rentaController.selected.rentaPK.codCia}" title="#{myBundle.ViewRentaTitle_rentaPK_codCia}"/>
+
                         <h:outputText value="#{myBundle.ViewRentaLabel_rentaPK_secuencia}"/>
                         <h:outputText value="#{rentaController.selected.rentaPK.secuencia}" title="#{myBundle.ViewRentaTitle_rentaPK_secuencia}"/>
 
                         <h:outputText value="#{myBundle.ViewRentaLabel_rentaPK_id}"/>
                         <h:outputText value="#{rentaController.selected.rentaPK.id}" title="#{myBundle.ViewRentaTitle_rentaPK_id}"/>
-
 
                         <h:outputText value="#{myBundle.ViewRentaLabel_del}"/>
                         <h:outputText value="#{rentaController.selected.del}" title="#{myBundle.ViewRentaTitle_del}"/>
@@ -36,6 +38,9 @@
 
                         <h:outputText value="#{myBundle.ViewRentaLabel_exceso}"/>
                         <h:outputText value="#{rentaController.selected.exceso}" title="#{myBundle.ViewRentaTitle_exceso}"/>
+
+                        <h:outputText value="#{myBundle.ViewRentaLabel_descripcion}"/>
+                        <h:outputText value="#{rentaController.selected.descripcion}" title="#{myBundle.ViewRentaTitle_descripcion}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{myBundle.Close}" onclick="RentaViewDialog.hide()"/>
                 </h:panelGroup>

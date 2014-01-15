@@ -15,8 +15,11 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{programacionPlaController.selected != null}">
 
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_programacionPlaPK_secuencia}" for="programacionPlaPK_secuencia" />
+                        <p:inputText id="programacionPlaPK_secuencia" value="#{programacionPlaController.selected.programacionPlaPK.secuencia}" title="#{myBundle.CreateProgramacionPlaTitle_programacionPlaPK_secuencia}" required="true" requiredMessage="#{myBundle.CreateProgramacionPlaRequiredMessage_programacionPlaPK_secuencia}"/>
 
-
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_status}" for="status" />
+                        <p:inputText id="status" value="#{programacionPlaController.selected.status}" title="#{myBundle.CreateProgramacionPlaTitle_status}" required="true" requiredMessage="#{myBundle.CreateProgramacionPlaRequiredMessage_status}"/>
 
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_fechaPago}" for="fechaPago" />
                         <p:calendar id="fechaPago" pattern="MM/dd/yyyy HH:mm:ss" value="#{programacionPlaController.selected.fechaPago}" title="#{myBundle.EditProgramacionPlaTitle_fechaPago}"  showOn="button"/>
@@ -33,20 +36,7 @@
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_fechaCorte}" for="fechaCorte" />
                         <p:calendar id="fechaCorte" pattern="MM/dd/yyyy HH:mm:ss" value="#{programacionPlaController.selected.fechaCorte}" title="#{myBundle.EditProgramacionPlaTitle_fechaCorte}"  showOn="button"/>
 
-
-                       
-
-                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_tiposPlanilla}" for="tiposPlanilla" />
-                        <p:selectOneMenu id="tiposPlanilla" value="#{programacionPlaController.selected.tiposPlanilla}" required="true" requiredMessage="#{myBundle.EditProgramacionPlaRequiredMessage_tiposPlanilla}">
-                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{tiposPlanillaController.items}"
-                                           var="tiposPlanillaItem"
-                                           itemValue="#{tiposPlanillaItem}"
-                                           itemLabel="#{tiposPlanillaItem.nomTipopla.toString()}"
-                                           />
-                            <f:converter binding="#{tiposPlanillaConverter}"/>
-                        </p:selectOneMenu>
-
+                      
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_recalculo}" for="recalculo" />
                         <p:inputText id="recalculo" value="#{programacionPlaController.selected.recalculo}" title="#{myBundle.CreateProgramacionPlaTitle_recalculo}" />
                     </p:panelGrid>

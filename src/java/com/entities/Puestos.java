@@ -63,6 +63,23 @@ public class Puestos implements Serializable {
     public Puestos() {
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public Date getFechaReg() {
+        return fechaReg;
+    }
+
+    public void setFechaReg(Date fechaReg) {
+        this.fechaReg = fechaReg;
+    }
+
+    
     public Puestos(PuestosPK puestosPK) {
 	this.puestosPK = puestosPK;
     }

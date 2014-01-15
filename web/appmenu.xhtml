@@ -2,29 +2,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
+ 
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <h:form id="menuForm">
+       
             <p:menubar>
-                <p:menuitem value="#{myBundle.Home}" outcome="/index" icon="ui-icon-home"/>
+                <p:menuitem value="#{myBundle.Home}"  outcome="/index" icon="ui-icon-home"/>
                 <p:submenu label="#{myBundle.Maintenance}">
-                    <p:menuitem value="CatDp" outcome="/catDp/index" />                    
+                    <p:menuitem value="CatDp" outcome="/catDp/index" />
                     <p:menuitem value="DeducPresta" outcome="/deducPresta/index" />
                     <p:menuitem value="Departamentos" outcome="/departamentos/index" />
                     <p:menuitem value="DeptosMov" outcome="/deptosMov/index" />
-                    <p:menuitem value="Empleados" outcome="/empleados/index" />
-                    <p:menuitem value="Deducciones Ley" outcome="/detEmpleado/index" />                    
-                    <p:menuitem value="Parametros" outcome="/parametros/index" />
+                    <p:menuitem value="DetEmpleado" outcome="/detEmpleado/index" />
+                    <p:menuitem value="Empleados" outcome="/empleados/index" />                    
+                    <p:menuitem value="Observaciones" outcome="/observaciones/index" />                    
+                    <p:menuitem value="Parametros" outcome="/parametros/index" />    
+                    <p:menuitem value="Planillah" outcome="/planillah/index" />                     
                     <p:menuitem value="Profesiones" outcome="/profesiones/index" />
-                    <p:menuitem value="ProgramacionPla" outcome="/programacionPla/index" />
-                    <p:menuitem value="Puestos" outcome="/puestos/index" />
-                    <p:menuitem value="Renta" outcome="/renta/index" />                    
-                    <p:menuitem value="TiposPlanilla" outcome="/tiposPlanilla/index" />                   
-                    <p:menuitem value="Observaciones" outcome="/observaciones/index" />                  
-                    
+                    <p:menuitem value="aa" url="#"/>
+             
+                    <p:menuitem value="Renta" outcome="/renta/index" />
+                    <p:menuitem value="ResumenAsistencia" outcome="/resumenAsistencia/index" />
+                    <p:menuitem value="TiposPlanilla" outcome="/tiposPlanilla/index" />                                     
                 </p:submenu>
 		<p:submenu label="Procesos">
 		    <p:menuitem value="ResumenAsistencia" outcome="/resumenAsistencia/index" />		    
@@ -38,7 +39,8 @@
 		</p:submenu>                
 		                
             </p:menubar>
-        </h:form>
+       
+             
     </ui:composition>
 
 </html>

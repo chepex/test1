@@ -18,7 +18,7 @@
                         <h:outputLabel value="#{myBundle.EditPuestosLabel_puestosPK_codPuesto}" for="puestosPK_codPuesto" />
                         <h:outputText id="puestosPK_codPuesto" value="#{puestosController.selected.puestosPK.codPuesto}" />
 
-                        
+
                         <p:outputLabel value="#{myBundle.EditPuestosLabel_nomPuesto}" for="nomPuesto" />
                         <p:inputText id="nomPuesto" value="#{puestosController.selected.nomPuesto}" title="#{myBundle.EditPuestosTitle_nomPuesto}" />
 
@@ -30,6 +30,8 @@
 
                         <p:outputLabel value="#{myBundle.EditPuestosLabel_rol}" for="rol" />
                         <p:inputText id="rol" value="#{puestosController.selected.rol}" title="#{myBundle.EditPuestosTitle_rol}" />
+
+                      
                     </p:panelGrid>
                     <p:commandButton actionListener="#{puestosController.save}" value="#{myBundle.Save}" update="display,:PuestosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PuestosEditDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="PuestosEditDialog.hide()"/>

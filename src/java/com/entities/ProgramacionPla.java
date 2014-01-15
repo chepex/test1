@@ -59,13 +59,15 @@ public class ProgramacionPla implements Serializable {
     private Date fechaPago;
     @Column(name = "FECHA_CORTE")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaCorte;    
-    public Date getFechaCorte() {
-	return fechaCorte;
-    }
-    public void setFechaCorte(Date fechaCorte) {
-	this.fechaCorte = fechaCorte;
-    }
+    private Date fechaCorte; 
+    @Size(max = 100)
+    @Column(name = "USUARIO")
+    private String usuario;
+    @Column(name = "FECHA_REG")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaReg;
+    
+
     @Column(name = "NUM_PLANILLA")
     private Short numPlanilla;
     @Column(name = "ANIO")
@@ -87,14 +89,14 @@ public class ProgramacionPla implements Serializable {
     private TiposPlanilla tiposPlanilla;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programacionPla")
     private List<Planilla> planillaList;
+
     
-    @Column(name = "USUARIO")
-    private String usuario;    
-    @Column(name = "FECHA_REG")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaReg;
-    
-    
+    public Date getFechaCorte() {
+	return fechaCorte;
+    }
+    public void setFechaCorte(Date fechaCorte) {
+	this.fechaCorte = fechaCorte;
+    }    
     public ProgramacionPla() {	
 	
     }

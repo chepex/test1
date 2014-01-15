@@ -11,8 +11,13 @@ import com.entities.LoginBean;
 import com.entities.Mensaje;
 import com.entities.MovDp;
 import com.entities.MovDpFacade;
+import com.entities.Parametros;
+import com.entities.ParametrosFacade;
 import com.entities.Planilla;
 import com.entities.PlanillaFacade;
+import com.entities.PlanillaIsss;
+import com.entities.PlanillaIsssFacade;
+import com.entities.PlanillaIsssPK;
 import com.entities.Prestamos;
 import com.entities.PrestamosFacade;
 import com.entities.ProgramacionPla;
@@ -35,6 +40,10 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class SB_Planilla {
+    @EJB
+    private PlanillaIsssFacade planillaIsssFacade;
+    @EJB
+    private ParametrosFacade parametrosFacade;
     @EJB
     private PrestamosFacade prestamosFacade;
     @EJB
@@ -123,6 +132,7 @@ public class SB_Planilla {
           for( ProgramacionPla e : iterador ){
               actualizarPrestamos(e);
               crearPartida(e);
+              GenerarIsss(e);
               //PlanillaHistorial(e);              
               actualizarStatus(e);
                
@@ -130,8 +140,58 @@ public class SB_Planilla {
          return "ok";
      }	    
     
-         
+    public String GenerarIsss(ProgramacionPla programacionPla){
+            
+            List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPla );
+            for( ResumenAsistencia ra : iterator ){          
+                  CalculoIsss(ra);
+              }
+        return "";
+    }      
     
+    public String CalculoIsss(ResumenAsistencia ra){
+        Parametros p= parametrosFacade.findByNombre("HORAS_LABORALES");
+        LoginBean lb= new LoginBean();	
+        
+        Planilla planilla = planillaFacade.findByEmp(ra);
+        
+        if(ra.getProgramacionPla().getNumPlanilla()==1){
+            
+            PlanillaIsss planillaIsss =new PlanillaIsss();
+            PlanillaIsssPK planillaIsssPK =new PlanillaIsssPK();
+            planillaIsssPK.setCodCia(ra.getResumenAsistenciaPK().getCodCia());
+            planillaIsssPK.setAnio(ra.getProgramacionPla().getAnio());
+            planillaIsssPK.setMes(ra.getProgramacionPla().getMes());
+            planillaIsssPK.setCodEmp(ra.getResumenAsistenciaPK().getCodEmp());
+            planillaIsss.setPlanillaIsssPK(planillaIsssPK);
+            planillaIsss.setNombre(ra.getEmpleados().getNombreIsss());
+            planillaIsss.setNoAfilacion(ra.getEmpleados().getNumIgss());
+            planillaIsss.setCorrelativo(ra.getProgramacionPla().getTiposPlanilla().getTiposPlanillaPK().getCodTipopla());
+            planillaIsss.setDiasRemunerados(ra.getDias());
+            planillaIsss.setHorasJornada(p.getValorTxt());
+            planillaIsss.setSalDebengado( planilla.getNeto());            
+            planillaIsss.setUsuario(lb.ssuser());
+            planillaIsss.setFechaReg(lb.sdate());        
+            if(ra.getObservaciones()!= null){
+                planillaIsss.setCodObserva(ra.getObservaciones().getIsss());
+            }
+            planillaIsssFacade.create(planillaIsss);            
+        }else{
+            PlanillaIsss plaIsss = planillaIsssFacade.findByEmp(ra);
+            Integer dias= Integer.parseInt(plaIsss.getDiasRemunerados())+Integer.parseInt(plaIsss.getDiasRemunerados());
+            plaIsss.setDiasRemunerados( dias.toString());
+            plaIsss.setSalDebengado( plaIsss.getSalDebengado().add(planilla.getNeto()) );
+            if(ra.getObservaciones()!= null){
+                plaIsss.setCodObserva(ra.getObservaciones().getIsss());
+            }            
+            planillaIsssFacade.edit(plaIsss); 
+        } 
+
+        
+        
+        return "";
+    }
+
     public String borrar(ProgramacionPla programacionPla){
         try{
                 mensaje =  sB_ProgramacionPla.validarEstado(programacionPla);

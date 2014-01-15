@@ -33,26 +33,25 @@
                     </f:facet>
                     <h:outputText value="#{item.status}"/>
                 </p:column>
-                
-                <p:column sortBy="#{item.numPlanilla}">
+                <p:column sortBy="#{item.numPlanilla}" filterBy="#{item.numPlanilla}">
                     <f:facet name="header">
-                        <h:outputText value="Quincena"/>
+                        <h:outputText value="#{myBundle.ListProgramacionPlaTitle_numPlanilla}"/>
                     </f:facet>
                     <h:outputText value="#{item.numPlanilla}"/>
                 </p:column>
-                <p:column sortBy="#{item.anio}" >
+                <p:column sortBy="#{item.anio}" filterBy="#{item.anio}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListProgramacionPlaTitle_anio}"/>
                     </f:facet>
                     <h:outputText value="#{item.anio}"/>
                 </p:column>
-                <p:column sortBy="#{item.mes}" >
+                <p:column sortBy="#{item.mes}" filterBy="#{item.mes}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListProgramacionPlaTitle_mes}"/>
                     </f:facet>
                     <h:outputText value="#{item.mes}"/>
                 </p:column>
-                <p:column sortBy="#{item.fechaCorte}" >
+                <p:column sortBy="#{item.fechaCorte}" filterBy="#{item.fechaCorte}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListProgramacionPlaTitle_fechaCorte}"/>
                     </f:facet>
@@ -60,14 +59,8 @@
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:outputText>
                 </p:column>
-
-                <p:column sortBy="#{item.tiposPlanilla.tiposPlanillaPK}" >
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListProgramacionPlaTitle_tiposPlanilla}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.tiposPlanilla.nomTipopla}"/>
-                </p:column>
-                <p:column sortBy="#{item.recalculo}" >
+             
+                <p:column sortBy="#{item.recalculo}" filterBy="#{item.recalculo}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListProgramacionPlaTitle_recalculo}"/>
                     </f:facet>

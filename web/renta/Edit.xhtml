@@ -15,12 +15,14 @@
                 <h:panelGroup id="display">
                     <p:panelGrid  columns="2" rendered="#{rentaController.selected != null}">
 
+                        <h:outputLabel value="#{myBundle.EditRentaLabel_rentaPK_codCia}" for="rentaPK_codCia" />
+                        <h:outputText id="rentaPK_codCia" value="#{rentaController.selected.rentaPK.codCia}" />
+
                         <h:outputLabel value="#{myBundle.EditRentaLabel_rentaPK_secuencia}" for="rentaPK_secuencia" />
                         <h:outputText id="rentaPK_secuencia" value="#{rentaController.selected.rentaPK.secuencia}" />
 
                         <h:outputLabel value="#{myBundle.EditRentaLabel_rentaPK_id}" for="rentaPK_id" />
                         <h:outputText id="rentaPK_id" value="#{rentaController.selected.rentaPK.id}" />
-
 
                         <p:outputLabel value="#{myBundle.EditRentaLabel_del}" for="del" />
                         <p:inputText id="del" value="#{rentaController.selected.del}" title="#{myBundle.EditRentaTitle_del}" required="true" requiredMessage="#{myBundle.EditRentaRequiredMessage_del}"/>
@@ -36,6 +38,9 @@
 
                         <p:outputLabel value="#{myBundle.EditRentaLabel_exceso}" for="exceso" />
                         <p:inputText id="exceso" value="#{rentaController.selected.exceso}" title="#{myBundle.EditRentaTitle_exceso}" required="true" requiredMessage="#{myBundle.EditRentaRequiredMessage_exceso}"/>
+
+                        <p:outputLabel value="#{myBundle.EditRentaLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{rentaController.selected.descripcion}" title="#{myBundle.EditRentaTitle_descripcion}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{rentaController.save}" value="#{myBundle.Save}" update="display,:RentaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,RentaEditDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="RentaEditDialog.hide()"/>

@@ -480,10 +480,10 @@ public class SB_Calculos {
             if(devengado>0){
                 devengado= (float) JsfUtil.Redondear((double)devengado,2);
                 if(this.programacionPla.getTiposPlanilla().getFrecuencia().equals("Q")){
-                    renta= rentaFacade.findByValor(devengado, (short)2);
+                   renta= rentaFacade.findByValor(devengado, (short)2);
                 }
                 if(this.programacionPla.getTiposPlanilla().getFrecuencia().equals("M")){
-                   renta= rentaFacade.findByValor(devengado, (short)2);
+                   renta= rentaFacade.findByValor(devengado, (short)1);
                 }                                
                 float valor = (((( devengado -renta.getExceso().floatValue()) * renta.getPorcentaje().floatValue())/100) )+renta.getValorFijo().floatValue();
                 crear_movdp(valor);   
@@ -934,7 +934,10 @@ public class SB_Calculos {
        
        List<Planilla> lpla=planillaFacade.findByEmpT(this.resumenAsistencia);
        for(Planilla pla : lpla){
-            total = total + pla.getNeto().floatValue();           
+           if(pla.getProgramacionPla().getTiposPlanilla().getLey().equals("S") ){
+              total = total + pla.getNeto().floatValue();           
+           } 
+            
        }
         }catch(Exception ex){
            JsfUtil.logs(ex , "Surgio un error", "Proceso tdevengado "+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR");                                                                                 

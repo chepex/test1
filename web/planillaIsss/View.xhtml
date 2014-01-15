@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillaIsssViewDlg" widgetVar="PlanillaIsssViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewPlanillaIsssTitle}">
+
+            <h:form id="PlanillaIsssViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planillaIsssController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_planillaIsssPK_anio}"/>
+                        <h:outputText value="#{planillaIsssController.selected.planillaIsssPK.anio}" title="#{myBundle.ViewPlanillaIsssTitle_planillaIsssPK_anio}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_planillaIsssPK_mes}"/>
+                        <h:outputText value="#{planillaIsssController.selected.planillaIsssPK.mes}" title="#{myBundle.ViewPlanillaIsssTitle_planillaIsssPK_mes}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_noPatronal}"/>
+                        <h:outputText value="#{planillaIsssController.selected.noPatronal}" title="#{myBundle.ViewPlanillaIsssTitle_noPatronal}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_noAfilacion}"/>
+                        <h:outputText value="#{planillaIsssController.selected.noAfilacion}" title="#{myBundle.ViewPlanillaIsssTitle_noAfilacion}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_nombre}"/>
+                        <h:outputText value="#{planillaIsssController.selected.nombre}" title="#{myBundle.ViewPlanillaIsssTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_salDebengado}"/>
+                        <h:outputText value="#{planillaIsssController.selected.salDebengado}" title="#{myBundle.ViewPlanillaIsssTitle_salDebengado}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_diasRemunerados}"/>
+                        <h:outputText value="#{planillaIsssController.selected.diasRemunerados}" title="#{myBundle.ViewPlanillaIsssTitle_diasRemunerados}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_horasJornada}"/>
+                        <h:outputText value="#{planillaIsssController.selected.horasJornada}" title="#{myBundle.ViewPlanillaIsssTitle_horasJornada}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_codObserva}"/>
+                        <h:outputText value="#{planillaIsssController.selected.codObserva}" title="#{myBundle.ViewPlanillaIsssTitle_codObserva}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_usuario}"/>
+                        <h:outputText value="#{planillaIsssController.selected.usuario}" title="#{myBundle.ViewPlanillaIsssTitle_usuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_fechaReg}"/>
+                        <h:outputText value="#{planillaIsssController.selected.fechaReg}" title="#{myBundle.ViewPlanillaIsssTitle_fechaReg}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_correlativo}"/>
+                        <h:outputText value="#{planillaIsssController.selected.correlativo}" title="#{myBundle.ViewPlanillaIsssTitle_correlativo}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaIsssLabel_empleados}"/>
+                        <h:outputText value="#{planillaIsssController.selected.empleados.empleadosPK}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PlanillaIsssViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

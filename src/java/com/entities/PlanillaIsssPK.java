@@ -15,31 +15,37 @@ import javax.validation.constraints.NotNull;
  * @author mmixco
  */
 @Embeddable
-public class PlanillahPK implements Serializable {
+public class PlanillaIsssPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "COD_CIA")
     private short codCia;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "SECUENCIA")
-    private long secuencia;
+    @Column(name = "ANIO")
+    private short anio;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "MES")
+    private short mes;
     @Basic(optional = false)
     @NotNull
     @Column(name = "COD_EMP")
     private int codEmp;
 
-    public PlanillahPK() {
+    public PlanillaIsssPK() {
+    
 	if( this.codCia == 0 ){
 	    LoginBean lb= new LoginBean();	
 	    this.codCia = lb.sscia();
 	}		
-            
+    
     }
 
-    public PlanillahPK(short codCia, long secuencia, int codEmp) {
+    public PlanillaIsssPK(short codCia, short anio, short mes, int codEmp) {
         this.codCia = codCia;
-        this.secuencia = secuencia;
+        this.anio = anio;
+        this.mes = mes;
         this.codEmp = codEmp;
     }
 
@@ -51,12 +57,20 @@ public class PlanillahPK implements Serializable {
         this.codCia = codCia;
     }
 
-    public long getSecuencia() {
-        return secuencia;
+    public short getAnio() {
+        return anio;
     }
 
-    public void setSecuencia(long secuencia) {
-        this.secuencia = secuencia;
+    public void setAnio(short anio) {
+        this.anio = anio;
+    }
+
+    public short getMes() {
+        return mes;
+    }
+
+    public void setMes(short mes) {
+        this.mes = mes;
     }
 
     public int getCodEmp() {
@@ -71,7 +85,8 @@ public class PlanillahPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) codCia;
-        hash += (int) secuencia;
+        hash += (int) anio;
+        hash += (int) mes;
         hash += (int) codEmp;
         return hash;
     }
@@ -79,14 +94,17 @@ public class PlanillahPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PlanillahPK)) {
+        if (!(object instanceof PlanillaIsssPK)) {
             return false;
         }
-        PlanillahPK other = (PlanillahPK) object;
+        PlanillaIsssPK other = (PlanillaIsssPK) object;
         if (this.codCia != other.codCia) {
             return false;
         }
-        if (this.secuencia != other.secuencia) {
+        if (this.anio != other.anio) {
+            return false;
+        }
+        if (this.mes != other.mes) {
             return false;
         }
         if (this.codEmp != other.codEmp) {
@@ -97,7 +115,7 @@ public class PlanillahPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.entities.PlanillahPK[ codCia=" + codCia + ", secuencia=" + secuencia + ", codEmp=" + codEmp + " ]";
+        return "com.entities.PlanillaIsssPK[ codCia=" + codCia + ", anio=" + anio + ", mes=" + mes + ", codEmp=" + codEmp + " ]";
     }
     
 }

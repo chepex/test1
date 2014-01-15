@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillaIsssCreateDlg" widgetVar="PlanillaIsssCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreatePlanillaIsssTitle}">
+
+            <h:form id="PlanillaIsssCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planillaIsssController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_planillaIsssPK_anio}" for="planillaIsssPK_anio" />
+                        <p:inputText id="planillaIsssPK_anio" value="#{planillaIsssController.selected.planillaIsssPK.anio}" title="#{myBundle.CreatePlanillaIsssTitle_planillaIsssPK_anio}" required="true" requiredMessage="#{myBundle.CreatePlanillaIsssRequiredMessage_planillaIsssPK_anio}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_planillaIsssPK_mes}" for="planillaIsssPK_mes" />
+                        <p:inputText id="planillaIsssPK_mes" value="#{planillaIsssController.selected.planillaIsssPK.mes}" title="#{myBundle.CreatePlanillaIsssTitle_planillaIsssPK_mes}" required="true" requiredMessage="#{myBundle.CreatePlanillaIsssRequiredMessage_planillaIsssPK_mes}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_noPatronal}" for="noPatronal" />
+                        <p:inputText id="noPatronal" value="#{planillaIsssController.selected.noPatronal}" title="#{myBundle.CreatePlanillaIsssTitle_noPatronal}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_noAfilacion}" for="noAfilacion" />
+                        <p:inputText id="noAfilacion" value="#{planillaIsssController.selected.noAfilacion}" title="#{myBundle.CreatePlanillaIsssTitle_noAfilacion}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{planillaIsssController.selected.nombre}" title="#{myBundle.CreatePlanillaIsssTitle_nombre}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_salDebengado}" for="salDebengado" />
+                        <p:inputText id="salDebengado" value="#{planillaIsssController.selected.salDebengado}" title="#{myBundle.CreatePlanillaIsssTitle_salDebengado}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_diasRemunerados}" for="diasRemunerados" />
+                        <p:inputText id="diasRemunerados" value="#{planillaIsssController.selected.diasRemunerados}" title="#{myBundle.CreatePlanillaIsssTitle_diasRemunerados}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_horasJornada}" for="horasJornada" />
+                        <p:inputText id="horasJornada" value="#{planillaIsssController.selected.horasJornada}" title="#{myBundle.CreatePlanillaIsssTitle_horasJornada}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_codObserva}" for="codObserva" />
+                        <p:inputText id="codObserva" value="#{planillaIsssController.selected.codObserva}" title="#{myBundle.CreatePlanillaIsssTitle_codObserva}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{planillaIsssController.selected.usuario}" title="#{myBundle.CreatePlanillaIsssTitle_usuario}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_fechaReg}" for="fechaReg" />
+                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{planillaIsssController.selected.fechaReg}" title="#{myBundle.EditPlanillaIsssTitle_fechaReg}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_correlativo}" for="correlativo" />
+                        <p:inputText id="correlativo" value="#{planillaIsssController.selected.correlativo}" title="#{myBundle.CreatePlanillaIsssTitle_correlativo}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaIsssLabel_empleados}" for="empleados" />
+                        <p:selectOneMenu id="empleados" value="#{planillaIsssController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditPlanillaIsssRequiredMessage_empleados}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadosController.items}"
+                                           var="empleadosItem"
+                                           itemValue="#{empleadosItem}"
+                                           itemLabel="#{empleadosItem.empleadosPK.toString()}"
+                                           />
+                            <f:converter binding="#{empleadosConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planillaIsssController.saveNew}" value="#{myBundle.Save}" update="display,:PlanillaIsssListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PlanillaIsssCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PlanillaIsssCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

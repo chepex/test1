@@ -8,60 +8,59 @@
 
     <h:form id="PuestosListForm">
 
-	<p:panel header="#{myBundle.ListPuestosTitle}">
+        <p:panel header="#{myBundle.ListPuestosTitle}">
 
-	    <p:dataTable id="datalist" value="#{puestosController.items}" var="item"
-			 selectionMode="single" selection="#{puestosController.selected}"
-			 rowKey="#{item.puestosPK}"
-			 paginator="true"
-			 rows="10"
-			 rowsPerPageTemplate="10,20,30"
-			 >
+            <p:dataTable id="datalist" value="#{puestosController.items}" var="item"
+                         selectionMode="single" selection="#{puestosController.selected}"
+                         rowKey="#{item.puestosPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
 
-		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-		<p:column sortBy="#{item.puestosPK.codPuesto}" filterBy="#{item.puestosPK.codPuesto}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListPuestosTitle_puestosPK_codPuesto}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.puestosPK.codPuesto}"/>
-		</p:column>
+                <p:column sortBy="#{item.puestosPK.codPuesto}" filterBy="#{item.puestosPK.codPuesto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPuestosTitle_puestosPK_codPuesto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.puestosPK.codPuesto}"/>
+                </p:column>
+                <p:column sortBy="#{item.nomPuesto}" filterBy="#{item.nomPuesto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPuestosTitle_nomPuesto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nomPuesto}"/>
+                </p:column>
+                <p:column sortBy="#{item.salMaximo}" filterBy="#{item.salMaximo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPuestosTitle_salMaximo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.salMaximo}"/>
+                </p:column>
+                <p:column sortBy="#{item.salMinimo}" filterBy="#{item.salMinimo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPuestosTitle_salMinimo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.salMinimo}"/>
+                </p:column>
+                <p:column sortBy="#{item.rol}" filterBy="#{item.rol}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPuestosTitle_rol}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rol}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{puestosController.prepareCreate}" update=":PuestosCreateForm" oncomplete="PuestosCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PuestosViewForm" oncomplete="PuestosViewDialog.show()" disabled="#{empty puestosController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PuestosEditForm" oncomplete="PuestosEditDialog.show()" disabled="#{empty puestosController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{puestosController.delete}" update=":growl,datalist" disabled="#{empty puestosController.selected}"/>
+                </f:facet>
 
-		<p:column sortBy="#{item.nomPuesto}" filterBy="#{item.nomPuesto}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListPuestosTitle_nomPuesto}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.nomPuesto}"/>
-		</p:column>
-		<p:column >
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListPuestosTitle_salMaximo}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.salMaximo}"/>
-		</p:column>
-		<p:column >
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListPuestosTitle_salMinimo}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.salMinimo}"/>
-		</p:column>
-		<p:column >
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListPuestosTitle_rol}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.rol}"/>
-		</p:column>
-		<f:facet name="footer">
-		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{puestosController.prepareCreate}" update=":PuestosCreateForm" oncomplete="PuestosCreateDialog.show()"/>
-		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PuestosViewForm" oncomplete="PuestosViewDialog.show()" disabled="#{empty puestosController.selected}"/>
-		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PuestosEditForm" oncomplete="PuestosEditDialog.show()" disabled="#{empty puestosController.selected}"/>
-		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{puestosController.delete}" update=":growl,datalist" disabled="#{empty puestosController.selected}"/>
-		</f:facet>
+            </p:dataTable>
 
-	    </p:dataTable>
-
-	</p:panel>
+        </p:panel>
 
     </h:form>
 

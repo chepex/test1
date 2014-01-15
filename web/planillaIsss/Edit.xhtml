@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillaIsssEditDlg" widgetVar="PlanillaIsssEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditPlanillaIsssTitle}">
+
+            <h:form id="PlanillaIsssEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{planillaIsssController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaIsssLabel_planillaIsssPK_anio}" for="planillaIsssPK_anio" />
+                        <h:outputText id="planillaIsssPK_anio" value="#{planillaIsssController.selected.planillaIsssPK.anio}" />
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaIsssLabel_planillaIsssPK_mes}" for="planillaIsssPK_mes" />
+                        <h:outputText id="planillaIsssPK_mes" value="#{planillaIsssController.selected.planillaIsssPK.mes}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_noPatronal}" for="noPatronal" />
+                        <p:inputText id="noPatronal" value="#{planillaIsssController.selected.noPatronal}" title="#{myBundle.EditPlanillaIsssTitle_noPatronal}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_noAfilacion}" for="noAfilacion" />
+                        <p:inputText id="noAfilacion" value="#{planillaIsssController.selected.noAfilacion}" title="#{myBundle.EditPlanillaIsssTitle_noAfilacion}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{planillaIsssController.selected.nombre}" title="#{myBundle.EditPlanillaIsssTitle_nombre}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_salDebengado}" for="salDebengado" />
+                        <p:inputText id="salDebengado" value="#{planillaIsssController.selected.salDebengado}" title="#{myBundle.EditPlanillaIsssTitle_salDebengado}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_diasRemunerados}" for="diasRemunerados" />
+                        <p:inputText id="diasRemunerados" value="#{planillaIsssController.selected.diasRemunerados}" title="#{myBundle.EditPlanillaIsssTitle_diasRemunerados}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_horasJornada}" for="horasJornada" />
+                        <p:inputText id="horasJornada" value="#{planillaIsssController.selected.horasJornada}" title="#{myBundle.EditPlanillaIsssTitle_horasJornada}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_codObserva}" for="codObserva" />
+                        <p:inputText id="codObserva" value="#{planillaIsssController.selected.codObserva}" title="#{myBundle.EditPlanillaIsssTitle_codObserva}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{planillaIsssController.selected.usuario}" title="#{myBundle.EditPlanillaIsssTitle_usuario}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_fechaReg}" for="fechaReg" />
+                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{planillaIsssController.selected.fechaReg}" title="#{myBundle.EditPlanillaIsssTitle_fechaReg}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_correlativo}" for="correlativo" />
+                        <p:inputText id="correlativo" value="#{planillaIsssController.selected.correlativo}" title="#{myBundle.EditPlanillaIsssTitle_correlativo}" />
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaIsssLabel_empleados}" for="empleados" />
+                        <h:outputText id="empleados" value="#{planillaIsssController.selected.empleados.empleadosPK}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planillaIsssController.save}" value="#{myBundle.Save}" update="display,:PlanillaIsssListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PlanillaIsssEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PlanillaIsssEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

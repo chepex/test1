@@ -18,6 +18,8 @@
                         <p:outputLabel value="#{myBundle.CreatePuestosLabel_puestosPK_codPuesto}" for="puestosPK_codPuesto" />
                         <p:inputText id="puestosPK_codPuesto" value="#{puestosController.selected.puestosPK.codPuesto}" title="#{myBundle.CreatePuestosTitle_puestosPK_codPuesto}" required="true" requiredMessage="#{myBundle.CreatePuestosRequiredMessage_puestosPK_codPuesto}"/>
 
+                        <p:outputLabel value="#{myBundle.CreatePuestosLabel_puestosPK_codCia}" for="puestosPK_codCia" />
+                        <p:inputText id="puestosPK_codCia" value="#{puestosController.selected.puestosPK.codCia}" title="#{myBundle.CreatePuestosTitle_puestosPK_codCia}" required="true" requiredMessage="#{myBundle.CreatePuestosRequiredMessage_puestosPK_codCia}"/>
 
                         <p:outputLabel value="#{myBundle.CreatePuestosLabel_nomPuesto}" for="nomPuesto" />
                         <p:inputText id="nomPuesto" value="#{puestosController.selected.nomPuesto}" title="#{myBundle.CreatePuestosTitle_nomPuesto}" />
@@ -30,6 +32,8 @@
 
                         <p:outputLabel value="#{myBundle.CreatePuestosLabel_rol}" for="rol" />
                         <p:inputText id="rol" value="#{puestosController.selected.rol}" title="#{myBundle.CreatePuestosTitle_rol}" />
+
+                      
                     </p:panelGrid>
                     <p:commandButton actionListener="#{puestosController.saveNew}" value="#{myBundle.Save}" update="display,:PuestosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PuestosCreateDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="PuestosCreateDialog.hide()"/>

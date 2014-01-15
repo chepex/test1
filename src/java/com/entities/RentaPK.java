@@ -30,6 +30,10 @@ public class RentaPK implements Serializable {
     private short secuencia;
 
     public RentaPK() {
+	if( this.codCia == 0 ){
+	    LoginBean lb= new LoginBean();	
+	    this.codCia = lb.sscia();
+	}	        
     }
 
     public RentaPK(short codCia, short id, short secuencia) {

@@ -27,41 +27,53 @@
                     </f:facet>
                     <h:outputText value="#{item.rentaPK.id}"/>
                 </p:column>
+                <p:column sortBy="#{item.rentaPK.codCia}" filterBy="#{item.rentaPK.codCia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRentaTitle_rentaPK_codCia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rentaPK.codCia}"/>
+                </p:column>
                 <p:column sortBy="#{item.rentaPK.secuencia}" filterBy="#{item.rentaPK.secuencia}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRentaTitle_rentaPK_secuencia}"/>
                     </f:facet>
                     <h:outputText value="#{item.rentaPK.secuencia}"/>
                 </p:column>
-                <p:column >
+                <p:column sortBy="#{item.del}" filterBy="#{item.del}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRentaTitle_del}"/>
                     </f:facet>
                     <h:outputText value="#{item.del}"/>
                 </p:column>
-                <p:column >
+                <p:column sortBy="#{item.al}" filterBy="#{item.al}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRentaTitle_al}"/>
                     </f:facet>
                     <h:outputText value="#{item.al}"/>
                 </p:column>
-                <p:column >
+                <p:column sortBy="#{item.valorFijo}" filterBy="#{item.valorFijo}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRentaTitle_valorFijo}"/>
                     </f:facet>
                     <h:outputText value="#{item.valorFijo}"/>
                 </p:column>
-                <p:column >
+                <p:column sortBy="#{item.porcentaje}" filterBy="#{item.porcentaje}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRentaTitle_porcentaje}"/>
                     </f:facet>
                     <h:outputText value="#{item.porcentaje}"/>
                 </p:column>
-                <p:column >
+                <p:column sortBy="#{item.exceso}" filterBy="#{item.exceso}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListRentaTitle_exceso}"/>
                     </f:facet>
                     <h:outputText value="#{item.exceso}"/>
+                </p:column>
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRentaTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
                 </p:column>
                 <f:facet name="footer">
                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{rentaController.prepareCreate}" update=":RentaCreateForm" oncomplete="RentaCreateDialog.show()"/>

@@ -23,7 +23,13 @@ public class RentaController extends AbstractController<Renta> implements Serial
     }
 
     @Override
+    protected void setEmbeddableKeys() {
+        this.getSelected().getRentaPK().setCodCia(this.getSelected().getRentaPK().getCodCia());
+    }
+    
+    @Override
     protected void initializeEmbeddableKey() {
         this.getSelected().setRentaPK(new com.entities.RentaPK());
     }
+
 }

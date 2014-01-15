@@ -6,6 +6,7 @@ package com.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -13,7 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -59,7 +63,14 @@ public class Renta implements Serializable {
     @NotNull
     @Column(name = "EXCESO")
     private BigDecimal exceso;
-
+    @Column(name = "USUARIO")
+    private String usuario;    
+    @Column(name = "FECHA_REG")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaReg;
+    @Size(max = 50)
+    @Column(name = "DESCRIPCION")
+    private String descripcion;    
     public Renta() {
     }
 
@@ -74,6 +85,31 @@ public class Renta implements Serializable {
         this.valorFijo = valorFijo;
         this.porcentaje = porcentaje;
         this.exceso = exceso;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
+
+    public Date getFechaReg() {
+        return fechaReg;
+    }
+
+    public void setFechaReg(Date fechaReg) {
+        this.fechaReg = fechaReg;
     }
 
     public Renta(short codCia, short id, short secuencia) {

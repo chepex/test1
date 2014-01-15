@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PlanillaIsssListForm">
+
+        <p:panel header="#{myBundle.ListPlanillaIsssTitle}">
+
+            <p:dataTable id="datalist" value="#{planillaIsssController.items}" var="item"
+                         selectionMode="single" selection="#{planillaIsssController.selected}"
+                         rowKey="#{item.planillaIsssPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.planillaIsssPK.mes}" filterBy="#{item.planillaIsssPK.mes}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_planillaIsssPK_mes}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.planillaIsssPK.mes}"/>
+                </p:column>
+                <p:column sortBy="#{item.planillaIsssPK.anio}" filterBy="#{item.planillaIsssPK.anio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_planillaIsssPK_anio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.planillaIsssPK.anio}"/>
+                </p:column>
+                <p:column sortBy="#{item.noPatronal}" filterBy="#{item.noPatronal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_noPatronal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.noPatronal}"/>
+                </p:column>
+                <p:column sortBy="#{item.noAfilacion}" filterBy="#{item.noAfilacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_noAfilacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.noAfilacion}"/>
+                </p:column>
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+                <p:column sortBy="#{item.salDebengado}" filterBy="#{item.salDebengado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_salDebengado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.salDebengado}"/>
+                </p:column>
+                <p:column sortBy="#{item.diasRemunerados}" filterBy="#{item.diasRemunerados}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_diasRemunerados}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.diasRemunerados}"/>
+                </p:column>
+                <p:column sortBy="#{item.horasJornada}" filterBy="#{item.horasJornada}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_horasJornada}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horasJornada}"/>
+                </p:column>
+                <p:column sortBy="#{item.codObserva}" filterBy="#{item.codObserva}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_codObserva}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codObserva}"/>
+                </p:column>
+                <p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_usuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuario}"/>
+                </p:column>
+                <p:column sortBy="#{item.fechaReg}" filterBy="#{item.fechaReg}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_fechaReg}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaReg}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{item.correlativo}" filterBy="#{item.correlativo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_correlativo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.correlativo}"/>
+                </p:column>
+                <p:column sortBy="#{item.empleados.empleadosPK}" filterBy="#{item.empleados.empleadosPK}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_empleados}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleados.empleadosPK}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{planillaIsssController.prepareCreate}" update=":PlanillaIsssCreateForm" oncomplete="PlanillaIsssCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PlanillaIsssViewForm" oncomplete="PlanillaIsssViewDialog.show()" disabled="#{empty planillaIsssController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PlanillaIsssEditForm" oncomplete="PlanillaIsssEditDialog.show()" disabled="#{empty planillaIsssController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{planillaIsssController.delete}" update=":growl,datalist" disabled="#{empty planillaIsssController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>
