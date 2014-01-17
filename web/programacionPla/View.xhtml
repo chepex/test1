@@ -41,6 +41,9 @@
                         <h:outputText value="#{programacionPlaController.selected.fechaCorte}" title="#{myBundle.ViewProgramacionPlaTitle_fechaCorte}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
+                        
+                        <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_tiposPlanilla}"/>
+                        <h:outputText value="#{programacionPlaController.selected.tiposPlanilla.nomTipopla}"/>
 
 
                         <h:outputText value="#{myBundle.ViewProgramacionPlaLabel_recalculo}"/>

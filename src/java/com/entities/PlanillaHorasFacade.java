@@ -44,8 +44,8 @@ public class PlanillaHorasFacade extends AbstractFacade<PlanillaHoras> {
 
     public List<PlanillaHoras> findByFiltro(ProgramacionPla programacionPla){
 	 TypedQuery<PlanillaHoras> q;
-	 
-	    LoginBean lb= new LoginBean();	
+	 try{
+            LoginBean lb= new LoginBean();         	
 	    short codCia = lb.sscia();	
 	    String user = lb.ssuser();
 		 q = em.createNamedQuery("PlanillaHoras.findByFiltro", PlanillaHoras.class )		    
@@ -53,6 +53,9 @@ public class PlanillaHorasFacade extends AbstractFacade<PlanillaHoras> {
 		    .setParameter("usuario", "%"+ user +"%" )
 		    .setParameter("secuencia",  programacionPla.getProgramacionPlaPK().getSecuencia() );
          return q.getResultList();
+         }catch(Exception ex){
+             return null;
+         } 
     
     } 
 

@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MovDp.findAll", query = "SELECT m FROM MovDp m"),
     @NamedQuery(name = "MovDp.findByPk", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codDp = :codDp and  m.movDpPK.codEmp = :codEmp and  m.movDpPK.secuencia = :secuencia"),
     @NamedQuery(name = "MovDp.findByFiltro", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.secuencia = :secuencia"),
+    @NamedQuery(name = "MovDp.findByPkDp", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.secuencia = :secuencia and m.movDpPK.codDp = :codDp and m.movDpPK.codEmp = :codEmp"),
     
     @NamedQuery(name = "MovDp.findByCodCia", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia"),
     @NamedQuery(name = "MovDp.findBySR", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia and m.movDpPK.codEmp = :codEmp and m.movDpPK.secuencia = :secuencia and m.deducPresta.catDp.sumaResta = :sumaResta"),    
@@ -48,11 +49,13 @@ public class MovDp implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected MovDpPK movDpPK;
+    @Column(name = "CANTIDAD")
+    private BigDecimal cantidad;    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "VALOR")
     private BigDecimal valor;
     @Column(name = "PENDIENTE")
-    private BigDecimal pendiente;    
+    private BigDecimal pendiente;        
     @JoinColumns({
         @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
         @JoinColumn(name = "SECUENCIA", referencedColumnName = "SECUENCIA", insertable = false, updatable = false)})
@@ -94,6 +97,15 @@ public class MovDp implements Serializable {
         return pendiente;
     }
 
+    public BigDecimal getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(BigDecimal cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    
     public void setPendiente(BigDecimal pendiente) {
         this.pendiente = pendiente;
     }

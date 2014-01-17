@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Planilla.findByCodCia", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia"),
     @NamedQuery(name = "Planilla.findByStatus", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.status = :status"),
     @NamedQuery(name = "Planilla.findByAnioMes", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes"),    
+    @NamedQuery(name = "Planilla.findByMes", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes and p.planillaPK.codEmp = :codEmp"),        
     @NamedQuery(name = "Planilla.findByPk", query = "SELECT p  FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.planillaPK.secuencia = :secuencia"),
     @NamedQuery(name = "Planilla.findBySecuencia", query = "SELECT p FROM Planilla p WHERE p.planillaPK.secuencia = :secuencia"),
     @NamedQuery(name = "Planilla.findByEmpt", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codEmp = :codEmp and p.planillaPK.codCia= :codCia and p.programacionPla.anio = :anio"),        
@@ -60,7 +61,8 @@ public class Planilla implements Serializable {
     private BigDecimal liquido;
     @Column(name = "COD_DEPTO")
     private short codDepto;
- 
+    @Column(name = "DIAS")
+    private String dias;  
     @JoinColumns({
         @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
         @JoinColumn(name = "SECUENCIA", referencedColumnName = "SECUENCIA", insertable = false, updatable = false)})
@@ -92,6 +94,15 @@ public class Planilla implements Serializable {
     public Planilla() {
     }
 
+    public String getDias() {
+        return dias;
+    }
+
+    public void setDias(String dias) {
+        this.dias = dias;
+    }
+
+    
     public ResumenAsistencia getResumenAsistencia() {
         return resumenAsistencia;
     }

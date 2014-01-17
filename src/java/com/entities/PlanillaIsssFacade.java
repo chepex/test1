@@ -42,10 +42,11 @@ public class PlanillaIsssFacade extends AbstractFacade<PlanillaIsss> {
                     .setParameter("anio",  ra.getProgramacionPla().getAnio() )                                             
                     .setParameter("mes",  ra.getProgramacionPla().getMes() )                                                                      
                     .setParameter("codEmp",  ra.getResumenAsistenciaPK().getCodEmp() );
-                   return q.getSingleResult();
+                 
+                   return  q.getSingleResult();
         }
         catch(Exception ex){
-             JsfUtil.logs(ex , "Surgio un error", "Proceso findByEmp Empleado "+ra.getEmpleados().getNombreIsss(),PlanillaIsssFacade.class,"ERROR");             
+            // JsfUtil.logs(ex , "Surgio un error", "Proceso findByEmp Empleado "+ra.getEmpleados().getNombreIsss(),PlanillaIsssFacade.class,"ERROR");             
             return null;
         }
   

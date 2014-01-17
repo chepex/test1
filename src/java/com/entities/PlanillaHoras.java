@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "PlanillaHoras.findByCodEmp", query = "SELECT p FROM PlanillaHoras p WHERE p.planillaHorasPK.codEmp = :codEmp"),
     @NamedQuery(name = "PlanillaHoras.findByCodDp", query = "SELECT p FROM PlanillaHoras p WHERE p.planillaHorasPK.codDp = :codDp"),
     @NamedQuery(name = "PlanillaHoras.findByValor", query = "SELECT p FROM PlanillaHoras p WHERE p.valor = :valor")})
+
 public class PlanillaHoras implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -55,15 +56,14 @@ public class PlanillaHoras implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaReg;
 
-    public Date getFechaReg() {
-	return fechaReg;
-    }
-
-    public void setFechaReg(Date fechaReg) {
-	this.fechaReg = fechaReg;
-    }
-
-
+    
+    @JoinColumns({
+        @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
+        @JoinColumn(name = "SECUENCIA", referencedColumnName = "SECUENCIA", insertable = false, updatable = false),
+        @JoinColumn(name = "COD_EMP", referencedColumnName = "COD_EMP", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private ResumenAsistencia resumenAsistencia;   
+    
     @Column(name = "VALOR")
     private BigDecimal valor;
     @JoinColumns({
@@ -81,13 +81,26 @@ public class PlanillaHoras implements Serializable {
         @JoinColumn(name = "COD_DP", referencedColumnName = "COD_DP", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private DeducPresta deducPresta;
-
-
-    
     
     public PlanillaHoras() {
     }
 
+    public ResumenAsistencia getResumenAsistencia() {
+        return resumenAsistencia;
+    }
+
+    public void setResumenAsistencia(ResumenAsistencia resumenAsistencia) {
+        this.resumenAsistencia = resumenAsistencia;
+    }
+
+    public Date getFechaReg() {
+	return fechaReg;
+    }
+
+    public void setFechaReg(Date fechaReg) {
+	this.fechaReg = fechaReg;
+    }    
+    
     public PlanillaHoras(PlanillaHorasPK planillaHorasPK) {
 	this.planillaHorasPK = planillaHorasPK;
     }

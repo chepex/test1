@@ -361,6 +361,31 @@ public class SB_Calculos {
     }    
     
     /**
+    *  Obtiene el valor en dinero de las horas extras laboradas por un empleado
+    *  Formula:
+    *  vHoraExtra = valor x hora $ * fractor tipo hora extras * cantidad horas
+    *  Ejemplo
+    *   Emp: 2526
+    *       vHoraExtra = $0.97 * 2.25 * 10 = $21.82
+    * @author       Mario J. Mixco
+* @version	1.0.012014 
+    * @exception    Indica la excepción que puede generar   
+    */
+    public float HoraExtra(MovDp movdp){  
+        try{
+            this.movdp = movdp;
+            float horas= calcular_hora();
+            float  valor = valorHora() * movdp.getDeducPresta().getFactor().floatValue() *horas; 
+            
+            return valor;
+        }catch(Exception ex){
+           JsfUtil.logs(ex , "Surgio un error", "Proceso HoraExtra Empleado"+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR"); 
+            return 0;
+        }
+    }  
+    
+    
+    /**
     *  Obtiene el valor de isss a descontar segun lo devengado por el empleado
     *  Formula:
     *  vIsss= 233 * 0.03;
@@ -693,6 +718,7 @@ public class SB_Calculos {
             planillapk.setSecuencia(this.resumenAsistencia.getResumenAsistenciaPK().getSecuencia());        
             planillak.setPlanillaPK(planillapk);
             planillak.setBruto(BigDecimal.valueOf( bruto) );
+            planillak.setDias(this.resumenAsistencia.getDias());
             planillak.setBonos(BigDecimal.valueOf( TotalBonos ));
             planillak.setHorasExtras(BigDecimal.valueOf( TotalHorasExtras ));
             planillak.setNeto(BigDecimal.valueOf( neto ) );        
@@ -840,12 +866,23 @@ public class SB_Calculos {
      */
     public float calcular_hora(){ 
         try{
-            float p_Ent  = this.movdp.getValor().setScale(0).floatValue();
+            /*float p_Ent  = this.movdp.getValor().setScale(0).floatValue();
             float Hora  = this.movdp.getValor().setScale(2).floatValue();
             float P_Dec = Hora - p_Ent; 
             float Var1 = (P_Dec*100)/60;
-            float Valor = p_Ent + Var1;
-            return Valor ;
+            float Valor = p_Ent + Var1;*/
+            
+            BigDecimal  valor2 =this.movdp.getValor();
+            double minutos=0;
+            double horasminutos=0;
+            int entero= valor2.intValue();
+                    //valor2 =  valor2.multiply(BigDecimal.valueOf(24));
+                    minutos = this.movdp.getValor().remainder(BigDecimal.ONE).doubleValue();
+                    minutos = (minutos * 60)/100;
+                    horasminutos = entero + minutos;        
+            
+           return (float)(horasminutos) ;                                
+            
         }catch(Exception ex){  
            JsfUtil.logs(ex , "Surgio un error", "Proceso calcular_hora "+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR");                                                            
            return 0;              

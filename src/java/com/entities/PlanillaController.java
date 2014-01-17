@@ -128,10 +128,15 @@ public class PlanillaController extends AbstractController<Planilla> implements 
         this.anio= 0;
         this.mes = 0;    
         try{
-            sBPlanilla.Cerrar();
-            JsfUtil.addSuccessMessage("Cierre ejecutado con exito");
+            if (sBPlanilla.Cerrar().equals("ok")){
+                JsfUtil.addSuccessMessage("Cierre ejecutado con exito");
+            }else{
+                JsfUtil.addErrorMessage("Surgio un error al ejecutar el proceso de cierre");
+            }
+            
+            
         }catch(Exception ex){
-            JsfUtil.addErrorMessage(ex, "Surgio un error al intentar crear el cierre");
+            JsfUtil.addErrorMessage(ex, "Surgio un error al ejecutar el proceso de cierre");
         }      
         return "";	
    }       

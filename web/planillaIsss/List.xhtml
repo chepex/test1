@@ -33,41 +33,23 @@
                     </f:facet>
                     <h:outputText value="#{item.planillaIsssPK.anio}"/>
                 </p:column>
-                <p:column sortBy="#{item.noPatronal}" filterBy="#{item.noPatronal}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_noPatronal}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.noPatronal}"/>
-                </p:column>
-                <p:column sortBy="#{item.noAfilacion}" filterBy="#{item.noAfilacion}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_noAfilacion}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.noAfilacion}"/>
-                </p:column>
                 <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPlanillaIsssTitle_nombre}"/>
                     </f:facet>
                     <h:outputText value="#{item.nombre}"/>
                 </p:column>
-                <p:column sortBy="#{item.salDebengado}" filterBy="#{item.salDebengado}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPlanillaIsssTitle_salDebengado}"/>
                     </f:facet>
                     <h:outputText value="#{item.salDebengado}"/>
                 </p:column>
-                <p:column sortBy="#{item.diasRemunerados}" filterBy="#{item.diasRemunerados}">
+                <p:column>
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPlanillaIsssTitle_diasRemunerados}"/>
                     </f:facet>
                     <h:outputText value="#{item.diasRemunerados}"/>
-                </p:column>
-                <p:column sortBy="#{item.horasJornada}" filterBy="#{item.horasJornada}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_horasJornada}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.horasJornada}"/>
                 </p:column>
                 <p:column sortBy="#{item.codObserva}" filterBy="#{item.codObserva}">
                     <f:facet name="header">
@@ -75,31 +57,11 @@
                     </f:facet>
                     <h:outputText value="#{item.codObserva}"/>
                 </p:column>
-                <p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_usuario}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.usuario}"/>
-                </p:column>
-                <p:column sortBy="#{item.fechaReg}" filterBy="#{item.fechaReg}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_fechaReg}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.fechaReg}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:outputText>
-                </p:column>
-                <p:column sortBy="#{item.correlativo}" filterBy="#{item.correlativo}">
+                <p:column >
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListPlanillaIsssTitle_correlativo}"/>
                     </f:facet>
                     <h:outputText value="#{item.correlativo}"/>
-                </p:column>
-                <p:column sortBy="#{item.empleados.empleadosPK}" filterBy="#{item.empleados.empleadosPK}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListPlanillaIsssTitle_empleados}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.empleados.empleadosPK}"/>
                 </p:column>
                 <f:facet name="footer">
                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{planillaIsssController.prepareCreate}" update=":PlanillaIsssCreateForm" oncomplete="PlanillaIsssCreateDialog.show()"/>

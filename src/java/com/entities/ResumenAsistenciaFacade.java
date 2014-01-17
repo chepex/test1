@@ -122,5 +122,6 @@ public class ResumenAsistenciaFacade extends AbstractFacade<ResumenAsistencia> {
         return q.getSingleResult();
     
     }           
-   
+        
+
 }

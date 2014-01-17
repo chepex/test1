@@ -61,7 +61,7 @@ public  Empleados findbyCodemp( int emp){
 		    q = em.createNamedQuery("Empleados.findByPk2", Empleados.class )		    
 		    .setParameter("codCia",  codCia)			 
 		    .setParameter("codEmp",  emp);
-
+            System.out.print("Empleado "+ emp);
          return q.getSingleResult();
     }catch(Exception ex){
            JsfUtil.logs(ex , "Surgio un error", "Proceso findbyCodemp",EmpleadosFacade.class,"ERROR");             

@@ -125,9 +125,9 @@ public class SB_Planilla {
     public String Cerrar()  {   
         
         List<ProgramacionPla> iterador=  programacionPlaFacade.findByEstado("P");        
-        if(iterador== null){
+        if(iterador.isEmpty()){
             
-           return  "ok";
+           return  "error";
         }
           for( ProgramacionPla e : iterador ){
               actualizarPrestamos(e);
@@ -146,16 +146,19 @@ public class SB_Planilla {
             for( ResumenAsistencia ra : iterator ){          
                   CalculoIsss(ra);
               }
-        return "";
+        return "ok";
     }      
     
     public String CalculoIsss(ResumenAsistencia ra){
         Parametros p= parametrosFacade.findByNombre("HORAS_LABORALES");
+        Parametros nPATRONAL= parametrosFacade.findByNombre("NPATRONAL_ISSS");
         LoginBean lb= new LoginBean();	
+        List<Planilla> planillas = planillaFacade.findByMes(ra ) ;
+        BigDecimal devengado = BigDecimal.valueOf( devengoIsss(planillas));
+        String dias =  devengoDias(planillas) ;
+        PlanillaIsss plaIsss = planillaIsssFacade.findByEmp(ra);
         
-        Planilla planilla = planillaFacade.findByEmp(ra);
-        
-        if(ra.getProgramacionPla().getNumPlanilla()==1){
+        if(plaIsss==null){
             
             PlanillaIsss planillaIsss =new PlanillaIsss();
             PlanillaIsssPK planillaIsssPK =new PlanillaIsssPK();
@@ -167,31 +170,61 @@ public class SB_Planilla {
             planillaIsss.setNombre(ra.getEmpleados().getNombreIsss());
             planillaIsss.setNoAfilacion(ra.getEmpleados().getNumIgss());
             planillaIsss.setCorrelativo(ra.getProgramacionPla().getTiposPlanilla().getTiposPlanillaPK().getCodTipopla());
-            planillaIsss.setDiasRemunerados(ra.getDias());
+            planillaIsss.setDiasRemunerados(dias);
             planillaIsss.setHorasJornada(p.getValorTxt());
-            planillaIsss.setSalDebengado( planilla.getNeto());            
+            planillaIsss.setSalDebengado( devengado);            
             planillaIsss.setUsuario(lb.ssuser());
             planillaIsss.setFechaReg(lb.sdate());        
+            planillaIsss.setNoPatronal(nPATRONAL.getValorTxt());
             if(ra.getObservaciones()!= null){
                 planillaIsss.setCodObserva(ra.getObservaciones().getIsss());
             }
-            planillaIsssFacade.create(planillaIsss);            
+            
+            planillaIsssFacade.create(planillaIsss);
+            planillaIsssFacade.flush();
+            planillaIsssFacade.refresh(planillaIsss);
         }else{
-            PlanillaIsss plaIsss = planillaIsssFacade.findByEmp(ra);
-            Integer dias= Integer.parseInt(plaIsss.getDiasRemunerados())+Integer.parseInt(plaIsss.getDiasRemunerados());
+            Parametros TOPE_ISSS= parametrosFacade.findByNombre("TOPE_ISSS");            
+            
             plaIsss.setDiasRemunerados( dias.toString());
-            plaIsss.setSalDebengado( plaIsss.getSalDebengado().add(planilla.getNeto()) );
+            
+            
             if(ra.getObservaciones()!= null){
                 plaIsss.setCodObserva(ra.getObservaciones().getIsss());
+            }      
+            if( devengado.floatValue() >  TOPE_ISSS.getValorInt().floatValue() ){
+                plaIsss.setSalDebengado(TOPE_ISSS.getValorInt());                
+            }else{
+                plaIsss.setSalDebengado(devengado);                
             }            
             planillaIsssFacade.edit(plaIsss); 
+            planillaIsssFacade.flush();
+            planillaIsssFacade.refresh(plaIsss);
         } 
 
         
         
-        return "";
+        return "ok";
     }
+    
+    public Float devengoIsss(List<Planilla> lplanilla){
+        float total =0;  
+            for(Planilla pla : lplanilla){
+              total = total + pla.getNeto().floatValue();
+            } 
+        return total;
 
+    }
+    
+    public String devengoDias(List<Planilla> lplanilla){
+        int total =0;  
+            for(Planilla pla : lplanilla){
+              total = total + Integer.parseInt(pla.getDias());
+            } 
+            
+        return Integer.toString(total); 
+
+    }    
     public String borrar(ProgramacionPla programacionPla){
         try{
                 mensaje =  sB_ProgramacionPla.validarEstado(programacionPla);
@@ -286,7 +319,7 @@ public class SB_Planilla {
     
     public void salarios(ResumenAsistencia ra){
         try{
-        calculos.inicializar(ra);
+        //calculos.inicializar(ra);
         Planilla pla= planillaFacade.findByEmp(ra);
         BigDecimal salario = BigDecimal.valueOf(pla.getBruto().floatValue());       
         if(salario.intValue()>0){
@@ -471,9 +504,12 @@ public class SB_Planilla {
             }                                                        
     }  
     
-    public void actualizarStatus(ProgramacionPla prog){
+    public String actualizarStatus(ProgramacionPla prog){
         prog.setStatus("C");
         programacionPlaFacade.edit(prog);
+        programacionPlaFacade.flush();
+        programacionPlaFacade.refresh(prog);
+        return "ok";
     }    
     
     

@@ -10,11 +10,13 @@ import com.entities.Mensaje;
 import com.entities.MovDp;
 import com.entities.MovDpFacade;
 import com.entities.MovDpPK;
+import com.entities.Planilla;
 import com.entities.PlanillaHoras;
 import com.entities.PlanillaHorasFacade;
 import com.entities.PlanillaHorasPK;
 import com.entities.ProgramacionPla;
 import com.entities.ResumenAsistenciaFacade;
+import com.entities.util.JsfUtil;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,10 +39,11 @@ import jxl.Workbook;
 
 public class SB_Planilla_horas {
     @EJB
+    private SB_Calculos sB_Calculos;
+    @EJB
     private DeducPrestaFacade deducPrestaFacade;
     @EJB
     private EmpleadosFacade empleadosFacade;
-
     @EJB
     private PlanillaHorasFacade planillaHorasFacade;
     @EJB
@@ -111,20 +114,40 @@ public class SB_Planilla_horas {
     
     public Mensaje trasladar(List <PlanillaHoras> planillahoras ){
 	
+        borrar( planillahoras);
+                
 	for( PlanillaHoras e : planillahoras ){ 
             LoginBean lb= new LoginBean();		
 	    MovDpPK  movdppk = new MovDpPK(e.getPlanillaHorasPK().getCodCia(), 
 		    e.getProgramacionPla().getProgramacionPlaPK().getSecuencia(),
 		    e.getEmpleados().getEmpleadosPK().getCodEmp(),
-		    e.getDeducPresta().getDeducPrestaPK().getCodDp(),0 );	
-                    
+		    e.getDeducPresta().getDeducPrestaPK().getCodDp(),0 );
+            
+            
+                    /*si es categorias horas extras convertir a dinero y guardar cantidad de horas*/
+
+          
+            
+            
 	    MovDp movdp = new MovDp(movdppk);	    
 	    movdp.setValor(e.getValor());
             movdp.setUsuario(lb.ssuser() );
             movdp.setFechaReg( lb.sdate());    
             movdp.setGenerado("N");  
-	    movDpFacade.edit(movdp );	
+            
+            DeducPresta dp = deducPrestaFacade.findCodDeduc(movdp);
+            if(dp.getCatDp().getDescripcion().equals("HorasExtras")){    
+                movdp.setDeducPresta(dp);
+                sB_Calculos.inicializar(e.getResumenAsistencia());
+                sB_Calculos.movdp= movdp;
+                Float valor = sB_Calculos.HoraExtra(movdp);
+                movdp.setValor(BigDecimal.valueOf(valor) );
+                movdp.setCantidad(e.getValor());
+            }
+            
+	    movDpFacade.create(movdp );	
             movDpFacade.flush();
+            movDpFacade.refresh(movdp);
 	}	
 	msg.setTitulo("ok");
 	msg.setMensajes("Informacion traslada correctamente");
@@ -132,6 +155,23 @@ public class SB_Planilla_horas {
 	return msg;
     }
 
+public String borrar(List <PlanillaHoras> planillahoras){
+        try{
+                             
+            for( PlanillaHoras p : planillahoras ){                             
+                MovDp movDp= movDpFacade.findByPKDp(p);
+                movDpFacade.remove(movDp);
+                movDpFacade.flush();
+            }                                                       
+                   
+            return "ok";
+        }catch(Exception ex){
+           JsfUtil.logs(ex , "Surgio un error", "Proceso borrar",SB_Asistencia.class,"ERROR");             
+            return "error";
+            
+        }
+    }        
+    
   @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)  
   public void read(String mas, ProgramacionPla programacionPla) throws IOException, BiffException  {  
       
@@ -175,6 +215,7 @@ public class SB_Planilla_horas {
                     valor = new BigDecimal(cell.getContents());
                 }                                
             }    
+            
           ph.setPlanillaHorasPK(phpk);
           ph.setUsuario(lb.ssuser() );
           ph.setFechaReg( lb.sdate());   
@@ -182,14 +223,18 @@ public class SB_Planilla_horas {
           Empleados emp  = empleadosFacade.findbyCodemp(phpk.getCodEmp());
           ProgramacionPla Vpla  = new ProgramacionPla(lb.sscia(),ph.getPlanillaHorasPK().getSecuencia());
           DeducPresta dp = deducPrestaFacade.findCodDeduc(phpk.getCodDp());
+
           if (dp!=null){
-              if (resumenAsistenciaFacade.ByEmp(ph)!=null ){
+              if(dp.getCatDp().getDescripcion().equals("Deduciones") || dp.getCatDp().getDescripcion().equals("HorasExtras") || dp.getCatDp().getDescripcion().equals("Comision") )               
+              {
+                if (resumenAsistenciaFacade.ByEmp(ph)!=null ){                  
                     ph.setEmpleados(emp); 
                     ph.setDeducPresta(dp);
                     ph.setProgramacionPla(Vpla); 
                     planillaHorasFacade.create(ph); 
+                }                  
               }
-          }
+           }
       }   
       }catch(Exception ex){
           

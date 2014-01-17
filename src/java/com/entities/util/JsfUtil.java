@@ -148,15 +148,15 @@ public static double Redondear(double numero,int digitos)
 public static void logs(Exception ex,String summary , String detail, Class cl, String level){    
     if(level.equals("ERROR")){
         Logger.getLogger(cl.getName()).log(Level.SEVERE, detail, ex);                              
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL ,summary, detail));                
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL ,summary, cl+detail));                
     }
     if(level.equals("ALERT")){
         Logger.getLogger(cl.getName()).log(Level.WARNING, detail, ex);                                  
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,summary, detail));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,summary, cl+detail));
     }
     if(level.equals("INFO")){
         Logger.getLogger(cl.getName()).log(Level.INFO, detail, ex);                                          
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,summary, detail));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,summary, cl+detail));
     }  
     
     System.out.print("error "+summary);

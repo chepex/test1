@@ -67,8 +67,12 @@ public class ResumenAsistencia implements Serializable {
     private Observaciones observaciones;    
     
     
-        @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenAsistencia")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenAsistencia")
     private List<Planilla> planilla;  
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenAsistencia")
+    private List<Planilla> planillaHoras;      
+    
     @Column(name = "USUARIO")
     private String usuario;    
     @Column(name = "FECHA_REG")
@@ -79,6 +83,32 @@ public class ResumenAsistencia implements Serializable {
     public ResumenAsistencia() {
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public Date getFechaReg() {
+        return fechaReg;
+    }
+
+    public void setFechaReg(Date fechaReg) {
+        this.fechaReg = fechaReg;
+    }
+
+    
+    public List<Planilla> getPlanillaHoras() {
+        return planillaHoras;
+    }
+
+    public void setPlanillaHoras(List<Planilla> planillaHoras) {
+        this.planillaHoras = planillaHoras;
+    }
+
+    
     public List<Planilla> getPlanilla() {
         return planilla;
     }

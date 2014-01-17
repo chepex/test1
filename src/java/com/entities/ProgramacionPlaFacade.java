@@ -43,6 +43,7 @@ public class ProgramacionPlaFacade extends AbstractFacade<ProgramacionPla> {
 
 
     public List<ProgramacionPla> findByEstado(String status){
+        try{
 	 TypedQuery<ProgramacionPla> q;
 	 
 	    LoginBean lb= new LoginBean();	
@@ -52,6 +53,11 @@ public class ProgramacionPlaFacade extends AbstractFacade<ProgramacionPla> {
 		    .setParameter("codCia",  codCia )
 		    .setParameter("status",  status );
          return q.getResultList();
+         
+        }catch(Exception ex){
+            
+            return null;
+        }
     
     }   
     
@@ -69,7 +75,7 @@ public class ProgramacionPlaFacade extends AbstractFacade<ProgramacionPla> {
           
            ProgramacionPla programacionPlax = new   ProgramacionPla();
            
-            return programacionPlax;
+           return programacionPlax;
          }
          
     }      

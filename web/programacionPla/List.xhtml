@@ -27,6 +27,12 @@
                     </f:facet>
                     <h:outputText value="#{item.programacionPlaPK.secuencia}"/>
                 </p:column>
+                <p:column sortBy="#{item.tiposPlanilla.nomTipopla}" filterBy="#{item.tiposPlanilla.nomTipopla}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProgramacionPlaTitle_tiposPlanilla}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tiposPlanilla.nomTipopla}"/>
+                </p:column>                
                 <p:column sortBy="#{item.status}" filterBy="#{item.status}">
                     <f:facet name="header">
                         <h:outputText value="#{myBundle.ListProgramacionPlaTitle_status}"/>
@@ -60,12 +66,7 @@
                     </h:outputText>
                 </p:column>
              
-                <p:column sortBy="#{item.recalculo}" filterBy="#{item.recalculo}">
-                    <f:facet name="header">
-                        <h:outputText value="#{myBundle.ListProgramacionPlaTitle_recalculo}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.recalculo}"/>
-                </p:column>
+
                 <f:facet name="footer">
                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{programacionPlaController.prepareCreate}" update=":ProgramacionPlaCreateForm" oncomplete="ProgramacionPlaCreateDialog.show()"/>
                     <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":ProgramacionPlaViewForm" oncomplete="ProgramacionPlaViewDialog.show()" disabled="#{empty programacionPlaController.selected}"/>

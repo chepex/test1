@@ -37,7 +37,17 @@
                         <p:outputLabel value="#{myBundle.EditProgramacionPlaLabel_fechaCorte}" for="fechaCorte" />
                         <p:calendar id="fechaCorte" pattern="MM/dd/yyyy HH:mm:ss" value="#{programacionPlaController.selected.fechaCorte}" title="#{myBundle.EditProgramacionPlaTitle_fechaCorte}"  showOn="button"/>
 
-                      
+                        <p:outputLabel value="#{myBundle.EditProgramacionPlaLabel_tiposPlanilla}" for="tiposPlanilla" />
+                        <p:selectOneMenu id="tiposPlanilla" value="#{programacionPlaController.selected.tiposPlanilla}" required="true" requiredMessage="#{myBundle.EditProgramacionPlaRequiredMessage_tiposPlanilla}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tiposPlanillaController.items}"
+                                           var="tiposPlanillaItem"
+                                           itemValue="#{tiposPlanillaItem}"
+                                           itemLabel="#{tiposPlanillaItem.nomTipopla}"
+                                           />
+                            <f:converter binding="#{tiposPlanillaConverter}"/>
+                        </p:selectOneMenu>
+                        
                         <p:outputLabel value="#{myBundle.EditProgramacionPlaLabel_recalculo}" for="recalculo" />
                         <p:inputText id="recalculo" value="#{programacionPlaController.selected.recalculo}" title="#{myBundle.EditProgramacionPlaTitle_recalculo}" />
                     </p:panelGrid>

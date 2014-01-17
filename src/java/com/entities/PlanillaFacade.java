@@ -34,8 +34,8 @@ public class PlanillaFacade extends AbstractFacade<Planilla> {
 	 
 	    LoginBean lb= new LoginBean();	
 	    short codCia = lb.sscia();
-	
-		 q = em.createNamedQuery("Planilla.findByCodCia", Planilla.class )		    
+		 q = em.createNamedQuery("Planilla.findByStatus", Planilla.class )		    
+                    .setParameter("status",  "P" )		    
 		    .setParameter("codCia",  codCia );
          return q.getResultList();
     
@@ -99,6 +99,19 @@ public class PlanillaFacade extends AbstractFacade<Planilla> {
 		    .setParameter("codCia",  codCia );
     return q.getResultList();
     
-    }     
+    }    
+    
+    public  List<Planilla>  findByMes(ResumenAsistencia ra ){
+	 TypedQuery<Planilla> q;	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+		 q = em.createNamedQuery("Planilla.findByMes", Planilla.class )		    
+                    .setParameter("anio", ra.getProgramacionPla().getAnio() )
+                    .setParameter("mes",  ra.getProgramacionPla().getMes() )                    
+                    .setParameter("codEmp", ra.getEmpleados().getEmpleadosPK().getCodEmp() )                    
+		    .setParameter("codCia",  codCia );
+    return q.getResultList();
+    
+    }       
  
 }
