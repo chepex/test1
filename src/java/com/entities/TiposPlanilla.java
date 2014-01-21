@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TiposPlanilla.findByNomTipopla", query = "SELECT t FROM TiposPlanilla t WHERE t.nomTipopla = :nomTipopla"),
     @NamedQuery(name = "TiposPlanilla.findByStatus", query = "SELECT t FROM TiposPlanilla t WHERE t.status = :status")})
 public class TiposPlanilla implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected TiposPlanillaPK tiposPlanillaPK;
@@ -104,6 +105,9 @@ public class TiposPlanilla implements Serializable {
         return frecuencia;
     }
 
+
+
+    
     public void setFrecuencia(String frecuencia) {
         this.frecuencia = frecuencia;
     }

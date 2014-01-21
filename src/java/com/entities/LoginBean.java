@@ -89,7 +89,7 @@ public class LoginBean {
 	    Empleados emp = ejbFacadeEmpleados.findbyUsuario(username);	    
 	    this.codCia1 = ejbFacadeCia.find(emp.getEmpleadosPK().getCodCia());
             session.setAttribute("SSUSUARIO", username);    
-	     session.setAttribute("SSCIANOM", this.codCia1.getNomComercial() );                           
+	    session.setAttribute("SSCIANOM", this.codCia1.getNomComercial() );                           
 	    session.setAttribute("SSCIAVAL", this.codCia1.getCodCia() );   
 	   
 	

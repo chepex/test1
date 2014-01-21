@@ -64,7 +64,7 @@ public  Empleados findbyCodemp( int emp){
             System.out.print("Empleado "+ emp);
          return q.getSingleResult();
     }catch(Exception ex){
-           JsfUtil.logs(ex , "Surgio un error", "Proceso findbyCodemp",EmpleadosFacade.class,"ERROR");             
+           JsfUtil.logs(ex , "Surgio un error", "Proceso findbyCodemp codigo empleado : " +emp,EmpleadosFacade.class,"ERROR");             
                 
         return null;
     }

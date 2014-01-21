@@ -124,7 +124,7 @@ public class SB_Planilla_horas {
 		    e.getDeducPresta().getDeducPrestaPK().getCodDp(),0 );
             
             
-                    /*si es categorias horas extras convertir a dinero y guardar cantidad de horas*/
+/*si es categorias horas extras convertir a dinero y guardar cantidad de horas*/
 
           
             

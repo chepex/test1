@@ -12,6 +12,7 @@
 		<![CDATA[select * from Vplanilla p
 where p.secuencia = $P{mas}
 and p.cod_cia = $P{cia}
+and p.cod_depto not in 2
 order by p.cod_depto, p.apellidos]]>
 	</queryString>
 	<field name="COD_CIA" class="java.math.BigDecimal"/>

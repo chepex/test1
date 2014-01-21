@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class SB_ProgramacionPla {
-Mensaje msg = new Mensaje();
+
 
     public String validarEstado(ProgramacionPla programacionPla) {
 	if (programacionPla.getStatus().equals("C")){

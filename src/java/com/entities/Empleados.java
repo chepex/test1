@@ -83,7 +83,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empleados.findByComision", query = "SELECT e FROM Empleados e WHERE e.comision = :comision"),
     @NamedQuery(name = "Empleados.findByFechaIngresoHist", query = "SELECT e FROM Empleados e WHERE e.fechaIngresoHist = :fechaIngresoHist"),
     @NamedQuery(name = "Empleados.findByMarcacionTarjeta", query = "SELECT e FROM Empleados e WHERE e.marcacionTarjeta = :marcacionTarjeta"),
-    @NamedQuery(name = "Empleados.findByUsuario", query = "SELECT e FROM Empleados e WHERE e.usuario like :usuario and e.empleadosPK.codCia = :codCia"),
+    @NamedQuery(name = "Empleados.findByUsuario", query = "SELECT e FROM Empleados e WHERE e.userName like :usuario and e.empleadosPK.codCia = :codCia"),
     @NamedQuery(name = "Empleados.findByFechaReg", query = "SELECT e FROM Empleados e WHERE e.fechaReg = :fechaReg"),
     @NamedQuery(name = "Empleados.findByBeneficiario", query = "SELECT e FROM Empleados e WHERE e.beneficiario = :beneficiario"),
     @NamedQuery(name = "Empleados.findByNombreNit", query = "SELECT e FROM Empleados e WHERE e.nombreNit like :nombreNit"),
@@ -269,6 +269,9 @@ public class Empleados implements Serializable {
     @Size(max = 250)
     @Column(name = "PASSWORD")
     private String password;
+    @Size(max = 100)
+    @Column(name = "USER_NAME")
+    private String userName;    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleados")
     private List<PlanillaHoras> planillaHorasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleados")
@@ -300,6 +303,15 @@ public class Empleados implements Serializable {
     public Empleados() {
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    
     public Empleados(EmpleadosPK empleadosPK) {
 	this.empleadosPK = empleadosPK;
     }

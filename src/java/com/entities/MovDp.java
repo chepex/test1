@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MovDp.findByPk", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codDp = :codDp and  m.movDpPK.codEmp = :codEmp and  m.movDpPK.secuencia = :secuencia"),
     @NamedQuery(name = "MovDp.findByFiltro", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.secuencia = :secuencia"),
     @NamedQuery(name = "MovDp.findByPkDp", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.secuencia = :secuencia and m.movDpPK.codDp = :codDp and m.movDpPK.codEmp = :codEmp"),
-    
+    @NamedQuery(name = "MovDp.findByStatus", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.programacionPla.status= :status "), 
     @NamedQuery(name = "MovDp.findByCodCia", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia"),
     @NamedQuery(name = "MovDp.findBySR", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia and m.movDpPK.codEmp = :codEmp and m.movDpPK.secuencia = :secuencia and m.deducPresta.catDp.sumaResta = :sumaResta"),    
     @NamedQuery(name = "MovDp.findBySRPrioridad", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia and m.movDpPK.codEmp = :codEmp and m.movDpPK.secuencia = :secuencia and m.deducPresta.catDp.sumaResta = :sumaResta and  m.deducPresta.prioridad > 0 Order by m.deducPresta.prioridad DESC"),        

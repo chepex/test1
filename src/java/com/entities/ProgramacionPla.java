@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ProgramacionPla.findByCodCia", query = "SELECT p FROM ProgramacionPla p WHERE p.programacionPlaPK.codCia = :codCia"),
     @NamedQuery(name = "ProgramacionPla.findByStatus", query = "SELECT p FROM ProgramacionPla p WHERE p.status = :status and p.programacionPlaPK.codCia = :codCia "),
     @NamedQuery(name = "ProgramacionPla.findByPK", query = "SELECT p FROM ProgramacionPla p WHERE p.programacionPlaPK.codCia = :codCia and p.programacionPlaPK.secuencia = :secuencia "),
+    @NamedQuery(name = "ProgramacionPla.findByEmp", query = "SELECT p FROM ProgramacionPla p WHERE p.programacionPlaPK.codCia = :codCia and  p.tiposPlanilla.tiposPlanillaPK.codTipopla = :codTipopla and p.status= 'P'"),    
     @NamedQuery(name = "ProgramacionPla.findByFechaPago", query = "SELECT p FROM ProgramacionPla p WHERE p.fechaPago = :fechaPago"),
     @NamedQuery(name = "ProgramacionPla.findByNumPlanilla", query = "SELECT p FROM ProgramacionPla p WHERE p.numPlanilla = :numPlanilla"),
     @NamedQuery(name = "ProgramacionPla.findByAnio", query = "SELECT p FROM ProgramacionPla p WHERE p.anio = :anio"),

@@ -266,7 +266,21 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
 		    .setParameter("secuencia",  programacionPla.getProgramacionPlaPK().getSecuencia() );
          return q.getResultList();
     
-    }     
+    } 
+
+
+    public List<MovDp> findByStatus(String status){
+	 TypedQuery<MovDp> q;
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+	    String user = lb.ssuser();
+		 q = em.createNamedQuery("MovDp.findByStatus", MovDp.class )		    
+		    .setParameter("codCia",  codCia )		    
+		    .setParameter("status", status );
+         return q.getResultList();
+    
+    }       
   
     public MovDp findByPKDp(PlanillaHoras PlanillaHoras){
 	 TypedQuery<MovDp> q;

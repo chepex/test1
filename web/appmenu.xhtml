@@ -36,8 +36,14 @@
 		    <p:menuitem value="OtrosMovDp" outcome="/otrosMovDp/index" />
                     <p:menuitem value="MovDp" outcome="/movDp/index" />   
 		    <p:menuitem value="Planilla" outcome="/planilla/index" />                    
-                </p:submenu>                  
+                </p:submenu>  
+		<f:facet name="options">  
+		  <p:commandButton id="createButton" icon="ui-icon-extlink"   value="#{SSCIANOM}" oncomplete="cambioCompDialog.show()"/>		  
+		  <p:commandButton  value="#{SSUSUARIO}" actionListener="#{loginBean.logout}" icon="ui-icon-power" />                                        
+		</f:facet>	                
             </p:menubar>
+					
+            
         </h:form>
     </ui:composition>
 

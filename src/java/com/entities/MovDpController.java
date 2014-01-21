@@ -1,6 +1,7 @@
 package com.entities;
 
 
+import com.ejb.SB_Planilla_horas;
 import com.ejb.SB_ProgramacionPla;
 import com.ejb.SB_readXLS;
 import com.entities.util.JsfUtil;
@@ -11,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import jxl.read.biff.BiffException;
 import org.primefaces.event.FileUploadEvent;
@@ -19,6 +21,8 @@ import org.primefaces.event.FileUploadEvent;
 @ViewScoped
 public class MovDpController extends AbstractController<MovDp> implements Serializable {
     @EJB
+    private SB_Planilla_horas sB_Planilla_horas;    
+    @EJB
     private SB_ProgramacionPla sB_ProgramacionPla;    
     @EJB
     private SB_readXLS sB_readXLS;       
@@ -26,6 +30,9 @@ public class MovDpController extends AbstractController<MovDp> implements Serial
     private MovDpFacade ejbFacade;
     @EJB
     private ProgramacionPlaFacade programacionPlaFacade;    
+    
+
+    
     private ProgramacionPla programacionpla;    
     private List <ProgramacionPla> programacionplas;      
     private String estado;
@@ -61,22 +68,33 @@ public class MovDpController extends AbstractController<MovDp> implements Serial
 
     
     public void upload(FileUploadEvent event) throws IOException, BiffException  {      
-     mensaje = sB_ProgramacionPla.validarEstado(programacionpla);
      
-     if(mensaje.equals("ok")){
         ReadXls a = new ReadXls();
         String destination = "/opt/lib/"+event.getFile().getFileName();
-        a.copyFile(event.getFile().getFileName(), event.getFile().getInputstream());  
-        sB_readXLS.read(destination,this.getProgramacionpla());        
-        if(mensaje.equals("ok")){
-           consultar();
-        }  
-     }          
-     JsfUtil.addSuccessMessage( msg);  
+        a.copyFile(event.getFile().getFileName(), event.getFile().getInputstream()); 
+        String Mensaje ="";
+        
+        if(this.getProgramacionpla()==null ){
+            mensaje=sB_readXLS.read(destination,null);        
+        }else{
+           mensaje= sB_readXLS.read(destination,this.getProgramacionpla());        
+        }
+        
+        if(!mensaje.equals("error")){
+           consultar();        
+        }          
+     
+     JsfUtil.addSuccessMessage( mensaje); 
+     
     }  
 
-    public List<MovDp> consultar (){		
-	this.items = ejbFacade.findByFiltro(this.getProgramacionpla() );
+    public List<MovDp> consultar (){	
+        if(this.getProgramacionpla()==null){
+            this.items = ejbFacade.findByStatus("P" );
+        }else{
+            this.items = ejbFacade.findByFiltro(this.getProgramacionpla() );
+        }
+	
 	
 	if (!isValidationFailed()) {
 	    this.setSelected(null); 
@@ -117,4 +135,52 @@ public class MovDpController extends AbstractController<MovDp> implements Serial
     protected void initializeEmbeddableKey() {
 	this.getSelected().setMovDpPK(new com.entities.MovDpPK());
     }
+    
+    @Override      
+    public void delete(ActionEvent event) {
+	mensaje    = sB_ProgramacionPla.validarEstado(programacionpla);
+	
+	if (mensaje.equals("ok")){
+	    mensaje = "Registro Eliminado Correctamente empleado:";	    	    	    
+	    persist(AbstractController.PersistAction.DELETE, msg);
+	    consultar();
+	}else{
+	     JsfUtil.addSuccessMessage( mensaje);
+	}
+    }    
+    
+
+    @Override  
+    public void save(ActionEvent event) {	
+	mensaje    = sB_ProgramacionPla.validarEstado(programacionpla);
+	
+	if (mensaje.equals("ok")){
+	    mensaje = "Registro Modificado Correctamente ";	    	    
+	    
+	    persist(AbstractController.PersistAction.UPDATE, mensaje);
+	}else{	    
+	    JsfUtil.addSuccessMessage( mensaje);	    
+	}
+    }
+
+    @Override      
+    public void saveNew(ActionEvent event) {
+	//this.getSelected().getPlanillaHorasPK().setCodEmp(this.getSelected().getEmpleados().getEmpleadosPK().getCodEmp() );
+	//this.getSelected().getPlanillaHorasPK().setCodDp(this.getSelected().getDeducPresta().getDeducPrestaPK().getCodDp());
+        
+	mensaje = sB_ProgramacionPla.validarEstado(programacionpla);
+	
+	if (mensaje.equals("ok")){
+	    mensaje = "Registro Creado Correctamente ";	    	    
+	    
+	    persist(AbstractController.PersistAction.CREATE, mensaje);
+	    consultar();		
+	}else{
+	      JsfUtil.addSuccessMessage( mensaje);
+	}	    
+	
+	
+	
+    }     
+    
 }

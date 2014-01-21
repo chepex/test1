@@ -79,4 +79,23 @@ public class ProgramacionPlaFacade extends AbstractFacade<ProgramacionPla> {
          }
          
     }      
+    
+    public  ProgramacionPla findByCodEmp(Empleados emp){
+	 TypedQuery<ProgramacionPla> q;
+	 try{
+		 LoginBean lb= new LoginBean();	
+		 short codCia = lb.sscia();	
+		 	 
+		 q = em.createNamedQuery("ProgramacionPla.findByEmp", ProgramacionPla.class )		    
+		    .setParameter("codCia",  codCia )
+		    .setParameter("codTipopla", emp.getDepartamentos().getCodTipopla() );
+         return q.getSingleResult();
+         }catch(Exception ex){
+          
+           ProgramacionPla programacionPlax = new   ProgramacionPla();
+           
+           return programacionPlax;
+         }
+         
+    }       
 }
