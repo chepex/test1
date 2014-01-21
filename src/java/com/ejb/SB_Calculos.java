@@ -511,6 +511,7 @@ public class SB_Calculos {
                    renta= rentaFacade.findByValor(devengado, (short)1);
                 }                                
                 float valor = (((( devengado -renta.getExceso().floatValue()) * renta.getPorcentaje().floatValue())/100) )+renta.getValorFijo().floatValue();
+                System.out.println("EMPLEADO"+this.empleado.getNombreIsss() +" DEVENGADO RENTA = "+devengado );
                 crear_movdp(valor);   
             } 
         }catch(Exception ex){      
