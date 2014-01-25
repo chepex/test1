@@ -219,6 +219,26 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
                  return q.getResultList();
    } 
     
+    public MovDp findByPresta(Prestamos presta,ResumenAsistencia resumenAsistencia){
+	 try{	
+              TypedQuery<MovDp> q;
+	
+           
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	
+                
+		 q = em.createNamedQuery("MovDp.Presta", MovDp.class )		    
+		    .setParameter("secuencia",  resumenAsistencia.getResumenAsistenciaPK().getSecuencia() )
+                    .setParameter("codEmp",  resumenAsistencia.getEmpleados().getEmpleadosPK().getCodEmp() )
+                    .setParameter("codPresta",  presta.getPrestamosPK().getCodPresta() )                         
+                    .setParameter("codCia",  codCia );
+                 return q.getSingleResult();
+         }catch(Exception ex){
+             return null;
+         }
+                 
+   }     
     
     public BigDecimal PromComision(Empleados empleado, ResumenAsistencia resumenAsistencia){
 	 BigDecimal val;
@@ -226,25 +246,24 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
 	    LoginBean lb= new LoginBean();	
 	    short codCia = lb.sscia();
 	 
-		Query q =  em.createNativeQuery("select nvl(sum(valor),0) from mov_dp m, deduc_presta d, cat_dp c, programacion_pla p " +
-                                                    " where M.COD_CIA = d.cod_cia" +
-                                                    " and m.cod_dp = d.cod_dp" +
-                                                    " and d.cod_cia= c.cod_cia" +
-                                                    " and D.COD_CAT = c.cod_cat" +
-                                                    " and C.DESCRIPCION = 'Comision'" +                                                    
-                                                    " and P.COD_CIA = m.cod_cia" +
-                                                    " and P.SECUENCIA = M.SECUENCIA" +
-                                                    " and P.FECHA_PAGO between  add_months( P.FECHA_PAGO,-5) and sysdate" +
-                                                    " and m.GENERADO <> 'G'" +    
-                                                    " and P.STATUS = 'C'" +
-                                                    " and m.cod_cia = ?" +
-                                                    " and m.cod_emp = ?" +
-                                                    " and m.secuencia= ? " 
-                                                      );		                        
-                q.setParameter(1, codCia);  
-                q.setParameter(2, empleado.getEmpleadosPK().getCodEmp());                  
-                q.setParameter(3, resumenAsistencia.getResumenAsistenciaPK().getSecuencia());  
-                val= (BigDecimal)q.getSingleResult();
+            Query q =  em.createNativeQuery("select nvl(sum(valor),0) from mov_dp m, deduc_presta d, cat_dp c, programacion_pla p " +
+                                                " where M.COD_CIA = d.cod_cia" +
+                                                " and m.cod_dp = d.cod_dp" +
+                                                " and d.cod_cia= c.cod_cia" +
+                                                " and D.COD_CAT = c.cod_cat" +
+                                                " and C.DESCRIPCION = 'Comision'" +                                                    
+                                                " and P.COD_CIA = m.cod_cia" +
+                                                " and P.SECUENCIA = M.SECUENCIA" +
+                                                " and P.FECHA_PAGO between  add_months( P.FECHA_PAGO,-5) and sysdate" +
+                                                " and m.GENERADO <> 'G'" +    
+                                                " and P.STATUS = 'C'" +
+                                                " and m.cod_cia = ?" +
+                                                " and m.cod_emp = ?"                                                 
+                                                  );		                        
+            q.setParameter(1, codCia);  
+            q.setParameter(2, empleado.getEmpleadosPK().getCodEmp());                  
+            
+            val= (BigDecimal)q.getSingleResult();
         
          }
          catch(Exception ex){

@@ -89,9 +89,7 @@ public class SB_Planilla {
                List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(e );
 
               for( ResumenAsistencia ra : iterator ){ 
-                  if(e.getTiposPlanilla().getLey().equals("S")){
-                     calculos.CalcularLey(ra);                
-                  }                  
+                 
                   if(e.getTiposPlanilla().getPromedio().equals("M")){                      
                      calculos.promedioMensual(ra);    
                   } 
@@ -103,6 +101,9 @@ public class SB_Planilla {
                   }                                                       
                   if(e.getTiposPlanilla().getAdicional().equals("S")){
                      calculos.CalcularEspecial(ra);
+                  } 
+                  if(e.getTiposPlanilla().getLey().equals("S")){
+                     calculos.CalcularLey(ra);                
                   }                   
                   if(e.getTiposPlanilla().getLiquido().equals("S")){
                      calculos.CalcularLiqRecibir(ra); 

@@ -26,6 +26,9 @@
 
                         <h:outputLabel value="#{myBundle.EditMovDpLabel_deducPresta}" for="deducPresta" />
                         <h:outputText id="deducPresta" value="#{movDpController.selected.deducPresta.descripcion}"/>
+                        
+                        <p:outputLabel value="#{myBundle.EditMovDpLabel_generado}" for="generado" />
+                        <p:inputText id="generado" value="#{movDpController.selected.generado}" title="#{myBundle.EditMovDpTitle_generado}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{movDpController.save}" value="#{myBundle.Save}" update="display,:MovDpListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MovDpEditDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="MovDpEditDialog.hide()"/>

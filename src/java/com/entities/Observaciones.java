@@ -53,11 +53,31 @@ public class Observaciones implements Serializable {
     private String usuario;    
     @Column(name = "FECHA_REG")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaReg;    
+    private Date fechaReg; 
+    @Column(name = "NOM_CORTO")
+    private String nomCorto;
+    
 
     public Observaciones() {
     }
 
+    public Date getFechaReg() {
+        return fechaReg;
+    }
+
+    public void setFechaReg(Date fechaReg) {
+        this.fechaReg = fechaReg;
+    }
+
+    public String getNomCorto() {
+        return nomCorto;
+    }
+
+    public void setNomCorto(String nomCorto) {
+        this.nomCorto = nomCorto;
+    }
+
+    
     public Observaciones(ObservacionesPK observacionesPK) {
         this.observacionesPK = observacionesPK;
     }

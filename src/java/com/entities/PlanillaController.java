@@ -144,7 +144,7 @@ public class PlanillaController extends AbstractController<Planilla> implements 
      public String reportePlanilla() throws NamingException, SQLException, JRException, IOException{         
         HashMap params = new HashMap();  
         long cia= 1;
-        long secuencia= 20140112;
+        long secuencia= 20140141;
         params.put("mas",secuencia ); 
         params.put("cia",cia ); 
         reportes.GenerarReporte("/reportes/Planilla.jasper", params);

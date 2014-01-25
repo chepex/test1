@@ -71,7 +71,7 @@
 
                         
                     </p:panelGrid>
-                    <h:commandButton actionListener="#{deducPrestaController.saveNew}" value="#{myBundle.Save}" />
+                    <p:commandButton actionListener="#{deducPrestaController.saveNew}" value="#{myBundle.Save}" update="display,:DeducPrestaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DeducPrestaCreateDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="DeducPrestaCreateDialog.hide()"/>
                 </h:panelGroup>
 

@@ -16,6 +16,7 @@ import com.entities.ProgramacionPla;
 import com.entities.ProgramacionPlaFacade;
 import com.entities.ResumenAsistencia;
 import com.entities.ResumenAsistenciaFacade;
+import com.entities.util.JsfUtil;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -105,7 +106,7 @@ private MovDpFacade movDpFacade;
             }   
             
             mensaje = sB_ProgramacionPla.validarEstado(programacionPla);
-     
+     try{
             if(mensaje.equals("ok")){
                  movdp.setMovDpPK(movpk);
                  movdp.setUsuario(lb.ssuser() );
@@ -114,6 +115,7 @@ private MovDpFacade movDpFacade;
                  Empleados emp  = empleadosFacade.findbyCodemp(movpk.getCodEmp());
                  DeducPresta dp = deducPrestaFacade.findCodDeduc(movdp);
                  ResumenAsistencia ra= resumenAsistenciaFacade.ByEmp(movdp);
+                 movdp.setGenerado("N");
                  if (dp!=null){              
                      if (ra!=null ){
                        ProgramacionPla Vpla  = new ProgramacionPla(lb.sscia(),movdp.getMovDpPK().getSecuencia());                
@@ -130,9 +132,13 @@ private MovDpFacade movDpFacade;
                         }  
                         xx++;
                         movDpFacade.edit(movdp); 
+                        movDpFacade.flush();
                        }
                  }
             }
+     }catch(Exception ex){
+           JsfUtil.logs(ex , "Surgio un error", "Proceso upload Linea"+i,SB_readXLS.class,"ERROR");            
+     }
         }
 
     return "Cantida de registros insertados "+xx+" de "+total;
@@ -166,42 +172,58 @@ private MovDpFacade movDpFacade;
                     
                     valor = new BigDecimal(cell.getContents());
                 }                                
-            }     
+            }
+             try{ 
+                 
           Empleados emp  = empleadosFacade.findbyCodemp(codEmp); 
+    
           ProgramacionPla pp= programacionPlaFacade.findByCodEmp(emp);
+          if(pp!=null){
+              
+           
           String mensaje = sB_ProgramacionPla.validarEstado(pp);
-          
-            if(mensaje.equals("ok")){
-                MovDpPK movpk = new MovDpPK( lb.sscia(), pp.getProgramacionPlaPK().getSecuencia() , codEmp, codDp, 0 ); 
-                MovDp movdp = new MovDp(); 
-                movdp.setMovDpPK(movpk);
-                movdp.setUsuario(lb.ssuser() );
-                movdp.setFechaReg( lb.sdate());   
-                movdp.setValor(valor);
+        
+                if(mensaje.equals("ok")){
+                    MovDpPK movpk = new MovDpPK( lb.sscia(), pp.getProgramacionPlaPK().getSecuencia() , codEmp, codDp, 0 ); 
+                    MovDp movdp = new MovDp(); 
+                    movdp.setMovDpPK(movpk);
+                    movdp.setUsuario(lb.ssuser() );
+                    movdp.setFechaReg( lb.sdate());   
+                    movdp.setValor(valor);
+                    
 
-                DeducPresta dp = deducPrestaFacade.findCodDeduc(movdp);
-                if (dp!=null){      
-                ResumenAsistencia ra= resumenAsistenciaFacade.ByEmp(movdp);                              
-                    if (ra!=null ){
-                        
-                        
-                      ProgramacionPla Vpla  = new ProgramacionPla(lb.sscia(),movdp.getMovDpPK().getSecuencia());                
-                      movdp.setEmpleados(emp); 
-                      movdp.setDeducPresta(dp);
-                      movdp.setProgramacionPla(Vpla); 
-                      
-                        if(dp.getCatDp().getDescripcion().equals("HorasExtras")){    
-                            movdp.setDeducPresta(dp);
-                            sB_Calculos.inicializar( ra );
-                            sB_Calculos.movdp= movdp;
-                            movdp.setCantidad(movdp.getValor());
-                            valor = BigDecimal.valueOf( sB_Calculos.HoraExtra(movdp));
-                            movdp.setValor(valor );       
-                        }     
-                        xx++;
-                      movDpFacade.edit(movdp);  
-                      }
+                    DeducPresta dp = deducPrestaFacade.findCodDeduc(movdp);
+                    
+                    if (dp!=null){      
+                    ResumenAsistencia ra= resumenAsistenciaFacade.ByEmp(movdp);                              
+                        if (ra!=null ){
+
+
+                          ProgramacionPla Vpla  = new ProgramacionPla(lb.sscia(),movdp.getMovDpPK().getSecuencia());                
+                          movdp.setEmpleados(emp); 
+                          movdp.setDeducPresta(dp);
+                          movdp.setProgramacionPla(Vpla); 
+                          movdp.setGenerado("N");
+
+                            if(dp.getCatDp().getDescripcion().equals("HorasExtras")){    
+                                movdp.setDeducPresta(dp);
+                                sB_Calculos.inicializar( ra );
+                                sB_Calculos.movdp= movdp;
+                                movdp.setCantidad(movdp.getValor());
+                                valor = BigDecimal.valueOf( sB_Calculos.HoraExtra(movdp));
+                                movdp.setValor(valor );       
+                            }     
+                            xx++;                            
+                          movDpFacade.edit(movdp);  
+                          movDpFacade.flush();
+                          }else{
+                JsfUtil.logs(null , "Surgio un error", "proceso upload Linea"+i+" Empleado sin planilla ",SB_readXLS.class,"ERROR");                        
+                        }
+                    }
                 }
+          }
+            }catch(Exception ex){
+                JsfUtil.logs(ex , "Surgio un error", "Proceso upload Linea"+i,SB_readXLS.class,"ERROR");            
             }
         }
 

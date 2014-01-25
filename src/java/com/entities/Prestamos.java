@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Prestamos.findByPagado", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codCia = :codCia and p.saldo= 0"),    
     @NamedQuery(name = "Prestamos.findByPendiente", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codCia = :codCia and p.saldo > 0"),    
     @NamedQuery(name = "Prestamos.findByCodCia", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codCia = :codCia"),
-    @NamedQuery(name = "Prestamos.findByCodEmp", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codEmp = :codEmp and p.prestamosPK.codCia = :codCia and p.cuotas > p.cuotasP"),
+    @NamedQuery(name = "Prestamos.findByCodEmp", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codEmp = :codEmp and p.prestamosPK.codCia = :codCia and p.cuotas > p.cuotasP and p.saldo>0"),
     @NamedQuery(name = "Prestamos.findByPK", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codEmp = :codEmp and p.prestamosPK.codCia = :codCia and p.prestamosPK.codDp = :codDp and p.prestamosPK.codPresta = :codPresta"),
     @NamedQuery(name = "Prestamos.findByCodDp", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codDp = :codDp"),
     @NamedQuery(name = "Prestamos.findByNumRef", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codPresta = :codPresta"),

@@ -49,7 +49,7 @@
                         <p:inputText id="promedio" value="#{tiposPlanillaController.selected.promedio}" title="#{myBundle.CreateTiposPlanillaTitle_promedio}" />
 
                         <p:outputLabel value="#{myBundle.CreateTiposPlanillaLabel_deducPresta}" for="deducPresta" />
-                        <p:selectOneMenu id="deducPresta" value="#{tiposPlanillaController.selected.deducPresta}" required="true" requiredMessage="#{myBundle.EditTiposPlanillaRequiredMessage_deducPresta}">
+                        <p:selectOneMenu id="deducPresta" value="#{tiposPlanillaController.selected.deducPresta}" >
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{deducPrestaController.items}"
                                            var="deducPrestaItem"
