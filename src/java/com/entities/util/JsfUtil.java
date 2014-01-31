@@ -169,6 +169,12 @@ public static String truncate(String value, int length)
   if (value != null && value.length() > length)
     value = value.substring(0, length);
   return value;
-}    
+}
+
+public static double Redondear2(float numero,int digitos)
+{
+      int cifras=(int) Math.pow(10,digitos);
+      return Math.rint(numero*cifras)/cifras;
+}
 
 }

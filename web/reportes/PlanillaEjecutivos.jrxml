@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1008" pageHeight="612" orientation="Landscape" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34cb187e-6412-4050-be54-86cc7ded95f4">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.9487171000000125"/>
+	<property name="ireport.x" value="380"/>
+	<property name="ireport.y" value="89"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="mas" class="java.lang.Long"/>
 	<parameter name="cia" class="java.lang.Long">
@@ -20,7 +20,7 @@
 		<![CDATA[select * from Vplanilla p
 where p.secuencia = $P{mas}
 and p.cod_cia = $P{cia}
-and p.cod_depto not in(2)
+and p.cod_depto in(2)
 order by p.cod_depto, p.apellidos]]>
 	</queryString>
 	<field name="COD_CIA" class="java.math.BigDecimal"/>
@@ -271,7 +271,7 @@ order by p.cod_depto, p.apellidos]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="33" splitType="Stretch">
+		<band height="29" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="fbc68254-cd32-42ce-8f1e-628aaee8bec4" x="342" y="0" width="296" height="25"/>
 				<textElement>
@@ -287,18 +287,25 @@ order by p.cod_depto, p.apellidos]]>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement uuid="f2c730b7-4397-44b6-8eb7-b04bbdbce42e" x="47" y="4" width="124" height="20"/>
 				<textElement>
-					<font size="10"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement uuid="86a73940-123c-464d-9472-fc22c239611f" x="860" y="-8" width="69" height="41"/>
-				<imageExpression><![CDATA["../resources/img/logocaricia.jpg"]]></imageExpression>
+				<reportElement uuid="86a73940-123c-464d-9472-fc22c239611f" x="846" y="4" width="44" height="25"/>
+				<imageExpression><![CDATA["/home/dromero/logocaricia.jpg"]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement uuid="8879f53c-11a7-4f27-9f38-2e93a6691f6a" x="893" y="4" width="65" height="20"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="62" splitType="Stretch">
+		<band height="64" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="dcba62eb-3611-43eb-bf2c-a69a6c5d5588" x="391" y="0" width="191" height="20"/>
 				<textElement>
@@ -396,7 +403,7 @@ order by p.cod_depto, p.apellidos]]>
 	<columnHeader>
 		<band height="39" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="1227059b-a6ba-486e-8800-b8c4517ff4ea" x="365" y="2" width="41" height="12"/>
+				<reportElement uuid="1227059b-a6ba-486e-8800-b8c4517ff4ea" x="365" y="0" width="65" height="12"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -418,9 +425,9 @@ order by p.cod_depto, p.apellidos]]>
 				<text><![CDATA[Dias lab.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="f2b83b7b-98a1-4592-a129-eab897ae81b2" x="401" y="27" width="47" height="12"/>
+				<reportElement uuid="f2b83b7b-98a1-4592-a129-eab897ae81b2" x="412" y="27" width="36" height="12"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Valor.]]></text>
 			</staticText>
@@ -470,10 +477,10 @@ order by p.cod_depto, p.apellidos]]>
 				<text><![CDATA[DEDUCCIONES]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="141f4bc7-a52f-4ffa-94d8-5450fd90859a" x="457" y="13" width="110" height="1"/>
+				<reportElement uuid="141f4bc7-a52f-4ffa-94d8-5450fd90859a" x="452" y="14" width="110" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="93c2def8-68cf-4f60-9507-f09966489c5b" x="638" y="13" width="253" height="1"/>
+				<reportElement uuid="93c2def8-68cf-4f60-9507-f09966489c5b" x="591" y="24" width="257" height="1"/>
 			</line>
 			<staticText>
 				<reportElement uuid="c44f9389-7774-4e9f-ba3d-c9b071eb4e2a" x="838" y="27" width="59" height="12"/>
@@ -481,14 +488,14 @@ order by p.cod_depto, p.apellidos]]>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9f679fec-c2ae-4743-9bae-3470b77c7b09" x="454" y="1" width="128" height="12"/>
+				<reportElement uuid="9f679fec-c2ae-4743-9bae-3470b77c7b09" x="451" y="0" width="116" height="12"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Ingresos Adicionales]]></text>
+				<text><![CDATA[Ingresos adicionales]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8ff8d2f8-3571-483a-99d9-010131b7cfbc" x="684" y="1" width="100" height="12"/>
+				<reportElement uuid="8ff8d2f8-3571-483a-99d9-010131b7cfbc" x="684" y="12" width="100" height="12"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -534,14 +541,14 @@ order by p.cod_depto, p.apellidos]]>
 				<text><![CDATA[Valor.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b0e147fe-ac59-4fa5-85af-0ed9a01f13db" x="335" y="16" width="30" height="10"/>
+				<reportElement uuid="b0e147fe-ac59-4fa5-85af-0ed9a01f13db" x="334" y="16" width="30" height="10"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tarde]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b0e147fe-ac59-4fa5-85af-0ed9a01f13db" x="395" y="16" width="30" height="10"/>
+				<reportElement uuid="b0e147fe-ac59-4fa5-85af-0ed9a01f13db" x="400" y="16" width="30" height="10"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -685,23 +692,10 @@ order by p.cod_depto, p.apellidos]]>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="36" splitType="Stretch"/>
+		<band height="28" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="29" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="f5558433-1450-4e5d-a426-37a96319dc52" x="8" y="3" width="488" height="22"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[L= LABORADO I= INCAPACIDAD P= PREMISO ESPECIAL M= MATERNIDAD C= VACACIONES COMPLEMENTARIAS V=VACACIONES S= SEPARADO(A) N= NUEVO INGRESO D= DIA Y SEPTIMO T= SUPERNUMERARIO(A)]]></text>
-			</staticText>
-			<textField>
-				<reportElement uuid="99f3ca7b-e5dc-497e-b6b5-eb64b73e6594" x="872" y="3" width="33" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
+		<band height="29" splitType="Stretch"/>
 	</pageFooter>
 	<lastPageFooter>
 		<band height="54">
@@ -871,6 +865,13 @@ order by p.cod_depto, p.apellidos]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PRESTACIONES_1}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="f5558433-1450-4e5d-a426-37a96319dc52" x="14" y="36" width="488" height="22"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[L= LABORADO I= INCAPACIDAD P= PREMISO ESPECIAL M= MATERNIDAD C= VACACIONES COMPLEMENTARIAS V=VACACIONES S= SEPARADO(A) N= NUEVO INGRESO D= DIA Y SEPTIMO T= SUPERNUMERARIO(A)]]></text>
+			</staticText>
 			<textField>
 				<reportElement uuid="60e92322-cdc1-475a-b54d-5abbab6e8443" x="383" y="7" width="29" height="20"/>
 				<textElement>

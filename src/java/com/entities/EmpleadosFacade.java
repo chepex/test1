@@ -70,6 +70,27 @@ public  Empleados findbyCodemp( int emp){
     }
     }  
 
+public  Empleados findbyCodempref( String emp){
+    try{
+     LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+            
+ 	     TypedQuery<Empleados> q;     
+
+		    q = em.createNamedQuery("Empleados.findByPk3", Empleados.class )		    
+		    .setParameter("codCia",  codCia)			 		    
+                    .setParameter("codEmpref",  emp);
+                    
+            System.out.print("Empleado "+ emp);
+            
+         return q.getSingleResult();
+    }catch(Exception ex){
+           JsfUtil.logs(ex , "Surgio un error", "Proceso findbyCodemp codigo empleado : " +emp,EmpleadosFacade.class,"ERROR");             
+                
+        return null;
+    }
+    }  
+
 public  Empleados findbyUsuario(String usuario){
  	     TypedQuery<Empleados> q;	 
 	     LoginBean lb= new LoginBean();	
@@ -166,5 +187,23 @@ public  List<Empleados> findbyVacc(  ProgramacionPla tipopla){
              return q.getResultList();
     }
     
-    
+
+     public List<Empleados> findbyPuestos(Short CodPuesto){
+         TypedQuery<Empleados> q;	 
+         try{
+                LoginBean lb= new LoginBean();	
+                short codCia = lb.sscia();	 
+                String act = "A";
+                     q = em.createNamedQuery("Empleados.findByPuesto", Empleados.class )		    
+                        .setParameter("puesto", CodPuesto)
+                        .setParameter("status",  "%" +act  + "%")
+                        .setParameter("codCia", codCia);
+             return q.getResultList();
+         }catch(Exception ex){
+             ex.printStackTrace();
+             return null;
+             
+         }
+          
+    }    
 }

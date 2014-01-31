@@ -26,17 +26,35 @@ import net.sf.jasperreports.engine.JRException;
 @ViewScoped
 public class PlanillaController extends AbstractController<Planilla> implements Serializable {
     @EJB
+    private ProgramacionPlaFacade programacionPlaFacade;
+    @EJB
+    private EmpleadosFacade empleadosFacade;
+    @EJB
     private MovDpFacade movDpFacade;
     @EJB
     private SB_Reportes reportes;    
     @EJB
     private SB_Planilla sBPlanilla;
-    
     List <MovDp> deduciones;
     List <MovDp> prestaciones;
+    ProgramacionPla programacionpla;
+    List <ProgramacionPla> programacionplas;
+    List <Empleados> ListEmpleados;
     short anio;
     short mes;
+    String estado;
+    String todosdptos;    
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+
+    
     @EJB
     private PlanillaFacade ejbFacade;
 
@@ -46,6 +64,31 @@ public class PlanillaController extends AbstractController<Planilla> implements 
 
     }
 
+    public String getTodosdptos() {
+        return todosdptos;
+    }
+
+    public void setTodosdptos(String todosdptos) {
+        this.todosdptos = todosdptos;
+    }
+
+    public ProgramacionPla getProgramacionpla() {
+        return programacionpla;
+    }
+
+    public void setProgramacionpla(ProgramacionPla programacionpla) {
+        this.programacionpla = programacionpla;
+    }
+
+    public List<ProgramacionPla> getProgramacionplas() {
+        return programacionplas;
+    }
+
+    public void setProgramacionplas(List<ProgramacionPla> programacionplas) {
+        this.programacionplas = programacionplas;
+    }
+
+    
     @PostConstruct
     public void init() {
 	super.setFacade(ejbFacade);
@@ -108,7 +151,11 @@ public class PlanillaController extends AbstractController<Planilla> implements 
         this.deduciones = deduciones;
     }
     
-
+    public void ChangeEstadoPlanilla() {  
+        if(estado !=null && !estado.equals(""))  
+            programacionplas = programacionPlaFacade.findByEstado(estado);        
+    }  
+    
     
     
     public String generar(){    
@@ -141,7 +188,7 @@ public class PlanillaController extends AbstractController<Planilla> implements 
         return "";	
    }       
     
-     public String reportePlanilla() throws NamingException, SQLException, JRException, IOException{         
+     public String reportePlanilla2() throws NamingException, SQLException, JRException, IOException{         
         HashMap params = new HashMap();  
         long cia= 1;
         long secuencia= 20140141;
@@ -202,5 +249,43 @@ public class PlanillaController extends AbstractController<Planilla> implements 
         reportes.GenerarReporte("/reportes/BoletaPago2.jasper", params); 
         return "";     
     }
+
     
+    public String reportePlanilla() throws NamingException, SQLException, JRException, IOException{  
+        HashMap params = new HashMap(); 
+        LoginBean lb= new LoginBean();	
+	long codCia = lb.sscia();
+        long secuencia;
+        secuencia = this.getProgramacionpla().getProgramacionPlaPK().getSecuencia();
+        params.put("cia",codCia ); 
+        params.put("mas",secuencia ); 
+        ListEmpleados = empleadosFacade.findbyPuestos((short)148);
+        for(Empleados emp:  ListEmpleados){
+            params.put("encargadoplanilla",emp.getNombreNit()); 
+            params.put("puestoplanilla",emp.getPuestos().getNomPuesto());
+        }
+        ListEmpleados = empleadosFacade.findbyPuestos((short)325);
+        for(Empleados emp:  ListEmpleados){
+            params.put("gerenteConta",emp.getNombreNit());
+            params.put("puestoconta",emp.getPuestos().getNomPuesto());
+        }
+        ListEmpleados = empleadosFacade.findbyPuestos((short)57);
+        for(Empleados emp:  ListEmpleados){
+            params.put("gerenteRrhh",emp.getNombreNit());
+            params.put("puestorrhh",emp.getPuestos().getNomPuesto() );
+        }
+        ListEmpleados = empleadosFacade.findbyPuestos((short)111);
+        for(Empleados emp:  ListEmpleados){
+            params.put("directorFinanza",emp.getNombreNit());
+            params.put("puestofinanza",emp.getPuestos().getNomPuesto());
+        }
+
+        if(this.todosdptos == null || "1".equals(this.todosdptos)){
+            reportes.GenerarReporte("/reportes/Planilla.jasper", params);
+        }else{
+            reportes.GenerarReporte("/reportes/PlanillaEjecutivos.jasper", params);
+        }
+        return "";           
+    } 
+ 
 }

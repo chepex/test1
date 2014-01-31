@@ -43,7 +43,7 @@ public class RentaFacade extends AbstractFacade<Renta> {
 
     
 
-    public Renta findByValor(float devengado,short id ){
+    public Renta findByValor(double devengado,short id ){
         try{
 	 TypedQuery<Renta> q;
 	 

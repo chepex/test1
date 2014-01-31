@@ -15,8 +15,6 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{deducPrestaController.selected != null}">
 
-
-
                         <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_descripcion}" for="descripcion" />
                         <p:inputText id="descripcion" value="#{deducPrestaController.selected.descripcion}" title="#{myBundle.CreateDeducPrestaTitle_descripcion}" />
 
@@ -29,6 +27,9 @@
 
                         <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_isss}" for="isss" />
                         <p:inputText id="isss" value="#{deducPrestaController.selected.isss}" title="#{myBundle.CreateDeducPrestaTitle_isss}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_nogravado}" for="nogravado" />
+                        <p:inputText id="nogravado" value="#{deducPrestaController.selected.nogravado}" title="#{myBundle.CreateDeducPrestaTitle_nogravado}" />
 
                         
                         <p:outputLabel value="#{myBundle.CreateDeducPrestaLabel_factor}" for="factor" />

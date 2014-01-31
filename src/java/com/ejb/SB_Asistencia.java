@@ -260,21 +260,21 @@ public class SB_Asistencia {
                 Parametros min2 = parametrosFacade.findByNombre("SAL_MIN2");
 		int minimo1 = e.getSalarioBase().compareTo(min1.getValorInt());
 		int minimo2 = e.getSalarioBase().compareTo(min2.getValorInt());
-		
+	
 		if(programacionpla.getNumPlanilla()==2){
 		    if (JsfUtil.diasDelMes(programacionpla.getMes(), programacionpla.getAnio())==31){
 			
-			if (minimo1 !=1  && minimo2 !=1)  {
+			if (minimo1 ==0  || minimo2 ==0)  {
 			    dias= "16"; 
 			}
 		    }
 		    if (JsfUtil.diasDelMes(programacionpla.getMes(), programacionpla.getAnio())==28){
-			if (minimo1 !=1  && minimo2 !=1)  {
+			if (minimo1 ==0  || minimo2 ==0)  {
 			   dias= "13";  
 			}
 		    }
 		    if (JsfUtil.diasDelMes(programacionpla.getMes(), programacionpla.getAnio())==29){
-			if (minimo1 !=1  && minimo2 !=1)  {
+			if (minimo1 ==0  || minimo2 ==0)  {
 			    dias= "14"; 
 			}
 		    }		

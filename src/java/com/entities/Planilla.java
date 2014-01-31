@@ -30,8 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Planilla.findAll", query = "SELECT p FROM Planilla p"),
     @NamedQuery(name = "Planilla.findByCodCia", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia"),
-    @NamedQuery(name = "Planilla.findByStatus", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.status = :status"),
-    @NamedQuery(name = "Planilla.findByAnioMes", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes"),    
+    @NamedQuery(name = "Planilla.findByStatus", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and  p.programacionPla.status = :status"),
+    @NamedQuery(name = "Planilla.findByAnioMes", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes and p.programacionPla.status = 'C'"),    
+    @NamedQuery(name = "Planilla.findByAnioMes2", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes and p.programacionPla.status = 'C' and p.planillaPK.codEmp = :codEmp"),        
     @NamedQuery(name = "Planilla.findByMes", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes and p.planillaPK.codEmp = :codEmp"),        
     @NamedQuery(name = "Planilla.findByPk", query = "SELECT p  FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.planillaPK.secuencia = :secuencia"),
     @NamedQuery(name = "Planilla.findBySecuencia", query = "SELECT p FROM Planilla p WHERE p.planillaPK.secuencia = :secuencia"),
@@ -46,7 +47,12 @@ public class Planilla implements Serializable {
     protected PlanillaPK planillaPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
 
-
+    @Column(name = "CANTIDAHE")
+    private BigDecimal cantidahe;
+    @Column(name = "LLEGADATARDE")
+    private BigDecimal llegadatarde;
+    @Column(name = "CANT_LLEGAT")
+    private BigDecimal cantLlegat;
     @Column(name = "BRUTO")
     private BigDecimal bruto;
     @Column(name = "HORASEXTRAS")
@@ -102,6 +108,31 @@ public class Planilla implements Serializable {
         this.dias = dias;
     }
 
+    public BigDecimal getCantidahe() {
+        return cantidahe;
+    }
+
+    public void setCantidahe(BigDecimal cantidahe) {
+        this.cantidahe = cantidahe;
+    }
+
+    public BigDecimal getLlegadatarde() {
+        return llegadatarde;
+    }
+
+    public void setLlegadatarde(BigDecimal llegadatarde) {
+        this.llegadatarde = llegadatarde;
+    }
+
+    public BigDecimal getCantLlegat() {
+        return cantLlegat;
+    }
+
+    public void setCantLlegat(BigDecimal cantLlegat) {
+        this.cantLlegat = cantLlegat;
+    }
+
+    
     
     public ResumenAsistencia getResumenAsistencia() {
         return resumenAsistencia;

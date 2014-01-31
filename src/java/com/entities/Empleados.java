@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empleados.findByVac", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and e.status like :status and e.vacaciones = :vacaciones "),    
     @NamedQuery(name = "Empleados.findByFiltros", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia like :codCia  and  e.apellidos like :apellidos and e.nombres like :nombres"),
     @NamedQuery(name = "Empleados.findByPk2", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and  e.empleadosPK.codEmp = :codEmp"),        
+    @NamedQuery(name = "Empleados.findByPk3", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and  e.codEmpref = :codEmpref"),            
     @NamedQuery(name = "Empleados.findByDeptos", query = "SELECT e FROM Empleados e  WHERE  e.empleadosPK.codCia = :codCia and e.status like :status"	
 	+ " and e.departamentos.departamentosPK.codDepto in :departamentos  "),    
     @NamedQuery(name = "Empleados.findByCodEmp", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codEmp = :codEmp"),
@@ -98,7 +99,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empleados.findByFecRegistro", query = "SELECT e FROM Empleados e WHERE e.fecRegistro = :fecRegistro"),
     @NamedQuery(name = "Empleados.findByCodBanco", query = "SELECT e FROM Empleados e WHERE e.codBanco = :codBanco"),
     @NamedQuery(name = "Empleados.findByCodArea", query = "SELECT e FROM Empleados e WHERE e.codArea = :codArea"),
-    @NamedQuery(name = "Empleados.findByPassword", query = "SELECT e FROM Empleados e WHERE e.password = :password")})
+    @NamedQuery(name = "Empleados.findByPassword", query = "SELECT e FROM Empleados e WHERE e.password = :password"),
+    @NamedQuery(name = "Empleados.findByPuesto", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and e.status like :status" 
+                     + " and e.puestos.puestosPK.codPuesto = :puesto")
+})
 public class Empleados implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleados")

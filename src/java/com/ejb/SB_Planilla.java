@@ -524,14 +524,14 @@ public class SB_Planilla {
           String Correlativo =   "00000".substring(vCorrelativo.length())+vCorrelativo;
           String vNit= "";
           String Nit=  "                    ".substring(vNit.length())+vNit;
-          String Id=  "     ";
+          
           String anio= "2013";
           String vmes= "4";
           String mes = "00".substring(vmes.length())+vmes;          
           String vdias= "2";
           String dias = "00".substring(vdias.length())+vdias;                              
-          String vmonto= "15000";
-          String monto = "             ".substring(vmonto.length())+vmonto;                    
+          
+                            
           String vtrans = "";
           String trans  = "     ".substring(vtrans.length())+vtrans; 
           String vdescripcion = "";
@@ -541,6 +541,50 @@ public class SB_Planilla {
           String nombre =  "                              ".substring(vnombre.length())+vnombre; 
           String vCuenta = "";
           String Cuenta =  "     ".substring(vCuenta.length())+vCuenta; 
+          
+            BigDecimal total = new BigDecimal(0);
+            BigDecimal bd2 = new BigDecimal("100");
+          int id= 0;           
+        
+          
+          List<Planilla> lpla= planillaFacade.findByStatus();
+          int cort= 1;
+          String detalle = "";
+           for( Planilla p : lpla ){               
+               try{
+                   
+               if (!p.getEmpleados().getCodBanco().equals("0")){
+                   if (p.getEmpleados().getCodBanco().equals("14")){
+                       if(p.getLiquido().floatValue()>0){
+                           detalle += txtDetalle(p,cort++);
+                           total = total.add(p.getLiquido().multiply(bd2)) ;
+                           id++;
+                       }
+                       
+                       
+                    }
+               }
+               
+               
+               
+               }catch(Exception ex){
+                   return "error empleado  ="+p.getEmpleados().getEmpleadosPK().getCodEmp();
+               }
+                   
+                   
+                   
+               
+             
+           }
+           
+           
+           String vmonto = "";  
+           String monto ="";
+           String Id= String.valueOf(id);
+           Id =   "     ".substring(Id.length() )+id;
+              
+           monto =String.valueOf(total.intValue() ) ;
+           monto = "             ".substring(monto.length())+monto;  
           encabezado+=Campo;
           encabezado+=Plan;
           encabezado+=Correlativo;
@@ -555,27 +599,8 @@ public class SB_Planilla {
           encabezado+=Esp;
           encabezado+=nombre;
           encabezado+=Cuenta;
-          encabezado+="\n";
-        
+          encabezado+="\n";           
           
-          List<Planilla> lpla= planillaFacade.findByStatus();
-          int cort= 1;
-          String detalle = "";
-           for( Planilla p : lpla ){               
-               try{
-               if (p.getEmpleados().getCodBanco().equals("14")){
-                     detalle += txtDetalle(p,cort++);
-               }
-               
-               }catch(Exception ex){
-                   return "error empleado  ="+p.getEmpleados().getEmpleadosPK().getCodEmp();
-               }
-                   
-                   
-                   
-               
-             
-           }
         encabezado+=detalle;
         return encabezado;
     }
@@ -583,7 +608,7 @@ public class SB_Planilla {
     public String txtDetalle(Planilla pl,int ct)
     {
         
-          float valor= pl.getLiquido().floatValue()*10;
+          float valor= pl.getLiquido().floatValue()*100;
           DecimalFormat df = new DecimalFormat("###########");
           
           

@@ -42,6 +42,7 @@ public class Observaciones implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ObservacionesPK observacionesPK;
+    
     @Size(max = 150)
     @Column(name = "DESCRIPCION")
     private String descripcion;

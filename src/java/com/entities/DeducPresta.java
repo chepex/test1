@@ -63,6 +63,9 @@ public class DeducPresta implements Serializable {
     @Column(name = "RENTA")
     private String renta;    
     @Size(max = 1)
+    @Column(name = "NOGRAVADO")
+    private String nogravado;     
+    @Size(max = 1)
     @Column(name = "AFP")
     private String afp;
     @Size(max = 1)
@@ -119,6 +122,15 @@ public class DeducPresta implements Serializable {
         this.isss = isss;
     }
 
+    public String getNogravado() {
+        return nogravado;
+    }
+
+    public void setNogravado(String nogravado) {
+        this.nogravado = nogravado;
+    }
+
+    
     
     public void setRenta(String renta) {
         this.renta = renta;

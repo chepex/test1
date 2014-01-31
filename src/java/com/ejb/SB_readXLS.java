@@ -78,7 +78,9 @@ private MovDpFacade movDpFacade;
          int total=0; 
         String mensaje="";
         BigDecimal valor=null;
+        Empleados emp= null;
         LoginBean lb= new LoginBean();
+         String codEmp ="";
         for (int i = 0; i < sheet.getRows(); i++) { 
            total++;
            MovDpPK movpk = new MovDpPK(); 
@@ -91,8 +93,8 @@ private MovDpFacade movDpFacade;
                 Cell cell = sheet.getCell(j, i);
                 if(j==0){
                   
+                     codEmp =  String.valueOf(cell.getContents());
                     
-                    movpk.setCodEmp( Integer.parseInt(cell.getContents()));
                 }          
                 if(j==1){
                    
@@ -108,11 +110,20 @@ private MovDpFacade movDpFacade;
             mensaje = sB_ProgramacionPla.validarEstado(programacionPla);
      try{
             if(mensaje.equals("ok")){
+                 if(codEmp.length()>4){
+                    emp  = empleadosFacade.findbyCodempref(codEmp); 
+                 }else{
+                      int codemp = Integer.valueOf(codEmp);
+                      emp  = empleadosFacade.findbyCodemp(codemp); 
+                      
+                 }
+                
+                 movpk.setCodEmp(emp.getEmpleadosPK().getCodEmp());
                  movdp.setMovDpPK(movpk);
                  movdp.setUsuario(lb.ssuser() );
                  movdp.setFechaReg( lb.sdate());   
                  movdp.setValor(valor);
-                 Empleados emp  = empleadosFacade.findbyCodemp(movpk.getCodEmp());
+                 
                  DeducPresta dp = deducPrestaFacade.findCodDeduc(movdp);
                  ResumenAsistencia ra= resumenAsistenciaFacade.ByEmp(movdp);
                  movdp.setGenerado("N");
@@ -149,8 +160,9 @@ private MovDpFacade movDpFacade;
     int xx=0; 
       int total=0; 
         BigDecimal valor=null;
-        int codEmp  =0; 
-        short codDp =0;        
+        String codEmp  =""; 
+        short codDp =0;      
+        Empleados emp = null;
         LoginBean lb= new LoginBean();
         for (int i = 0; i < sheet.getRows(); i++) { 
          total++;
@@ -161,7 +173,7 @@ private MovDpFacade movDpFacade;
                 if(j==0){
                   
                     
-                    codEmp =  Integer.parseInt(cell.getContents());
+                    codEmp =  String.valueOf(cell.getContents());
                 }          
                 if(j==1){
                    
@@ -175,7 +187,14 @@ private MovDpFacade movDpFacade;
             }
              try{ 
                  
-          Empleados emp  = empleadosFacade.findbyCodemp(codEmp); 
+                 if(codEmp.length()>4){
+                     emp  = empleadosFacade.findbyCodempref(codEmp); 
+                 }else{
+                     int codemp = Integer.valueOf(codEmp);
+                      emp  = empleadosFacade.findbyCodemp(codemp); 
+                      
+                 }
+          
     
           ProgramacionPla pp= programacionPlaFacade.findByCodEmp(emp);
           if(pp!=null){
@@ -184,7 +203,7 @@ private MovDpFacade movDpFacade;
           String mensaje = sB_ProgramacionPla.validarEstado(pp);
         
                 if(mensaje.equals("ok")){
-                    MovDpPK movpk = new MovDpPK( lb.sscia(), pp.getProgramacionPlaPK().getSecuencia() , codEmp, codDp, 0 ); 
+                    MovDpPK movpk = new MovDpPK( lb.sscia(), pp.getProgramacionPlaPK().getSecuencia() , emp.getEmpleadosPK().getCodEmp(), codDp, 0 ); 
                     MovDp movdp = new MovDp(); 
                     movdp.setMovDpPK(movpk);
                     movdp.setUsuario(lb.ssuser() );
