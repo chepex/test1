@@ -263,7 +263,7 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
 	 try{
 	    LoginBean lb= new LoginBean();	
 	    short codCia = lb.sscia();
-	 
+	 /*TENEMOS Q MANDARLE LA FECHA DE PAGO DE LA PLANILLA PARAQ NOS CUADRE*/
             Query q =  em.createNativeQuery("select nvl(sum(valor),0) from mov_dp m, deduc_presta d, cat_dp c, programacion_pla p " +
                                                 " where M.COD_CIA = d.cod_cia" +
                                                 " and m.cod_dp = d.cod_dp" +
@@ -271,15 +271,17 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
                                                 " and D.COD_CAT = c.cod_cat" +
                                                 " and C.DESCRIPCION = 'Comision'" +                                                    
                                                 " and P.COD_CIA = m.cod_cia" +
-                                                " and P.SECUENCIA = M.SECUENCIA" +
-                                                " and P.FECHA_PAGO between  add_months(sysdate,-5) and sysdate" +
+                                                " and P.SECUENCIA = M.SECUENCIA" +                                                
                                                 " and m.GENERADO <> 'G'" +    
                                                 " and P.STATUS = 'C'" +
                                                 " and m.cod_cia = ?" +
-                                                " and m.cod_emp = ?"                                                 
+                                                " and m.cod_emp = ?" +
+                                                " and P.FECHA_PAGO between add_months(?,-6) and ?"                                                 
                                                   );		                        
             q.setParameter(1, codCia);  
             q.setParameter(2, empleado.getEmpleadosPK().getCodEmp());                  
+            q.setParameter(3, resumenAsistencia.getProgramacionPla().getFechaPago());                  
+            q.setParameter(4, resumenAsistencia.getProgramacionPla().getFechaPago());       
             
             val= (BigDecimal)q.getSingleResult();
         

@@ -111,7 +111,7 @@ public class SB_Planilla {
                   if(e.getRecalculo().equals("S")){
                      calculos.recalculo(ra); 
                   } 
-                  System.out.print(ra.getResumenAsistenciaPK().getCodEmp());
+             //     System.out.print(ra.getResumenAsistenciaPK().getCodEmp());
                   mensaje ="ok+";
               }
                     mensaje ="ok";
