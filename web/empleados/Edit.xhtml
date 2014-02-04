@@ -13,7 +13,7 @@
             <h:form id="EmpleadosEditForm">
 
                 <h:panelGroup id="display">
-                    <p:panelGrid  columns="6" rendered="#{empleadosController.selected != null}">
+                    <p:panelGrid  columns="4" rendered="#{empleadosController.selected != null}">
 
                         <h:outputLabel value="#{myBundle.EditEmpleadosLabel_empleadosPK_codEmp}" for="empleadosPK_codEmp" />
                         <h:outputText id="empleadosPK_codEmp" value="#{empleadosController.selected.empleadosPK.codEmp}" />
@@ -39,8 +39,6 @@
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_numIgss}" for="numIgss" />
                         <p:inputText id="numIgss" value="#{empleadosController.selected.numIgss}" title="#{myBundle.EditEmpleadosTitle_numIgss}" />
 
-                        <p:outputLabel value="#{myBundle.EditEmpleadosLabel_numIrtra}" for="numIrtra" />
-                        <p:inputText id="numIrtra" value="#{empleadosController.selected.numIrtra}" title="#{myBundle.EditEmpleadosTitle_numIrtra}" />
 
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_numNit}" for="numNit" />
                         <p:inputText id="numNit" value="#{empleadosController.selected.numNit}" title="#{myBundle.EditEmpleadosTitle_numNit}" />
@@ -81,20 +79,15 @@
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_cedula}" for="cedula" />
                         <p:inputText id="cedula" value="#{empleadosController.selected.cedula}" title="#{myBundle.EditEmpleadosTitle_cedula}" />
 
-                        <p:outputLabel value="#{myBundle.EditEmpleadosLabel_chequeDep}" for="chequeDep" />
-                        <p:inputText id="chequeDep" value="#{empleadosController.selected.chequeDep}" title="#{myBundle.EditEmpleadosTitle_chequeDep}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_chequeDep}"/>
+                    
 
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_ctaBancaria}" for="ctaBancaria" />
                         <p:inputText id="ctaBancaria" value="#{empleadosController.selected.ctaBancaria}" title="#{myBundle.EditEmpleadosTitle_ctaBancaria}" />
 
-                        <p:outputLabel value="#{myBundle.EditEmpleadosLabel_comSprod}" for="comSprod" />
-                        <p:inputText id="comSprod" value="#{empleadosController.selected.comSprod}" title="#{myBundle.EditEmpleadosTitle_comSprod}" />
 
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_comSobra}" for="comSobra" />
                         <p:inputText id="comSobra" value="#{empleadosController.selected.comSobra}" title="#{myBundle.EditEmpleadosTitle_comSobra}" />
 
-                        <p:outputLabel value="#{myBundle.EditEmpleadosLabel_valIsr}" for="valIsr" />
-                        <p:inputText id="valIsr" value="#{empleadosController.selected.valIsr}" title="#{myBundle.EditEmpleadosTitle_valIsr}" />
 
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_sexo}" for="sexo" />
                         <p:inputText id="sexo" value="#{empleadosController.selected.sexo}" title="#{myBundle.EditEmpleadosTitle_sexo}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_sexo}"/>
@@ -104,9 +97,6 @@
 
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_nupAfp}" for="nupAfp" />
                         <p:inputText id="nupAfp" value="#{empleadosController.selected.nupAfp}" title="#{myBundle.EditEmpleadosTitle_nupAfp}" />
-
-                        <p:outputLabel value="#{myBundle.EditEmpleadosLabel_codAfp}" for="codAfp" />
-                        <p:inputText id="codAfp" value="#{empleadosController.selected.codAfp}" title="#{myBundle.EditEmpleadosTitle_codAfp}" />
 
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_numHijos}" for="numHijos" />
                         <p:inputText id="numHijos" value="#{empleadosController.selected.numHijos}" title="#{myBundle.EditEmpleadosTitle_numHijos}" />
@@ -120,23 +110,11 @@
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_nombreIsss}" for="nombreIsss" />
                         <p:inputText id="nombreIsss" value="#{empleadosController.selected.nombreIsss}" title="#{myBundle.EditEmpleadosTitle_nombreIsss}" />
 
-                        <p:outputLabel value="#{myBundle.EditEmpleadosLabel_codIsss}" for="codIsss" />
-                        <p:inputText id="codIsss" value="#{empleadosController.selected.codIsss}" title="#{myBundle.EditEmpleadosTitle_codIsss}" />
-
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_comision}" for="comision" />
                         <p:inputText id="comision" value="#{empleadosController.selected.comision}" title="#{myBundle.EditEmpleadosTitle_comision}" />
 
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_fechaIngresoHist}" for="fechaIngresoHist" />
                         <p:calendar id="fechaIngresoHist" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.fechaIngresoHist}" title="#{myBundle.EditEmpleadosTitle_fechaIngresoHist}"  showOn="button"/>
-
-                        <p:outputLabel value="#{myBundle.EditEmpleadosLabel_marcacionTarjeta}" for="marcacionTarjeta" />
-                        <p:inputText id="marcacionTarjeta" value="#{empleadosController.selected.marcacionTarjeta}" title="#{myBundle.EditEmpleadosTitle_marcacionTarjeta}" />
-
-                        <p:outputLabel value="#{myBundle.EditEmpleadosLabel_usuario}" for="usuario" />
-                        <p:inputText id="usuario" value="#{empleadosController.selected.usuario}" title="#{myBundle.EditEmpleadosTitle_usuario}" />
-
-                        <p:outputLabel value="#{myBundle.EditEmpleadosLabel_fechaReg}" for="fechaReg" />
-                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.fechaReg}" title="#{myBundle.EditEmpleadosTitle_fechaReg}"  showOn="button"/>
 
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_beneficiario}" for="beneficiario" />
                         <p:inputText id="beneficiario" value="#{empleadosController.selected.beneficiario}" title="#{myBundle.EditEmpleadosTitle_beneficiario}" />
@@ -147,8 +125,6 @@
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_vacaciones}" for="vacaciones" />
                         <p:inputText id="vacaciones" value="#{empleadosController.selected.vacaciones}" title="#{myBundle.EditEmpleadosTitle_vacaciones}" />
 
-                        <p:outputLabel value="#{myBundle.EditEmpleadosLabel_preId}" for="preId" />
-                        <p:inputText id="preId" value="#{empleadosController.selected.preId}" title="#{myBundle.EditEmpleadosTitle_preId}" />
 
                         <p:outputLabel value="#{myBundle.EditEmpleadosLabel_codDepartamento}" for="codDepartamento" />
                         <p:inputText id="codDepartamento" value="#{empleadosController.selected.codDepartamento}" title="#{myBundle.EditEmpleadosTitle_codDepartamento}" />

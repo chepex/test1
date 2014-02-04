@@ -6,12 +6,14 @@ package com.entities;
 
 import com.ejb.SB_Calculos;
 import com.entities.util.JsfUtil;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 
@@ -206,4 +208,21 @@ public  List<Empleados> findbyVacc(  ProgramacionPla tipopla){
          }
           
     }    
+     
+    public int Sequence(String seq_name ){	 	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+		Query q =  em.createNativeQuery("Select nvl(SEQ_COUNT ,0)+1 from SEQUENCE_TABLE s where s.cod_Cia = ?  and SEQ_NAME = ?" );		                                                   
+                q.setParameter(1, codCia);  
+                q.setParameter(2, seq_name);  
+                BigDecimal val = (BigDecimal)q.getSingleResult(); 
+                int val2 = val.shortValue();
+                
+                Query q2 =  em.createNativeQuery("UPDATE SEQUENCE_TABLE SET SEQ_COUNT = SEQ_COUNT+1 WHERE cod_Cia = ?  and SEQ_NAME = ?" );		                                                       
+                q2.setParameter(1, codCia);  
+                q2.setParameter(2, seq_name);                  
+                q2.executeUpdate();
+        return val2;
+    
+    }       
 }

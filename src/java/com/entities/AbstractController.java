@@ -100,10 +100,11 @@ public abstract class AbstractController<T> {
     }
 
     public void saveNew(ActionEvent event) {
+        
         String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Created");
         persist(AbstractController.PersistAction.CREATE, msg);
         if (!isValidationFailed()) {
-            items = null; // Invalidate list of items to trigger re-query.
+            items = null; 
         }
     }
 
@@ -187,7 +188,7 @@ public abstract class AbstractController<T> {
             this.selected = newItem;
             inicializar();
             initializeEmbeddableKey();
-            return newItem;
+                return newItem;
         } catch (InstantiationException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {

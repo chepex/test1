@@ -18,9 +18,9 @@
 			 rowsPerPageTemplate="10,20,30"
 			 >
 
-		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
-		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
-
+		
+		
+                <p:ajax event="rowSelect" update=":EmpleadosCreateForm"  />     
 		<p:column sortBy="#{item.empleadosPK.codEmp}" filterBy="#{item.empleadosPK.codEmp}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListEmpleadosTitle_empleadosPK_codEmp}"/>
@@ -45,349 +45,10 @@
 		    </f:facet>
 		    <h:outputText value="#{item.departamentos.nomDepto }"/>
 		</p:column>		
-		<!--<p:column sortBy="#{item.apCasada}" filterBy="#{item.apCasada}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_apCasada}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.apCasada}"/>
-		</p:column>
-		<p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_direccion}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.direccion}"/>
-		</p:column>
-		<p:column sortBy="#{item.telefonos}" filterBy="#{item.telefonos}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_telefonos}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.telefonos}"/>
-		</p:column>
-		<p:column sortBy="#{item.fechaNac}" filterBy="#{item.fechaNac}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_fechaNac}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.fechaNac}">
-			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-		    </h:outputText>
-		</p:column>
-		<p:column sortBy="#{item.numIgss}" filterBy="#{item.numIgss}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_numIgss}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.numIgss}"/>
-		</p:column>
-		<p:column sortBy="#{item.numIrtra}" filterBy="#{item.numIrtra}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_numIrtra}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.numIrtra}"/>
-		</p:column>
-		<p:column sortBy="#{item.numNit}" filterBy="#{item.numNit}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_numNit}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.numNit}"/>
-		</p:column>
-		<p:column sortBy="#{item.fecIngreso}" filterBy="#{item.fecIngreso}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_fecIngreso}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.fecIngreso}">
-			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-		    </h:outputText>
-		</p:column>
-		<p:column sortBy="#{item.fecSalida}" filterBy="#{item.fecSalida}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_fecSalida}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.fecSalida}">
-			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-		    </h:outputText>
-		</p:column>
-		<p:column sortBy="#{item.motSalida}" filterBy="#{item.motSalida}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_motSalida}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.motSalida}"/>
-		</p:column>
-		<p:column sortBy="#{item.observacion}" filterBy="#{item.observacion}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_observacion}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.observacion}"/>
-		</p:column>
-		<p:column sortBy="#{item.status}" filterBy="#{item.status}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_status}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.status}"/>
-		</p:column>
-		<p:column sortBy="#{item.tipoContra}" filterBy="#{item.tipoContra}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_tipoContra}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.tipoContra}"/>
-		</p:column>
-		<p:column sortBy="#{item.salario}" filterBy="#{item.salario}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_salario}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.salario}"/>
-		</p:column>
-		<p:column sortBy="#{item.promedio}" filterBy="#{item.promedio}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_promedio}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.promedio}"/>
-		</p:column>
-		<p:column sortBy="#{item.bonificacion}" filterBy="#{item.bonificacion}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_bonificacion}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.bonificacion}"/>
-		</p:column>
-		<p:column sortBy="#{item.salarioBase}" filterBy="#{item.salarioBase}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_salarioBase}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.salarioBase}"/>
-		</p:column>
-		<p:column sortBy="#{item.avisarA}" filterBy="#{item.avisarA}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_avisarA}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.avisarA}"/>
-		</p:column>
-		<p:column sortBy="#{item.cedula}" filterBy="#{item.cedula}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_cedula}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.cedula}"/>
-		</p:column>
-		<p:column sortBy="#{item.chequeDep}" filterBy="#{item.chequeDep}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_chequeDep}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.chequeDep}"/>
-		</p:column>
-		<p:column sortBy="#{item.ctaBancaria}" filterBy="#{item.ctaBancaria}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_ctaBancaria}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.ctaBancaria}"/>
-		</p:column>
-		<p:column sortBy="#{item.comSprod}" filterBy="#{item.comSprod}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_comSprod}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.comSprod}"/>
-		</p:column>
-		<p:column sortBy="#{item.comSobra}" filterBy="#{item.comSobra}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_comSobra}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.comSobra}"/>
-		</p:column>
-		<p:column sortBy="#{item.valIsr}" filterBy="#{item.valIsr}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_valIsr}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.valIsr}"/>
-		</p:column>
-		<p:column sortBy="#{item.sexo}" filterBy="#{item.sexo}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_sexo}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.sexo}"/>
-		</p:column>
-		<p:column sortBy="#{item.tipoCta}" filterBy="#{item.tipoCta}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_tipoCta}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.tipoCta}"/>
-		</p:column>
-		<p:column sortBy="#{item.nupAfp}" filterBy="#{item.nupAfp}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_nupAfp}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.nupAfp}"/>
-		</p:column>
-		<p:column sortBy="#{item.codAfp}" filterBy="#{item.codAfp}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codAfp}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codAfp}"/>
-		</p:column>
-		<p:column sortBy="#{item.numHijos}" filterBy="#{item.numHijos}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_numHijos}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.numHijos}"/>
-		</p:column>
-		<p:column sortBy="#{item.estadoCivil}" filterBy="#{item.estadoCivil}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_estadoCivil}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.estadoCivil}"/>
-		</p:column>
-		<p:column sortBy="#{item.codEmpref}" filterBy="#{item.codEmpref}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codEmpref}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codEmpref}"/>
-		</p:column>
-		<p:column sortBy="#{item.nombreIsss}" filterBy="#{item.nombreIsss}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_nombreIsss}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.nombreIsss}"/>
-		</p:column>
-		<p:column sortBy="#{item.codIsss}" filterBy="#{item.codIsss}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codIsss}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codIsss}"/>
-		</p:column>
-		<p:column sortBy="#{item.comision}" filterBy="#{item.comision}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_comision}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.comision}"/>
-		</p:column>
-		<p:column sortBy="#{item.fechaIngresoHist}" filterBy="#{item.fechaIngresoHist}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_fechaIngresoHist}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.fechaIngresoHist}">
-			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-		    </h:outputText>
-		</p:column>
-		<p:column sortBy="#{item.marcacionTarjeta}" filterBy="#{item.marcacionTarjeta}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_marcacionTarjeta}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.marcacionTarjeta}"/>
-		</p:column>
-		<p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_usuario}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.usuario}"/>
-		</p:column>
-		<p:column sortBy="#{item.fechaReg}" filterBy="#{item.fechaReg}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_fechaReg}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.fechaReg}">
-			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-		    </h:outputText>
-		</p:column>
-		<p:column sortBy="#{item.beneficiario}" filterBy="#{item.beneficiario}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_beneficiario}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.beneficiario}"/>
-		</p:column>
-		<p:column sortBy="#{item.nombreNit}" filterBy="#{item.nombreNit}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_nombreNit}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.nombreNit}"/>
-		</p:column>
-		<p:column sortBy="#{item.vacaciones}" filterBy="#{item.vacaciones}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_vacaciones}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.vacaciones}"/>
-		</p:column>
-		<p:column sortBy="#{item.preId}" filterBy="#{item.preId}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_preId}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.preId}"/>
-		</p:column>
-		<p:column sortBy="#{item.codDepartamento}" filterBy="#{item.codDepartamento}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codDepartamento}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codDepartamento}"/>
-		</p:column>
-		<p:column sortBy="#{item.codZona}" filterBy="#{item.codZona}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codZona}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codZona}"/>
-		</p:column>
-		<p:column sortBy="#{item.codMuni}" filterBy="#{item.codMuni}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codMuni}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codMuni}"/>
-		</p:column>
-		<p:column sortBy="#{item.codSeguridad}" filterBy="#{item.codSeguridad}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codSeguridad}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codSeguridad}"/>
-		</p:column>
-		<p:column sortBy="#{item.FExtDoc}" filterBy="#{item.FExtDoc}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_FExtDoc}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.FExtDoc}">
-			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-		    </h:outputText>
-		</p:column>
-		<p:column sortBy="#{item.codPais}" filterBy="#{item.codPais}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codPais}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codPais}"/>
-		</p:column>
-		<p:column sortBy="#{item.fecRegistro}" filterBy="#{item.fecRegistro}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_fecRegistro}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.fecRegistro}">
-			<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-		    </h:outputText>
-		</p:column>
-		<p:column sortBy="#{item.codBanco}" filterBy="#{item.codBanco}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codBanco}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codBanco}"/>
-		</p:column>
-		<p:column sortBy="#{item.codArea}" filterBy="#{item.codArea}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codArea}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codArea}"/>
-		</p:column>
-		<p:column sortBy="#{item.password}" filterBy="#{item.password}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_password}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.password}"/>
-		</p:column>
-		<p:column sortBy="#{item.puestos.puestosPK}" filterBy="#{item.puestos.puestosPK}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_puestos}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.puestos.puestosPK}"/>
-		</p:column>
-		<p:column sortBy="#{item.codProfesion.descripcion}" filterBy="#{item.codProfesion.descripcion}">
-		    <f:facet name="header">
-			<h:outputText value="#{myBundle.ListEmpleadosTitle_codProfesion}"/>
-		    </f:facet>
-		    <h:outputText value="#{item.codProfesion.descripcion}"/>
-		</p:column>
-		-->
+	
+	
 		<f:facet name="footer">
-		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{empleadosController.prepareCreate}" update=":EmpleadosCreateForm" oncomplete="EmpleadosCreateDialog.show()"/>
-		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":EmpleadosViewForm" oncomplete="EmpleadosViewDialog.show()" disabled="#{empty empleadosController.selected}"/>
-		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":EmpleadosEditForm" oncomplete="EmpleadosEditDialog.show()" disabled="#{empty empleadosController.selected}"/>
+		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Crear Empleado" actionListener="#{empleadosController.prepareCreate}" update=":EmpleadosCreateForm" />		   
 		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empleadosController.delete}" update=":growl,datalist" disabled="#{empty empleadosController.selected}"/>
 		</f:facet>
 
@@ -395,6 +56,234 @@
 
 	</p:panel>
 
-    </h:form>
+    </h:form><br /> 
+<p:separator />  
+    
+<h:form id="EmpleadosCreateForm" >
+                <h:panelGroup id="display">
+                    
+                
+                <p:panel header="Datos Personales">
+                
+                    <p:panelGrid columns="8" rendered="#{empleadosController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_empleadosPK_codEmp}" for="empleadosPK_codEmp" />
+                        <p:outputLabel id="empleadosPK_codEmp" value="#{empleadosController.selected.empleadosPK.codEmp}" title="#{myBundle.CreateEmpleadosTitle_empleadosPK_codEmp}" />
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codEmpref}" for="codEmpref" />
+                        <p:inputText id="codEmpref" value="#{empleadosController.selected.codEmpref}" title="#{myBundle.CreateEmpleadosTitle_codEmpref}" />
+                        
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{empleadosController.selected.apellidos}" title="#{myBundle.CreateEmpleadosTitle_apellidos}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_apellidos}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{empleadosController.selected.nombres}" title="#{myBundle.CreateEmpleadosTitle_nombres}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_nombres}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_apCasada}" for="apCasada" />
+                        <p:inputText id="apCasada" value="#{empleadosController.selected.apCasada}" title="#{myBundle.CreateEmpleadosTitle_apCasada}" />
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{empleadosController.selected.direccion}" title="#{myBundle.CreateEmpleadosTitle_direccion}" />
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_telefonos}" for="telefonos" />
+                        <p:inputText id="telefonos" value="#{empleadosController.selected.telefonos}" title="#{myBundle.CreateEmpleadosTitle_telefonos}" />
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_fechaNac}" for="fechaNac" />
+                        <p:calendar id="fechaNac" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.fechaNac}" title="#{myBundle.EditEmpleadosTitle_fechaNac}"  showOn="button"/>
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_avisarA}" for="avisarA" />
+                        <p:inputText id="avisarA" value="#{empleadosController.selected.avisarA}" title="#{myBundle.CreateEmpleadosTitle_avisarA}" />
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_sexo}" for="sexo" />
+                        
+                        <p:selectOneMenu id="sexo" value="#{empleadosController.selected.sexo}"  >                            
+                               <f:selectItem itemLabel="Femenino" itemValue ="1"/>
+                               <f:selectItem itemLabel="Masculino" itemValue="2"/>
+                        </p:selectOneMenu>
+                        
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_numHijos}" for="numHijos" />
+                        <p:inputText id="numHijos" value="#{empleadosController.selected.numHijos}" title="#{myBundle.CreateEmpleadosTitle_numHijos}" />
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_estadoCivil}" for="estadoCivil" />
+                        <p:inputText id="estadoCivil" value="#{empleadosController.selected.estadoCivil}" title="#{myBundle.CreateEmpleadosTitle_estadoCivil}" />
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_beneficiario}" for="beneficiario" />
+                        <p:inputText id="beneficiario" value="#{empleadosController.selected.beneficiario}" title="#{myBundle.CreateEmpleadosTitle_beneficiario}" />
+                    </p:panelGrid>
+                </p:panel>
+                    
+                <p:panel header="Datos de Registro">
+                     <p:panelGrid columns="4" rendered="#{empleadosController.selected != null}">
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_departamentos}" for="departamentos" />
+                           <p:selectOneMenu id="departamentos" value="#{empleadosController.selected.departamentos}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_departamentos}">
+                               <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                               <f:selectItems value="#{departamentosController.items}"
+                                              var="departamentosItem"
+                                              itemValue="#{departamentosItem}"
+                                              itemLabel="#{departamentosItem.nomDepto.toString()}"
+                                              />
+                               <f:converter binding="#{departamentosConverter}"/>
+                           </p:selectOneMenu>
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_puestos}" for="puestos" />
+                           <p:selectOneMenu id="puestos" value="#{empleadosController.selected.puestos}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_puestos}">
+                               <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                               <f:selectItems value="#{puestosController.items}"
+                                              var="puestosItem"
+                                              itemValue="#{puestosItem}"
+                                              itemLabel="#{puestosItem.nomPuesto.toString()}"
+                                              />
+                               <f:converter binding="#{puestosConverter}"/>
+                           </p:selectOneMenu>
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codProfesion}" for="codProfesion" />
+                           <p:selectOneMenu id="codProfesion" value="#{empleadosController.selected.codProfesion}" >
+                               <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                               <f:selectItems value="#{profesionesController.items}"
+                                              var="codProfesionItem"
+                                              itemValue="#{codProfesionItem}"
+                                              itemLabel="#{codProfesionItem.descripcion.toString()}"
+                                              />
+                               <f:converter binding="#{profesionesConverter}"/>
+                           </p:selectOneMenu>                     
+
+                           
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_numIgss}" for="numIgss" />
+                           <p:inputText id="numIgss" value="#{empleadosController.selected.numIgss}" title="#{myBundle.CreateEmpleadosTitle_numIgss}" />
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_numNit}" for="numNit" />
+                           <p:inputText id="numNit" value="#{empleadosController.selected.numNit}" title="#{myBundle.CreateEmpleadosTitle_numNit}" />
+
+
+
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_cedula}" for="cedula" />
+                           <p:inputText id="cedula" value="#{empleadosController.selected.cedula}" title="#{myBundle.CreateEmpleadosTitle_cedula}" />
+
+
+
+
+
+
+
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_nupAfp}" for="nupAfp" />
+                           <p:inputText id="nupAfp" value="#{empleadosController.selected.nupAfp}" title="#{myBundle.CreateEmpleadosTitle_nupAfp}" />
+
+
+
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_nombreIsss}" for="nombreIsss" />
+                           <p:inputText id="nombreIsss" value="#{empleadosController.selected.nombreIsss}" title="#{myBundle.CreateEmpleadosTitle_nombreIsss}" />
+
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_comision}" for="comision" />
+                           <p:inputText id="comision" value="#{empleadosController.selected.comision}" title="#{myBundle.CreateEmpleadosTitle_comision}" />
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_fechaIngresoHist}" for="fechaIngresoHist" />
+                           <p:calendar id="fechaIngresoHist" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.fechaIngresoHist}" title="#{myBundle.EditEmpleadosTitle_fechaIngresoHist}"  showOn="button"/>
+
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_nombreNit}" for="nombreNit" />
+                           <p:inputText id="nombreNit" value="#{empleadosController.selected.nombreNit}" title="#{myBundle.CreateEmpleadosTitle_nombreNit}" />
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codZona}" for="codZona" />
+                           <p:inputText id="codZona" value="#{empleadosController.selected.codZona}" title="#{myBundle.CreateEmpleadosTitle_codZona}" />
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codMuni}" for="codMuni" />
+                           <p:inputText id="codMuni" value="#{empleadosController.selected.codMuni}" title="#{myBundle.CreateEmpleadosTitle_codMuni}" />
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codSeguridad}" for="codSeguridad" />
+                           <p:inputText id="codSeguridad" value="#{empleadosController.selected.codSeguridad}" title="#{myBundle.CreateEmpleadosTitle_codSeguridad}" />
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_FExtDoc}" for="FExtDoc" />
+                           <p:calendar id="FExtDoc" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.FExtDoc}" title="#{myBundle.EditEmpleadosTitle_FExtDoc}"  showOn="button"/>
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codPais}" for="codPais" />
+                           <p:inputText id="codPais" value="#{empleadosController.selected.codPais}" title="#{myBundle.CreateEmpleadosTitle_codPais}" />
+
+                           
+ 
+
+                      
+
+                       
+                       
+                     
+                     </p:panelGrid>
+                     </p:panel>
+                    <p:panel header="Situacion Actual">
+                        <p:panelGrid columns="8" rendered="#{empleadosController.selected != null}">
+                            
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_status}" for="status" />                        
+                        <p:selectOneMenu id="status" value="#{empleadosController.selected.status}"  >                            
+                               <f:selectItem itemLabel="Retirado" itemValue ="R"/>
+                               <f:selectItem itemLabel="Activo" itemValue="A"/>
+                               <f:selectItem itemLabel="Marcacion" itemValue="M"/>
+                        </p:selectOneMenu>
+                            
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_fecIngreso}" for="fecIngreso" />
+                        <p:calendar id="fecIngreso" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.fecIngreso}" title="#{myBundle.EditEmpleadosTitle_fecIngreso}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_fecIngreso}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_fecSalida}" for="fecSalida" />
+                        <p:calendar id="fecSalida" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.fecSalida}" title="#{myBundle.EditEmpleadosTitle_fecSalida}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_motSalida}" for="motSalida" />
+                        <p:inputText id="motSalida" value="#{empleadosController.selected.motSalida}" title="#{myBundle.CreateEmpleadosTitle_motSalida}" />
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_observacion}" for="observacion" />
+                        <p:inputText id="observacion" value="#{empleadosController.selected.observacion}" title="#{myBundle.CreateEmpleadosTitle_observacion}" />
+                            
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_promedio}" for="promedio" />
+                        <p:inputText id="promedio" value="#{empleadosController.selected.promedio}" title="#{myBundle.CreateEmpleadosTitle_promedio}" />
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_tipoContra}" for="tipoContra" />                        
+                        <p:selectOneMenu id="tipoContra" value="#{empleadosController.selected.tipoContra}"  >                            
+                               <f:selectItem itemLabel="Permanenete" itemValue ="P"/>
+                               <f:selectItem itemLabel="Eventual" itemValue="E"/>                               
+                        </p:selectOneMenu>                        
+                            
+                        </p:panelGrid>
+                    </p:panel>
+                     <p:panel header="Datos de Registro">
+                        <p:panelGrid columns="8" rendered="#{empleadosController.selected != null}">
+                            
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_ctaBancaria}" for="ctaBancaria" />
+                           <p:inputText id="ctaBancaria" value="#{empleadosController.selected.ctaBancaria}" title="#{myBundle.CreateEmpleadosTitle_ctaBancaria}" />
+
+                                                <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codBanco}" for="codBanco" />
+                           <p:inputText id="codBanco" value="#{empleadosController.selected.codBanco}" title="#{myBundle.CreateEmpleadosTitle_codBanco}" />
+
+                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codArea}" for="codArea" />
+                           <p:inputText id="codArea" value="#{empleadosController.selected.codArea}" title="#{myBundle.CreateEmpleadosTitle_codArea}" />
+
+                           
+                       
+
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_salario}" for="salario" />
+                        <p:inputText id="salario" value="#{empleadosController.selected.salario}" title="#{myBundle.CreateEmpleadosTitle_salario}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_salario}"/>
+
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_bonificacion}" for="bonificacion" />
+                        <p:inputText id="bonificacion" value="#{empleadosController.selected.bonificacion}" title="#{myBundle.CreateEmpleadosTitle_bonificacion}" />
+
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_salarioBase}" for="salarioBase" />
+                        <p:inputText id="salarioBase" value="#{empleadosController.selected.salarioBase}" title="#{myBundle.CreateEmpleadosTitle_salarioBase}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_salarioBase}"/>
+
+                        
+                    
+                    
+                        </p:panelGrid>
+                </p:panel>
+                </h:panelGroup>
+      <p:separator />  
+<p:commandButton actionListener="#{empleadosController.save}" value="#{myBundle.Save}" update="display,:EmpleadosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EmpleadosCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="EmpleadosCreateDialog.hide()"/>      
+            </h:form>
+    
 
 </ui:composition>

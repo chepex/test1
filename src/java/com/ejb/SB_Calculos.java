@@ -1026,23 +1026,24 @@ public class SB_Calculos {
     /**
     * inserta los datos de liquido  a recibir, total devengado entre otros en la tabla de planilla   
     * @author       Mario J. Mixco
-* @version	1.0.012014  
+    * @version	1.0.012014  
     * @exception    Indica la excepción que puede generar 
     */  
     public void savemovDp(MovDp movDp){   
         try{
-        this.movDpFacade.create(movDp);
-        this.movDpFacade.flush();
-        this.movDpFacade.refresh(movDp);    
+            this.movDpFacade.create(movDp);
+            this.movDpFacade.flush();
+            this.movDpFacade.refresh(movDp);    
         }catch(Exception ex){
             JsfUtil.logs(ex , "Surgio un error", "Proceso savePlanilla "+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR");                                    
             
         }
-    }    
+    } 
+    
     /**
     * retorna el valor por horas devengado por un empleado
     *   formula:
-    *           $horas = (((salariobase+promedio)/30)*dias/)15/8
+        *           $horas = (((salariobase+promedio)/30)*dias/)15/8
     *   ejemplo:
     *           $horas = ((237+10)/30)*7)/15/8
     *           $horas = 0.98
@@ -1065,26 +1066,17 @@ public class SB_Calculos {
             }
             if(vpromedio>0){
                 sdiario = ((this.empleado.getSalarioBase().floatValue()+vpromedio) /30);
+            }else{
+                sdiario = (this.empleado.getSalarioBase().floatValue()/30);                
+            }
+            
                 mas = JsfUtil.Redondear(sdiario ,2);
                 sdiario =    (float)sdiario * Float.parseFloat(dias);
                 mas = JsfUtil.Redondear(sdiario ,2);                        
                 sdiario = (float)mas/15/8;
                 mas = JsfUtil.Redondear(sdiario ,2);
                 sdiario = (float)sdiario;
-               
-            }else{
-                
-                
-//sdiario = ((this.empleado.getSalarioBase().floatValue()/30) * (Float.parseFloat(resumenAsistencia.getDias())))/(30/2)/8;
-                sdiario = (this.empleado.getSalarioBase().floatValue()/30);
                 mas = JsfUtil.Redondear(sdiario ,2);
-                sdiario =   sdiario * Float.parseFloat(dias);
-                mas = JsfUtil.Redondear(sdiario ,2);                        
-                sdiario = (float)mas/15/8;
-                mas = JsfUtil.Redondear(sdiario ,2);
-                sdiario = sdiario;
-            }
-            mas = JsfUtil.Redondear(sdiario ,2);
             sdiario = (float)mas;
            
             return sdiario;

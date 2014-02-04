@@ -67,7 +67,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empleados.findBySalarioBase", query = "SELECT e FROM Empleados e WHERE e.salarioBase = :salarioBase"),
     @NamedQuery(name = "Empleados.findByAvisarA", query = "SELECT e FROM Empleados e WHERE e.avisarA = :avisarA"),
     @NamedQuery(name = "Empleados.findByCedula", query = "SELECT e FROM Empleados e WHERE e.cedula = :cedula"),
-    @NamedQuery(name = "Empleados.findByChequeDep", query = "SELECT e FROM Empleados e WHERE e.chequeDep = :chequeDep"),
+    
     @NamedQuery(name = "Empleados.findByCtaBancaria", query = "SELECT e FROM Empleados e WHERE e.ctaBancaria = :ctaBancaria"),
     @NamedQuery(name = "Empleados.findByComSprod", query = "SELECT e FROM Empleados e WHERE e.comSprod = :comSprod"),
     @NamedQuery(name = "Empleados.findByComSobra", query = "SELECT e FROM Empleados e WHERE e.comSobra = :comSobra"),
@@ -183,12 +183,7 @@ public class Empleados implements Serializable {
     private String avisarA;
     @Size(max = 15)
     @Column(name = "CEDULA")
-    private String cedula;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1)
-    @Column(name = "CHEQUE_DEP")
-    private String chequeDep;
+    private String cedula;    
     @Size(max = 15)
     @Column(name = "CTA_BANCARIA")
     private String ctaBancaria;
@@ -320,7 +315,7 @@ public class Empleados implements Serializable {
 	this.empleadosPK = empleadosPK;
     }
 
-    public Empleados(EmpleadosPK empleadosPK, String apellidos, String nombres, Date fecIngreso, String status, String tipoContra, BigDecimal salario, BigDecimal salarioBase, String chequeDep, short sexo) {
+    public Empleados(EmpleadosPK empleadosPK, String apellidos, String nombres, Date fecIngreso, String status, String tipoContra, BigDecimal salario, BigDecimal salarioBase, short sexo) {
 	this.empleadosPK = empleadosPK;
 	this.apellidos = apellidos;
 	this.nombres = nombres;
@@ -328,8 +323,7 @@ public class Empleados implements Serializable {
 	this.status = status;
 	this.tipoContra = tipoContra;
 	this.salario = salario;
-	this.salarioBase = salarioBase;
-	this.chequeDep = chequeDep;
+	this.salarioBase = salarioBase;	
 	this.sexo = sexo;
     }
 
@@ -522,13 +516,7 @@ public class Empleados implements Serializable {
 	this.cedula = cedula;
     }
 
-    public String getChequeDep() {
-	return chequeDep;
-    }
-
-    public void setChequeDep(String chequeDep) {
-	this.chequeDep = chequeDep;
-    }
+  
 
     public String getCtaBancaria() {
 	return ctaBancaria;

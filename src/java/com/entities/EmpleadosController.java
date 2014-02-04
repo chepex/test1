@@ -2,12 +2,12 @@ package com.entities;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
+
 
 @ManagedBean(name="empleadosController")
 @ViewScoped
@@ -87,6 +87,8 @@ public List<Empleados> activos;
     @Override
     protected void setEmbeddableKeys() {
         this.getSelected().getEmpleadosPK().setCodCia(this.getSelected().getDepartamentos().getDepartamentosPK().getCodCia());
+        int codemp = ejbFacade.Sequence("EMPLEADOS");
+            this.getSelected().getEmpleadosPK().setCodEmp(codemp);
     }
 
     @Override
@@ -124,7 +126,9 @@ public List<Empleados> activos;
 	this.activos = activos;
     }
     
-    
+
+}    
     
 
-}
+  
+
