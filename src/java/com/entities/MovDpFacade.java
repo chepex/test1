@@ -89,7 +89,7 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
 	
 		 q = em.createNamedQuery("MovDp.findBySecuencia", MovDp.class )		    
 		    .setParameter("secuencia",  programacionPla.getProgramacionPlaPK().getSecuencia() )
-                    .setParameter("generado",  "G" )
+                    .setParameter("generado",  "S" )
                     .setParameter("codCia",  codCia );
                  
                  
@@ -272,16 +272,18 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
                                                 " and C.DESCRIPCION = 'Comision'" +                                                    
                                                 " and P.COD_CIA = m.cod_cia" +
                                                 " and P.SECUENCIA = M.SECUENCIA" +                                                
-                                                " and m.GENERADO <> 'G'" +    
+                                                " and m.GENERADO <> 'S'" +    
                                                 " and P.STATUS = 'C'" +
                                                 " and m.cod_cia = ?" +
                                                 " and m.cod_emp = ?" +
-                                                " and P.FECHA_PAGO between add_months(?,-6) and ?"                                                 
-                                                  );		                        
+                                                " and P.FECHA_PAGO between  "+
+                                                "TO_DATE('01/'||to_char(add_months(?,-6),'mm')||'/'||to_char(add_months(?,-6),'yyyy'),'DD/MM/YYYY') "+        
+                                                " and last_day(add_months (?,-1))");		                        
             q.setParameter(1, codCia);  
             q.setParameter(2, empleado.getEmpleadosPK().getCodEmp());                  
             q.setParameter(3, resumenAsistencia.getProgramacionPla().getFechaPago());                  
             q.setParameter(4, resumenAsistencia.getProgramacionPla().getFechaPago());       
+            q.setParameter(5, resumenAsistencia.getProgramacionPla().getFechaPago());  
             
             val= (BigDecimal)q.getSingleResult();
         
@@ -294,6 +296,44 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
     
     }     
 
+    public BigDecimal PromComision(Empleados empleado, ProgramacionPla ppla){
+	 BigDecimal val;
+	 try{
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	 /*TENEMOS Q MANDARLE LA FECHA DE PAGO DE LA PLANILLA PARAQ NOS CUADRE*/
+            Query q =  em.createNativeQuery("select nvl(sum(valor),0) from mov_dp m, deduc_presta d, cat_dp c, programacion_pla p " +
+                                                " where M.COD_CIA = d.cod_cia" +
+                                                " and m.cod_dp = d.cod_dp" +
+                                                " and d.cod_cia= c.cod_cia" +
+                                                " and D.COD_CAT = c.cod_cat" +
+                                                " and C.DESCRIPCION = 'Comision'" +                                                    
+                                                " and P.COD_CIA = m.cod_cia" +
+                                                " and P.SECUENCIA = M.SECUENCIA" +                                                
+                                                " and m.GENERADO <> 'S'" +    
+                                                " and P.STATUS = 'C'" +
+                                                " and m.cod_cia = ?" +
+                                                " and m.cod_emp = ?" +
+                                                " and P.FECHA_PAGO between  "+
+                                                "TO_DATE('01/'||to_char(add_months(?,-6),'mm')||'/'||to_char(add_months(?,-6),'yyyy'),'DD/MM/YYYY') "+        
+                                                " and last_day(add_months (?,-1))");		                        
+            q.setParameter(1, codCia);  
+            q.setParameter(2, empleado.getEmpleadosPK().getCodEmp());                  
+            q.setParameter(3, ppla.getFechaPago());                  
+            q.setParameter(4, ppla.getFechaPago());       
+            q.setParameter(5, ppla.getFechaPago());  
+            
+            val= (BigDecimal)q.getSingleResult();
+        
+         }
+         catch(Exception ex){
+              val =  BigDecimal.ZERO ;
+            
+         }
+       return val;
+    
+    } 
+    
     public List<MovDp> findByFiltro(ProgramacionPla programacionPla){
 	 TypedQuery<MovDp> q;
 	 

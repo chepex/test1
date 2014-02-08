@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,7 +44,8 @@ public class PlanillaController extends AbstractController<Planilla> implements 
     short anio;
     short mes;
     String estado;
-    String todosdptos;    
+    String todosdptos;  
+    
 
     public String getEstado() {
         return estado;
@@ -52,6 +54,8 @@ public class PlanillaController extends AbstractController<Planilla> implements 
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+
     
 
     
@@ -239,13 +243,15 @@ public class PlanillaController extends AbstractController<Planilla> implements 
     }   
 
     public String GenerarBoletas() throws NamingException, SQLException, JRException, IOException{         
-        HashMap params = new HashMap();  
-        String STA = "P";
+        HashMap params = new HashMap();          
         String SUMA = "S";
         String RESTA = "R";
-        params.put("STA",STA ); 
+        BigDecimal codEmp =  new BigDecimal (this.getSelected().getEmpleados().getEmpleadosPK().getCodEmp());
+        long secuencia= this.getProgramacionpla().getProgramacionPlaPK().getSecuencia();        
         params.put("SUMA",SUMA ); 
-        params.put("RESTA",RESTA ); 
+        params.put("RESTA",RESTA );
+        params.put("CODEMP",codEmp );
+        params.put("SECUENCIA",secuencia );        
         reportes.GenerarReporte("/reportes/BoletaPago2.jasper", params); 
         return "";     
     }

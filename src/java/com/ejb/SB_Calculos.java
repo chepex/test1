@@ -27,6 +27,7 @@ import com.entities.Renta;
 import com.entities.RentaFacade;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -69,6 +70,7 @@ public class SB_Calculos {
     public ProgramacionPla programacionPla;  
     private float cat_h_neg;
     private float cat_h_ext;
+    private float v_h_ext;
     private float v_neg;
     
     Mensaje msg = new Mensaje();
@@ -243,7 +245,10 @@ public class SB_Calculos {
             if(liquido<0){
                 liquido = negativos(liquido );
                 liquido=(float)0.1;
-            }          
+            }
+            if(liquido ==0){
+                liquido=(float)0.1;
+            }
                   return liquido;        
         }catch(Exception ex){           
            JsfUtil.logs(ex , "Surgio un error", "Proceso LiqRecibir Empleado"+resumenAsistenciax.getEmpleados().getNombreIsss(),SB_Calculos.class,"ERROR");         
@@ -513,18 +518,25 @@ public class SB_Calculos {
     public void isss(){        
         try{
             double devengado=0;
+            double valor =0;
+            
+            
             if(this.programacionPla.getNumPlanilla()==2){
                  devengado= devengado()+devengadom();
+                 valor = devengado * this.deducPresta.getFactor().doubleValue();
+            
             }
             else{
                  devengado= devengado();
+                 valor = devengado * this.deducPresta.getFactor().doubleValue();
             }
             
-            double valor2= tmovdp(this.deducPresta.getDeducPrestaPK().getCodDp());
-            double valor = devengado * this.deducPresta.getFactor().doubleValue();
-            valor = valor - valor2;
+            
+            
+            
             valor= tope(valor);
-            crear_movdp(valor);  
+            crear_movdp(valor);
+            System.out.println("Devengado ISSS=>"+devengado);
         }catch(Exception ex){      
            JsfUtil.logs(ex , "Surgio un error", "Proceso isss Empleado"+ this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR"); 
         }
@@ -545,11 +557,20 @@ public class SB_Calculos {
         double vtope ;
          
         try{
+            double valor2= tmovdp(this.deducPresta.getDeducPrestaPK().getCodDp());
             if(this.programacionPla.getTiposPlanilla().getFrecuencia().equals("Q")){
-                vtope = this.deducPresta.getTope().floatValue() / 2;
-                if(valor>vtope){
-                   valor=vtope; 
-                }   
+                if(this.programacionPla.getNumPlanilla()==2){
+                    
+                    vtope = this.deducPresta.getTope().floatValue();
+                    if(valor>vtope){
+                        valor=vtope;
+                        valor = valor-valor2;
+                    }else{
+                        valor = valor-valor2;
+                    }   
+                }else{
+                    vtope = this.deducPresta.getTope().floatValue() / 2;
+                }
             }else{
                 vtope = this.deducPresta.getTope().floatValue();
                 if(valor>vtope){
@@ -608,15 +629,20 @@ public class SB_Calculos {
         try{
             
             double devengado=0;
+            double valor =0;
+            
             if(this.programacionPla.getNumPlanilla()==2){
                  devengado= devengado()+devengadom();
+                 valor = devengado * this.deducPresta.getFactor().floatValue();
+                 
             }
             else{
-                     devengado= devengado();
+                 devengado= devengado();
+                 valor = devengado * this.deducPresta.getFactor().floatValue();
             }
-            double valor2= tmovdp(this.deducPresta.getDeducPrestaPK().getCodDp());
-            double valor = devengado * this.deducPresta.getFactor().floatValue();
-            valor = valor -valor2;
+            
+            
+            
             
             valor= tope(valor);
             crear_movdp(valor);  
@@ -708,7 +734,8 @@ public class SB_Calculos {
             BigDecimal promedio = movDpFacade.PromComision(empleado, resumenAsistencia);                
             float vpromedio = (promedio.floatValue()/6)/2;
             double valor = (( (devengado) + vpromedio)) *  this.deducPresta.getFactor().floatValue();        
-            crear_movdp(valor);            
+            crear_movdp(valor); 
+          //  System.out.print("emp=>"+this.empleado.getEmpleadosPK().getCodEmp()+"Comision=>"+vpromedio);
         }catch(Exception ex){          
            JsfUtil.logs(ex , "Surgio un error", "Proceso vaca Empleado "+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR");            
         }
@@ -840,7 +867,7 @@ public class SB_Calculos {
             movdpx.setValor(vv );        
             movdpx.setUsuario(lb.ssuser() );
             movdpx.setFechaReg( lb.sdate());    
-            movdpx.setGenerado("G");        
+            movdpx.setGenerado("S");        
            
             savemovDp(movdpx); 
             
@@ -870,7 +897,7 @@ public class SB_Calculos {
             movdpx.setValor(vv );        
             movdpx.setUsuario(lb.ssuser() );
             movdpx.setFechaReg( lb.sdate());    
-            movdpx.setGenerado("G");  
+            movdpx.setGenerado("S");  
             savemovDp(movdpx);
             
         }catch(Exception ex){                      
@@ -907,8 +934,8 @@ public class SB_Calculos {
             planillak.setBonos(BigDecimal.valueOf( TotalBonos ));
             
             /*horas extras y llegadas tardes*/
-            planillak.setHorasExtras(BigDecimal.valueOf( cat_h_neg ));            
-            planillak.setHorasExtras(BigDecimal.valueOf( TotalHorasExtras ));            
+            planillak.setHorasExtras(BigDecimal.valueOf( v_h_ext ));            
+            planillak.setCantidahe(BigDecimal.valueOf( cat_h_neg ));            
             planillak.setCantLlegat(BigDecimal.valueOf(cat_h_neg));
             planillak.setLlegadatarde(BigDecimal.valueOf(v_neg));
             
@@ -987,14 +1014,17 @@ public class SB_Calculos {
         cat_h_neg =0;
         cat_h_ext=0;
         v_neg=0;
+        v_h_ext=0;
         
         for( MovDp mdp : lmovdp ){    
             if(mdp.getDeducPresta().getFactor().floatValue()>0){
                total = total + mdp.getValor().floatValue();
+               v_h_ext= v_h_ext+ mdp.getValor().floatValue();
                cat_h_ext= cat_h_ext+ mdp.getCantidad().floatValue();
             }else{
-                v_neg = v_neg + mdp.getValor().floatValue();
-                cat_h_neg = cat_h_neg +mdp.getCantidad().floatValue();
+               v_neg = v_neg + mdp.getValor().floatValue();
+               cat_h_neg = cat_h_neg +mdp.getCantidad().floatValue();
+               total = total + mdp.getValor().floatValue();
             }            
         }   
         
@@ -1065,13 +1095,13 @@ public class SB_Calculos {
                 vpromedio =0;
             }
             if(vpromedio>0){
-                sdiario = ((this.empleado.getSalarioBase().floatValue()+vpromedio) /30);
+                sdiario = (this.empleado.getSalarioBase().floatValue() /30)* Float.parseFloat(dias)+(vpromedio/2);
             }else{
-                sdiario = (this.empleado.getSalarioBase().floatValue()/30);                
+                sdiario = (this.empleado.getSalarioBase().floatValue()/30)* Float.parseFloat(dias);                
             }
-            
+            System.out.print("empleado->"+ this.empleado.getEmpleadosPK().getCodEmp()+"promedio-->"+vpromedio);
                 mas = JsfUtil.Redondear(sdiario ,2);
-                sdiario =    (float)sdiario * Float.parseFloat(dias);
+              //  sdiario =    (float)sdiario * Float.parseFloat(dias);
                 mas = JsfUtil.Redondear(sdiario ,2);                        
                 sdiario = (float)mas/15/8;
                 mas = JsfUtil.Redondear(sdiario ,2);

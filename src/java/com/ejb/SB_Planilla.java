@@ -75,6 +75,8 @@ public class SB_Planilla {
     Short cta4;
     Short cta5;
     int correlativo = 0;
+ 
+    BigDecimal vliquido;
     
     public String Generar()  {   
         String totales="";
@@ -151,6 +153,8 @@ public class SB_Planilla {
     }      
     
     public String CalculoIsss(ResumenAsistencia ra){
+        
+        try{
         Parametros p= parametrosFacade.findByNombre("HORAS_LABORALES");
         Parametros nPATRONAL= parametrosFacade.findByNombre("NPATRONAL_ISSS");
         LoginBean lb= new LoginBean();	
@@ -158,7 +162,7 @@ public class SB_Planilla {
         BigDecimal devengado = BigDecimal.valueOf( devengoIsss(planillas));
         String dias =  devengoDias(planillas) ;
         PlanillaIsss plaIsss = planillaIsssFacade.findByEmp(ra);
-        
+        System.out.print("ISSS EMP=>"+ra.getResumenAsistenciaPK().getCodEmp());
         if(plaIsss==null){
             
             PlanillaIsss planillaIsss =new PlanillaIsss();
@@ -179,6 +183,9 @@ public class SB_Planilla {
             planillaIsss.setNoPatronal(nPATRONAL.getValorTxt());
             if(ra.getObservaciones()!= null){
                 planillaIsss.setCodObserva(ra.getObservaciones().getIsss());
+            }
+            if(ra.getResumenAsistenciaPK().getCodEmp()==210){
+                System.out.print("aa");
             }
             
             planillaIsssFacade.create(planillaIsss);
@@ -205,6 +212,11 @@ public class SB_Planilla {
 
         
         
+        
+        
+        }catch(Exception ex){
+             JsfUtil.logs(ex , "Surgio un error", "Proceso validaCuenta",SB_Planilla.class,"ERROR"); 
+        }
         return "ok";
     }
     
@@ -260,11 +272,15 @@ public class SB_Planilla {
         try{
             generarPoliza(programacionPlax);                             
             List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPlax );
+            this.vliquido=new BigDecimal(0);
             for( ResumenAsistencia ra : iterator ){          
+               
                     salarios(ra);                    
                     liquido(ra);                                
                     mov(ra); 
               }
+                               
+             part_liquido();
             redondearPartida();
             return "ok";
         }catch(Exception ex){
@@ -318,12 +334,17 @@ public class SB_Planilla {
         dmgpolizaFacade.create(pl);  
     }
     
+    
+    
+
+    
     public void salarios(ResumenAsistencia ra){
         try{
         //calculos.inicializar(ra);
         Planilla pla= planillaFacade.findByEmp(ra);
         BigDecimal salario = BigDecimal.valueOf(pla.getBruto().floatValue());       
         if(salario.intValue()>0){
+          
              cta1= ra.getEmpleados().getDepartamentos().getScta1();
              cta2= ra.getEmpleados().getDepartamentos().getScta2();
              cta3= ra.getEmpleados().getDepartamentos().getScta3();
@@ -356,24 +377,7 @@ public class SB_Planilla {
         Planilla pla= planillaFacade.findByEmp(ra);
         BigDecimal liquido = BigDecimal.valueOf(pla.getLiquido().floatValue());      
         if(liquido.intValue()>0){
-             cta1= ra.getEmpleados().getDepartamentos().getLcta1();
-             cta2= ra.getEmpleados().getDepartamentos().getLcta2();
-             cta3= ra.getEmpleados().getDepartamentos().getLcta3();
-             cta4= ra.getEmpleados().getDepartamentos().getLcta4();
-             cta5= ra.getEmpleados().getDepartamentos().getLcta5();
-            String py = ra.getEmpleados().getDepartamentos().getProyecto();                
-            DmgdetallePK pk = new DmgdetallePK(pl.getDmgpolizaPK().getCodCia(),pl.getDmgpolizaPK().getTipoDocto(), pl.getDmgpolizaPK().getNumPoliza(),pl.getDmgpolizaPK().getFecha(),0);
-            dt = new Dmgdetalle(pk);
-            dt.setCta1(cta1);
-            dt.setCta2(cta2);
-            dt.setCta3(cta3);
-            dt.setCta4(cta4);
-            dt.setCta5(cta5);
-            dt.setProyecto(py);
-            dt.setConcepto("Liquido  planilla"+ra.getResumenAsistenciaPK().getSecuencia() );        
-            dt.setAbono(liquido); 
-            dt.setCargo(BigDecimal.ZERO);
-            validaCuenta(dt);
+            this.vliquido = BigDecimal.valueOf(vliquido.floatValue() + liquido.floatValue());            
          }
         }catch( Exception ex){
            
@@ -382,11 +386,44 @@ public class SB_Planilla {
         
     } 
     
+   public void part_liquido(){
+        try{        
+            
+            Parametros  p=parametrosFacade.findByNombre("CUENTA_LIQUIDO");            
+            String colores = p.getValorTxt();
+            String[] arrayCuentas = colores.split(",");           
+            
+             cta1= Short.valueOf( arrayCuentas[0]) ;
+             cta2= Short.valueOf( arrayCuentas[1]) ;
+             cta3= Short.valueOf( arrayCuentas[2]) ;
+             cta4= Short.valueOf( arrayCuentas[3]) ;
+             cta5= Short.valueOf( arrayCuentas[4]) ;
+            
+            DmgdetallePK pk = new DmgdetallePK(pl.getDmgpolizaPK().getCodCia(),pl.getDmgpolizaPK().getTipoDocto(), pl.getDmgpolizaPK().getNumPoliza(),pl.getDmgpolizaPK().getFecha(),0);
+            dt = new Dmgdetalle(pk);
+            dt.setCta1(cta1);
+            dt.setCta2(cta2);
+            dt.setCta3(cta3);
+            dt.setCta4(cta4);
+            dt.setCta5(cta5);
+            dt.setProyecto("2");
+            dt.setConcepto("Liquido  planilla " );        
+            dt.setAbono(vliquido); 
+            dt.setCargo(BigDecimal.ZERO);
+            validaCuenta(dt);
+         
+        }catch( Exception ex){
+           
+        JsfUtil.logs(ex , "Surgio un error", "Proceso PART_ liquido",SB_Asistencia.class,"ERROR"); 
+        }
+        
+    } 
+   
     public void mov(ResumenAsistencia ra){
         try{
         List<MovDp> deduc =  movDpFacade.findByCodEmp(ra);
          for( MovDp movDp : deduc ){  
-            
+            String concepto="";
                BigDecimal cargo = BigDecimal.ZERO;
                BigDecimal abono = BigDecimal.ZERO;
                BigDecimal valor = movDp.getValor();               
@@ -399,6 +436,7 @@ public class SB_Planilla {
                         cta5= movDp.getDeducPresta().getCta5();   
                         cargo = BigDecimal.ZERO;
                         abono = valor;
+                        concepto="DEDUCCION ";
                         
                    }                   
                    if(movDp.getDeducPresta().getCatDp().getSumaResta().equals("S")){
@@ -410,6 +448,7 @@ public class SB_Planilla {
                         cta5= Cuentas.getBcta5();
                         cargo = valor;
                         abono = BigDecimal.ZERO;         
+                        concepto="PRESTACION ";
                    }
 
                 String py = ra.getEmpleados().getDepartamentos().getProyecto();
@@ -420,8 +459,8 @@ public class SB_Planilla {
                 dt.setCta3(cta3);
                 dt.setCta4(cta4);
                 dt.setCta5(cta5);
-                dt.setProyecto(py); 
-                dt.setConcepto("planilla "+ra.getResumenAsistenciaPK().getSecuencia()+"Deducion  "+ movDp.getDeducPresta().getDescripcion() );        
+                dt.setProyecto( String.valueOf(cta1)); 
+                dt.setConcepto("planilla "+ra.getResumenAsistenciaPK().getSecuencia()+concepto + movDp.getDeducPresta().getDescripcion() );        
                 dt.setAbono(abono);                
                 dt.setCargo(cargo);                        
                 validaCuenta(dt);   

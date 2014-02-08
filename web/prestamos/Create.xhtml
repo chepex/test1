@@ -35,7 +35,7 @@
                         <p:outputLabel value="#{myBundle.CreatePrestamosLabel_deducPresta}" for="deducPresta" />
                         <p:selectOneMenu id="deducPresta" value="#{prestamosController.selected.deducPresta}" required="true"  filter="true" requiredMessage="#{myBundle.EditPrestamosRequiredMessage_deducPresta}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{deducPrestaController.items}"
+                            <f:selectItems value="#{deducPrestaController.cprestamos}"
                                            var="deducPrestaItem"
                                            itemValue="#{deducPrestaItem}"
                                            itemLabel="#{deducPrestaItem.descripcion.toString()}"

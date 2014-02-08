@@ -1,6 +1,7 @@
 package com.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -11,6 +12,17 @@ import javax.faces.event.ActionEvent;
 @ManagedBean(name = "deducPrestaController")
 @ViewScoped
 public class DeducPrestaController extends AbstractController<DeducPresta> implements Serializable {
+public List<DeducPresta> cprestamos;
+
+    public List<DeducPresta> getCprestamos() {
+        cprestamos = ejbFacade.findByCat("Prestamos");
+        return cprestamos;
+    }
+
+    public void setCprestamos(List<DeducPresta> cprestamos) {
+        this.cprestamos = cprestamos;
+    }
+
 
     @EJB
     private DeducPrestaFacade ejbFacade;
@@ -33,7 +45,6 @@ public class DeducPrestaController extends AbstractController<DeducPresta> imple
     }
     
 
-      
       
       @Override     
     public void saveNew(ActionEvent event) {

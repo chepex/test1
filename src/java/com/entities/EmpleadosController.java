@@ -86,9 +86,13 @@ public List<Empleados> activos;
     
     @Override
     protected void setEmbeddableKeys() {
-        this.getSelected().getEmpleadosPK().setCodCia(this.getSelected().getDepartamentos().getDepartamentosPK().getCodCia());
-        int codemp = ejbFacade.Sequence("EMPLEADOS");
+                this.getSelected().getEmpleadosPK().setCodCia(this.getSelected().getDepartamentos().getDepartamentosPK().getCodCia());
+        if(this.getSelected().getEmpleadosPK().getCodEmp() ==0) {
+            int codemp = ejbFacade.Sequence("EMPLEADOS");
             this.getSelected().getEmpleadosPK().setCodEmp(codemp);
+            
+        }
+
     }
 
     @Override

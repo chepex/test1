@@ -12,10 +12,12 @@ import com.entities.ResumenAsistencia;
 import com.entities.ResumenAsistenciaFacade;
 import com.entities.ResumenAsistenciaPK;
 import com.entities.LoginBean;
+import com.entities.MovDpFacade;
 import com.entities.Renta;
 import com.entities.RentaFacade;
 import com.entities.util.JsfUtil;
 import com.entities.util.ManejadorFechas;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -33,6 +35,8 @@ import javax.faces.context.FacesContext;
 @Stateless
 public class SB_Asistencia {
     @EJB
+    private MovDpFacade movDpFacade;
+    @EJB
     private ParametrosFacade parametrosFacade1;
     @EJB
     private RentaFacade rentaFacade;
@@ -46,6 +50,7 @@ public class SB_Asistencia {
     private ResumenAsistenciaFacade resumenAsistenciaFacade;
     @EJB
     private EmpleadosFacade empleadosFacade;   
+    
     
     Mensaje msg = new Mensaje();
     String mensaje;
@@ -137,15 +142,19 @@ public class SB_Asistencia {
            try{
             LoginBean lb= new LoginBean();		 
 	    short codCia = lb.sscia();	    
+            
 	    List<Empleados>   iterador =    empleadosFacade.findbytipoPla(   programacionpla );		    
+            
 	    for( Empleados e : iterador ){        
+                BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
 		ResumenAsistencia hj = new ResumenAsistencia();
 		ResumenAsistenciaPK resumenAsistenciaPK = new ResumenAsistenciaPK(codCia,programacionpla.getProgramacionPlaPK().getSecuencia(),e.getEmpleadosPK().getCodEmp() );
 		String dias= diasNormal( programacionpla, e);
 		hj.setDias(dias);
 		hj.setEmpleados(e);
 		hj.setProgramacionPla(programacionpla);
-		hj.setResumenAsistenciaPK(resumenAsistenciaPK);	    	    
+		hj.setResumenAsistenciaPK(resumenAsistenciaPK);	   
+                hj.setPromedio(promedio);
 		resumenAsistenciaFacade.edit(hj);			
 	    }
                return "ok";
@@ -168,14 +177,16 @@ public class SB_Asistencia {
             LoginBean lb= new LoginBean();		 
 	    short codCia = lb.sscia();	    
 	    List<Empleados>   iterador =    empleadosFacade.findbyVacc(   programacionpla );		    
-	    for( Empleados e : iterador ){        
+	    for( Empleados e : iterador ){ 
+                BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
 		ResumenAsistencia hj = new ResumenAsistencia();
 		ResumenAsistenciaPK resumenAsistenciaPK = new ResumenAsistenciaPK(codCia,programacionpla.getProgramacionPlaPK().getSecuencia(),e.getEmpleadosPK().getCodEmp() );
 		String dias= diasVacc( programacionpla, e);
 		hj.setDias(dias);
 		hj.setEmpleados(e);
 		hj.setProgramacionPla(programacionpla);
-		hj.setResumenAsistenciaPK(resumenAsistenciaPK);	    	    
+		hj.setResumenAsistenciaPK(resumenAsistenciaPK);	
+                hj.setPromedio(promedio);                
 		resumenAsistenciaFacade.edit(hj);			
 	    }
                 return "ok";      
@@ -198,6 +209,7 @@ public class SB_Asistencia {
 	    short codCia = lb.sscia();	    
 	    List<Empleados>   iterador =   null;		    
                 for( Empleados e : iterador ){        
+                    BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
                     ResumenAsistencia hj = new ResumenAsistencia();
                     ResumenAsistenciaPK resumenAsistenciaPK = new ResumenAsistenciaPK(codCia,programacionpla.getProgramacionPlaPK().getSecuencia(),e.getEmpleadosPK().getCodEmp() );
                     String dias= diasVaca( programacionpla, e);
@@ -205,7 +217,9 @@ public class SB_Asistencia {
                     hj.setEmpleados(e);
                     hj.setProgramacionPla(programacionpla);
                     hj.setResumenAsistenciaPK(resumenAsistenciaPK);	    	    
-                    resumenAsistenciaFacade.edit(hj);			
+                    hj.setPromedio(promedio);    
+                    resumenAsistenciaFacade.edit(hj);
+                    
                 }
                 return "ok";
             }catch(Exception ex){
@@ -226,13 +240,15 @@ public class SB_Asistencia {
 	    short codCia = lb.sscia();	    
 	    List<Empleados>   iterador =    empleadosFacade.activos();			    
                 for( Empleados e : iterador ){        
+                    BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
                     ResumenAsistencia hj = new ResumenAsistencia();
                     ResumenAsistenciaPK resumenAsistenciaPK = new ResumenAsistenciaPK(codCia,programacionpla.getProgramacionPlaPK().getSecuencia(),e.getEmpleadosPK().getCodEmp() );
                     String dias= diasAgui( programacionpla, e);
                     hj.setDias(dias);
                     hj.setEmpleados(e);
                     hj.setProgramacionPla(programacionpla);
-                    hj.setResumenAsistenciaPK(resumenAsistenciaPK);	    	    
+                    hj.setResumenAsistenciaPK(resumenAsistenciaPK);
+                    hj.setPromedio(promedio);    
                     resumenAsistenciaFacade.edit(hj);			
                 }
                 return "ok";

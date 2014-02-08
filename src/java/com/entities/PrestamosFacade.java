@@ -86,7 +86,7 @@ public class PrestamosFacade extends AbstractFacade<Prestamos> {
 	 
 	    LoginBean lb= new LoginBean();	
 	    short codCia = lb.sscia();	
-	    
+	    System.out.print("Empleados"+movdp.getMovDpPK().getCodEmp() +"Cod_Presta"+movdp.getMovDpPK().getCodPresta());
 	    
 		q = em.createNamedQuery("Prestamos.findByPK", Prestamos.class )		    
                     .setParameter("codPresta", movdp.getMovDpPK().getCodPresta() )                    

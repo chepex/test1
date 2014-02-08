@@ -70,12 +70,14 @@
 		    </f:facet>
 		    <h:outputText value="#{item.empleados.empleadosPK.codEmp}"/>
 		</p:column>
-           <p:column  filterBy="#{item.programacionPla.mes}">
-                <f:facet name="header">
-			<h:outputText value="#{myBundle.ListResumenAsistenciaTitle_mes}"/>
+                
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListResumenAsistenciaTitle_promedio}"/>
 		    </f:facet>
-		    <h:outputText value="#{item.programacionPla.mes }"/>
-           </p:column>		
+		    <h:outputText value="#{item.promedio}"/>
+		</p:column>                
+	
 		    
     
 		    

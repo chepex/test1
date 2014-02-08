@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ResumenAsistenciaListForm">
+        <br/><br/><br/>
+	<p:panelGrid columns="1" style="margin: 0 auto;">
+            
+	    Estado
+            <p:selectOneMenu id="estado" value="#{planillaController.estado }" 
+				       filter="true">
+			    <f:selectItem itemLabel="Selecione un status"/>
+                            <f:selectItem itemLabel="Programada" itemValue="P"/>			    
+			    <f:selectItem itemLabel="Cerrada" itemValue="C"/>
+                           <p:ajax update="@form" listener="#{planillaController.ChangeEstadoPlanilla}" />    
+                        </p:selectOneMenu>
+	    
+	    Planillas Programada
+		      <p:selectOneMenu id="programacionPla" value="#{planillaController.programacionpla }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_programacionPla}"
+				       filter="true">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{planillaController.programacionplas}"
+                                           var="programacionPlaItem"
+                                           itemValue="#{programacionPlaItem}"
+                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "					   
+					   
+					   />
+                            <f:converter binding="#{programacionPlaConverter}"/>
+                        </p:selectOneMenu>
+            <p:outputLabel value="#{myBundle.CreatePlanillaLabel_empleados}" for="empleados" />
+                        <p:selectOneMenu  filter="true" id="empleados" value="#{planillaController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditPlanillaRequiredMessage_empleados}">
+                            <f:selectItem  itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadosController.items}"
+                                           var="empleadosItem"
+                                           itemValue="#{empleadosItem}"
+                                           itemLabel="#{empleadosItem.nombreNit }"
+					   />
+                            <f:converter binding="#{empleadosConverter}"/>
+                        </p:selectOneMenu> 
+            
+            <p:commandButton id="btnprint"   icon="ui-icon ui-icon-print"  value="Imprimir" actionListener="#{planillaController.GenerarBoletas()}" ajax="false" update="@form :growl" />
+			
+	</p:panelGrid>                   
+    </h:form>
+
+</ui:composition>

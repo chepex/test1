@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a3c6df3-2659-4090-b597-c4127ecd0851">
 	<property name="ireport.zoom" value="1.6105100000000032"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="188"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
 	<parameter name="RESTA" class="java.lang.String">
@@ -10,8 +10,14 @@
 	<parameter name="SUMA" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="STA" class="java.lang.String">
-		<defaultValueExpression><![CDATA["P"]]></defaultValueExpression>
+	<parameter name="CODEMP" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SECUENCIA" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/mmixco/NetBeansProjects/test1/web/reportes/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[select e.cod_emp,
@@ -31,11 +37,12 @@ D.NOM_DEPTO,
 R.DIAS,
 p.secuencia
 from planilla p, empleados e, PROGRAMACION_PLA PP, TIPOS_PLANILLA T , DEPARTAMENTOS D, RESUMEN_ASISTENCIA R
-where pp.status= $P{STA}
-and e.cod_cia= p.cod_cia
+where e.cod_cia= p.cod_cia
 and e.cod_emp = p.cod_emp
 AND P.COD_CIA = PP.COD_CIA
 AND P.SECUENCIA = PP.SECUENCIA
+AND P.SECUENCIA= $P{SECUENCIA}
+AND P.COD_EMP = $P{CODEMP}
 AND T.COD_CIA  = P.COD_CIA
 AND T.COD_TIPOPLA = PP.COD_TIPOPLA
 AND E.COD_CIA= D.COD_CIA
@@ -250,7 +257,21 @@ AND P.COD_EMP =  R.COD_EMP]]>
 			</textField>
 			<elementGroup/>
 			<subreport>
-				<reportElement uuid="6c28b83f-94db-4e7f-b87d-bb74cdca1ff3" x="350" y="113" width="200" height="180"/>
+				<reportElement uuid="d1e25bd6-7caa-4edd-b687-ac6870bd6da7" x="143" y="115" width="200" height="136"/>
+				<subreportParameter name="COD_EMP">
+					<subreportParameterExpression><![CDATA[$P{CODEMP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUMA_RESTA">
+					<subreportParameterExpression><![CDATA[$P{SUMA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BoletaPago_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="81debf41-c4de-47ad-a70b-c6e686335ee6" x="350" y="115" width="200" height="136"/>
 				<subreportParameter name="COD_EMP">
 					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -258,24 +279,10 @@ AND P.COD_EMP =  R.COD_EMP]]>
 					<subreportParameterExpression><![CDATA[$P{RESTA}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="SECUENCIA">
-					<subreportParameterExpression><![CDATA[$F{SECUENCIA}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{SECUENCIA}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["/home/mmixco/NetBeansProjects/test1/web/reportes/BoletaPago_subreport1.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement uuid="3b2aec7f-224c-4c79-8ae0-4d0c3c4a21ac" x="143" y="113" width="200" height="180"/>
-				<subreportParameter name="COD_EMP">
-					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SUMA_RESTA">
-					<subreportParameterExpression><![CDATA[$P{SUMA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SECUENCIA">
-					<subreportParameterExpression><![CDATA[$F{SECUENCIA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["/home/mmixco/NetBeansProjects/test1/web/reportes/BoletaPago_subreport1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BoletaPago_subreport1.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

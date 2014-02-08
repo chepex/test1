@@ -106,8 +106,16 @@
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_numHijos}" for="numHijos" />
                         <p:inputText id="numHijos" value="#{empleadosController.selected.numHijos}" title="#{myBundle.CreateEmpleadosTitle_numHijos}" />
 
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_estadoCivil}" for="estadoCivil" />
-                        <p:inputText id="estadoCivil" value="#{empleadosController.selected.estadoCivil}" title="#{myBundle.CreateEmpleadosTitle_estadoCivil}" />
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_estadoCivil}" for="estadoCivil" />                                
+                        <p:selectOneMenu id="estadoCivil" value="#{empleadosController.selected.estadoCivil}"  >                            
+                               <f:selectItem itemLabel="Soltero" itemValue ="S"/>
+                               <f:selectItem itemLabel="Viudo" itemValue ="V"/>
+                               <f:selectItem itemLabel="Union Libre" itemValue ="U"/>
+                               <f:selectItem itemLabel="Casado" itemValue ="C"/>
+                               <f:selectItem itemLabel="Acompañado" itemValue ="A"/>                               
+                               <f:selectItem itemLabel="Divorciado" itemValue ="D"/>                               
+                        </p:selectOneMenu>                        
+                        
 
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_beneficiario}" for="beneficiario" />
                         <p:inputText id="beneficiario" value="#{empleadosController.selected.beneficiario}" title="#{myBundle.CreateEmpleadosTitle_beneficiario}" />
@@ -204,15 +212,7 @@
 
                            <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codPais}" for="codPais" />
                            <p:inputText id="codPais" value="#{empleadosController.selected.codPais}" title="#{myBundle.CreateEmpleadosTitle_codPais}" />
-
-                           
- 
-
-                      
-
-                       
-                       
-                     
+                    
                      </p:panelGrid>
                      </p:panel>
                     <p:panel header="Situacion Actual">

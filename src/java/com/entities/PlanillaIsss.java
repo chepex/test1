@@ -58,7 +58,7 @@ public class PlanillaIsss implements Serializable {
     @Size(max = 9)
     @Column(name = "NO_AFILACION")
     private String noAfilacion;
-    @Size(max = 40)
+    @Size(max = 100)
     @Column(name = "NOMBRE")
     private String nombre;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

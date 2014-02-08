@@ -6,6 +6,7 @@ package com.entities;
 
 import com.entities.util.JsfUtil;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -72,6 +73,9 @@ public class ResumenAsistencia implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenAsistencia")
     private List<Planilla> planillaHoras;      
+    
+    @Column(name = "PROMEDIO")
+    private BigDecimal promedio;
     
     @Column(name = "USUARIO")
     private String usuario;    
@@ -156,6 +160,14 @@ public class ResumenAsistencia implements Serializable {
 
     public void setDias(String dias) {
 	this.dias = dias;
+    }
+
+    public BigDecimal getPromedio() {
+        return promedio;
+    }
+
+    public void setPromedio(BigDecimal promedio) {
+        this.promedio = promedio;
     }
 
 
