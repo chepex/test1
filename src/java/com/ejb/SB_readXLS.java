@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.ejb;
 
 import com.entities.DeducPresta;
@@ -12,6 +9,9 @@ import com.entities.LoginBean;
 import com.entities.MovDp;
 import com.entities.MovDpFacade;
 import com.entities.MovDpPK;
+import com.entities.Prestamos;
+import com.entities.PrestamosFacade;
+import com.entities.PrestamosPK;
 import com.entities.ProgramacionPla;
 import com.entities.ProgramacionPlaFacade;
 import com.entities.ResumenAsistencia;
@@ -33,6 +33,8 @@ import jxl.read.biff.BiffException;
 @Stateless
 public class SB_readXLS {
     @EJB
+    private PrestamosFacade prestamosFacade;
+    @EJB
     private SB_Calculos sB_Calculos;
     @EJB
     private SB_ProgramacionPla sB_ProgramacionPla;
@@ -53,8 +55,7 @@ private MovDpFacade movDpFacade;
 
     
  @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)  
-  public String read(String mas, ProgramacionPla programacionPla) throws IOException, BiffException  {  
-      
+ public String read(String mas, ProgramacionPla programacionPla) throws IOException, BiffException  {        
       String mensaje;
       try{
            this.inputWorkbook= new File(mas);
@@ -69,9 +70,9 @@ private MovDpFacade movDpFacade;
       }   
       catch(Exception ex){
         return "error";          
-      }   
+   }   
         return "ok " +mensaje;  
-      }
+ }
   
     public String ConSecuencia(Sheet sheet,ProgramacionPla programacionPla){
         int xx=0; 
@@ -249,4 +250,120 @@ private MovDpFacade movDpFacade;
     return "Cantida de registros insertados "+xx+" de "+total;
     }
     
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)  
+    public String readPrestamos(String mas ) throws IOException, BiffException  {        
+         String mensaje;
+         try{
+              this.inputWorkbook= new File(mas);
+              Workbook w=null;       
+              w = Workbook.getWorkbook(inputWorkbook);     
+              Sheet sheet = w.getSheet(0);                 
+              mensaje= createPrestamos(sheet);
+
+         }   
+         catch(Exception ex){
+           return "error";          
+      }   
+           return "ok " +mensaje;  
+    }    
+
+ 
+    public String createPrestamos(Sheet sheet){   
+            int xx=0; 
+            int total=0; 
+            
+            
+            String cod_emp="";
+            Short cod_dp=0;
+            int cod_presta=0;
+            Short cuotas=0;
+            BigDecimal valor_cuota=new BigDecimal( 0);
+            Short frecuencia=0;
+            String numRef="";            
+            
+            Empleados emp = null;
+            LoginBean lb= new LoginBean();
+            for (int i = 0; i < sheet.getRows(); i++) { 
+             total++;
+
+                for (int j = 0; j < sheet.getColumns(); j++) {              
+
+                    Cell cell = sheet.getCell(j, i);
+                    if(j==0){
+
+
+                        cod_emp =  String.valueOf(cell.getContents());
+                    }          
+                    if(j==1){
+
+                       cod_dp =Short.parseShort(cell.getContents());
+                    }          
+                    if(j==2){
+
+
+                        numRef =  String.valueOf(cell.getContents());
+                    }  
+                    if(j==3){
+
+
+                        frecuencia =  Short.parseShort(cell.getContents());
+                    }    
+                    if(j==4){
+
+
+                        cuotas =  Short.parseShort(cell.getContents());
+                    }      
+                    if(j==5){
+
+
+                        valor_cuota = new BigDecimal(cell.getContents());
+                    }                          
+                }
+                 try{ 
+
+                     if(cod_emp.length()>4){
+                         emp  = empleadosFacade.findbyCodempref(cod_emp); 
+                     }else{
+                         int codemp = Integer.valueOf(cod_emp);
+                          emp  = empleadosFacade.findbyCodemp(codemp); 
+                     }
+
+
+                        cod_presta= prestamosFacade.SeqNext();
+
+                        PrestamosPK prestamoPk = new PrestamosPK(lb.sscia(),emp.getEmpleadosPK().getCodEmp(),cod_dp, cod_presta  ); 
+                        Prestamos prestamo = new Prestamos();                         
+                        
+                        if(frecuencia==3){
+                           valor_cuota = new BigDecimal(valor_cuota.floatValue()/2);
+                           int vcuotas= cuotas*2;
+                           cuotas = (short)vcuotas;
+                        }    
+                        prestamo.setMonto(valor_cuota.multiply(BigDecimal.valueOf(cuotas)));
+                        prestamo.setSaldo(valor_cuota.multiply(BigDecimal.valueOf(cuotas)));                        
+                        prestamo.setPrestamosPK(prestamoPk);
+                        prestamo.setUsuario(lb.ssuser() );
+                        prestamo.setFechaReg( lb.sdate());
+                        prestamo.setFrecuencia(frecuencia);
+                        prestamo.setVcuota(valor_cuota);
+                        prestamo.setCuotas(cuotas);
+                        
+                        prestamo.setCuotasP(Short.parseShort("0"));
+                        prestamo.setNumRef(numRef);
+                        DeducPresta dp = deducPrestaFacade.findCodDeduc(cod_dp);
+
+                        if (dp!=null){ 
+                            xx++;
+                              prestamosFacade.create(prestamo);  
+                              movDpFacade.flush();                          
+                        }
+                    
+              
+                }catch(Exception ex){
+                    JsfUtil.logs(ex , "Surgio un error", "Proceso upload Linea"+i,SB_readXLS.class,"ERROR");            
+                }
+            }
+
+        return "Cantida de registros insertados "+xx+" de "+total;
+        } 
 }

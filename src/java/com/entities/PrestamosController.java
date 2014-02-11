@@ -1,7 +1,9 @@
 package com.entities;
 
 import com.ejb.SB_Prestamos;
+import com.ejb.SB_readXLS;
 import com.entities.util.JsfUtil;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,17 +13,25 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+import jxl.read.biff.BiffException;
+import org.primefaces.event.FileUploadEvent;
 
 @ManagedBean(name = "prestamosController")
 @ViewScoped
 public class PrestamosController extends AbstractController<Prestamos> implements Serializable {
+    @EJB
+    private SB_readXLS sB_readXLS;
+    
+    @EJB
+    private MovDpFacade movDpFacade;
     String estado;
     @EJB
     private SB_Prestamos sB_Prestamos;
 
     @EJB
     private PrestamosFacade ejbFacade;
-
+    List<MovDp> listaCuotas;
+    
     public PrestamosController() {
 	super(Prestamos.class);
     }
@@ -55,14 +65,19 @@ public class PrestamosController extends AbstractController<Prestamos> implement
     
     @Override
     public void saveNew(ActionEvent event) {
+        
+        if(this.getSelected().getFrecuencia()==3){
+            float cutaq= this.getSelected().getVcuota().floatValue()/2;
+            this.getSelected().setVcuota(BigDecimal.valueOf(cutaq) );      
+            int cuotas= getSelected().getCuotas().shortValue() *2;
+            this.getSelected().setCuotas(  (short)cuotas);
+        }
+            
 	String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Created");
 	this.setSelected(sB_Prestamos.CalcularMonto(this.getSelected()));	
 	persist(AbstractController.PersistAction.CREATE, msg);
 	
-	/*if (!isValidationFailed()) {
-	    items = null; // Invalidate list of items to trigger re-query.
-	}*/
-	//consultar();
+
     }
 
     @Override    
@@ -111,6 +126,35 @@ public class PrestamosController extends AbstractController<Prestamos> implement
 	JsfUtil.contar_registros(items.size() );
 	
 	return this.items;
-    }       
+    }     
+
+    public List<MovDp> getListaCuotas() {         
+        
+        return listaCuotas;
+    }
+    
+    public void consultarCoutas(){
+         List<MovDp> lista= movDpFacade.findByCodPresta(this.getSelected());                    
+         listaCuotas=lista;
+    }
+    
+    
+    
+    public void upload(FileUploadEvent event) throws IOException, BiffException  {      
+     
+        ReadXls a = new ReadXls();
+        String destination = "/opt/lib/"+event.getFile().getFileName();
+        a.copyFile(event.getFile().getFileName(), event.getFile().getInputstream()); 
+        String Mensaje ="";
+        Mensaje=sB_readXLS.readPrestamos(destination);        
+                  
+     
+     JsfUtil.addSuccessMessage( Mensaje); 
+     
+    }  
+ 
+    
+    
+
     
 }

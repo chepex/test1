@@ -86,6 +86,25 @@ public class Prestamos implements Serializable {
     public Prestamos() {
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public Date getFechaReg() {
+        return fechaReg;
+    }
+
+    public void setFechaReg(Date fechaReg) {
+        this.fechaReg = fechaReg;
+    }
+    
+    
+    
+
     public Prestamos(PrestamosPK prestamosPK) {
 	this.prestamosPK = prestamosPK;
     }

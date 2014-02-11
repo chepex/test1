@@ -346,6 +346,20 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
          return q.getResultList();
     
     } 
+    
+    
+    public List<MovDp> findByCodPresta(Prestamos prestamo){
+	 TypedQuery<MovDp> q;
+	 
+	    
+		 q = em.createNamedQuery("MovDp.findByCodpresta", MovDp.class )		    
+		    .setParameter("codCia",  prestamo.getPrestamosPK().getCodCia() )		    
+                    .setParameter("codEmp",  prestamo.getPrestamosPK().getCodEmp() )		    
+                    .setParameter("codPresta",  prestamo.getPrestamosPK().getCodPresta() );
+		    
+         return q.getResultList();
+    
+    }     
 
 
     public List<MovDp> findByStatus(String status){

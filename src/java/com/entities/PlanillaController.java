@@ -45,7 +45,10 @@ public class PlanillaController extends AbstractController<Planilla> implements 
     short mes;
     String estado;
     String todosdptos;  
+    String reciboEstado;
+    List <ProgramacionPla> reciboProgramacioPlas;
     
+
 
     public String getEstado() {
         return estado;
@@ -53,6 +56,14 @@ public class PlanillaController extends AbstractController<Planilla> implements 
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public List<Empleados> getListEmpleados() {
+        return ListEmpleados;
+    }
+
+    public void setListEmpleados(List<Empleados> ListEmpleados) {
+        this.ListEmpleados = ListEmpleados;
     }
 
 
@@ -160,7 +171,15 @@ public class PlanillaController extends AbstractController<Planilla> implements 
             programacionplas = programacionPlaFacade.findByEstado(estado);        
     }  
     
+    public void ChangeEstadoPlanilla2() {  
+        if(reciboEstado !=null && !reciboEstado.equals(""))  
+            reciboProgramacioPlas = programacionPlaFacade.findByEstado(reciboEstado);        
+    }    
     
+    public void ChangePlanilla() {  
+        if(reciboProgramacioPlas !=null && !reciboProgramacioPlas.equals(""))  
+            this.ListEmpleados= empleadosFacade.findbytipoPla(programacionpla);
+    }     
     
     public String generar(){    
         this.anio= 0;
@@ -293,5 +312,25 @@ public class PlanillaController extends AbstractController<Planilla> implements 
         }
         return "";           
     } 
+
+    public String getReciboEstado() {
+        return reciboEstado;
+    }
+
+    public void setReciboEstado(String reciboEstado) {
+        this.reciboEstado = reciboEstado;
+    }
+
+    public List<ProgramacionPla> getReciboProgramacioPlas() {
+        return reciboProgramacioPlas;
+    }
+
+    public void setReciboProgramacioPlas(List<ProgramacionPla> reciboProgramacioPlas) {
+        this.reciboProgramacioPlas = reciboProgramacioPlas;
+    }
  
+
+    
+
+        
 }

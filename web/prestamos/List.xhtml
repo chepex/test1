@@ -27,8 +27,8 @@
 			 rows="10"
 			 rowsPerPageTemplate="10,20,30"
 			 >
-
-		<p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                
+                <p:ajax event="rowSelect" listener="#{prestamosController.consultarCoutas}"  update="createButton viewButton editButton deleteButton @form"/>
 		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 		<p:column sortBy="#{item.empleados.nombreNit}" filterBy="#{item.empleados.nombreNit}">
 		    <f:facet name="header">
@@ -91,7 +91,44 @@
 	    </p:dataTable>
 
 	</p:panel>
+        <p:fileUpload fileUploadListener="#{prestamosController.upload}"  dragDropSupport="false"  
+                   update="@form :growl"   />          
+        <BR/>
+        <BR/>
+        
+        
+<h3>PAGOS REALIZADOS</h3>  
+<p:dataList id="lisCuotas" value="#{prestamosController.listaCuotas}" var="cuotas" itemType="disc">  
+    Codigo: #{ cuotas.movDpPK.codPresta } -  Valor:  $#{cuotas.valor} - Fecha: #{cuotas.fechaReg.toGMTString() }  
+</p:dataList>          
+        
 
     </h:form>
+    
+    
+<br></br>
+NOTA ESTE PROCESO GUARDA INFORMACION SI YA EXISTE UN PRESTAMO DARA UN ERROR Y SI LA FRECUENCIA ES 3 DIVIDIRA LA CUOTA ENTRE 2 QUINCENAS<BR/>
+PROCESO PARA CARGAR ARCHIVO <br></br>
+1 SELECIONAR SECUENCIA, <br></br>
+2 SELECIONAR ARCHIVO<br></br>
+PRESIONAR BOTON DE CARGAR<br></br>
+FORMATO<br></br>
+COD_EMP, COD_DP, numRef,frecuencia(QUINCENA ,1,2,3 AMBAS),cuotas,valor_cuota<br/>
+EJEMPLO<BR/>    
+2526,216,'123',3,12,35    
+<BR/>
+
+<h1>Mantenimiento MovDp</h1>
+<p>Este mantenimiento permite que el usuario pueda observar los movimientos de los empleados y ademas permite cargar otros movimientos directamente a la planilla</p>
+<p>&nbsp;</p>
+<p><strong>Forma de carga Automatica</strong></p>
+<p>Se llama manual porque el sistema se encarga automaticamente de detectar cual es el empleado que se esta cargando y la ultima vigente de esta para ingresar automaticamente el movimiento a esta planilla</p>
+<p>&nbsp;</p>
+<p><strong>Forma de carga Manual</strong></p>
+<p>Este proceso se realiza selecionando previamente la planilla a la cual se cargaran los movimientos del excel</p>
+<p>&nbsp;</p>
+<p><strong>Validaciones si una planilla ya esta cerrada no se puede modificar</strong></p>    
+        
+    
 
 </ui:composition>

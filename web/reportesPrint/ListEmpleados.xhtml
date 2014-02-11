@@ -11,33 +11,34 @@
 	<p:panelGrid columns="1" style="margin: 0 auto;">
             
 	    Estado
-            <p:selectOneMenu id="estado" value="#{planillaController.estado }" 
+            <p:selectOneMenu id="estado" value="#{planillaController.reciboEstado }" 
 				       filter="true">
 			    <f:selectItem itemLabel="Selecione un status"/>
                             <f:selectItem itemLabel="Programada" itemValue="P"/>			    
 			    <f:selectItem itemLabel="Cerrada" itemValue="C"/>
-                           <p:ajax update="@form" listener="#{planillaController.ChangeEstadoPlanilla}" />    
+                           <p:ajax update="@form" listener="#{planillaController.ChangeEstadoPlanilla2}" />    
                         </p:selectOneMenu>
 	    
 	    Planillas Programada
 		      <p:selectOneMenu id="programacionPla" value="#{planillaController.programacionpla }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_programacionPla}"
 				       filter="true">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{planillaController.programacionplas}"
+                            <f:selectItems value="#{planillaController.reciboProgramacioPlas}"
                                            var="programacionPlaItem"
                                            itemValue="#{programacionPlaItem}"
                                            itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "					   
 					   
 					   />
+                            <p:ajax update="@form" listener="#{planillaController.ChangePlanilla}" />    
                             <f:converter binding="#{programacionPlaConverter}"/>
                         </p:selectOneMenu>
             <p:outputLabel value="#{myBundle.CreatePlanillaLabel_empleados}" for="empleados" />
                         <p:selectOneMenu  filter="true" id="empleados" value="#{planillaController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditPlanillaRequiredMessage_empleados}">
                             <f:selectItem  itemLabel="#{myBundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{empleadosController.items}"
+                            <f:selectItems value="#{planillaController.listEmpleados}"
                                            var="empleadosItem"
                                            itemValue="#{empleadosItem}"
-                                           itemLabel="#{empleadosItem.nombreNit }"
+                                           itemLabel="#{empleadosItem.nombreNit}"
 					   />
                             <f:converter binding="#{empleadosConverter}"/>
                         </p:selectOneMenu> 

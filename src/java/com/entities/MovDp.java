@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MovDp.findAll", query = "SELECT m FROM MovDp m"),
     @NamedQuery(name = "MovDp.findByPk", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codDp = :codDp and  m.movDpPK.codEmp = :codEmp and  m.movDpPK.secuencia = :secuencia"),
     @NamedQuery(name = "MovDp.findByFiltro", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.secuencia = :secuencia"),
+    @NamedQuery(name = "MovDp.findByCodpresta", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codEmp = :codEmp and m.movDpPK.codPresta = :codPresta"),
     @NamedQuery(name = "MovDp.findByPkDp", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.secuencia = :secuencia and m.movDpPK.codDp = :codDp and m.movDpPK.codEmp = :codEmp"),
     @NamedQuery(name = "MovDp.findByPkDpMes", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.programacionPla.anio = :anio and m.programacionPla.mes = :mes and m.movDpPK.codDp = :codDp and m.movDpPK.codEmp = :codEmp and m.programacionPla.status = 'C'"),
     

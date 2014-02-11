@@ -1,3 +1,7 @@
+
+/*pendientes
+verificar tope
+*/
 package com.ejb;
 import com.entities.DeducPresta;
 import com.entities.DeducPrestaFacade;
@@ -27,7 +31,6 @@ import com.entities.Renta;
 import com.entities.RentaFacade;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Locale;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -72,7 +75,7 @@ public class SB_Calculos {
     private float cat_h_ext;
     private float v_h_ext;
     private float v_neg;
-    
+    String logs = "S";    
     Mensaje msg = new Mensaje();
     /**
      *
@@ -100,7 +103,7 @@ public class SB_Calculos {
   
     
   /**
-    * ejecuta los procesos de los movimientos de ley relacionados a el empleado
+    * ejecuta los procesos de los movimientos de ley relacionados a el empleado (det_empleado)
     * ejemplo: <br>
     *   emp:2526 <br>
     *       movimientos a ejecutar y crear en la tabla mov_dp<br>
@@ -108,19 +111,16 @@ public class SB_Calculos {
     *       renta:2<br>
     *       afp:3<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014
+    * @version	1.0.012014
     */
     public void CalcularLey(ResumenAsistencia resumenAsistenciax)    {    
       inicializar(resumenAsistenciax);
-      try {  
-          //this.msg.setTitulo("ok");
+      try {            
           List<DetEmpleado>   iterador =   detEmpleadoFacade.findByEmp(this.empleado);
           if(!iterador.isEmpty()) {  
               int i=0;
             for( DetEmpleado e : iterador ){ 
               i++;
-                    
-              
               this.deducPresta = e.getDeducPresta();  
               if(this.deducPresta.getProceso()!= null){
                 this.getClass().getMethod(this.deducPresta.getProceso()).invoke(this);                 
@@ -140,7 +140,7 @@ public class SB_Calculos {
     *       planilla vacacion colectiva = movimiento vacc <br>
     *       planilla aguinaldo          = movimiento agui<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014
+    * @version	1.0.012014
     */
     public void CalcularEspecial(ResumenAsistencia resumenAsistenciax)    {       
       try {  
@@ -158,7 +158,7 @@ public class SB_Calculos {
     *   emp:2526 <br>
     *       prestamos where cuotas_p!=cuotas    <br>
     * @author       Mario J. Mixco
-* @version	1.0.012014 
+    * @version	1.0.012014 
     * @exception    Indica la excepción que puede generar            
      */
     public void CalcularPrestamos(ResumenAsistencia resumenAsistenciax)   { 
@@ -209,7 +209,8 @@ public class SB_Calculos {
            return "ok";
        
        }
-       if (prestamo.getFrecuencia()==1 && this.programacionPla.getNumPlanilla()==1){
+       if (prestamo.getFrecuencia()==1 && this.programacionPla.getNumPlanilla()
+        ==1){
            return "ok";
        
        }       
@@ -217,7 +218,7 @@ public class SB_Calculos {
    }
     
     /**
-    * obtinen el lilquido a recibir y posteriormente guarda este en la tabla planilla
+    * Obtinen el liquido a recibir y posteriormente guarda este en la tabla planilla
     * @author       Mario J. Mixco
     * @version	1.0.012014 
     * @exception    Indica la excepción que puede generar            
@@ -232,7 +233,7 @@ public class SB_Calculos {
     }    
   
     /**
-    *  obtinen el lilquido a recibir y posteriormente guarda este en la tabla planilla
+    * Obtinen el liquido a recibir y posteriormente guarda este en la tabla planilla
     * @author       Mario J. Mixco
     * @version	1.0.012014   
     * @exception    Indica la excepción que puede generar            
@@ -258,7 +259,19 @@ public class SB_Calculos {
     
     /**
     * Actualiza los mivimientos de deduciones hasta dejar a cero el liquido a recibir, esto segun el campo prioridad 
-    * @author       Mario J. Mixco
+    * Ejemplo:<br>
+    * Negativo=-$90<br>
+    * Deducciones= bac $35, acoopeminca $30, bagricola $40<br>
+    * Formula -90 < $35<br>
+    *    nega= -90 + $35 = $55<br>
+    *    bac = 0<br>
+    * Formula -55 > $30<br>
+    *    nega= -55 + $30 = $25<br>
+    *    acoopeminca = 0<br>
+    * Formula -25 > $40<br>
+    *    nega= -25 + 40<br>
+    *    bac = $15<br>
+    * @author   Mario J. Mixco
     * @version	1.0.012014  
     * @exception    Indica la excepción que puede generar   
     * @return      
@@ -267,7 +280,7 @@ public class SB_Calculos {
         try{            
             List<MovDp> mov= this.movDpFacade.findByPkPrioridad(this.empleado, "R", this.resumenAsistencia);
              for( MovDp m : mov ){ 
-                 BigDecimal real = m.getValor();
+                BigDecimal real = m.getValor();
                 double pendiente ;
                  if(negativo > m.getValor().floatValue()){
                     negativo= negativo + m.getValor().floatValue();
@@ -302,7 +315,7 @@ public class SB_Calculos {
     *  Formula:<br>
     *  devengado = ((salario_base/dias_mes)* dias_laborados)+bonificaciones;<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014 
+    * @version	1.0.012014 
     * @exception    Indica la excepción que puede generar   
     * @return        float devengado
     */
@@ -310,7 +323,7 @@ public class SB_Calculos {
         try{
             float dias_mes = 30;  
             double devengado ; 
-            float dias_laborados = Float.valueOf( this.resumenAsistencia.getDias());		        
+            float dias_laborados = Float.valueOf( this.resumenAsistencia.getDias());	       
             devengado = (this.empleado.getSalarioBase().floatValue()/dias_mes)* (dias_laborados);
             double bonificaciones= prestaciones();
             devengado = devengado + bonificaciones;
@@ -324,9 +337,7 @@ public class SB_Calculos {
     }
     
     /**
-    *  Obtiene de las variables del EJB los dias laborados y el salario base del empleado para calcular asi el devengado
-    *  Formula:
-    *  devengado = (salario_base);
+    *  Recorre todas las planillas de un mes especifico para obtener el total devengado mensual   
     * @author       Mario J. Mixco
     * @version	1.0.012014 
     * @exception    Indica la excepción que puede generar   
@@ -350,11 +361,11 @@ public class SB_Calculos {
     
     
     /**
-    *  Obtiene de las variables del EJB los dias laborados y el salario base del empleado para calcular asi el devengado
-    *  Formula:
-    *  devengado = (mov_dp) donde deducpresta nogravado = 'S';
+    *  Obtiene el total de deduciones no gravadas (parametro en deduc_presta) de la planilla en proceso
+    *  Formula:<br>
+    *  devengado = (mov_dp) donde deducpresta nogravado = 'S';<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014 
+    * @version	1.0.012014 
     * @exception    Indica la excepción que puede generar   
     * @return        float devengado
     */
@@ -379,12 +390,12 @@ public class SB_Calculos {
     }  
         
        
- /**
-    *  Obtiene de las variables del EJB los dias laborados y el salario base del empleado para calcular asi el devengado
-    *  Formula:
+    /**
+    *  Obtiene el devengado de un empleado segun los dias laborados <br>
+    *  Formula:<br>
     *  devengado = (salario_base/dias_mes)* dias_laborados;
     * @author       Mario J. Mixco
-* @version	1.0.012014
+    * @version	1.0.012014
     * @exception    Indica la excepción que puede generar   
     * @return        float devengado
     */
@@ -392,7 +403,7 @@ public class SB_Calculos {
         try{
             float dias_mes = 30;  
             float devengado ; 
-            float dias_laborados = Float.valueOf( this.resumenAsistencia.getDias());		        
+            float dias_laborados = Float.valueOf( this.resumenAsistencia.getDias());	       
             devengado = (this.empleado.getSalarioBase().floatValue()/dias_mes)* (dias_laborados);
             return devengado;	
         }catch(Exception ex){  
@@ -402,23 +413,23 @@ public class SB_Calculos {
     }    
     
     /**
-    *  Obtiene el total de las deduciones por empleado que existen en la tabla mov_dp en una planilla especifica
-    *  Formula:
-    *  deduciones = sum(valor) from mov_dp where suma_resta = 'R'
+    *  Obtiene el total de las deduciones por empleado que existen en la tabla mov_dp en una planilla especifica<br>
+    *  Formula:<br>
+    *  deduciones = sum(valor) from mov_dp where suma_resta = 'R'<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014   
+    * @version	1.0.012014   
     * @exception    Indica la excepción que puede generar   
     * @return        float deducciones
     */
     public double deducciones( ) {   
        double valor=0;
        try{        
-	List<MovDp> deduc =  movDpFacade.findByTotal(this.empleado, "R", this.programacionPla);
-        if(!deduc.isEmpty()){
-            for( MovDp m : deduc ){ 
-         valor =valor+ m.getValor().doubleValue();
-         }
-        }      	        
+        List<MovDp> deduc =  movDpFacade.findByTotal(this.empleado, "R", this.programacionPla);
+            if(!deduc.isEmpty()){
+                for( MovDp m : deduc ){ 
+                valor =valor+ m.getValor().doubleValue();
+                }
+            }      	       
        }catch(Exception ex){                    
        JsfUtil.logs(ex , "Surgio un error", "Proceso deducciones Empleado"+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR"); 
         return 0;
@@ -426,12 +437,13 @@ public class SB_Calculos {
       return valor;	
     }    
      
+
     /**
-    *  Obtiene el total de las prestaciones por empleado que existen en la tabla mov_dp en una planilla especifica
-    *  Formula:
+    *  Obtiene el total de las prestaciones por empleado que existen en la tabla mov_dp en una planilla especifica<br>
+    *  Formula:<br>
     *  deduciones = sum(valor) from mov_dp where suma_resta = 'S'
     * @author       Mario J. Mixco
-* @version	1.0.012014   
+    * @version	1.0.012014   
     * @exception    Indica la excepción que puede generar   
     * @return        float deducciones
     */
@@ -457,14 +469,14 @@ public class SB_Calculos {
          
 
     /**
-    *  Obtiene el valor en dinero de las horas extras laboradas por un empleado
-    *  Formula:
-    *  vHoraExtra = $ valor x hora  * fractor tipo hora extras * cantidad horas
-    *  Ejemplo
-    *   Emp: 2526
-    *       vHoraExtra = $0.97 * 2.25 * 10 = $21.82
+    *  Obtiene el valor en dinero de las horas extras laboradas por un empleado<br>
+    *  Formula:<br>
+    *  vHoraExtra = $ valor x hora  * fractor tipo hora extras * cantidad horas<br>
+    *  Ejemplo<br>
+    *   Emp: 2526<br>
+    *       vHoraExtra = $0.97 * 2.25 * 10 = $21.82<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014 
+    * @version	1.0.012014 
     * @exception    Indica la excepción que puede generar   
     */
     public void HoraExtra(){  
@@ -478,15 +490,16 @@ public class SB_Calculos {
         }
     }    
     
+    
     /**
-    *  Obtiene el valor en dinero de las horas extras laboradas por un empleado
-    *  Formula:
-    *  vHoraExtra = valor x hora $ * fractor tipo hora extras * cantidad horas
-    *  Ejemplo
-    *   Emp: 2526
-    *       vHoraExtra = $0.97 * 2.25 * 10 = $21.82
+    *  Obtiene el valor en dinero de las horas extras laboradas por un empleado<br>
+    *  Formula:<br>
+    *  vHoraExtra = valor x hora $ * fractor tipo hora extras * cantidad horas<br>
+    *  Ejemplo<br>
+    *   Emp: 2526<br>
+    *       vHoraExtra = $0.97 * 2.25 * 10 = $21.82<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014 
+    * @version	1.0.012014 
     * @exception    Indica la excepción que puede generar   
     */
     public float HoraExtra(MovDp movdp){  
@@ -505,12 +518,12 @@ public class SB_Calculos {
     
     
     /**
-    *  Obtiene el valor de isss a descontar segun lo devengado por el empleado
-    *  Formula:
-    *  vIsss= 233 * 0.03;
-    *  Ejemplo
-    *   Emp: 2526
-    *       vIsss = $233 * 0.03 = $6.99
+    *  Obtiene el valor de isss a descontar segun lo devengado por el empleado<br>
+    *  Formula:<br>
+    *  vIsss= 233 * 0.03;<br>
+    *  Ejemplo<br>
+    *   Emp: 2526<br>
+    *       vIsss = $233 * 0.03 = $6.99<br>
     * @author       Mario J. Mixco
     * @version	1.0.012014 
     * @exception    Indica la excepción que puede generar   
@@ -533,10 +546,10 @@ public class SB_Calculos {
             
             
             
-            
+             Logs( "isss",String.valueOf(valor) ,String.valueOf(this.empleado),String.valueOf(devengado) );            
             valor= tope(valor);
             crear_movdp(valor);
-            System.out.println("Devengado ISSS=>"+devengado);
+            
         }catch(Exception ex){      
            JsfUtil.logs(ex , "Surgio un error", "Proceso isss Empleado"+ this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR"); 
         }
@@ -544,23 +557,28 @@ public class SB_Calculos {
     } 
     
     /**
-    *  Evalua si un monto es mayor que el monto si es asi retorna el tope
-    *  Ejemplo
-    *   si $monto  > tope
-    *       $monto = tope
+    *  Evalua si un monto es mayor que el monto si es asi retorna el tope<br>
+    *  Ejemplo<br>    
+    *   si es planilla quincenal<br>    
+    *       si es segunda quincena<br>    
+    *           si valor> tope    valor = valor - $total deduccion mensual<br>    
+    *       si es primera quincen<br>    
+    *           si valor> tope    valor = TOPE/2<br>    
+    *   si es planilla mensual<br>             
+    *       si $monto  > tope<br>
+    *           $monto = tope<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014  
+    * @version	1.0.012014  
     * @exception    Indica la excepción que puede generar 
     * @return       float monto
     */
     public double tope(double valor ){    
-        double vtope ;
-         
+        double vtope ;         
         try{
+            /* */
             double valor2= tmovdp(this.deducPresta.getDeducPrestaPK().getCodDp());
             if(this.programacionPla.getTiposPlanilla().getFrecuencia().equals("Q")){
-                if(this.programacionPla.getNumPlanilla()==2){
-                    
+                if(this.programacionPla.getNumPlanilla()==2){                    
                     vtope = this.deducPresta.getTope().floatValue();
                     if(valor>vtope){
                         valor=vtope;
@@ -586,12 +604,18 @@ public class SB_Calculos {
     
     
     /**
-    *  Evalua si un monto es mayor que el monto si es asi retorna el tope
-    *  Ejemplo
-    *   si $monto  > tope
-    *       $monto = tope
+    *  Evalua si un monto es mayor que el monto si es asi retorna el tope<br>
+    *  Ejemplo<br>    
+    *   si es planilla quincenal<br>    
+    *       si es segunda quincena<br>    
+    *           si valor> tope    valor = valor - $total deduccion mensual<br>    
+    *       si es primera quincen<br>    
+    *           si valor> tope    valor = TOPE/2<br>    
+    *   si es planilla mensual<br>             
+    *       si $monto  > tope<br>
+    *           $monto = tope<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014  
+    * @version	1.0.012014  
     * @exception    Indica la excepción que puede generar 
     * @return       float monto
     */
@@ -618,11 +642,12 @@ public class SB_Calculos {
     }    
     
     /**
-    * Obtiene el monto a descotar de afp segun lo devengado de un empleado
-     *  Formula:
-    *  vAfp= 233 * 0.0625=14.56;
+    * Obtiene el monto a descotar de afp segun lo devengado de un empleado<br>
+    * Si es la seguna quincena se suman el total del mes y si es necesario se hace un ajuste
+    *  Formula:<br>
+    *  vAfp= 233 * 0.0625=14.56;<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014   
+    * @version	1.0.012014   
     * @exception    Indica la excepción que puede generar 
     */
     public void afp(){   
@@ -642,8 +667,7 @@ public class SB_Calculos {
             }
             
             
-            
-            
+            Logs( "afp",String.valueOf(valor) ,String.valueOf(this.empleado),String.valueOf(devengado) );            
             valor= tope(valor);
             crear_movdp(valor);  
         }
@@ -658,7 +682,7 @@ public class SB_Calculos {
     *  Formula:
     *  devengado= ((salario base/dias mes) * dias laborados) - afp;    * 
     * @author       Mario J. Mixco
-* @version	1.0.012014
+    * @version	1.0.012014
     * @exception    Indica la excepción que puede generar 
      */
     public double devengado_renta(){
@@ -705,7 +729,7 @@ public class SB_Calculos {
                    renta= rentaFacade.findByValor(devengado, (short)1);
                 }                                
                 double valor = (((( devengado -renta.getExceso().floatValue()) * renta.getPorcentaje().floatValue())/100) )+renta.getValorFijo().floatValue();
-               
+               Logs( "renta",String.valueOf(valor) ,String.valueOf(this.empleado),String.valueOf(devengado) );            
                 crear_movdp(valor);   
             } 
         }catch(Exception ex){      
@@ -724,7 +748,7 @@ public class SB_Calculos {
     *       monto = (1000+((5000 /6)/2))*30%<br>
     *       monto = $1125<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014  
+    * @version	1.0.012014  
     * @exception    Indica la excepción que puede generar 
      */
     public void vaca(){
@@ -735,7 +759,7 @@ public class SB_Calculos {
             float vpromedio = (promedio.floatValue()/6)/2;
             double valor = (( (devengado) + vpromedio)) *  this.deducPresta.getFactor().floatValue();        
             crear_movdp(valor); 
-          //  System.out.print("emp=>"+this.empleado.getEmpleadosPK().getCodEmp()+"Comision=>"+vpromedio);
+    
         }catch(Exception ex){          
            JsfUtil.logs(ex , "Surgio un error", "Proceso vaca Empleado "+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR");            
         }
@@ -751,14 +775,14 @@ public class SB_Calculos {
     *       monto = (1000+(((5000/6) /30)*7))*30%<br>
     *       monto = $1058<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014   
+    * @version	1.0.012014   
     * @exception    Indica la excepción que puede generar 
      */
     public void vacc(){
         try{
             double devengado= devengado();
             float dias_mes = 30; 
-            float dias_laborados = Float.valueOf( this.resumenAsistencia.getDias());		        
+            float dias_laborados = Float.valueOf( this.resumenAsistencia.getDias());	       
             BigDecimal promedio = movDpFacade.PromComision(empleado, resumenAsistencia);                
             float vpromedio = (promedio.floatValue()/6);
             double valor = (((devengado + vpromedio )/dias_mes)*dias_laborados ) *  this.deducPresta.getFactor().floatValue();        
@@ -779,15 +803,16 @@ public class SB_Calculos {
     *       monto = 600/6<br>
     *       monto = $60<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014   
+    * @version	1.0.012014   
     * @exception    Indica la excepción que puede generar 
      */
     public void promedioagui(ResumenAsistencia resumenAsistenciax){
         try{      
+            float valor=0;
             inicializar(resumenAsistenciax);        
             BigDecimal promedio = movDpFacade.PromComision(empleado, resumenAsistencia);
             float vpromedio = (promedio.floatValue());
-            float valor =  + vpromedio;  	
+            valor =  valor+ vpromedio;  	
             crear_movdp(valor);  
         }catch(Exception ex){          
            JsfUtil.logs(ex , "Surgio un error", "Proceso promedioagui Empleado"+resumenAsistenciax.getEmpleados().getNombreIsss(),SB_Calculos.class,"ERROR");            
@@ -804,7 +829,7 @@ public class SB_Calculos {
     *       monto = ((600)/6)/2<br>
     *       monto = $30<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014   
+    * @version	1.0.012014   
     * @exception    Indica la excepción que puede generar 
      */
     public void promedioQuincenal(ResumenAsistencia resumenAsistenciax){
@@ -831,7 +856,7 @@ public class SB_Calculos {
     *       monto = (600)/6<br>
     *       monto = $60<br>
     * @author       Mario J. Mixco
-* @version	1.0.012014 
+    * @version	1.0.012014 
     * @exception    Indica la excepción que puede generar 
      */
     public void promedioMensual(ResumenAsistencia resumenAsistenciax){
@@ -849,13 +874,13 @@ public class SB_Calculos {
     /**
     * crea la deduccion o prestacion en la tabla de movimientos de planilla    
     * @author       Mario J. Mixco
-* @version	1.0.012014 
+    * @version	1.0.012014 
     * @exception    Indica la excepción que puede generar 
      */
     public void crear_movdp(double valor){     
         try{
             BigDecimal vv= new BigDecimal(valor);
-            LoginBean lb= new LoginBean();		
+            LoginBean lb= new LoginBean();	
             MovDp movdpx = new MovDp();
             MovDpPK movdppk = new MovDpPK();
             movdppk.setCodCia(lb.sscia());
@@ -885,7 +910,7 @@ public class SB_Calculos {
     public void crear_movdp(float valor,Prestamos prestamo){     
         try{
             BigDecimal vv= new BigDecimal(valor);
-            LoginBean lb= new LoginBean();		
+            LoginBean lb= new LoginBean();	
             MovDp movdpx = new MovDp();
             MovDpPK movdppk = new MovDpPK();
             movdppk.setCodCia(lb.sscia());
@@ -922,7 +947,7 @@ public class SB_Calculos {
            
             
             float neto= bruto+ TotalBonos+TotalHorasExtras; 
-            LoginBean lb= new LoginBean();		
+            LoginBean lb= new LoginBean();	
             Planilla planillak = new Planilla();
             PlanillaPK planillapk = new PlanillaPK();
             planillapk.setCodCia(lb.sscia());        
@@ -956,7 +981,7 @@ public class SB_Calculos {
     /**
     * Retorna el total de movimientos para de la categoria bonos para una planilla y empleado especifico       
     * @author       Mario J. Mixco
-* @version	1.0.012014
+    * @version	1.0.012014
     */    
     public float TotalBonos(ResumenAsistencia ra){
         try{
@@ -983,7 +1008,7 @@ public class SB_Calculos {
     /**
     * Retorna el total de movimientos para de la categoria especifica para una planilla y empleado especifico       
     * @author       Mario J. Mixco
-* @version	1.0.012014
+    * @version	1.0.012014
     */    
   
     public float SumarCategoria(ResumenAsistencia ra,String Cat){
@@ -1005,7 +1030,7 @@ public class SB_Calculos {
     /**
     * Retorna el total de movimientos para de la categoria horasExtras para una planilla y empleado especifico       
     * @author       Mario J. Mixco
-* @version	1.0.012014
+    * @version	1.0.012014
     */            
     public float TotalHorasExtras(ResumenAsistencia ra){
         float total = 0;        
@@ -1039,7 +1064,7 @@ public class SB_Calculos {
     /**
     * inserta los datos de liquido  a recibir, total devengado entre otros en la tabla de planilla   
     * @author       Mario J. Mixco
-* @version	1.0.012014  
+    * @version	1.0.012014  
     * @exception    Indica la excepción que puede generar 
     */  
     public void savePlanilla(Planilla planillak){   
@@ -1071,12 +1096,12 @@ public class SB_Calculos {
     } 
     
     /**
-    * retorna el valor por horas devengado por un empleado
-    *   formula:
-        *           $horas = (((salariobase+promedio)/30)*dias/)15/8
-    *   ejemplo:
-    *           $horas = ((237+10)/30)*7)/15/8
-    *           $horas = 0.98
+    * retorna el valor por horas devengado por un empleado<br>
+    *   formula:<br>
+    *           $horas = ((salariobase)/30)*dias)+(promedio/2)/15/8<br>
+    *   ejemplo:<br>
+    *           $horas = ((237+10)/30)*7)/15/8<br>
+    *           $horas = 0.98<br>
     *           
     * @author       Mario J. Mixco
     * @version	1.0.012014 
@@ -1099,9 +1124,9 @@ public class SB_Calculos {
             }else{
                 sdiario = (this.empleado.getSalarioBase().floatValue()/30)* Float.parseFloat(dias);                
             }
-            System.out.print("empleado->"+ this.empleado.getEmpleadosPK().getCodEmp()+"promedio-->"+vpromedio);
+            
                 mas = JsfUtil.Redondear(sdiario ,2);
-              //  sdiario =    (float)sdiario * Float.parseFloat(dias);
+                //sdiario =    (float)sdiario * Float.parseFloat(dias);
                 mas = JsfUtil.Redondear(sdiario ,2);                        
                 sdiario = (float)mas/15/8;
                 mas = JsfUtil.Redondear(sdiario ,2);
@@ -1148,7 +1173,7 @@ public class SB_Calculos {
       /**
     * Inicializa las variables necesarias para los procesos    
     * @author       Mario J. Mixco
-* @version	1.0.012014
+    * @version	1.0.012014
     */
    public void inicializar(ResumenAsistencia resumenAsistenciax){         
     try{
@@ -1168,7 +1193,7 @@ public class SB_Calculos {
    
    public String recalculo(ResumenAsistencia ra){
     /**
-    * Inicializa las variables necesarias para los procesos    
+    * recalculo = devengadoanual -renta_exceso * renta_porcentaje/100 + renta_fijo
     * @author   Mario J. Mixco
     * @version	1.0.012014
     */
@@ -1304,5 +1329,12 @@ public class SB_Calculos {
        }
        return total;
    }      
+
+    public void Logs(String calculo,String valor, String emp,String devengado){
+        if(logs.equals("S")){
+            System.out.print("Empleado-> "+emp+" Calculo ="+calculo+" Devengado ="+devengado +" Valor =" + valor);
+        }
+        
+    }   
 
 }
