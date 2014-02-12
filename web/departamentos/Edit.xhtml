@@ -42,21 +42,7 @@
                         <p:outputLabel value="#{myBundle.EditDepartamentosLabel_scta5}" for="scta5" />
                         <p:inputText id="scta5" value="#{departamentosController.selected.scta5}" title="#{myBundle.EditDepartamentosTitle_scta5}" />
 
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_lcta1}" for="lcta1" />
-                        <p:inputText id="lcta1" value="#{departamentosController.selected.lcta1}" title="#{myBundle.EditDepartamentosTitle_lcta1}" />
-
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_lcta2}" for="lcta2" />
-                        <p:inputText id="lcta2" value="#{departamentosController.selected.lcta2}" title="#{myBundle.EditDepartamentosTitle_lcta2}" />
-
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_lcta3}" for="lcta3" />
-                        <p:inputText id="lcta3" value="#{departamentosController.selected.lcta3}" title="#{myBundle.EditDepartamentosTitle_lcta3}" />
-
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_lcta4}" for="lcta4" />
-                        <p:inputText id="lcta4" value="#{departamentosController.selected.lcta4}" title="#{myBundle.EditDepartamentosTitle_lcta4}" />
-
-                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_lcta5}" for="lcta5" />
-                        <p:inputText id="lcta5" value="#{departamentosController.selected.lcta5}" title="#{myBundle.EditDepartamentosTitle_lcta5}" />
-
+                      
                         <p:outputLabel value="#{myBundle.EditDepartamentosLabel_contable}" for="contable" />
                         <p:inputText id="contable" value="#{departamentosController.selected.contable}" title="#{myBundle.EditDepartamentosTitle_contable}" />
 
@@ -78,6 +64,10 @@
 
                         <p:outputLabel value="#{myBundle.EditDepartamentosLabel_VSecuencia}" for="VSecuencia" />
                         <p:inputText id="VSecuencia" value="#{departamentosController.selected.VSecuencia}" title="#{myBundle.EditDepartamentosTitle_VSecuencia}" />
+
+                        <p:outputLabel value="#{myBundle.EditDepartamentosLabel_correlIsss}" for="correlIsss" />
+                        <p:inputText id="correlIsss" value="#{departamentosController.selected.correlIsss}" title="#{myBundle.EditDepartamentosTitle_correlIsss}" />
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{departamentosController.save}" value="#{myBundle.Save}" update="display,:DepartamentosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DepartamentosEditDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="DepartamentosEditDialog.hide()"/>

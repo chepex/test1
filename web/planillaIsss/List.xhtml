@@ -68,6 +68,7 @@
                     <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PlanillaIsssViewForm" oncomplete="PlanillaIsssViewDialog.show()" disabled="#{empty planillaIsssController.selected}"/>
                     <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PlanillaIsssEditForm" oncomplete="PlanillaIsssEditDialog.show()" disabled="#{empty planillaIsssController.selected}"/>
                     <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{planillaIsssController.delete}" update=":growl,datalist" disabled="#{empty planillaIsssController.selected}"/>
+                    <p:commandButton id="CreateCVS" icon="ui-icon-circle-arrow-s" actionListener="#{planillaIsssController.Gcvs()}" ajax="false" value="Generar CVS" update="PlanillaIsssListForm" oncomplete="ProductoPdfDialog.show()"/>                    
                 </f:facet>
 
             </p:dataTable>

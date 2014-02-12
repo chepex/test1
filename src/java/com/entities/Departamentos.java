@@ -42,11 +42,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Departamentos.findByPuesto", query = "SELECT d FROM Departamentos d WHERE d.puestosList = :puestosList"),    
     @NamedQuery(name = "Departamentos.findByNomDepto", query = "SELECT d FROM Departamentos d WHERE d.nomDepto = :nomDepto"),
     @NamedQuery(name = "Departamentos.findByEmpleados", query = "SELECT d FROM Departamentos d WHERE d.empleados = :empleados"),
-    @NamedQuery(name = "Departamentos.findByLcta1", query = "SELECT d FROM Departamentos d WHERE d.lcta1 = :lcta1"),
-    @NamedQuery(name = "Departamentos.findByLcta2", query = "SELECT d FROM Departamentos d WHERE d.lcta2 = :lcta2"),
-    @NamedQuery(name = "Departamentos.findByLcta3", query = "SELECT d FROM Departamentos d WHERE d.lcta3 = :lcta3"),
-    @NamedQuery(name = "Departamentos.findByLcta4", query = "SELECT d FROM Departamentos d WHERE d.lcta4 = :lcta4"),
-    @NamedQuery(name = "Departamentos.findByLcta5", query = "SELECT d FROM Departamentos d WHERE d.lcta5 = :lcta5"),
     @NamedQuery(name = "Departamentos.findByScta1", query = "SELECT d FROM Departamentos d WHERE d.scta1 = :scta1"),
     @NamedQuery(name = "Departamentos.findByScta2", query = "SELECT d FROM Departamentos d WHERE d.scta2 = :scta2"),
     @NamedQuery(name = "Departamentos.findByScta3", query = "SELECT d FROM Departamentos d WHERE d.scta3 = :scta3"),
@@ -80,16 +75,6 @@ public class Departamentos implements Serializable {
     private String nomDepto;
     @Column(name = "EMPLEADOS")
     private Integer empleados;
-    @Column(name = "LCTA_1")
-    private Short lcta1;
-    @Column(name = "LCTA_2")
-    private Short lcta2;
-    @Column(name = "LCTA_3")
-    private Short lcta3;
-    @Column(name = "LCTA_4")
-    private Short lcta4;
-    @Column(name = "LCTA_5")
-    private Short lcta5;
     @Column(name = "SCTA_1")
     private Short scta1;
     @Column(name = "SCTA_2")
@@ -127,6 +112,8 @@ public class Departamentos implements Serializable {
     private String firmaDoc;
     @Column(name = "V_SECUENCIA")
     private Long vSecuencia;
+    @Column(name = "CORREL_ISSS")
+    private Short correlIsss;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamentos")
     private List<Planilla> planillaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamentos")
@@ -177,45 +164,7 @@ public class Departamentos implements Serializable {
 	this.empleados = empleados;
     }
 
-    public Short getLcta1() {
-        return lcta1;
-    }
-
-    public void setLcta1(Short lcta1) {
-        this.lcta1 = lcta1;
-    }
-
-    public Short getLcta2() {
-        return lcta2;
-    }
-
-    public void setLcta2(Short lcta2) {
-        this.lcta2 = lcta2;
-    }
-
-    public Short getLcta3() {
-        return lcta3;
-    }
-
-    public void setLcta3(Short lcta3) {
-        this.lcta3 = lcta3;
-    }
-
-    public Short getLcta4() {
-        return lcta4;
-    }
-
-    public void setLcta4(Short lcta4) {
-        this.lcta4 = lcta4;
-    }
-
-    public Short getLcta5() {
-        return lcta5;
-    }
-
-    public void setLcta5(Short lcta5) {
-        this.lcta5 = lcta5;
-    }
+   
 
     public Short getScta1() {
         return scta1;
@@ -330,6 +279,16 @@ public class Departamentos implements Serializable {
 	this.vSecuencia = vSecuencia;
     }
 
+    public Short getCorrelIsss() {
+        return correlIsss;
+    }
+
+    public void setCorrelIsss(Short correlIsss) {
+        this.correlIsss = correlIsss;
+    }
+
+
+    
     @XmlTransient
     public List<Planilla> getPlanillaList() {
 	return planillaList;

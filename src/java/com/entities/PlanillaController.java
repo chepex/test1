@@ -27,6 +27,8 @@ import net.sf.jasperreports.engine.JRException;
 @ViewScoped
 public class PlanillaController extends AbstractController<Planilla> implements Serializable {
     @EJB
+    private VplanillaFacade vPlanillaFacade;
+    @EJB
     private ProgramacionPlaFacade programacionPlaFacade;
     @EJB
     private EmpleadosFacade empleadosFacade;
@@ -35,18 +37,21 @@ public class PlanillaController extends AbstractController<Planilla> implements 
     @EJB
     private SB_Reportes reportes;    
     @EJB
+    
     private SB_Planilla sBPlanilla;
     List <MovDp> deduciones;
     List <MovDp> prestaciones;
     ProgramacionPla programacionpla;
+    String estado;
     List <ProgramacionPla> programacionplas;
     List <Empleados> ListEmpleados;
     short anio;
     short mes;
-    String estado;
+    
     String todosdptos;  
     String reciboEstado;
     List <ProgramacionPla> reciboProgramacioPlas;
+    List <Vplanilla> listvplanilla;
     
 
 
@@ -79,6 +84,22 @@ public class PlanillaController extends AbstractController<Planilla> implements 
 
     }
 
+    public String getReciboEstado() {
+        return reciboEstado;
+    }
+
+    public void setReciboEstado(String reciboEstado) {
+        this.reciboEstado = reciboEstado;
+    }
+
+    public List<ProgramacionPla> getReciboProgramacioPlas() {
+        return reciboProgramacioPlas;
+    }
+
+    public void setReciboProgramacioPlas(List<ProgramacionPla> reciboProgramacioPlas) {
+        this.reciboProgramacioPlas = reciboProgramacioPlas;
+    }
+    
     public String getTodosdptos() {
         return todosdptos;
     }
@@ -259,7 +280,11 @@ public class PlanillaController extends AbstractController<Planilla> implements 
 	}
 	JsfUtil.contar_registros(items.size() );
 	return this.items;
-    }   
+    }  
+    
+   
+    
+    
 
     public String GenerarBoletas() throws NamingException, SQLException, JRException, IOException{         
         HashMap params = new HashMap();          
@@ -313,24 +338,47 @@ public class PlanillaController extends AbstractController<Planilla> implements 
         return "";           
     } 
 
-    public String getReciboEstado() {
-        return reciboEstado;
-    }
 
-    public void setReciboEstado(String reciboEstado) {
-        this.reciboEstado = reciboEstado;
-    }
-
-    public List<ProgramacionPla> getReciboProgramacioPlas() {
-        return reciboProgramacioPlas;
-    }
-
-    public void setReciboProgramacioPlas(List<ProgramacionPla> reciboProgramacioPlas) {
-        this.reciboProgramacioPlas = reciboProgramacioPlas;
-    }
  
-
+    public String reporteMail(){
+            String a = reportes.mario();
+            return a;
+    }
     
+    
+    public HashMap Parameter() {
+        HashMap params = new HashMap(); 
+            LoginBean lb= new LoginBean();	
+            long codCia = lb.sscia();
+            long secuencia;
+            secuencia = this.getProgramacionpla().getProgramacionPlaPK().getSecuencia();
+            params.put("cia",codCia ); 
+            params.put("mas",secuencia ); 
+            ListEmpleados = empleadosFacade.findbyPuestos((short)148);
+            for(Empleados emp:  ListEmpleados){
+                params.put("encargadoplanilla",emp.getNombreNit()); 
+                params.put("puestoplanilla",emp.getPuestos().getNomPuesto());
+            }
+            ListEmpleados = empleadosFacade.findbyPuestos((short)325);
+            for(Empleados emp:  ListEmpleados){
+                params.put("gerenteConta",emp.getNombreNit());
+                params.put("puestoconta",emp.getPuestos().getNomPuesto());
+            }
+            ListEmpleados = empleadosFacade.findbyPuestos((short)57);
+            for(Empleados emp:  ListEmpleados){
+                params.put("gerenteRrhh",emp.getNombreNit());
+                params.put("puestorrhh",emp.getPuestos().getNomPuesto() );
+            }
+            ListEmpleados = empleadosFacade.findbyPuestos((short)111);
+            for(Empleados emp:  ListEmpleados){
+                params.put("directorFinanza",emp.getNombreNit());
+                params.put("puestofinanza",emp.getPuestos().getNomPuesto());
+            }
 
-        
+        return params;
+    }
+
+
+
+   
 }

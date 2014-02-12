@@ -7,6 +7,8 @@ import com.entities.DmgdetallePK;
 import com.entities.Dmgpoliza;
 import com.entities.DmgpolizaFacade;
 import com.entities.DmgpolizaPK;
+import com.entities.Empleados;
+import com.entities.EmpleadosFacade;
 import com.entities.LoginBean;
 import com.entities.Mensaje;
 import com.entities.MovDp;
@@ -30,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -40,6 +43,8 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class SB_Planilla {
+    @EJB
+    private EmpleadosFacade empleadosFacade;
     @EJB
     private PlanillaIsssFacade planillaIsssFacade;
     @EJB
@@ -63,7 +68,8 @@ public class SB_Planilla {
     @EJB
     private SB_Calculos calculos;    
     @EJB
-    private ResumenAsistenciaFacade resumenAsistenciaFacade;            
+    private ResumenAsistenciaFacade resumenAsistenciaFacade; 
+    
     
     Mensaje msg1 = new Mensaje();
     String mensaje ;
@@ -157,12 +163,14 @@ public class SB_Planilla {
         try{
         Parametros p= parametrosFacade.findByNombre("HORAS_LABORALES");
         Parametros nPATRONAL= parametrosFacade.findByNombre("NPATRONAL_ISSS");
+        Parametros  p2=parametrosFacade.findByNombre("PATRONALISSS");            
+         String NUMPATRONAL = p2.getValorTxt();
         LoginBean lb= new LoginBean();	
         List<Planilla> planillas = planillaFacade.findByMes(ra ) ;
         BigDecimal devengado = BigDecimal.valueOf( devengoIsss(planillas));
         String dias =  devengoDias(planillas) ;
         PlanillaIsss plaIsss = planillaIsssFacade.findByEmp(ra);
-        System.out.print("ISSS EMP=>"+ra.getResumenAsistenciaPK().getCodEmp());
+        Empleados emp= empleadosFacade.findbyCodemp(ra.getResumenAsistenciaPK().getCodEmp());
         if(plaIsss==null){
             
             PlanillaIsss planillaIsss =new PlanillaIsss();
@@ -173,9 +181,11 @@ public class SB_Planilla {
             planillaIsssPK.setCodEmp(ra.getResumenAsistenciaPK().getCodEmp());
             planillaIsss.setPlanillaIsssPK(planillaIsssPK);
             planillaIsss.setNombre(ra.getEmpleados().getNombreIsss());
+         
             planillaIsss.setNoAfilacion(ra.getEmpleados().getNumIgss());
-            planillaIsss.setCorrelativo(ra.getProgramacionPla().getTiposPlanilla().getTiposPlanillaPK().getCodTipopla());
+            planillaIsss.setCorrelativo(emp.getDepartamentos().getCorrelIsss());
             planillaIsss.setDiasRemunerados(dias);
+            planillaIsss.setNoPatronal(NUMPATRONAL);
             planillaIsss.setHorasJornada(p.getValorTxt());
             planillaIsss.setSalDebengado( devengado);            
             planillaIsss.setUsuario(lb.ssuser());
@@ -184,10 +194,7 @@ public class SB_Planilla {
             if(ra.getObservaciones()!= null){
                 planillaIsss.setCodObserva(ra.getObservaciones().getIsss());
             }
-            if(ra.getResumenAsistenciaPK().getCodEmp()==210){
-                System.out.print("aa");
-            }
-            
+
             planillaIsssFacade.create(planillaIsss);
             planillaIsssFacade.flush();
             planillaIsssFacade.refresh(planillaIsss);
@@ -700,4 +707,92 @@ public class SB_Planilla {
         return detalle;
     }
 
+    
+  public String generarTxtISSS(short Anio, short Mes ){
+         
+        DecimalFormat df = new DecimalFormat("###########");
+         List<PlanillaIsss> lpisss = planillaIsssFacade.findByAnioMes(Anio, Mes);
+         String detalle = "";
+         String ob="";
+         String mes= String.valueOf(Mes);
+         if(mes.length()==1){
+             mes= "0"+mes;
+         }
+         for( PlanillaIsss pisss : lpisss ){  
+         String nombre = JsfUtil.truncate(pisss.getNombre(),40);
+         nombre =  nombre+"                                        ".substring(nombre.length()); 
+         String dev =  String.valueOf(df.format(pisss.getSalDebengado().floatValue()*100));
+          
+          dev =  "000000000".substring(dev.length())+dev;
+         if(pisss.getCodObserva()==null){
+             ob ="00";
+         }else{
+             ob = String.valueOf(pisss.getCodObserva());
+         }
+         
+         detalle+=pisss.getNoPatronal();
+         detalle+=String.valueOf(Anio-2000);
+         detalle+=mes;
+         detalle+="01";
+         detalle+=pisss.getNoAfilacion();
+         detalle+="000000000000000";
+         detalle+=nombre;         
+         detalle+=dev;
+         detalle+=pisss.getDiasRemunerados();
+         detalle+="08";
+         detalle+=ob;
+         detalle+="\n";
+         
+         }
+        
+                 
+        return detalle;
+    } 
+  
+  
+    
+  public String generarTxtAFP(short Anio, short Mes ){
+         
+         DecimalFormat df = new DecimalFormat("###########");
+         List<PlanillaIsss> lpisss = planillaIsssFacade.findByAnioMes(Anio, Mes);
+         String detalle = "";
+         String ob="";
+         String mes= String.valueOf(Mes);
+         if(mes.length()==1){
+             mes= "0"+mes;
+         }
+         detalle+=String.valueOf(Anio) +String.valueOf(mes);
+         detalle+="\n";
+         for( PlanillaIsss pisss : lpisss ){  
+             
+             
+         String nombre = JsfUtil.truncate(pisss.getNombre(),40);
+         nombre =  nombre+"                                        ".substring(nombre.length()); 
+         String dev =  String.valueOf(df.format(pisss.getSalDebengado().floatValue()*100));
+          
+          dev =  "000000000".substring(dev.length())+dev;
+         if(pisss.getCodObserva()==null){
+             ob ="00";
+         }else{
+             ob = String.valueOf(pisss.getCodObserva());
+         }
+         
+         detalle+=pisss.getNoPatronal();
+         detalle+=String.valueOf(Anio-2000);
+         detalle+=mes;
+         detalle+="01";
+         detalle+=pisss.getNoAfilacion();
+         detalle+="000000000000000";
+         detalle+=nombre;         
+         detalle+=dev;
+         detalle+=pisss.getDiasRemunerados();
+         detalle+="08";
+         detalle+=ob;
+         detalle+="\n";
+         
+         }
+        
+                 
+        return detalle;
+    }   
 }

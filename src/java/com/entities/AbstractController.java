@@ -85,7 +85,6 @@ public abstract class AbstractController<T> {
     public List<T> getItems() {
         if (items == null) {
             items = this.ejbFacade.findAll();
-
         }
         return items;
     }

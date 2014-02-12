@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
@@ -26,6 +27,8 @@ import net.sf.jasperreports.engine.JasperPrint;
  *
  * @author mmixco
  */
+
+
 @Stateless
 public class SB_Reportes {
     
@@ -48,6 +51,10 @@ public class SB_Reportes {
       return "";
     }
     
+ 
+ public String mario(){
+     return "Hola MARIO";
+ }
      
     }
 

@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "MovDp.findByCodpresta", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codEmp = :codEmp and m.movDpPK.codPresta = :codPresta"),
     @NamedQuery(name = "MovDp.findByPkDp", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.secuencia = :secuencia and m.movDpPK.codDp = :codDp and m.movDpPK.codEmp = :codEmp"),
     @NamedQuery(name = "MovDp.findByPkDpMes", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.programacionPla.anio = :anio and m.programacionPla.mes = :mes and m.movDpPK.codDp = :codDp and m.movDpPK.codEmp = :codEmp and m.programacionPla.status = 'C'"),
+    @NamedQuery(name = "MovDp.findByEmp", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.movDpPK.codEmp = :codEmp and m.movDpPK.secuencia = :secuencia"),
     
     @NamedQuery(name = "MovDp.findByStatus", query = "SELECT m FROM MovDp m WHERE m.movDpPK.codCia = :codCia and  m.programacionPla.status= :status "), 
     @NamedQuery(name = "MovDp.findByCodCia", query = "SELECT m FROM MovDp m WHERE  m.movDpPK.codCia = :codCia"),

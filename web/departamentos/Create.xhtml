@@ -40,21 +40,7 @@
                         <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_scta5}" for="scta5" />
                         <p:inputText id="scta5" value="#{departamentosController.selected.scta5}" title="#{myBundle.CreateDepartamentosTitle_scta5}" />
 
-                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_lcta1}" for="lcta1" />
-                        <p:inputText id="lcta1" value="#{departamentosController.selected.lcta1}" title="#{myBundle.CreateDepartamentosTitle_lcta1}" />
-
-                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_lcta2}" for="lcta2" />
-                        <p:inputText id="lcta2" value="#{departamentosController.selected.lcta2}" title="#{myBundle.CreateDepartamentosTitle_lcta2}" />
-
-                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_lcta3}" for="lcta3" />
-                        <p:inputText id="lcta3" value="#{departamentosController.selected.lcta3}" title="#{myBundle.CreateDepartamentosTitle_lcta3}" />
-
-                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_lcta4}" for="lcta4" />
-                        <p:inputText id="lcta4" value="#{departamentosController.selected.lcta4}" title="#{myBundle.CreateDepartamentosTitle_lcta4}" />
-
-                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_lcta5}" for="lcta5" />
-                        <p:inputText id="lcta5" value="#{departamentosController.selected.lcta5}" title="#{myBundle.CreateDepartamentosTitle_lcta5}" />
-
+                       
                        
                         <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_contable}" for="contable" />
                         <p:inputText id="contable" value="#{departamentosController.selected.contable}" title="#{myBundle.CreateDepartamentosTitle_contable}" />
@@ -77,6 +63,9 @@
 
                         <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_VSecuencia}" for="VSecuencia" />
                         <p:inputText id="VSecuencia" value="#{departamentosController.selected.VSecuencia}" title="#{myBundle.CreateDepartamentosTitle_VSecuencia}" />
+
+                        <p:outputLabel value="#{myBundle.CreateDepartamentosLabel_correlIsss}" for="correlIsss" />
+                        <p:inputText id="correlIsss" value="#{departamentosController.selected.correlIsss}" title="#{myBundle.CreateDepartamentosTitle_correlIsss}" />                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{departamentosController.saveNew}" value="#{myBundle.Save}" update="display,:DepartamentosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DepartamentosCreateDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="DepartamentosCreateDialog.hide()"/>

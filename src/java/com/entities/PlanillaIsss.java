@@ -38,6 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
         + " and p.planillaIsssPK.mes = :mes "
         + " and p.planillaIsssPK.codEmp = :codEmp")        
         ,    
+    @NamedQuery(name = "PlanillaIsss.findByAnioMes", query = "SELECT p FROM PlanillaIsss p WHERE  p.planillaIsssPK.codCia = :codCia  "
+        + " and p.planillaIsssPK.anio = :anio"
+        + " and p.planillaIsssPK.mes = :mes ") ,    
     @NamedQuery(name = "PlanillaIsss.findByNoPatronal", query = "SELECT p FROM PlanillaIsss p WHERE p.noPatronal = :noPatronal"),
     @NamedQuery(name = "PlanillaIsss.findByNoAfilacion", query = "SELECT p FROM PlanillaIsss p WHERE p.noAfilacion = :noAfilacion"),
     @NamedQuery(name = "PlanillaIsss.findByNombre", query = "SELECT p FROM PlanillaIsss p WHERE p.nombre = :nombre"),

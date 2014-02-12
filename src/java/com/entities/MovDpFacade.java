@@ -403,6 +403,23 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
                  .setParameter("codEmp",  empleado.getEmpleadosPK().getCodEmp() );
          return q.getResultList();
     
+    }  
+    
+    public List<MovDp> findByPla(Vplanilla planilla ){
+	 TypedQuery<MovDp> q;
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();		    
+		 q = em.createNamedQuery("MovDp.findByEmp", MovDp.class )		    
+		    .setParameter("codCia",  codCia )		    
+		    .setParameter("codEmp",  planilla.getVplanillaPK().getCodEmp())
+                    .setParameter("secuencia", planilla.getVplanillaPK().getSecuencia());
+                    
+                 
+         return q.getResultList();
+    
     }      
+    
+    
 }
 

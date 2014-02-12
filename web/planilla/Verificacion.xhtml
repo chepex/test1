@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui"
+		template="/template.xhtml">
+
+    
+    
+           <ui:define name="title">
+	<h:outputText value="#{myBundle.PlanillaTitle}"/>
+    </ui:define>
+
+    <ui:define name="body">
+        
+    <h:form id="PlanillaListForm">
+        <p:dialog id="mas" widgetVar="statusDialog" header="Status"  >  
+                <p:graphicImage value="/resources/img/loading.gif" />  
+        </p:dialog>  
+        
+	<p:panelGrid columns="6" >
+	       Estado
+            <p:selectOneMenu id="estado" value="#{vplanillaController.estado }" 
+				       filter="true">
+			    <f:selectItem itemLabel="Selecione un status"/>
+                            <f:selectItem itemLabel="Programada" itemValue="P"/>			    
+			    <f:selectItem itemLabel="Cerrada" itemValue="C"/>
+                           <p:ajax update="@form" listener="#{vplanillaController.ChangeEstadoPlanilla}" />    
+                        </p:selectOneMenu>
+	    
+	    Planillas Programada
+		      <p:selectOneMenu id="programacionPla" value="#{vplanillaController.programacionpla }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_programacionPla}"
+				       filter="true">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{vplanillaController.programacionplas}"
+                                           var="programacionPlaItem"
+                                           itemValue="#{programacionPlaItem}"
+                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "					   
+					   
+					   />
+                            <f:converter binding="#{programacionPlaConverter}"/>
+                        </p:selectOneMenu>	            
+            
+            <p:commandButton id="btn-consultar"   icon="ui-icon-refresh"  value="Consultar" actionListener="#{vplanillaController.consultarByPlanilla() }"  update="@form :growl datalist " />
+		
+			
+	</p:panelGrid>
+        
+	<p:panel header="#{myBhundle.ListPlanillaTitle}">
+
+	    <p:dataTable id="datalist" value="#{vplanillaController.items}" var="item"
+			 selectionMode="single" selection="#{vplanillaController.selected}"
+			 rowKey="#{item.vplanillaPK}"
+			 paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 >
+                <p:ajax event="rowSelect"   update=":PlanillaListForm:datalist2" listener="#{vplanillaController.detalleMov()}"/>
+                
+	         <p:column sortBy="#{item.vplanillaPK.codEmp}" filterBy="#{item.vplanillaPK.codEmp}">
+		    <f:facet name="header">
+			<h:outputText value="Cod_emp"/>
+		    </f:facet>
+		    <h:outputText value="#{item.vplanillaPK.codEmp} "/>
+		</p:column>
+
+		<p:column sortBy="#{item.nombres}" filterBy="#{item.nombres}">
+		    <f:facet name="header">
+			<h:outputText value="Nombres"/>
+		    </f:facet>
+		    <h:outputText value="#{item.nombres} "/>
+		</p:column>
+                
+                
+		<p:column sortBy="#{item.apellidos}" filterBy="#{item.apellidos}">
+		    <f:facet name="header">
+			<h:outputText value="Apellidos"/>
+		    </f:facet>
+		    <h:outputText value="#{item.apellidos} "/>
+		</p:column>
+                
+		<p:column sortBy="#{item.nomDepto}" filterBy="#{item.nomDepto}">
+		    <f:facet name="header">
+			<h:outputText value="Nom. Depto"/>
+		    </f:facet>
+		    <h:outputText value="#{item.nomDepto} "/>
+		</p:column>                
+                
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="Dias"/>
+		    </f:facet>
+		    <h:outputText value="#{item.dias} "/>
+		</p:column>                
+   
+                
+		<p:column>
+		    <f:facet name="header">
+			<h:outputText value="Bruto"/>
+		    </f:facet>
+		    <h:outputText value="#{item.bruto} "/>
+		</p:column>  
+                
+		
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="T. Deven "/>
+		    </f:facet>
+		    <h:outputText value="#{item.neto} "/>
+		</p:column> 
+                
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="Isss "/>
+		    </f:facet>
+		    <h:outputText value="#{item.isss} "/>
+		</p:column>   
+                
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="Afp "/>
+		    </f:facet>
+		    <h:outputText value="#{item.afp} "/>
+		</p:column>  
+                
+                
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="Renta "/>
+		    </f:facet>
+		    <h:outputText value="#{item.renta} "/>
+		</p:column>   
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="T. Deduc "/>
+		    </f:facet>
+		    <h:outputText value="#{item.deducciones} "/>
+		</p:column>  
+		<p:column >
+		    <f:facet name="header">
+			<h:outputText value="Liquido "/>
+		    </f:facet>
+		    <h:outputText value="#{item.liquido} "/>
+		</p:column>                 
+	    </p:dataTable>
+
+	</p:panel>
+        
+        
+<p:dataTable id="datalist2" value="#{vplanillaController.lmovDp}" var="item"
+			 selectionMode="single" selection="#{movDpController.selected}"
+			 rowKey="#{item.movDpPK}"
+			 paginator="true"
+			 rows="10"
+			 rowsPerPageTemplate="10,20,30"
+			 >
+
+
+		
+
+	
+		<p:column sortBy="#{item.deducPresta.descripcion}" filterBy="#{item.deducPresta.descripcion}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListMovDpTitle_deducPresta}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.deducPresta.descripcion}"/>
+		</p:column>		
+		<p:column sortBy="#{item.valor}" filterBy="#{item.valor}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListMovDpTitle_valor}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.valor}"/>
+		</p:column>
+		<p:column sortBy="#{item.movDpPK.codPresta}" filterBy="#{item.movDpPK.codPresta}">
+		    <f:facet name="header">
+			<h:outputText value="Cod presta."/>
+		    </f:facet>
+		    <h:outputText value="#{item.movDpPK.codPresta}"/>
+		</p:column>                
+                 
+
+
+
+		
+
+	    </p:dataTable>
+        
+    </h:form>
+</ui:define>       
+</ui:composition>

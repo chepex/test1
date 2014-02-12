@@ -51,6 +51,27 @@ public class PlanillaIsssFacade extends AbstractFacade<PlanillaIsss> {
         }
   
     
-    }     
+    }  
+    
+    public List <PlanillaIsss> findByAnioMes(short vanio, short vmes){
+        TypedQuery<PlanillaIsss> q;	 
+        try{
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+		 q = em.createNamedQuery("PlanillaIsss.findByAnioMes", PlanillaIsss.class )		    
+                    .setParameter("codCia",  codCia )
+                    .setParameter("anio", vanio )                                             
+                    .setParameter("mes",  vmes ) ;                                                                                        
+                 
+                   return  q.getResultList();
+        }
+        catch(Exception ex){
+            // JsfUtil.logs(ex , "Surgio un error", "Proceso findByEmp Empleado "+ra.getEmpleados().getNombreIsss(),PlanillaIsssFacade.class,"ERROR");             
+            return null;
+        }
+  
+    
+    }      
     
 }
