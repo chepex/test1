@@ -1,6 +1,8 @@
 package com.ejb;
 import com.entities.DeptosMov;
 import com.entities.DeptosMovFacade;
+import com.entities.DetEmpleado;
+import com.entities.DetEmpleadoFacade;
 import com.entities.Dmgdetalle;
 import com.entities.DmgdetalleFacade;
 import com.entities.DmgdetallePK;
@@ -16,6 +18,9 @@ import com.entities.MovDpFacade;
 import com.entities.Parametros;
 import com.entities.ParametrosFacade;
 import com.entities.Planilla;
+import com.entities.PlanillaAfp;
+import com.entities.PlanillaAfpFacade;
+import com.entities.PlanillaAfpPK;
 import com.entities.PlanillaFacade;
 import com.entities.PlanillaIsss;
 import com.entities.PlanillaIsssFacade;
@@ -31,6 +36,7 @@ import com.entities.util.ManejadorFechas;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -43,6 +49,11 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class SB_Planilla {
+    @EJB
+    private DetEmpleadoFacade detEmpleadoFacade;
+    @EJB
+    private PlanillaAfpFacade planillaAfpFacade;
+    
     @EJB
     private EmpleadosFacade empleadosFacade;
     @EJB
@@ -142,6 +153,7 @@ public class SB_Planilla {
               actualizarPrestamos(e);
               crearPartida(e);
               GenerarIsss(e);
+            //  GenerarAfp(e);
               //PlanillaHistorial(e);              
               actualizarStatus(e);
                
@@ -156,9 +168,19 @@ public class SB_Planilla {
                   CalculoIsss(ra);
               }
         return "ok";
-    }      
+    }  
     
-    public String CalculoIsss(ResumenAsistencia ra){
+    public String GenerarAfp(ProgramacionPla programacionPla){
+            
+            List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(programacionPla );
+            for( ResumenAsistencia ra : iterator ){          
+                  CalculoAfp(ra);
+              }
+        return "ok";
+    }     
+    
+    
+  public String CalculoIsss(ResumenAsistencia ra){
         
         try{
         Parametros p= parametrosFacade.findByNombre("HORAS_LABORALES");
@@ -204,7 +226,7 @@ public class SB_Planilla {
             plaIsss.setDiasRemunerados( dias.toString());
             
             
-            if(ra.getObservaciones()!= null){
+            if(ra.getObservaciones()!= null){ 
                 plaIsss.setCodObserva(ra.getObservaciones().getIsss());
             }      
             if( devengado.floatValue() >  TOPE_ISSS.getValorInt().floatValue() ){
@@ -215,6 +237,94 @@ public class SB_Planilla {
             planillaIsssFacade.edit(plaIsss); 
             planillaIsssFacade.flush();
             planillaIsssFacade.refresh(plaIsss);
+        } 
+
+        
+        
+        
+        
+        }catch(Exception ex){
+             JsfUtil.logs(ex , "Surgio un error", "Proceso validaCuenta",SB_Planilla.class,"ERROR"); 
+        }
+        return "ok";
+    }
+  
+  
+    public String CalculoAfp(ResumenAsistencia ra){
+        
+        try{
+        Parametros p= parametrosFacade.findByNombre("HORAS_LABORALES");
+        
+        
+        
+        
+        LoginBean lb= new LoginBean();	
+        List<Planilla> planillas = planillaFacade.findByMes(ra ) ;
+        BigDecimal devengado = BigDecimal.valueOf( devengoIsss(planillas));
+        String dias =  devengoDias(planillas) ;
+        PlanillaAfp plaAfp = planillaAfpFacade.findByEmp(ra);
+        Empleados emp= empleadosFacade.findbyCodemp(ra.getResumenAsistenciaPK().getCodEmp());
+        DetEmpleado afp = detEmpleadoFacade.findByAfp(emp);
+        String estadoCivil= "";
+        if (emp.getEstadoCivil()=="A"){
+            estadoCivil= "U";
+        }else{
+            estadoCivil= emp.getEstadoCivil();
+        }
+        String cod_afp ="";
+        if(afp.getDetEmpleadoPK().getCodDp() == 64){
+            cod_afp="ISS";
+        } 
+        if(afp.getDetEmpleadoPK().getCodDp() == 65){
+            cod_afp="COF";
+        } 
+        if(afp.getDetEmpleadoPK().getCodDp() == 66){
+            cod_afp="MAX";
+        }         
+        if(plaAfp==null){
+            
+            PlanillaAfp planillaAfp =new PlanillaAfp();
+            PlanillaAfpPK planillaAfpPK =new PlanillaAfpPK();
+            planillaAfpPK.setCodCia(ra.getResumenAsistenciaPK().getCodCia());
+            planillaAfpPK.setAnio(ra.getProgramacionPla().getAnio());
+            planillaAfpPK.setMes(ra.getProgramacionPla().getMes());
+            planillaAfpPK.setCodEmp(ra.getResumenAsistenciaPK().getCodEmp());
+            planillaAfp.setPlanillaAfpPK(planillaAfpPK);
+            planillaAfp.setNumAfp(emp.getNupAfp());
+            planillaAfp.setApellidos(emp.getApellidos());
+            planillaAfp.setApCasada(emp.getApCasada());
+            planillaAfp.setNombres(emp.getNombres());
+            planillaAfp.setDocumento("DUI");
+            planillaAfp.setDocumento(emp.getCedula());
+            planillaAfp.setEstadoCivil(estadoCivil);
+            if(afp.getDetEmpleadoPK().getCodDp()==115){
+            planillaAfp.setPensionado("x");
+            }
+            planillaAfp.setAfp(cod_afp);
+            planillaAfp.setFechaIngreso(emp.getFecIngreso());
+            planillaAfp.setDevengado(devengado);
+            planillaAfp.setHoras(p.getValorTxt());
+            planillaAfp.setDias(dias);
+            if(ra.getObservaciones().getAfp()==3){
+                planillaAfp.setIncapacidad("X");
+            }
+            
+            
+
+            planillaAfpFacade.create(planillaAfp);
+            planillaAfpFacade.flush();
+            planillaAfpFacade.refresh(planillaAfp);
+        }else{
+            Parametros TOPE_AFP= parametrosFacade.findByNombre("TOPE_AFP");                        
+            plaAfp.setDias( dias.toString());            
+            if( devengado.floatValue() >  TOPE_AFP.getValorInt().floatValue() ){
+                plaAfp.setDevengado(TOPE_AFP.getValorInt());                
+            }else{
+                plaAfp.setDevengado(devengado);                
+            }            
+            planillaAfpFacade.edit(plaAfp); 
+            planillaAfpFacade.flush();
+            planillaAfpFacade.refresh(plaAfp);
         } 
 
         
@@ -753,46 +863,68 @@ public class SB_Planilla {
     
   public String generarTxtAFP(short Anio, short Mes ){
          
-         DecimalFormat df = new DecimalFormat("###########");
-         List<PlanillaIsss> lpisss = planillaIsssFacade.findByAnioMes(Anio, Mes);
+         
+         List<PlanillaAfp> lpisss = planillaAfpFacade.findByAnioMes(Anio, Mes);
          String detalle = "";
-         String ob="";
+         
          String mes= String.valueOf(Mes);
          if(mes.length()==1){
              mes= "0"+mes;
          }
          detalle+=String.valueOf(Anio) +String.valueOf(mes);
          detalle+="\n";
-         for( PlanillaIsss pisss : lpisss ){  
-             
-             
-         String nombre = JsfUtil.truncate(pisss.getNombre(),40);
-         nombre =  nombre+"                                        ".substring(nombre.length()); 
-         String dev =  String.valueOf(df.format(pisss.getSalDebengado().floatValue()*100));
-          
-          dev =  "000000000".substring(dev.length())+dev;
-         if(pisss.getCodObserva()==null){
-             ob ="00";
-         }else{
-             ob = String.valueOf(pisss.getCodObserva());
-         }
          
-         detalle+=pisss.getNoPatronal();
-         detalle+=String.valueOf(Anio-2000);
-         detalle+=mes;
-         detalle+="01";
-         detalle+=pisss.getNoAfilacion();
-         detalle+="000000000000000";
-         detalle+=nombre;         
-         detalle+=dev;
-         detalle+=pisss.getDiasRemunerados();
-         detalle+="08";
-         detalle+=ob;
-         detalle+="\n";
+         for( PlanillaAfp pafp : lpisss ){  
+            String fechaingreso= new SimpleDateFormat("yyyyMMdd").format(pafp.getFechaIngreso());    
+            String[] nombres = pafp.getNombres().split(" ");
+            String[] apellidos = pafp.getApellidos().split(" ");
+            detalle+=formatoAfp(pafp.getNumAfp());
+            detalle+=formatoAfp(apellidos[0]);
+            detalle+=formatoAfp(apellidos[1]);         
+            detalle+=formatoAfp(pafp.getApCasada());
+            detalle+=formatoAfp(nombres[0]);
+            detalle+=formatoAfp(nombres[1]);         
+            detalle+=formatoAfp(pafp.getDocumento());
+            detalle+=formatoAfp(pafp.getNumDocumento());
+            detalle+=formatoAfp(pafp.getEstadoCivil());
+            detalle+="\""+"P"+"\",";
+            detalle+=formatoAfp(pafp.getPensionado());
+            detalle+="\"\",";
+            detalle+=formatoAfp(pafp.getAfp());
+            detalle+=formatoAfp(fechaingreso);
+            detalle+="\"\",";
+            detalle+="\""+"M"+"\",";         
+            detalle+=formatoAfp(String.valueOf(pafp.getDevengado()));
+            detalle+=formatoAfp(pafp.getHoras());
+            detalle+=formatoAfp(pafp.getDias());
+            detalle+=formatoAfp(pafp.getIngreso());
+            detalle+=formatoAfp(pafp.getRetiro());
+            detalle+=formatoAfp(pafp.getLicencia());
+            detalle+=formatoAfp(pafp.getIncapacidad());
+            detalle+=formatoAfp(pafp.getAprendiz());
+            detalle+=formatoAfp(pafp.getPAnticipada());
+            detalle+=formatoAfp(pafp.getPSinObligacion());
+            detalle+=formatoAfp(pafp.getPRiesgo());
+            detalle+=formatoAfp(pafp.getDocente());
+            detalle+=formatoAfp(pafp.getCVoluntaria());
+            detalle+=formatoAfp(pafp.getCtv());
+            detalle+=formatoAfp(pafp.getCodCentro());
+            detalle+="\n";
          
          }
         
                  
         return detalle;
     }   
+  
+  public String formatoAfp(String valor){
+      
+      if(valor==null){
+        valor=   "\"\",";
+      }else{
+          valor=   "\""+valor+"\",";
+      }
+      return valor;
+  }
+  
 }

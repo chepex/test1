@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillaAfpEditDlg" widgetVar="PlanillaAfpEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditPlanillaAfpTitle}">
+
+            <h:form id="PlanillaAfpEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{planillaAfpController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaAfpLabel_planillaAfpPK_codCia}" for="planillaAfpPK_codCia" />
+                        <h:outputText id="planillaAfpPK_codCia" value="#{planillaAfpController.selected.planillaAfpPK.codCia}" />
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaAfpLabel_planillaAfpPK_mes}" for="planillaAfpPK_mes" />
+                        <h:outputText id="planillaAfpPK_mes" value="#{planillaAfpController.selected.planillaAfpPK.mes}" />
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaAfpLabel_planillaAfpPK_anio}" for="planillaAfpPK_anio" />
+                        <h:outputText id="planillaAfpPK_anio" value="#{planillaAfpController.selected.planillaAfpPK.anio}" />
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaAfpLabel_planillaAfpPK_codEmp}" for="planillaAfpPK_codEmp" />
+                        <h:outputText id="planillaAfpPK_codEmp" value="#{planillaAfpController.selected.planillaAfpPK.codEmp}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_numAfp}" for="numAfp" />
+                        <p:inputText id="numAfp" value="#{planillaAfpController.selected.numAfp}" title="#{myBundle.EditPlanillaAfpTitle_numAfp}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{planillaAfpController.selected.apellidos}" title="#{myBundle.EditPlanillaAfpTitle_apellidos}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_apCasada}" for="apCasada" />
+                        <p:inputText id="apCasada" value="#{planillaAfpController.selected.apCasada}" title="#{myBundle.EditPlanillaAfpTitle_apCasada}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{planillaAfpController.selected.nombres}" title="#{myBundle.EditPlanillaAfpTitle_nombres}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_documento}" for="documento" />
+                        <p:inputText id="documento" value="#{planillaAfpController.selected.documento}" title="#{myBundle.EditPlanillaAfpTitle_documento}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_numDocumento}" for="numDocumento" />
+                        <p:inputText id="numDocumento" value="#{planillaAfpController.selected.numDocumento}" title="#{myBundle.EditPlanillaAfpTitle_numDocumento}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_estadoCivil}" for="estadoCivil" />
+                        <p:inputText id="estadoCivil" value="#{planillaAfpController.selected.estadoCivil}" title="#{myBundle.EditPlanillaAfpTitle_estadoCivil}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_pensionado}" for="pensionado" />
+                        <p:inputText id="pensionado" value="#{planillaAfpController.selected.pensionado}" title="#{myBundle.EditPlanillaAfpTitle_pensionado}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_afp}" for="afp" />
+                        <p:inputText id="afp" value="#{planillaAfpController.selected.afp}" title="#{myBundle.EditPlanillaAfpTitle_afp}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_fechaIngreso}" for="fechaIngreso" />
+                        <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy HH:mm:ss" value="#{planillaAfpController.selected.fechaIngreso}" title="#{myBundle.EditPlanillaAfpTitle_fechaIngreso}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_devengado}" for="devengado" />
+                        <p:inputText id="devengado" value="#{planillaAfpController.selected.devengado}" title="#{myBundle.EditPlanillaAfpTitle_devengado}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_horas}" for="horas" />
+                        <p:inputText id="horas" value="#{planillaAfpController.selected.horas}" title="#{myBundle.EditPlanillaAfpTitle_horas}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_dias}" for="dias" />
+                        <p:inputText id="dias" value="#{planillaAfpController.selected.dias}" title="#{myBundle.EditPlanillaAfpTitle_dias}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_ingreso}" for="ingreso" />
+                        <p:inputText id="ingreso" value="#{planillaAfpController.selected.ingreso}" title="#{myBundle.EditPlanillaAfpTitle_ingreso}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_retiro}" for="retiro" />
+                        <p:inputText id="retiro" value="#{planillaAfpController.selected.retiro}" title="#{myBundle.EditPlanillaAfpTitle_retiro}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_licencia}" for="licencia" />
+                        <p:inputText id="licencia" value="#{planillaAfpController.selected.licencia}" title="#{myBundle.EditPlanillaAfpTitle_licencia}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_incapacidad}" for="incapacidad" />
+                        <p:inputText id="incapacidad" value="#{planillaAfpController.selected.incapacidad}" title="#{myBundle.EditPlanillaAfpTitle_incapacidad}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_aprendiz}" for="aprendiz" />
+                        <p:inputText id="aprendiz" value="#{planillaAfpController.selected.aprendiz}" title="#{myBundle.EditPlanillaAfpTitle_aprendiz}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_PAnticipada}" for="PAnticipada" />
+                        <p:inputText id="PAnticipada" value="#{planillaAfpController.selected.PAnticipada}" title="#{myBundle.EditPlanillaAfpTitle_PAnticipada}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_PSinObligacion}" for="PSinObligacion" />
+                        <p:inputText id="PSinObligacion" value="#{planillaAfpController.selected.PSinObligacion}" title="#{myBundle.EditPlanillaAfpTitle_PSinObligacion}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_PRiesgo}" for="PRiesgo" />
+                        <p:inputText id="PRiesgo" value="#{planillaAfpController.selected.PRiesgo}" title="#{myBundle.EditPlanillaAfpTitle_PRiesgo}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_docente}" for="docente" />
+                        <p:inputText id="docente" value="#{planillaAfpController.selected.docente}" title="#{myBundle.EditPlanillaAfpTitle_docente}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_CVoluntaria}" for="CVoluntaria" />
+                        <p:inputText id="CVoluntaria" value="#{planillaAfpController.selected.CVoluntaria}" title="#{myBundle.EditPlanillaAfpTitle_CVoluntaria}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_ctv}" for="ctv" />
+                        <p:inputText id="ctv" value="#{planillaAfpController.selected.ctv}" title="#{myBundle.EditPlanillaAfpTitle_ctv}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_codCentro}" for="codCentro" />
+                        <p:inputText id="codCentro" value="#{planillaAfpController.selected.codCentro}" title="#{myBundle.EditPlanillaAfpTitle_codCentro}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{planillaAfpController.selected.usuario}" title="#{myBundle.EditPlanillaAfpTitle_usuario}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaAfpLabel_fechaReg}" for="fechaReg" />
+                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{planillaAfpController.selected.fechaReg}" title="#{myBundle.EditPlanillaAfpTitle_fechaReg}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planillaAfpController.save}" value="#{myBundle.Save}" update="display,:PlanillaAfpListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PlanillaAfpEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PlanillaAfpEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillaAfpViewDlg" widgetVar="PlanillaAfpViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewPlanillaAfpTitle}">
+
+            <h:form id="PlanillaAfpViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planillaAfpController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_planillaAfpPK_codCia}"/>
+                        <h:outputText value="#{planillaAfpController.selected.planillaAfpPK.codCia}" title="#{myBundle.ViewPlanillaAfpTitle_planillaAfpPK_codCia}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_planillaAfpPK_mes}"/>
+                        <h:outputText value="#{planillaAfpController.selected.planillaAfpPK.mes}" title="#{myBundle.ViewPlanillaAfpTitle_planillaAfpPK_mes}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_planillaAfpPK_anio}"/>
+                        <h:outputText value="#{planillaAfpController.selected.planillaAfpPK.anio}" title="#{myBundle.ViewPlanillaAfpTitle_planillaAfpPK_anio}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_planillaAfpPK_codEmp}"/>
+                        <h:outputText value="#{planillaAfpController.selected.planillaAfpPK.codEmp}" title="#{myBundle.ViewPlanillaAfpTitle_planillaAfpPK_codEmp}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_numAfp}"/>
+                        <h:outputText value="#{planillaAfpController.selected.numAfp}" title="#{myBundle.ViewPlanillaAfpTitle_numAfp}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_apellidos}"/>
+                        <h:outputText value="#{planillaAfpController.selected.apellidos}" title="#{myBundle.ViewPlanillaAfpTitle_apellidos}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_apCasada}"/>
+                        <h:outputText value="#{planillaAfpController.selected.apCasada}" title="#{myBundle.ViewPlanillaAfpTitle_apCasada}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_nombres}"/>
+                        <h:outputText value="#{planillaAfpController.selected.nombres}" title="#{myBundle.ViewPlanillaAfpTitle_nombres}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_documento}"/>
+                        <h:outputText value="#{planillaAfpController.selected.documento}" title="#{myBundle.ViewPlanillaAfpTitle_documento}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_numDocumento}"/>
+                        <h:outputText value="#{planillaAfpController.selected.numDocumento}" title="#{myBundle.ViewPlanillaAfpTitle_numDocumento}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_estadoCivil}"/>
+                        <h:outputText value="#{planillaAfpController.selected.estadoCivil}" title="#{myBundle.ViewPlanillaAfpTitle_estadoCivil}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_pensionado}"/>
+                        <h:outputText value="#{planillaAfpController.selected.pensionado}" title="#{myBundle.ViewPlanillaAfpTitle_pensionado}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_afp}"/>
+                        <h:outputText value="#{planillaAfpController.selected.afp}" title="#{myBundle.ViewPlanillaAfpTitle_afp}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_fechaIngreso}"/>
+                        <h:outputText value="#{planillaAfpController.selected.fechaIngreso}" title="#{myBundle.ViewPlanillaAfpTitle_fechaIngreso}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_devengado}"/>
+                        <h:outputText value="#{planillaAfpController.selected.devengado}" title="#{myBundle.ViewPlanillaAfpTitle_devengado}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_horas}"/>
+                        <h:outputText value="#{planillaAfpController.selected.horas}" title="#{myBundle.ViewPlanillaAfpTitle_horas}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_dias}"/>
+                        <h:outputText value="#{planillaAfpController.selected.dias}" title="#{myBundle.ViewPlanillaAfpTitle_dias}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_ingreso}"/>
+                        <h:outputText value="#{planillaAfpController.selected.ingreso}" title="#{myBundle.ViewPlanillaAfpTitle_ingreso}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_retiro}"/>
+                        <h:outputText value="#{planillaAfpController.selected.retiro}" title="#{myBundle.ViewPlanillaAfpTitle_retiro}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_licencia}"/>
+                        <h:outputText value="#{planillaAfpController.selected.licencia}" title="#{myBundle.ViewPlanillaAfpTitle_licencia}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_incapacidad}"/>
+                        <h:outputText value="#{planillaAfpController.selected.incapacidad}" title="#{myBundle.ViewPlanillaAfpTitle_incapacidad}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_aprendiz}"/>
+                        <h:outputText value="#{planillaAfpController.selected.aprendiz}" title="#{myBundle.ViewPlanillaAfpTitle_aprendiz}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_PAnticipada}"/>
+                        <h:outputText value="#{planillaAfpController.selected.PAnticipada}" title="#{myBundle.ViewPlanillaAfpTitle_PAnticipada}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_PSinObligacion}"/>
+                        <h:outputText value="#{planillaAfpController.selected.PSinObligacion}" title="#{myBundle.ViewPlanillaAfpTitle_PSinObligacion}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_PRiesgo}"/>
+                        <h:outputText value="#{planillaAfpController.selected.PRiesgo}" title="#{myBundle.ViewPlanillaAfpTitle_PRiesgo}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_docente}"/>
+                        <h:outputText value="#{planillaAfpController.selected.docente}" title="#{myBundle.ViewPlanillaAfpTitle_docente}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_CVoluntaria}"/>
+                        <h:outputText value="#{planillaAfpController.selected.CVoluntaria}" title="#{myBundle.ViewPlanillaAfpTitle_CVoluntaria}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_ctv}"/>
+                        <h:outputText value="#{planillaAfpController.selected.ctv}" title="#{myBundle.ViewPlanillaAfpTitle_ctv}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_codCentro}"/>
+                        <h:outputText value="#{planillaAfpController.selected.codCentro}" title="#{myBundle.ViewPlanillaAfpTitle_codCentro}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_usuario}"/>
+                        <h:outputText value="#{planillaAfpController.selected.usuario}" title="#{myBundle.ViewPlanillaAfpTitle_usuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewPlanillaAfpLabel_fechaReg}"/>
+                        <h:outputText value="#{planillaAfpController.selected.fechaReg}" title="#{myBundle.ViewPlanillaAfpTitle_fechaReg}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PlanillaAfpViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

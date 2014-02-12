@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PlanillaAfpListForm">
+
+        <p:panel header="#{myBundle.ListPlanillaAfpTitle}">
+
+            <p:dataTable id="datalist" value="#{planillaAfpController.items}" var="item"
+                         selectionMode="single" selection="#{planillaAfpController.selected}"
+                         rowKey="#{item.planillaAfpPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.planillaAfpPK.codEmp}" filterBy="#{item.planillaAfpPK.codEmp}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_planillaAfpPK_codEmp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.planillaAfpPK.codEmp}"/>
+                </p:column>
+                <p:column sortBy="#{item.planillaAfpPK.codCia}" filterBy="#{item.planillaAfpPK.codCia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_planillaAfpPK_codCia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.planillaAfpPK.codCia}"/>
+                </p:column>
+                <p:column sortBy="#{item.planillaAfpPK.anio}" filterBy="#{item.planillaAfpPK.anio}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_planillaAfpPK_anio}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.planillaAfpPK.anio}"/>
+                </p:column>
+                <p:column sortBy="#{item.planillaAfpPK.mes}" filterBy="#{item.planillaAfpPK.mes}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_planillaAfpPK_mes}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.planillaAfpPK.mes}"/>
+                </p:column>
+                <p:column sortBy="#{item.numAfp}" filterBy="#{item.numAfp}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_numAfp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numAfp}"/>
+                </p:column>
+                <p:column sortBy="#{item.apellidos}" filterBy="#{item.apellidos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_apellidos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellidos}"/>
+                </p:column>
+                <p:column sortBy="#{item.apCasada}" filterBy="#{item.apCasada}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_apCasada}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apCasada}"/>
+                </p:column>
+                <p:column sortBy="#{item.nombres}" filterBy="#{item.nombres}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_nombres}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombres}"/>
+                </p:column>
+                <p:column sortBy="#{item.documento}" filterBy="#{item.documento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_documento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.documento}"/>
+                </p:column>
+                <p:column sortBy="#{item.numDocumento}" filterBy="#{item.numDocumento}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_numDocumento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numDocumento}"/>
+                </p:column>
+                <p:column sortBy="#{item.estadoCivil}" filterBy="#{item.estadoCivil}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_estadoCivil}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estadoCivil}"/>
+                </p:column>
+                <p:column sortBy="#{item.pensionado}" filterBy="#{item.pensionado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_pensionado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.pensionado}"/>
+                </p:column>
+                <p:column sortBy="#{item.afp}" filterBy="#{item.afp}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_afp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.afp}"/>
+                </p:column>
+                <p:column sortBy="#{item.fechaIngreso}" filterBy="#{item.fechaIngreso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_fechaIngreso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaIngreso}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{item.devengado}" filterBy="#{item.devengado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_devengado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.devengado}"/>
+                </p:column>
+                <p:column sortBy="#{item.horas}" filterBy="#{item.horas}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_horas}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horas}"/>
+                </p:column>
+                <p:column sortBy="#{item.dias}" filterBy="#{item.dias}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_dias}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.dias}"/>
+                </p:column>
+                <p:column sortBy="#{item.ingreso}" filterBy="#{item.ingreso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_ingreso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ingreso}"/>
+                </p:column>
+                <p:column sortBy="#{item.retiro}" filterBy="#{item.retiro}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_retiro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.retiro}"/>
+                </p:column>
+                <p:column sortBy="#{item.licencia}" filterBy="#{item.licencia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_licencia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.licencia}"/>
+                </p:column>
+                <p:column sortBy="#{item.incapacidad}" filterBy="#{item.incapacidad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_incapacidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.incapacidad}"/>
+                </p:column>
+                <p:column sortBy="#{item.aprendiz}" filterBy="#{item.aprendiz}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_aprendiz}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.aprendiz}"/>
+                </p:column>
+                <p:column sortBy="#{item.PAnticipada}" filterBy="#{item.PAnticipada}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_PAnticipada}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.PAnticipada}"/>
+                </p:column>
+                <p:column sortBy="#{item.PSinObligacion}" filterBy="#{item.PSinObligacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_PSinObligacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.PSinObligacion}"/>
+                </p:column>
+                <p:column sortBy="#{item.PRiesgo}" filterBy="#{item.PRiesgo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_PRiesgo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.PRiesgo}"/>
+                </p:column>
+                <p:column sortBy="#{item.docente}" filterBy="#{item.docente}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_docente}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.docente}"/>
+                </p:column>
+                <p:column sortBy="#{item.CVoluntaria}" filterBy="#{item.CVoluntaria}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_CVoluntaria}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.CVoluntaria}"/>
+                </p:column>
+                <p:column sortBy="#{item.ctv}" filterBy="#{item.ctv}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_ctv}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ctv}"/>
+                </p:column>
+                <p:column sortBy="#{item.codCentro}" filterBy="#{item.codCentro}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_codCentro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codCentro}"/>
+                </p:column>
+                <p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_usuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuario}"/>
+                </p:column>
+                <p:column sortBy="#{item.fechaReg}" filterBy="#{item.fechaReg}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPlanillaAfpTitle_fechaReg}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaReg}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{planillaAfpController.prepareCreate}" update=":PlanillaAfpCreateForm" oncomplete="PlanillaAfpCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PlanillaAfpViewForm" oncomplete="PlanillaAfpViewDialog.show()" disabled="#{empty planillaAfpController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PlanillaAfpEditForm" oncomplete="PlanillaAfpEditDialog.show()" disabled="#{empty planillaAfpController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{planillaAfpController.delete}" update=":growl,datalist" disabled="#{empty planillaAfpController.selected}"/>
+                    <p:commandButton id="CreateCVS" icon="ui-icon-circle-arrow-s" actionListener="#{planillaAfpController.Gcvs()}" ajax="false" value="Generar CVS" update="PlanillaIsssListForm" oncomplete="ProductoPdfDialog.show()"/>                    
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

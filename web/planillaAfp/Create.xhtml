@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillaAfpCreateDlg" widgetVar="PlanillaAfpCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreatePlanillaAfpTitle}">
+
+            <h:form id="PlanillaAfpCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{planillaAfpController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_planillaAfpPK_codCia}" for="planillaAfpPK_codCia" />
+                        <p:inputText id="planillaAfpPK_codCia" value="#{planillaAfpController.selected.planillaAfpPK.codCia}" title="#{myBundle.CreatePlanillaAfpTitle_planillaAfpPK_codCia}" required="true" requiredMessage="#{myBundle.CreatePlanillaAfpRequiredMessage_planillaAfpPK_codCia}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_planillaAfpPK_mes}" for="planillaAfpPK_mes" />
+                        <p:inputText id="planillaAfpPK_mes" value="#{planillaAfpController.selected.planillaAfpPK.mes}" title="#{myBundle.CreatePlanillaAfpTitle_planillaAfpPK_mes}" required="true" requiredMessage="#{myBundle.CreatePlanillaAfpRequiredMessage_planillaAfpPK_mes}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_planillaAfpPK_anio}" for="planillaAfpPK_anio" />
+                        <p:inputText id="planillaAfpPK_anio" value="#{planillaAfpController.selected.planillaAfpPK.anio}" title="#{myBundle.CreatePlanillaAfpTitle_planillaAfpPK_anio}" required="true" requiredMessage="#{myBundle.CreatePlanillaAfpRequiredMessage_planillaAfpPK_anio}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_planillaAfpPK_codEmp}" for="planillaAfpPK_codEmp" />
+                        <p:inputText id="planillaAfpPK_codEmp" value="#{planillaAfpController.selected.planillaAfpPK.codEmp}" title="#{myBundle.CreatePlanillaAfpTitle_planillaAfpPK_codEmp}" required="true" requiredMessage="#{myBundle.CreatePlanillaAfpRequiredMessage_planillaAfpPK_codEmp}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_numAfp}" for="numAfp" />
+                        <p:inputText id="numAfp" value="#{planillaAfpController.selected.numAfp}" title="#{myBundle.CreatePlanillaAfpTitle_numAfp}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{planillaAfpController.selected.apellidos}" title="#{myBundle.CreatePlanillaAfpTitle_apellidos}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_apCasada}" for="apCasada" />
+                        <p:inputText id="apCasada" value="#{planillaAfpController.selected.apCasada}" title="#{myBundle.CreatePlanillaAfpTitle_apCasada}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{planillaAfpController.selected.nombres}" title="#{myBundle.CreatePlanillaAfpTitle_nombres}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_documento}" for="documento" />
+                        <p:inputText id="documento" value="#{planillaAfpController.selected.documento}" title="#{myBundle.CreatePlanillaAfpTitle_documento}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_numDocumento}" for="numDocumento" />
+                        <p:inputText id="numDocumento" value="#{planillaAfpController.selected.numDocumento}" title="#{myBundle.CreatePlanillaAfpTitle_numDocumento}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_estadoCivil}" for="estadoCivil" />
+                        <p:inputText id="estadoCivil" value="#{planillaAfpController.selected.estadoCivil}" title="#{myBundle.CreatePlanillaAfpTitle_estadoCivil}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_pensionado}" for="pensionado" />
+                        <p:inputText id="pensionado" value="#{planillaAfpController.selected.pensionado}" title="#{myBundle.CreatePlanillaAfpTitle_pensionado}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_afp}" for="afp" />
+                        <p:inputText id="afp" value="#{planillaAfpController.selected.afp}" title="#{myBundle.CreatePlanillaAfpTitle_afp}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_fechaIngreso}" for="fechaIngreso" />
+                        <p:calendar id="fechaIngreso" pattern="MM/dd/yyyy HH:mm:ss" value="#{planillaAfpController.selected.fechaIngreso}" title="#{myBundle.EditPlanillaAfpTitle_fechaIngreso}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_devengado}" for="devengado" />
+                        <p:inputText id="devengado" value="#{planillaAfpController.selected.devengado}" title="#{myBundle.CreatePlanillaAfpTitle_devengado}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_horas}" for="horas" />
+                        <p:inputText id="horas" value="#{planillaAfpController.selected.horas}" title="#{myBundle.CreatePlanillaAfpTitle_horas}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_dias}" for="dias" />
+                        <p:inputText id="dias" value="#{planillaAfpController.selected.dias}" title="#{myBundle.CreatePlanillaAfpTitle_dias}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_ingreso}" for="ingreso" />
+                        <p:inputText id="ingreso" value="#{planillaAfpController.selected.ingreso}" title="#{myBundle.CreatePlanillaAfpTitle_ingreso}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_retiro}" for="retiro" />
+                        <p:inputText id="retiro" value="#{planillaAfpController.selected.retiro}" title="#{myBundle.CreatePlanillaAfpTitle_retiro}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_licencia}" for="licencia" />
+                        <p:inputText id="licencia" value="#{planillaAfpController.selected.licencia}" title="#{myBundle.CreatePlanillaAfpTitle_licencia}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_incapacidad}" for="incapacidad" />
+                        <p:inputText id="incapacidad" value="#{planillaAfpController.selected.incapacidad}" title="#{myBundle.CreatePlanillaAfpTitle_incapacidad}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_aprendiz}" for="aprendiz" />
+                        <p:inputText id="aprendiz" value="#{planillaAfpController.selected.aprendiz}" title="#{myBundle.CreatePlanillaAfpTitle_aprendiz}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_PAnticipada}" for="PAnticipada" />
+                        <p:inputText id="PAnticipada" value="#{planillaAfpController.selected.PAnticipada}" title="#{myBundle.CreatePlanillaAfpTitle_PAnticipada}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_PSinObligacion}" for="PSinObligacion" />
+                        <p:inputText id="PSinObligacion" value="#{planillaAfpController.selected.PSinObligacion}" title="#{myBundle.CreatePlanillaAfpTitle_PSinObligacion}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_PRiesgo}" for="PRiesgo" />
+                        <p:inputText id="PRiesgo" value="#{planillaAfpController.selected.PRiesgo}" title="#{myBundle.CreatePlanillaAfpTitle_PRiesgo}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_docente}" for="docente" />
+                        <p:inputText id="docente" value="#{planillaAfpController.selected.docente}" title="#{myBundle.CreatePlanillaAfpTitle_docente}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_CVoluntaria}" for="CVoluntaria" />
+                        <p:inputText id="CVoluntaria" value="#{planillaAfpController.selected.CVoluntaria}" title="#{myBundle.CreatePlanillaAfpTitle_CVoluntaria}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_ctv}" for="ctv" />
+                        <p:inputText id="ctv" value="#{planillaAfpController.selected.ctv}" title="#{myBundle.CreatePlanillaAfpTitle_ctv}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_codCentro}" for="codCentro" />
+                        <p:inputText id="codCentro" value="#{planillaAfpController.selected.codCentro}" title="#{myBundle.CreatePlanillaAfpTitle_codCentro}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{planillaAfpController.selected.usuario}" title="#{myBundle.CreatePlanillaAfpTitle_usuario}" />
+
+                        <p:outputLabel value="#{myBundle.CreatePlanillaAfpLabel_fechaReg}" for="fechaReg" />
+                        <p:calendar id="fechaReg" pattern="MM/dd/yyyy HH:mm:ss" value="#{planillaAfpController.selected.fechaReg}" title="#{myBundle.EditPlanillaAfpTitle_fechaReg}"  showOn="button"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planillaAfpController.saveNew}" value="#{myBundle.Save}" update="display,:PlanillaAfpListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PlanillaAfpCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PlanillaAfpCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
