@@ -16,7 +16,15 @@
                     <p:panelGrid columns="2" rendered="#{detEmpleadoController.selected != null}">
 
                         <p:outputLabel value="#{myBundle.CreateDetEmpleadoLabel_detEmpleadoPK_codEmp}" for="detEmpleadoPK_codEmp" />
-                        <p:inputText id="detEmpleadoPK_codEmp" value="#{detEmpleadoController.selected.detEmpleadoPK.codEmp}" title="#{myBundle.CreateDetEmpleadoTitle_detEmpleadoPK_codEmp}" required="true" requiredMessage="#{myBundle.CreateDetEmpleadoRequiredMessage_detEmpleadoPK_codEmp}"/>
+                        <p:selectOneMenu id="detEmpleadoPK_codEmp"  filterMatchMode="contains" value="#{detEmpleadoController.selected.detEmpleadoPK.codEmp}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_empleados}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadosController.activos}"
+                                           var="empleadosItem"
+                                           itemValue="#{empleadosItem}"
+                                           itemLabel=" ( #{empleadosItem.codEmpref} ) #{empleadosItem.nombreNit}"
+					   />
+                            <f:converter binding="#{empleadosConverter}"/>
+                        </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.CreateDetEmpleadoLabel_detEmpleadoPK_codDp}" for="detEmpleadoPK_codDp" />
                         <p:inputText id="detEmpleadoPK_codDp" value="#{detEmpleadoController.selected.detEmpleadoPK.codDp}" title="#{myBundle.CreateDetEmpleadoTitle_detEmpleadoPK_codDp}" required="true" requiredMessage="#{myBundle.CreateDetEmpleadoRequiredMessage_detEmpleadoPK_codDp}"/>

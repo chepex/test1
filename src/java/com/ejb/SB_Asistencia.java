@@ -13,6 +13,8 @@ import com.entities.ResumenAsistenciaFacade;
 import com.entities.ResumenAsistenciaPK;
 import com.entities.LoginBean;
 import com.entities.MovDpFacade;
+import com.entities.Observaciones;
+import com.entities.ObservacionesFacade;
 import com.entities.Renta;
 import com.entities.RentaFacade;
 import com.entities.util.JsfUtil;
@@ -34,6 +36,8 @@ import javax.faces.context.FacesContext;
 */
 @Stateless
 public class SB_Asistencia {
+    @EJB
+    private ObservacionesFacade observacionesFacade;
     @EJB
     private MovDpFacade movDpFacade;
     @EJB
@@ -144,6 +148,7 @@ public class SB_Asistencia {
 	    short codCia = lb.sscia();	    
             
 	    List<Empleados>   iterador =    empleadosFacade.findbytipoPla(   programacionpla );		    
+            Observaciones obs= observacionesFacade.findbyID((short)1);
             
 	    for( Empleados e : iterador ){        
                 BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
@@ -155,6 +160,7 @@ public class SB_Asistencia {
 		hj.setProgramacionPla(programacionpla);
 		hj.setResumenAsistenciaPK(resumenAsistenciaPK);	   
                 hj.setPromedio(promedio);
+                hj.setObservaciones(obs);
 		resumenAsistenciaFacade.edit(hj);			
 	    }
                return "ok";
@@ -177,6 +183,7 @@ public class SB_Asistencia {
             LoginBean lb= new LoginBean();		 
 	    short codCia = lb.sscia();	    
 	    List<Empleados>   iterador =    empleadosFacade.findbyVacc(   programacionpla );		    
+            Observaciones obs= observacionesFacade.findbyID((short)1);
 	    for( Empleados e : iterador ){ 
                 BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
 		ResumenAsistencia hj = new ResumenAsistencia();
@@ -186,7 +193,8 @@ public class SB_Asistencia {
 		hj.setEmpleados(e);
 		hj.setProgramacionPla(programacionpla);
 		hj.setResumenAsistenciaPK(resumenAsistenciaPK);	
-                hj.setPromedio(promedio);                
+                hj.setPromedio(promedio);  
+                hj.setObservaciones(obs);
 		resumenAsistenciaFacade.edit(hj);			
 	    }
                 return "ok";      
@@ -207,7 +215,8 @@ public class SB_Asistencia {
            try{
             LoginBean lb= new LoginBean();		 
 	    short codCia = lb.sscia();	    
-	    List<Empleados>   iterador =   null;		    
+	    List<Empleados>   iterador =   null;
+            Observaciones obs= observacionesFacade.findbyID((short)1);
                 for( Empleados e : iterador ){        
                     BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
                     ResumenAsistencia hj = new ResumenAsistencia();
@@ -217,7 +226,8 @@ public class SB_Asistencia {
                     hj.setEmpleados(e);
                     hj.setProgramacionPla(programacionpla);
                     hj.setResumenAsistenciaPK(resumenAsistenciaPK);	    	    
-                    hj.setPromedio(promedio);    
+                    hj.setPromedio(promedio);  
+                    hj.setObservaciones(obs);
                     resumenAsistenciaFacade.edit(hj);
                     
                 }
@@ -237,7 +247,8 @@ public class SB_Asistencia {
     public String agui(ProgramacionPla programacionpla){
            try{
             LoginBean lb= new LoginBean();		 
-	    short codCia = lb.sscia();	    
+	    short codCia = lb.sscia();	
+            Observaciones obs= observacionesFacade.findbyID((short)1);
 	    List<Empleados>   iterador =    empleadosFacade.activos();			    
                 for( Empleados e : iterador ){        
                     BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
@@ -248,7 +259,8 @@ public class SB_Asistencia {
                     hj.setEmpleados(e);
                     hj.setProgramacionPla(programacionpla);
                     hj.setResumenAsistenciaPK(resumenAsistenciaPK);
-                    hj.setPromedio(promedio);    
+                    hj.setPromedio(promedio);   
+                    hj.setObservaciones(obs);
                     resumenAsistenciaFacade.edit(hj);			
                 }
                 return "ok";

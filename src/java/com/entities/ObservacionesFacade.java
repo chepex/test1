@@ -45,4 +45,19 @@ public class ObservacionesFacade extends AbstractFacade<Observaciones> {
     }      
     
     
+    
+    public Observaciones findbyID(short vid){
+	 TypedQuery<Observaciones> q;
+	 
+	   
+            LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+		 q = em.createNamedQuery("Observaciones.findById", Observaciones.class )		    
+                    .setParameter("id",  vid )		   
+		    .setParameter("codCia",  codCia );	
+                 
+         return q.getSingleResult();
+    
+    }   
+    
 }

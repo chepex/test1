@@ -12,7 +12,7 @@
             
 	    Estado
             <p:selectOneMenu id="estado" value="#{planillaController.estado }" 
-				       filter="true">
+				       filter="true" filterMatchMode="contains">
 			    <f:selectItem itemLabel="Selecione un status"/>
                             <f:selectItem itemLabel="Programada" itemValue="P"/>			    
 			    <f:selectItem itemLabel="Cerrada" itemValue="C"/>
@@ -21,7 +21,7 @@
 	    
 	    Planillas Programada
 		      <p:selectOneMenu id="programacionPla" value="#{planillaController.programacionpla }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_programacionPla}"
-				       filter="true">
+				       filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{planillaController.programacionplas}"
                                            var="programacionPlaItem"
@@ -36,10 +36,16 @@
                     <f:selectItem itemLabel="Todos" itemValue="1"/>  
                     <f:selectItem itemLabel="Ejecutivos" itemValue="2" />  
                 </p:selectOneRadio>  
-            *
-            <p:commandButton id="btnprint"   icon="ui-icon ui-icon-print"  value="Imprimir" actionListener="#{planillaController.reportePlanilla}" ajax="false" update="@form :growl" />
-			
-	</p:panelGrid>                   
+            
+            <h:outputText value="Corelativo BAC" />              
+            <p:inputText id="correlativo" value="#{planillaController.correlativo }"  />
+         </p:panelGrid>   
+        <p:panelGrid columns="3" style="margin: 0 auto;">
+            <p:commandButton id="btnprint"   icon="ui-icon ui-icon-print"  value="Reporte" actionListener="#{planillaController.reportePlanilla}" ajax="false" update="@form :growl" />
+            <p:commandButton id="btnrecibos"   icon="ui-icon ui-icon-print"  value="Recibos" actionListener="#{planillaController.reciboPlanilla}" ajax="false" update="@form :growl" />            
+            <p:commandButton id="CreateCVS" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.Gcvs()}" ajax="false" value="Generar CVS" update="@form :growl"/>                                
+	</p:panelGrid> 		
+	                
     </h:form>
 
 </ui:composition>

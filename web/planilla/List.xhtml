@@ -9,6 +9,9 @@
     <h:form id="PlanillaListForm">
         <p:dialog id="mas" widgetVar="statusDialog" header="Status"  >  
                 <p:graphicImage value="/resources/img/loading.gif" />  
+                
+
+               
         </p:dialog>  
         
 	<p:panelGrid columns="6" >
@@ -34,11 +37,11 @@
 
 		<p:ajax event="rowSelect"   update="viewButton"/>
 		<p:ajax event="rowUnselect" update="viewButton"/>
-		<p:column sortBy="#{item.empleados.nombreNit}" filterBy="#{item.empleados.nombreNit}">
+		<p:column sortBy="#{item.empleados.nombreNit}" filterMatchMode="contains" filterBy="#{item.empleados.nombreNit}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListPlanillaTitle_empleados}"/>
 		    </f:facet>
-		    <h:outputText value="#{item.empleados.nombreNit} "/>
+		    <h:outputText value="#{item.empleados.nombres}  #{item.empleados.apellidos}"/>
 		</p:column>
 		<p:column sortBy="#{item.departamentos.nomDepto}" filterBy="#{item.departamentos.nomDepto}">
 		    <f:facet name="header">
@@ -84,20 +87,23 @@
 		</p:column>
 
 
-
+  
 		<f:facet name="footer">		  
 		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PlanillaViewForm" oncomplete="PlanillaViewDialog.show()" disabled="#{empty planillaController.selected}"/>		                        
-                    <p:commandButton id="btn-generar"   icon="ui-icon-shuffle"  value="Generar" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()"   actionListener="#{planillaController.generar() }" update="@form :growl" />                                        
+                    <p:commandButton id="btn-generar" onstart="pbPoll.start();" async="true"  icon="ui-icon-shuffle"  value="Generar" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()" ajax="true" actionListener="#{planillaController.generar() }" update="@form :growl" />                                        
                     <p:commandButton id="btn-cerrar"   icon="ui-icon-shuffle"  value="Cerrar" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()"   actionListener="#{planillaController.cerrar() }" update="@form :growl" />                                                            
-                    <p:commandButton id="pdfButton" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.reportePlanilla()}" ajax="false" value="Generar Pdf" update="PlanillaListForm" oncomplete="ProductoPdfDialog.show()"/>   
-                    <p:commandButton id="CreateCVS" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.Gcvs()}" ajax="false" value="Generar CVS" update="PlanillaListForm" oncomplete="ProductoPdfDialog.show()"/>                    
-                    <p:commandButton id="pdfBoletas" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.GenerarBoletas()}" ajax="false" value="Generar Boletas" update="PlanillaListForm" oncomplete="ProductoPdfDialog.show()"/>   
+                    
+                    
+                    
                     
                     
 		</f:facet>
-
+ 
 	    </p:dataTable>
-
+            <p:poll async="true" autoStart="true" interval="1" update=":PlanillaListForm:progressBar" widgetVar="pbPoll"/>
+<br/><br/>
+ <p:progressBar id="progressBar" value="#{planillaController.progress}" labelTemplate="{value}% #{planillaController.progress}" displayOnly="true"/>  
+  
 	</p:panel>
 <h1>Mantenimiento Planilla</h1>
 <p>El boton generar se encarga de traer todas las planillas en proceso y generar los movimientos segun los parametro establecidos</p>

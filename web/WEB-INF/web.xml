@@ -12,10 +12,10 @@
             <param-value>/opt/lib/</param-value>
         </init-param>
     </filter>
-<filter-mapping>
-<filter-name>PrimeFaces FileUpload Filter</filter-name>
-<servlet-name>Faces Servlet</servlet-name>
-</filter-mapping>   
+    <filter-mapping>
+        <filter-name>PrimeFaces FileUpload Filter</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Production</param-value>
@@ -25,10 +25,10 @@
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
-    	<context-param>
-	    <param-name>primefaces.THEME</param-name>
-	    <param-value>home</param-value>
-	</context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>home</param-value>
+    </context-param>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -47,6 +47,111 @@
             <web-resource-name>empleados</web-resource-name>
             <description/>
             <url-pattern>/faces/empleados/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>departamentos</web-resource-name>
+            <description/>
+            <url-pattern>/faces/departamentos/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>catDp</web-resource-name>
+            <description/>
+            <url-pattern>/faces/catDp/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>deducPresta</web-resource-name>
+            <description/>
+            <url-pattern>/faces/deducPresta/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>deptosMov</web-resource-name>
+            <description/>
+            <url-pattern>/faces/deptosMov/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>detEmpleado</web-resource-name>
+            <description/>
+            <url-pattern>/faces/detEmpleado/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>movDp</web-resource-name>
+            <description/>
+            <url-pattern>/faces/movDp/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>observaciones</web-resource-name>
+            <description/>
+            <url-pattern>/faces/observaciones/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>otrosMovDp</web-resource-name>
+            <description/>
+            <url-pattern>/faces/otrosMovDp/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>parametros</web-resource-name>
+            <description/>
+            <url-pattern>/faces/parametros/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>/faces/planilla/*</web-resource-name>
+            <description/>
+            <url-pattern>/faces/planilla/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>planillaAfp</web-resource-name>
+            <description/>
+            <url-pattern>/faces/planillaAfp/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>planillaHoras</web-resource-name>
+            <description/>
+            <url-pattern>/faces/planillaHoras/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>planillaIsss</web-resource-name>
+            <description/>
+            <url-pattern>/faces/planillaIsss/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>planillah</web-resource-name>
+            <description/>
+            <url-pattern>/faces/planillah/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>prestamos</web-resource-name>
+            <description/>
+            <url-pattern>/faces/prestamos/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>profesiones</web-resource-name>
+            <description/>
+            <url-pattern>/faces/profesiones/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>programacionPla</web-resource-name>
+            <description/>
+            <url-pattern>/faces/programacionPla/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>puestos</web-resource-name>
+            <description/>
+            <url-pattern>/faces/puestos/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>renta</web-resource-name>
+            <description/>
+            <url-pattern>/faces/renta/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>resumenAsistencia</web-resource-name>
+            <description/>
+            <url-pattern>/faces/resumenAsistencia/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>tiposPlanilla</web-resource-name>
+            <description/>
+            <url-pattern>/faces/tiposPlanilla/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>

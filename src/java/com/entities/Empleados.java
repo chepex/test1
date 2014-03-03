@@ -41,8 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empleados.findByTipoPla", query = "SELECT e FROM Empleados e JOIN e.departamentos d  WHERE e.empleadosPK.codCia = :codCia and e.status like :status and d.codTipopla = :codTipopla"),
     @NamedQuery(name = "Empleados.findByVac", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and e.status like :status and e.vacaciones = :vacaciones "),    
     @NamedQuery(name = "Empleados.findByFiltros", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia like :codCia  and  e.apellidos like :apellidos and e.nombres like :nombres"),
-    @NamedQuery(name = "Empleados.findByPk2", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and  e.empleadosPK.codEmp = :codEmp"),        
-    @NamedQuery(name = "Empleados.findByPk3", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and  e.codEmpref = :codEmpref"),            
+    @NamedQuery(name = "Empleados.findByPk2", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and e.status = 'A' and e.empleadosPK.codEmp = :codEmp"),        
+    @NamedQuery(name = "Empleados.findByPk3", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and e.status = 'A' and e.codEmpref = :codEmpref"),            
     @NamedQuery(name = "Empleados.findByDeptos", query = "SELECT e FROM Empleados e  WHERE  e.empleadosPK.codCia = :codCia and e.status like :status"	
 	+ " and e.departamentos.departamentosPK.codDepto in :departamentos  "),    
     @NamedQuery(name = "Empleados.findByCodEmp", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codEmp = :codEmp"),

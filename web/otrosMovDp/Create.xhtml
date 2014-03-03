@@ -30,12 +30,12 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.CreateOtrosMovDpLabel_empleados}" for="empleados" />
-                        <p:selectOneMenu id="empleados" value="#{otrosMovDpController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditOtrosMovDpRequiredMessage_empleados}">
+                        <p:selectOneMenu id="empleados"  filterMatchMode="contains" value="#{otrosMovDpController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditOtrosMovDpRequiredMessage_empleados}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{empleadosController.items}"
                                            var="empleadosItem"
                                            itemValue="#{empleadosItem}"
-                                           itemLabel="#{empleadosItem.empleadosPK.toString()}"
+                                           itemLabel=" ( #{empleadosItem.codEmpref} ) #{empleadosItem.nombreNit}"
 					   />
                             <f:converter binding="#{empleadosConverter}"/>
                         </p:selectOneMenu>

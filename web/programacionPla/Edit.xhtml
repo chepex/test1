@@ -19,8 +19,11 @@
                         <h:outputText id="programacionPlaPK_secuencia" value="#{programacionPlaController.selected.programacionPlaPK.secuencia}" />
 
                     
-                        <p:outputLabel value="#{myBundle.EditProgramacionPlaLabel_status}" for="status" />
-                        <p:inputText id="status" value="#{programacionPlaController.selected.status}" title="#{myBundle.EditProgramacionPlaTitle_status}" required="true" requiredMessage="#{myBundle.EditProgramacionPlaRequiredMessage_status}"/>
+                        <p:outputLabel value="#{myBundle.EditProgramacionPlaLabel_status}" for="status" />                                             
+                        <p:selectOneMenu id="status" value="#{programacionPlaController.selected.status}" required="true" requiredMessage="#{myBundle.CreateProgramacionPlaRequiredMessage_status}">
+                            <f:selectItem itemLabel="Cerrada" itemValue="C"/>                     
+                            <f:selectItem itemLabel="Programada" itemValue="P"/>
+                        </p:selectOneMenu>   
 
                         <p:outputLabel value="#{myBundle.EditProgramacionPlaLabel_fechaPago}" for="fechaPago" />
                         <p:calendar id="fechaPago" pattern="MM/dd/yyyy HH:mm:ss" value="#{programacionPlaController.selected.fechaPago}" title="#{myBundle.EditProgramacionPlaTitle_fechaPago}"  showOn="button"/>
@@ -49,7 +52,13 @@
                         </p:selectOneMenu>
                         
                         <p:outputLabel value="#{myBundle.EditProgramacionPlaLabel_recalculo}" for="recalculo" />
-                        <p:inputText id="recalculo" value="#{programacionPlaController.selected.recalculo}" title="#{myBundle.EditProgramacionPlaTitle_recalculo}" />
+
+                        
+                        <p:selectOneMenu id="recalculo" value="#{programacionPlaController.selected.recalculo}" >
+                            <f:selectItem itemLabel="Si" itemValue="S"/>                     
+                            <f:selectItem itemLabel="No" itemValue="N"/>
+                        </p:selectOneMenu>  
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{programacionPlaController.save}" value="#{myBundle.Save}" update="display,:ProgramacionPlaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ProgramacionPlaEditDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="ProgramacionPlaEditDialog.hide()"/>

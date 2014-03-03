@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a3c6df3-2659-4090-b597-c4127ecd0851">
+	<property name="ireport.zoom" value="1.6105100000000032"/>
+	<property name="ireport.x" value="7"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
+	<parameter name="RESTA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUMA" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SECUENCIA" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/mmixco/NetBeansProjects/test1/web/reportes/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CIA" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select e.cod_emp,
+e.nombres,
+e.apellidos, 
+p.bruto, 
+p.horasextras,
+p.bonos,
+p.deducciones,
+p.liquido,
+p.neto,
+PP.MES,
+PP.ANIO,
+T.NOM_TIPOPLA, 
+PP.NUM_PLANILLA , 
+D.NOM_DEPTO, 
+R.DIAS,
+p.secuencia
+from planilla p, empleados e, PROGRAMACION_PLA PP, TIPOS_PLANILLA T , DEPARTAMENTOS D, RESUMEN_ASISTENCIA R
+where e.cod_cia= p.cod_cia
+and e.cod_emp = p.cod_emp
+AND P.COD_CIA = PP.COD_CIA
+AND P.SECUENCIA = PP.SECUENCIA
+AND P.SECUENCIA= $P{SECUENCIA}
+
+AND T.COD_CIA  = P.COD_CIA
+AND T.COD_TIPOPLA = PP.COD_TIPOPLA
+AND E.COD_CIA= D.COD_CIA
+AND E.COD_DEPTO = D.COD_DEPTO
+AND P.COD_CIA = R.COD_CIA
+AND P.SECUENCIA = R.SECUENCIA
+AND P.COD_EMP =  R.COD_EMP]]>
+	</queryString>
+	<field name="COD_EMP" class="java.math.BigDecimal"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="APELLIDOS" class="java.lang.String"/>
+	<field name="BRUTO" class="java.math.BigDecimal"/>
+	<field name="HORASEXTRAS" class="java.math.BigDecimal"/>
+	<field name="BONOS" class="java.math.BigDecimal"/>
+	<field name="DEDUCCIONES" class="java.math.BigDecimal"/>
+	<field name="LIQUIDO" class="java.math.BigDecimal"/>
+	<field name="NETO" class="java.math.BigDecimal"/>
+	<field name="MES" class="java.math.BigDecimal"/>
+	<field name="ANIO" class="java.math.BigDecimal"/>
+	<field name="NOM_TIPOPLA" class="java.lang.String"/>
+	<field name="NUM_PLANILLA" class="java.math.BigDecimal"/>
+	<field name="NOM_DEPTO" class="java.lang.String"/>
+	<field name="DIAS" class="java.lang.String"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="349" splitType="Prevent">
+			<rectangle>
+				<reportElement uuid="cbe7f803-b491-4732-93cb-425feab178b0" x="10" y="110" width="121" height="141" backcolor="#C7C7C7"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="4b96fac4-0b2c-4119-8ae1-c6880a180d45" style="Heading 4" x="142" y="90" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Prestaciones]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="179eb9ce-5071-4610-a970-fb53fd915c0d" x="370" y="110" width="180" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="c337b3e4-deff-4fd0-8ea9-a422926d1e5d" x="10" y="316" width="313" height="20"/>
+				<textElement/>
+				<text><![CDATA[Su salario ha sido abonado a su cuenta #3124654564 ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="856e10e4-be7e-4e4d-8e84-b790ff391040" x="12" y="113" width="64" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Dias Laborados]]></text>
+			</staticText>
+			<textField pattern="$ #,##0.00">
+				<reportElement uuid="93d3673a-5b17-4fed-bdb8-016aabd4dbb8" x="84" y="188" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DEDUCCIONES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="08b2390f-cfc5-4299-b7bb-7762077f2573" x="84" y="215" width="45" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LIQUIDO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ca563459-2306-41f2-a529-af17d7c1e69d" x="12" y="188" width="76" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Deducciones (-)]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b4264e84-2163-42a9-986b-cef037533c28" x="86" y="113" width="45" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIAS}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="0340f6f2-4798-4113-ae87-b3ac3351326b" x="159" y="110" width="179" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="d6ed93cc-69c6-41c7-a29a-4b2270cf5279" x="12" y="215" width="41" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Liquido]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="f0333059-b654-4b1a-8e5d-32cac95b2017" x="22" y="206" width="100" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="cf831b2f-ecce-42f2-8713-5fbe1407de4c" x="12" y="133" width="76" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Salario Base]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9de60493-de03-4736-be37-e99b73ff0fb7" x="12" y="153" width="72" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Prestaciones (+)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f6eb7883-d2f7-4c84-977b-4f203695d1e5" style="Heading 4" x="350" y="90" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Deducciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="acf64fbf-857f-477e-829e-97c3f8039157" style="Heading 4" x="249" y="35" width="33" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f89db89f-5bb8-4c67-8aae-e91aa20e810c" style="Heading 4" x="10" y="36" width="45" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Planilla]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0fec6614-f94f-47b2-a82b-1e2f65522058" x="120" y="57" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APELLIDOS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="93a5a768-ceb4-465d-99f8-d2947aadc44c" style="Heading 4" x="112" y="3" width="277" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[INDUSTRIAS CARICIA S.A. DE C.V.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c8de7c66-b87a-42e0-8add-6dff36cdb720" style="Heading 4" x="159" y="35" width="61" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quincena]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c42dc26b-6db6-4e99-98d6-2501cd0ab5f3" style="Heading 4" x="343" y="34" width="35" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Anio]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c27c8c91-fd5c-412e-801f-274d10c2043a" x="12" y="57" width="108" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="37aeabd8-de49-4e6d-bbd4-d3ca3599df1d" x="219" y="35" width="23" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUM_PLANILLA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b09e6d52-7236-4e22-a36b-8c84a8ac4f8c" x="378" y="35" width="56" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ANIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="56c571cf-7c14-4f47-b781-0092c4d885aa" x="283" y="35" width="55" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7362cbca-0c6b-4e2e-9303-b12d7b9af960" x="59" y="35" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOM_TIPOPLA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0.00">
+				<reportElement uuid="e95b237b-cf5e-4454-a9a2-cf836bde997b" x="74" y="133" width="55" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BRUTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5433bda9-f101-41de-8be7-1aa7739aadf8" x="289" y="57" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamentos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b193f051-ed3b-466a-943c-072e0a8b2993" x="389" y="57" width="161" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{NOM_DEPTO}]]></textFieldExpression>
+			</textField>
+			<elementGroup/>
+			<subreport>
+				<reportElement uuid="65103478-cec0-4158-82f5-fbd747229727" x="143" y="115" width="200" height="100"/>
+				<subreportParameter name="COD_EMP">
+					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUMA_RESTA">
+					<subreportParameterExpression><![CDATA[$P{SUMA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BoletaPago_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="6fdff14a-0f3d-4ca3-9aea-27df38f96318" x="350" y="115" width="200" height="100"/>
+				<subreportParameter name="COD_EMP">
+					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUMA_RESTA">
+					<subreportParameterExpression><![CDATA[$P{RESTA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BoletaPago_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<textField pattern="$ #,##0.00">
+				<reportElement uuid="dec0f989-32aa-4985-8586-024820e7ec10" x="82" y="171" width="47" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORASEXTRAS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9de60493-de03-4736-be37-e99b73ff0fb7" x="12" y="168" width="72" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[H. Extra (+)]]></text>
+			</staticText>
+			<textField pattern="$ #,##0.00">
+				<reportElement uuid="7144c3e3-4e05-4c80-b04b-b93e8096faca" x="81" y="153" width="47" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BONOS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="acf64fbf-857f-477e-829e-97c3f8039157" style="Heading 4" x="449" y="35" width="51" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CodEmp]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="28887a4d-2b2b-42fc-97b0-c45370fcb81a" x="624" y="42" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{COD_EMP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f4daa505-486c-4524-a9fe-44c78cbbb889" x="500" y="36" width="61" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{COD_EMP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

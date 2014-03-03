@@ -18,13 +18,17 @@
                         
 
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_status}" for="status" />
-                        <p:inputText id="status" value="#{programacionPlaController.selected.status}" title="#{myBundle.CreateProgramacionPlaTitle_status}" required="true" requiredMessage="#{myBundle.CreateProgramacionPlaRequiredMessage_status}"/>
+                        <p:selectOneMenu id="status" value="#{programacionPlaController.selected.status}" required="true" requiredMessage="#{myBundle.CreateProgramacionPlaRequiredMessage_status}">
+                            <f:selectItem itemLabel="Cerrada" itemValue="C"/>                     
+                            <f:selectItem itemLabel="Programada" itemValue="P"/>
+                        </p:selectOneMenu>                         
+                        
 
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_fechaPago}" for="fechaPago" />
                         <p:calendar id="fechaPago" pattern="MM/dd/yyyy HH:mm:ss" value="#{programacionPlaController.selected.fechaPago}" title="#{myBundle.EditProgramacionPlaTitle_fechaPago}"  showOn="button"/>
 
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_numPlanilla}" for="numPlanilla" />
-                        <p:inputText id="numPlanilla" value="#{programacionPlaController.selected.numPlanilla}" title="#{myBundle.CreateProgramacionPlaTitle_numPlanilla}" />
+                        <p:inputText id="numPlanilla" value="#{programacionPlaController.selected.numPlanilla}" title="#{myBundle.EditProgramacionPlaTitle_numPlanilla}" />
 
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_anio}" for="anio" />
                         <p:inputText id="anio" value="#{programacionPlaController.selected.anio}" title="#{myBundle.CreateProgramacionPlaTitle_anio}" />
@@ -47,7 +51,10 @@
                         </p:selectOneMenu>                        
                       
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_recalculo}" for="recalculo" />
-                        <p:inputText id="recalculo" value="#{programacionPlaController.selected.recalculo}" title="#{myBundle.CreateProgramacionPlaTitle_recalculo}" />
+                        <p:selectOneMenu id="recalculo" value="#{programacionPlaController.selected.recalculo}" >
+                            <f:selectItem itemLabel="Si" itemValue="S"/>                     
+                            <f:selectItem itemLabel="No" itemValue="N"/>
+                        </p:selectOneMenu> 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{programacionPlaController.saveNew}" value="#{myBundle.Save}" update="display,:ProgramacionPlaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ProgramacionPlaCreateDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="ProgramacionPlaCreateDialog.hide()"/>

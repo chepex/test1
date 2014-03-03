@@ -10,7 +10,7 @@
 	<p:panelGrid columns="6" >
 	    Estado
 	    <p:selectOneMenu id="estado" value="#{resumenAsistenciaController.estado }" 
-				       filter="true">
+				       filter="true" filterMatchMode="contains">
 			    <f:selectItem itemLabel="Selecione un status"/>
                             <f:selectItem itemLabel="Programada" itemValue="P"/>			    
 			    <f:selectItem itemLabel="Cerrada" itemValue="C"/>
@@ -19,7 +19,7 @@
 	    
 	    Planillas Programada
 		      <p:selectOneMenu id="programacionPla" value="#{resumenAsistenciaController.programacionpla }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_programacionPla}"
-				       filter="true">
+				       filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{resumenAsistenciaController.programacionplas}"
                                            var="programacionPlaItem"
@@ -47,8 +47,8 @@
 			 
 			 >
 		<p:ajax event="cellEdit" listener="#{resumenAsistenciaController.onCellEdit}" update=":growl" />  
-		<p:ajax event="rowSelect"  update="createButton viewButton editButton deleteButton"/>
-		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+		<p:ajax event="rowSelect"  update=":ResumenAsistenciaEditForm"/>
+		
 		
 		
 		<p:column sortBy="#{item.empleados.nombreIsss}" filterBy="#{item.empleados.nombreIsss}">
@@ -83,27 +83,42 @@
 		    
            <p:column headerText="Dias" style="width:25%">  
             <p:cellEditor>  
-                <f:facet name="output"><h:outputText  value="#{item.dias}" /></f:facet>  
-                <f:facet name="input"><p:inputText  value="#{item.dias}" style="width:96%" label="Dias">			
+                <f:facet name="output">
+                    <h:outputText  value="#{item.dias}" /></f:facet>  
+                <f:facet name="input">
+                    <p:inputText  value="#{item.dias}" style="width:76%" label="Dias">			
 		    </p:inputText>
 		</f:facet>  
             </p:cellEditor>  
         </p:column> 
 	
-       <p:column sortBy="#{item.observaciones.descripcion}" filterBy="#{item.observaciones.descripcion}">
-            <f:facet name="header">
-                <h:outputText value="#{myBundle.ListResumenAsistenciaTitle_observaciones}"/>
-            </f:facet>
-            <h:outputText value="#{item.observaciones.descripcion}"/>
+       <p:column  headerText="Observaciones" sortBy="#{item.observaciones.descripcion}" filterBy="#{item.observaciones.descripcion}">
+           <p:cellEditor>
+                <f:facet name="output">
+                    <h:outputText value="#{item.observaciones.descripcion}"/>
+                </f:facet>
+                <f:facet name="input" >
+                     <p:selectOneMenu  style="width:96%" filter="true"  filterMatchMode="contains" id="observaciones" value="#{item.observaciones}">
+                         <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{observacionesController.obs }"
+                                           var="observacionesItem"					   
+                                           itemValue="#{observacionesItem}"
+                                           itemLabel="#{observacionesItem.descripcion}"
+					   />
+                                       <f:converter binding="#{observacionesConverter}"/>
+                        </p:selectOneMenu>
+                    
+                </f:facet>
+            </p:cellEditor>              
         </p:column>
                
 		
 		
 
 		<f:facet name="footer">
-		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{resumenAsistenciaController.prepareCreate}" update=":ResumenAsistenciaCreateForm" oncomplete="ResumenAsistenciaCreateDialog.show()"/>
-		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":ResumenAsistenciaViewForm" oncomplete="ResumenAsistenciaViewDialog.show()" disabled="#{empty resumenAsistenciaController.selected}"/>
-		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ResumenAsistenciaEditForm" oncomplete="ResumenAsistenciaEditDialog.show()" disabled="#{empty resumenAsistenciaController.selected}"/>
+		    
+		    
+		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Crear Asistencia" actionListener="#{resumenAsistenciaController.prepareCreate}" update=":ResumenAsistenciaEditForm" />
 		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{resumenAsistenciaController.delete}" update=":growl,datalist" disabled="#{empty resumenAsistenciaController.selected}"/>
 		    
 		    
@@ -116,5 +131,47 @@
 
 		
     </h:form>
+    
+    <br/>
+    <br/>
+    <br/>
+     <h:form id="ResumenAsistenciaEditForm" >
+
+         <h:panelGroup id="display" >
+                    <p:panelGrid   columns="2" rendered="#{resumenAsistenciaController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.EditResumenAsistenciaLabel_dias}" for="dias" />
+                        <p:inputText id="dias" value="#{resumenAsistenciaController.selected.dias}" title="#{myBundle.EditResumenAsistenciaTitle_dias}" />
+
+                        <p:outputLabel value="#{myBundle.EditResumenAsistenciaLabel_observacion}" for="observacion" />
+                         <p:selectOneMenu  filter="true"  filterMatchMode="contains" id="observacion" value="#{resumenAsistenciaController.selected.observaciones}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{observacionesController.obs }"
+                                           var="observacionesItem"					   
+                                           itemValue="#{observacionesItem}"
+                                           itemLabel="#{observacionesItem.descripcion}"
+					   />
+                              <f:converter binding="#{observacionesConverter}"/>
+                        
+                         </p:selectOneMenu>
+                        
+                      <p:outputLabel value="#{myBundle.CreateResumenAsistenciaLabel_empleados}" for="empleados" />
+                        <p:selectOneMenu  filter="true"  filterMatchMode="contains" id="empleados" value="#{resumenAsistenciaController.selected.empleados }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_empleados}"
+					 >
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadosController.activos}"
+                                           var="empleadosItem"					   
+                                           itemValue="#{empleadosItem}"
+                                           itemLabel=" ( #{empleadosItem.codEmpref} ) #{empleadosItem.nombreNit}"
+					   />
+                            <f:converter binding="#{empleadosConverter}"/>
+                        </p:selectOneMenu>
+                      
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{resumenAsistenciaController.save}" value="#{myBundle.Save}" update="display,:ResumenAsistenciaListForm:datalist,:growl" />
+                    
+                </h:panelGroup>
+
+            </h:form>
 
 </ui:composition>

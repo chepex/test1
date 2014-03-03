@@ -12,7 +12,7 @@
             
 	    Estado
             <p:selectOneMenu id="estado" value="#{planillaController.reciboEstado }" 
-				       filter="true">
+				       filter="true" filterMatchMode="contains">
 			    <f:selectItem itemLabel="Selecione un status"/>
                             <f:selectItem itemLabel="Programada" itemValue="P"/>			    
 			    <f:selectItem itemLabel="Cerrada" itemValue="C"/>
@@ -21,7 +21,7 @@
 	    
 	    Planillas Programada
 		      <p:selectOneMenu id="programacionPla" value="#{planillaController.programacionpla }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_programacionPla}"
-				       filter="true">
+				       filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{planillaController.reciboProgramacioPlas}"
                                            var="programacionPlaItem"
@@ -33,7 +33,7 @@
                             <f:converter binding="#{programacionPlaConverter}"/>
                         </p:selectOneMenu>
             <p:outputLabel value="#{myBundle.CreatePlanillaLabel_empleados}" for="empleados" />
-                        <p:selectOneMenu  filter="true" id="empleados" value="#{planillaController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditPlanillaRequiredMessage_empleados}">
+                        <p:selectOneMenu  filter="true"  filterMatchMode="contains" id="empleados" value="#{planillaController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditPlanillaRequiredMessage_empleados}">
                             <f:selectItem  itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{planillaController.listEmpleados}"
                                            var="empleadosItem"

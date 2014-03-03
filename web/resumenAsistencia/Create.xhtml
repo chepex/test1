@@ -19,7 +19,7 @@
                         <p:inputText id="dias" value="#{resumenAsistenciaController.selected.dias}" title="#{myBundle.CreateResumenAsistenciaTitle_dias}" />
 
                         <p:outputLabel value="#{myBundle.CreateResumenAsistenciaLabel_observacion}" for="observaciones" />
-                        <p:selectOneMenu  filter="true" id="observaciones" value="#{resumenAsistenciaController.selected.observaciones}">
+                        <p:selectOneMenu  filter="true"  filterMatchMode="contains" id="observaciones" value="#{resumenAsistenciaController.selected.observaciones}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{observacionesController.obs }"
                                            var="observacionesItem"					   
@@ -31,13 +31,13 @@
                         
 
                         <p:outputLabel value="#{myBundle.CreateResumenAsistenciaLabel_empleados}" for="empleados" />
-                        <p:selectOneMenu  filter="true" id="empleados" value="#{resumenAsistenciaController.selected.empleados }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_empleados}"
+                        <p:selectOneMenu  filter="true"  filterMatchMode="contains" id="empleados" value="#{resumenAsistenciaController.selected.empleados }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_empleados}"
 					 >
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{empleadosController.activos}"
                                            var="empleadosItem"					   
                                            itemValue="#{empleadosItem}"
-                                           itemLabel="#{empleadosItem.nombreNit}"
+                                           itemLabel=" ( #{empleadosItem.codEmpref} ) #{empleadosItem.nombreNit}"
 					   />
                             <f:converter binding="#{empleadosConverter}"/>
                         </p:selectOneMenu>

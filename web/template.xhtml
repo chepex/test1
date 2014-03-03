@@ -23,7 +23,7 @@
                 <p:layoutUnit id="bottom" position="south" size="60">
                          <h:form id="frmAnagPersonName"></h:form>
                 </p:layoutUnit>
-            <p:layoutUnit id="right" position="east" size="375" rendered="#{request.getUserPrincipal() != null}" header="Herramientas" resizable="true" closable="true" collapsible="true"
+            <p:layoutUnit id="right" position="east" size="375" rendered="#{request.getUserPrincipal() == null}" header="Herramientas" resizable="true" closable="true" collapsible="true"
                               style="text-align:center">
 		    <p:accordionPanel rendered="#{request.getUserPrincipal() != null}">
                         <p:tab title="Empleados" >                            

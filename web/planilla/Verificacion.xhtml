@@ -22,7 +22,7 @@
 	<p:panelGrid columns="6" >
 	       Estado
             <p:selectOneMenu id="estado" value="#{vplanillaController.estado }" 
-				       filter="true">
+				       filter="true" filterMatchMode="contains">
 			    <f:selectItem itemLabel="Selecione un status"/>
                             <f:selectItem itemLabel="Programada" itemValue="P"/>			    
 			    <f:selectItem itemLabel="Cerrada" itemValue="C"/>
@@ -31,7 +31,7 @@
 	    
 	    Planillas Programada
 		      <p:selectOneMenu id="programacionPla" value="#{vplanillaController.programacionpla }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_programacionPla}"
-				       filter="true">
+				       filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{vplanillaController.programacionplas}"
                                            var="programacionPlaItem"

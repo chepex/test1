@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HorariosCreateDlg" widgetVar="HorariosCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateHorariosTitle}">
+
+            <h:form id="HorariosCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{horariosController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateHorariosLabel_horariosPK_codHorario}" for="horariosPK_codHorario" />
+                        <p:inputText id="horariosPK_codHorario" value="#{horariosController.selected.horariosPK.codHorario}" title="#{myBundle.CreateHorariosTitle_horariosPK_codHorario}" required="true" requiredMessage="#{myBundle.CreateHorariosRequiredMessage_horariosPK_codHorario}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorariosLabel_entrada}" for="entrada" />
+                        <p:calendar id="entrada" pattern="MM/dd/yyyy HH:mm:ss" value="#{horariosController.selected.entrada}" title="#{myBundle.EditHorariosTitle_entrada}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorariosLabel_salida}" for="salida" />
+                        <p:calendar id="salida" pattern="MM/dd/yyyy HH:mm:ss" value="#{horariosController.selected.salida}" title="#{myBundle.EditHorariosTitle_salida}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorariosLabel_almuerzoEntrada}" for="almuerzoEntrada" />
+                        <p:calendar id="almuerzoEntrada" pattern="MM/dd/yyyy HH:mm:ss" value="#{horariosController.selected.almuerzoEntrada}" title="#{myBundle.EditHorariosTitle_almuerzoEntrada}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateHorariosLabel_almuerzoSalida}" for="almuerzoSalida" />
+                        <p:calendar id="almuerzoSalida" pattern="MM/dd/yyyy HH:mm:ss" value="#{horariosController.selected.almuerzoSalida}" title="#{myBundle.EditHorariosTitle_almuerzoSalida}"  showOn="button"/>
+
+                     
+                        <p:outputLabel value="#{myBundle.CreateHorariosLabel_departamentos}" for="departamentos" />
+                        <p:selectOneMenu id="departamentos" value="#{horariosController.selected.departamentos}" required="true" requiredMessage="#{myBundle.EditHorariosRequiredMessage_departamentos}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{departamentosController.items}"
+                                           var="departamentosItem"
+                                           itemValue="#{departamentosItem}"
+                                           itemLabel="#{departamentosItem.nomDepto.toString()}"
+                                           />
+                            <f:converter binding="#{departamentosConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{horariosController.saveNew}" value="#{myBundle.Save}" update="display,:HorariosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,HorariosCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="HorariosCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

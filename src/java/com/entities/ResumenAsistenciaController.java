@@ -149,6 +149,7 @@ public class ResumenAsistenciaController extends AbstractController<ResumenAsist
      msg = sB_ProgramacionPla.validarEstado(programacionpla);   
      
      if (msg.equals("ok")  ){
+            this.getSelected().setProgramacionPla(programacionpla);
 	    persist(AbstractController.PersistAction.UPDATE, msg);
 	    consultar();        
      }else{	

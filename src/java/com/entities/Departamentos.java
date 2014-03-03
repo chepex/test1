@@ -66,7 +66,8 @@ public class Departamentos implements Serializable {
         @JoinColumn(name = "COD_PUESTO", referencedColumnName = "COD_PUESTO")})
     @ManyToMany
     private List<Puestos> puestosList;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamentos")
+    private List<Horarios> horariosList;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected DepartamentosPK departamentosPK;
@@ -285,6 +286,14 @@ public class Departamentos implements Serializable {
 
     public void setCorrelIsss(Short correlIsss) {
         this.correlIsss = correlIsss;
+    }
+
+    public List<Horarios> getHorariosList() {
+        return horariosList;
+    }
+
+    public void setHorariosList(List<Horarios> horariosList) {
+        this.horariosList = horariosList;
     }
 
 

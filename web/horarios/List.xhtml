@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="HorariosListForm">
+
+        <p:panel header="#{myBundle.ListHorariosTitle}">
+
+            <p:dataTable id="datalist" value="#{horariosController.items}" var="item"
+                         selectionMode="single" selection="#{horariosController.selected}"
+                         rowKey="#{item.horariosPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.horariosPK.codHorario}" filterBy="#{item.horariosPK.codHorario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorariosTitle_horariosPK_codHorario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.horariosPK.codHorario}"/>
+                </p:column>
+                <p:column sortBy="#{item.entrada}" filterBy="#{item.entrada}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorariosTitle_entrada}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.entrada}">
+                        <f:convertDateTime pattern="dd/MM/YYYY HH:mm:ss"  timeZone="GMT-6"/>
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{item.salida}" filterBy="#{item.salida}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorariosTitle_salida}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.salida}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" timeZone="GMT-6" />
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{item.almuerzoEntrada}" filterBy="#{item.almuerzoEntrada}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorariosTitle_almuerzoEntrada}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.almuerzoEntrada}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" timeZone="GMT-6" />
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{item.almuerzoSalida}" filterBy="#{item.almuerzoSalida}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorariosTitle_almuerzoSalida}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.almuerzoSalida}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" timeZone="GMT-6"/>
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{item.departamentos.departamentosPK}" filterBy="#{item.departamentos.departamentosPK}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListHorariosTitle_departamentos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.departamentos.nomDepto}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{horariosController.prepareCreate}" update=":HorariosCreateForm" oncomplete="HorariosCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":HorariosViewForm" oncomplete="HorariosViewDialog.show()" disabled="#{empty horariosController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":HorariosEditForm" oncomplete="HorariosEditDialog.show()" disabled="#{empty horariosController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{horariosController.delete}" update=":growl,datalist" disabled="#{empty horariosController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

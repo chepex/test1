@@ -136,7 +136,7 @@
                            </p:selectOneMenu>
 
                            <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_puestos}" for="puestos" />
-                           <p:selectOneMenu id="puestos" value="#{empleadosController.selected.puestos}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_puestos}">
+                           <p:selectOneMenu id="puestos" filter="true" filterMatchMode="contains" value="#{empleadosController.selected.puestos}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_puestos}">
                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                <f:selectItems value="#{puestosController.items}"
                                               var="puestosItem"

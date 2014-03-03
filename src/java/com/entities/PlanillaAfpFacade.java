@@ -30,7 +30,7 @@ public class PlanillaAfpFacade extends AbstractFacade<PlanillaAfp> {
     
 
     
-    public  PlanillaAfp findByEmp(ResumenAsistencia ra){
+    public  List<PlanillaAfp> findByEmp(ResumenAsistencia ra){
         TypedQuery<PlanillaAfp> q;	 
         try{
 	 
@@ -42,7 +42,7 @@ public class PlanillaAfpFacade extends AbstractFacade<PlanillaAfp> {
                     .setParameter("mes",  ra.getProgramacionPla().getMes() )                                                                      
                     .setParameter("codEmp",  ra.getResumenAsistenciaPK().getCodEmp() );
                  
-                   return  q.getSingleResult();
+                   return  q.getResultList();
         }
         catch(Exception ex){
             // JsfUtil.logs(ex , "Surgio un error", "Proceso findByEmp Empleado "+ra.getEmpleados().getNombreIsss(),PlanillaIsssFacade.class,"ERROR");             

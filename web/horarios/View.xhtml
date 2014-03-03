@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HorariosViewDlg" widgetVar="HorariosViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewHorariosTitle}">
+
+            <h:form id="HorariosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{horariosController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewHorariosLabel_horariosPK_codHorario}"/>
+                        <h:outputText value="#{horariosController.selected.horariosPK.codHorario}" title="#{myBundle.ViewHorariosTitle_horariosPK_codHorario}"/>
+
+                        <h:outputText value="#{myBundle.ViewHorariosLabel_entrada}"/>
+                        <h:outputText value="#{horariosController.selected.entrada}" title="#{myBundle.ViewHorariosTitle_entrada}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss"  timeZone="GMT-6"/>
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewHorariosLabel_salida}"/>
+                        <h:outputText value="#{horariosController.selected.salida}" title="#{myBundle.ViewHorariosTitle_salida}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" timeZone="GMT-6"/>
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewHorariosLabel_almuerzoEntrada}"/>
+                        <h:outputText value="#{horariosController.selected.almuerzoEntrada}" title="#{myBundle.ViewHorariosTitle_almuerzoEntrada}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" timeZone="GMT-6" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewHorariosLabel_almuerzoSalida}"/>
+                        <h:outputText value="#{horariosController.selected.almuerzoSalida}" title="#{myBundle.ViewHorariosTitle_almuerzoSalida}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" timeZone="GMT-6"/>
+                        </h:outputText>
+
+
+                        <h:outputText value="#{myBundle.ViewHorariosLabel_departamentos}"/>
+                        <h:outputText value="#{horariosController.selected.departamentos.nomDepto}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="HorariosViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

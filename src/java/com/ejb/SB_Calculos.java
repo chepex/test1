@@ -152,6 +152,41 @@ public class SB_Calculos {
        }       
     }   
             
+    
+    public void VComVaca(ResumenAsistencia resumenAsistenciax)   { 
+        try{
+              
+              if (resumenAsistenciax.getResumenAsistenciaPK().getCodEmp()==796){
+                  System.out.print("DeduccionEliminada" );
+              }
+        List <MovDp> lmdp = movDpFacade.findByRa(resumenAsistencia);
+        if(!lmdp.isEmpty() ){
+              System.out.print("DeduccionEliminada" );
+            if(Integer.parseInt(resumenAsistenciax.getDias())==0){
+                
+
+                    List <MovDp> deduc = movDpFacade.findByCat("Deducciones", resumenAsistenciax);
+                    List <MovDp> presta = movDpFacade.findByCat("Prestamos", resumenAsistenciax);
+                     for( MovDp d : deduc ){ 
+                         System.out.print("DeduccionEliminada" + d);
+                         if(d.getMovDpPK().getCodDp()!=278){
+                             movDpFacade.remove(d);
+                             movDpFacade.flush();
+                         }
+                         
+                     }
+                     for( MovDp p : presta ){ 
+                         if(p.getMovDpPK().getCodDp()!=278){
+                            movDpFacade.remove(p);
+                            movDpFacade.flush();
+                         }
+                     }                     
+            }
+        }
+        }catch(Exception ex){
+            JsfUtil.logs(ex , "Surgio un error", "Proceso VComVaca Empleado"+resumenAsistenciax.getEmpleados().getNombreIsss(),SB_Calculos.class,"ERROR");   
+        }
+    }    
     /**
     *  crea los prestamos aun no cancelados por el empleado para luego guardarlos en la tabla mov_dp
     * ejemplo: <br>
@@ -290,7 +325,7 @@ public class SB_Calculos {
                  }else{
                      negativo = m.getValor().floatValue() + negativo;
                      pendiente = negativo -real.floatValue();
-                     if(negativo<0.1){                         
+                     if(negativo<0.01){                         
                          m.setValor(BigDecimal.ZERO );                                
                          m.setPendiente(real);
                      }else{                         
@@ -588,6 +623,9 @@ public class SB_Calculos {
                     }   
                 }else{
                     vtope = this.deducPresta.getTope().floatValue() / 2;
+                    if(valor>vtope){
+                        valor=vtope;
+                    }
                 }
             }else{
                 vtope = this.deducPresta.getTope().floatValue();
@@ -636,7 +674,7 @@ public class SB_Calculos {
             }
             return valor;
         }catch(Exception ex){ 
-           JsfUtil.logs(ex , "Surgio un error", "Proceso tope Empleado"+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR");             
+           JsfUtil.logs(ex , "Surgio un error", "Proceso tope2 Empleado"+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR");             
             return 0;
         }
     }    
@@ -960,7 +998,7 @@ public class SB_Calculos {
             
             /*horas extras y llegadas tardes*/
             planillak.setHorasExtras(BigDecimal.valueOf( v_h_ext ));            
-            planillak.setCantidahe(BigDecimal.valueOf( cat_h_neg ));            
+            planillak.setCantidahe(BigDecimal.valueOf(cat_h_ext  ));            
             planillak.setCantLlegat(BigDecimal.valueOf(cat_h_neg));
             planillak.setLlegadatarde(BigDecimal.valueOf(v_neg));
             

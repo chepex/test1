@@ -258,6 +258,27 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
                  
    }     
     
+    
+    public  List<MovDp> findByRa(ResumenAsistencia resumenAsistencia){
+	 try{	
+              TypedQuery<MovDp> q;
+	
+           
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();
+	
+                
+		 q = em.createNamedQuery("MovDp.ComVac", MovDp.class )		    
+		    .setParameter("secuencia",  resumenAsistencia.getResumenAsistenciaPK().getSecuencia() )
+                    .setParameter("codEmp",  resumenAsistencia.getEmpleados().getEmpleadosPK().getCodEmp() )
+                    .setParameter("codDp",  85 )                         
+                    .setParameter("codCia",  codCia );
+                 return q.getResultList();
+         }catch(Exception ex){
+             return null;
+         }
+                 
+   }       
     public BigDecimal PromComision(Empleados empleado, ResumenAsistencia resumenAsistencia){
 	 BigDecimal val;
 	 try{

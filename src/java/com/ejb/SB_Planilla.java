@@ -37,11 +37,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -92,8 +95,12 @@ public class SB_Planilla {
     Short cta4;
     Short cta5;
     int correlativo = 0;
- 
+    private int cantidad;
+    public int ix=0;
+    
     BigDecimal vliquido;
+
+ 
     
     public String Generar()  {   
         String totales="";
@@ -106,9 +113,9 @@ public class SB_Planilla {
           for( ProgramacionPla e : iterador ){ 
                borrar(e); 
                List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(e );
-
+                ProcesoAcero();
               for( ResumenAsistencia ra : iterator ){ 
-                 
+                 System.out.print("Empleado"+ra.getResumenAsistenciaPK().getCodEmp());
                   if(e.getTiposPlanilla().getPromedio().equals("M")){                      
                      calculos.promedioMensual(ra);    
                   } 
@@ -117,7 +124,11 @@ public class SB_Planilla {
                   }                  
                   if(e.getTiposPlanilla().getPrestamos().equals("S")){
                      calculos.CalcularPrestamos(ra);  
-                  }                                                       
+                  }  
+                  if(Integer.parseInt(ra.getDias())==0){
+                    calculos.VComVaca(ra);                  
+                  }
+                  
                   if(e.getTiposPlanilla().getAdicional().equals("S")){
                      calculos.CalcularEspecial(ra);
                   } 
@@ -130,10 +141,14 @@ public class SB_Planilla {
                   if(e.getRecalculo().equals("S")){
                      calculos.recalculo(ra); 
                   } 
-             //     System.out.print(ra.getResumenAsistenciaPK().getCodEmp());
+                  
+                  
+                   
+                 this.cantidad=this.cantidad+1;
+                  Proceso(cantidad,iterator.size());
                   mensaje ="ok+";
               }
-                    mensaje ="ok";
+                  mensaje ="ok";
                     
                     totales += e.getTiposPlanilla().getNomTipopla();
                
@@ -141,6 +156,24 @@ public class SB_Planilla {
             
          return mensaje;
      }	
+
+ public void Proceso(int cant, int total){
+     
+     int actual = cant*100/total;
+    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);  
+    session.setAttribute("SSPROCESO", actual);    
+ }
+
+  public void ProcesoAcero(){
+     cantidad =0;
+      int actual = 0;
+    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);  
+    session.setAttribute("SSPROCESO", 0);    
+ }
+    
+
+ 
+    
     
     public String Cerrar()  {   
         
@@ -153,7 +186,7 @@ public class SB_Planilla {
               actualizarPrestamos(e);
               crearPartida(e);
               GenerarIsss(e);
-            //  GenerarAfp(e);
+              GenerarAfp(e);
               //PlanillaHistorial(e);              
               actualizarStatus(e);
                
@@ -236,7 +269,7 @@ public class SB_Planilla {
             }            
             planillaIsssFacade.edit(plaIsss); 
             planillaIsssFacade.flush();
-            planillaIsssFacade.refresh(plaIsss);
+        //   planillaIsssFacade.refresh(plaIsss);
         } 
 
         
@@ -244,7 +277,7 @@ public class SB_Planilla {
         
         
         }catch(Exception ex){
-             JsfUtil.logs(ex , "Surgio un error", "Proceso validaCuenta",SB_Planilla.class,"ERROR"); 
+             JsfUtil.logs(ex , "Surgio un error", "Proceso CalculoIsss",SB_Planilla.class,"ERROR"); 
         }
         return "ok";
     }
@@ -256,15 +289,16 @@ public class SB_Planilla {
         Parametros p= parametrosFacade.findByNombre("HORAS_LABORALES");
         
         
-        
+   
         
         LoginBean lb= new LoginBean();	
         List<Planilla> planillas = planillaFacade.findByMes(ra ) ;
         BigDecimal devengado = BigDecimal.valueOf( devengoIsss(planillas));
         String dias =  devengoDias(planillas) ;
-        PlanillaAfp plaAfp = planillaAfpFacade.findByEmp(ra);
+        List<PlanillaAfp> plaAfp = planillaAfpFacade.findByEmp(ra);
         Empleados emp= empleadosFacade.findbyCodemp(ra.getResumenAsistenciaPK().getCodEmp());
         DetEmpleado afp = detEmpleadoFacade.findByAfp(emp);
+        
         String estadoCivil= "";
         if (emp.getEstadoCivil()=="A"){
             estadoCivil= "U";
@@ -272,6 +306,7 @@ public class SB_Planilla {
             estadoCivil= emp.getEstadoCivil();
         }
         String cod_afp ="";
+        
         if(afp.getDetEmpleadoPK().getCodDp() == 64){
             cod_afp="ISS";
         } 
@@ -281,7 +316,7 @@ public class SB_Planilla {
         if(afp.getDetEmpleadoPK().getCodDp() == 66){
             cod_afp="MAX";
         }         
-        if(plaAfp==null){
+        if(plaAfp.isEmpty()){
             
             PlanillaAfp planillaAfp =new PlanillaAfp();
             PlanillaAfpPK planillaAfpPK =new PlanillaAfpPK();
@@ -316,15 +351,15 @@ public class SB_Planilla {
             planillaAfpFacade.refresh(planillaAfp);
         }else{
             Parametros TOPE_AFP= parametrosFacade.findByNombre("TOPE_AFP");                        
-            plaAfp.setDias( dias.toString());            
+            plaAfp.get(0).setDias( dias.toString());            
             if( devengado.floatValue() >  TOPE_AFP.getValorInt().floatValue() ){
-                plaAfp.setDevengado(TOPE_AFP.getValorInt());                
+                plaAfp.get(0).setDevengado(TOPE_AFP.getValorInt());                
             }else{
-                plaAfp.setDevengado(devengado);                
+                plaAfp.get(0).setDevengado(devengado);                
             }            
-            planillaAfpFacade.edit(plaAfp); 
+            planillaAfpFacade.edit(plaAfp.get(0)); 
             planillaAfpFacade.flush();
-            planillaAfpFacade.refresh(plaAfp);
+            //planillaAfpFacade.refresh(plaAfp);
         } 
 
         
@@ -332,7 +367,7 @@ public class SB_Planilla {
         
         
         }catch(Exception ex){
-             JsfUtil.logs(ex , "Surgio un error", "Proceso validaCuenta",SB_Planilla.class,"ERROR"); 
+             JsfUtil.logs(ex , "Surgio un error", "Proceso CalculoAfp",SB_Planilla.class,"ERROR"); 
         }
         return "ok";
     }
@@ -483,7 +518,7 @@ public class SB_Planilla {
         }
         }catch(Exception ex){
          
-        JsfUtil.logs(ex , "Surgio un error", "Proceso savePoliza",SB_Asistencia.class,"ERROR"); 
+        JsfUtil.logs(ex , "Surgio un error", "Proceso salarios",SB_Asistencia.class,"ERROR"); 
         }
     }
 
@@ -531,7 +566,7 @@ public class SB_Planilla {
          
         }catch( Exception ex){
            
-        JsfUtil.logs(ex , "Surgio un error", "Proceso PART_ liquido",SB_Asistencia.class,"ERROR"); 
+        JsfUtil.logs(ex , "Surgio un error", "Proceso PART_liquido",SB_Asistencia.class,"ERROR"); 
         }
         
     } 
@@ -543,7 +578,13 @@ public class SB_Planilla {
             String concepto="";
                BigDecimal cargo = BigDecimal.ZERO;
                BigDecimal abono = BigDecimal.ZERO;
-               BigDecimal valor = movDp.getValor();               
+               BigDecimal negativo = BigDecimal.valueOf(-1);
+               
+               BigDecimal valor = movDp.getValor(); 
+               System.out.print("mov->"+movDp.getMovDpPK()+"emp->"+ra.getEmpleados()+"dp"+movDp.getDeducPresta().getCatDp()+"depto"+ra.getEmpleados().getDepartamentos());
+                if(movDp.getDeducPresta().getFactor().floatValue()<0){
+                          valor = valor.multiply(negativo);
+                }
                if(valor.intValue()>0){                    
                    if(movDp.getDeducPresta().getCatDp().getSumaResta().equals("R")){
                         cta1= movDp.getDeducPresta().getCta1();
@@ -563,9 +604,18 @@ public class SB_Planilla {
                         cta3= Cuentas.getBcta3();
                         cta4= Cuentas.getBcta4();
                         cta5= Cuentas.getBcta5();
-                        cargo = valor;
-                        abono = BigDecimal.ZERO;         
-                        concepto="PRESTACION ";
+                        if(movDp.getDeducPresta().getFactor().floatValue()<0){
+                          
+                            concepto="DEDUCCION ";
+                            cargo = BigDecimal.ZERO;  
+                            abono = valor;                                   
+                        }else{
+                            cargo = valor;
+                            abono = BigDecimal.ZERO;         
+                            concepto="PRESTACION ";
+                        }
+                        
+                        
                    }
 
                 String py = ra.getEmpleados().getDepartamentos().getProyecto();
@@ -576,7 +626,12 @@ public class SB_Planilla {
                 dt.setCta3(cta3);
                 dt.setCta4(cta4);
                 dt.setCta5(cta5);
-                dt.setProyecto( String.valueOf(cta1)); 
+                if(cta1==1 && cta2 == 2 ){
+                    dt.setProyecto( String.valueOf(cta1));     
+                }else{
+                    dt.setProyecto( ra.getEmpleados().getDepartamentos().getProyecto());         
+                }
+                
                 dt.setConcepto("planilla "+ra.getResumenAsistenciaPK().getSecuencia()+concepto + movDp.getDeducPresta().getDescripcion() );        
                 dt.setAbono(abono);                
                 dt.setCargo(cargo);                        
@@ -665,29 +720,24 @@ public class SB_Planilla {
         prog.setStatus("C");
         programacionPlaFacade.edit(prog);
         programacionPlaFacade.flush();
-        programacionPlaFacade.refresh(prog);
+       // programacionPlaFacade.refresh(prog);
         return "ok";
     }    
     
     
-    public String generarTxt(){
+    public String generarTxt(int correlativo){
         
           String encabezado="";
           String Campo="B";
           String vPlan="4177";
           String Plan =   vPlan +"0000".substring(vPlan.length());
-          String vCorrelativo= "4";
+          String vCorrelativo= String.valueOf(correlativo);
           String Correlativo =   "00000".substring(vCorrelativo.length())+vCorrelativo;
           String vNit= "";
           String Nit=  "                    ".substring(vNit.length())+vNit;
-          
-          String anio= "2013";
-          String vmes= "4";
-          String mes = "00".substring(vmes.length())+vmes;          
-          String vdias= "2";
-          String dias = "00".substring(vdias.length())+vdias;                              
-          
-                            
+          String anio= "";
+          String vmes= "";                 
+          String vdias= "";
           String vtrans = "";
           String trans  = "     ".substring(vtrans.length())+vtrans; 
           String vdescripcion = "";
@@ -698,10 +748,11 @@ public class SB_Planilla {
           String vCuenta = "";
           String Cuenta =  "     ".substring(vCuenta.length())+vCuenta; 
           
-            BigDecimal total = new BigDecimal(0);
-            BigDecimal bd2 = new BigDecimal("100");
+          BigDecimal total = new BigDecimal(0);
+          BigDecimal bd2 = new BigDecimal("100");
           int id= 0;           
-        
+          Calendar calendar = Calendar.getInstance();
+          
           
           List<Planilla> lpla= planillaFacade.findByStatus();
           int cort= 1;
@@ -712,9 +763,19 @@ public class SB_Planilla {
                if (!p.getEmpleados().getCodBanco().equals("0")){
                    if (p.getEmpleados().getCodBanco().equals("14")){
                        if(p.getLiquido().floatValue()>0){
-                           detalle += txtDetalle(p,cort++);
+                           
+                           if(id==1){
+                               anio = String.valueOf(p.getProgramacionPla().getAnio());
+                               vmes = String.valueOf(p.getProgramacionPla().getMes());
+                               calendar.setTime(p.getProgramacionPla().getFechaPago());
+                               vdias = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+                               
+                           }
+                           detalle += txtDetalle(p,cort++,vCorrelativo);
                            total = total.add(p.getLiquido().multiply(bd2)) ;
                            id++;
+                 
+                           
                        }
                        
                        
@@ -732,65 +793,63 @@ public class SB_Planilla {
                
              
            }
-           
-           
-           String vmonto = "";  
+           String mes = "00".substring(vmes.length())+vmes; 
+           String dias = "00".substring(vdias.length())+vdias;            
            String monto ="";
            String Id= String.valueOf(id);
            Id =   "     ".substring(Id.length() )+id;
               
            monto =String.valueOf(total.intValue() ) ;
            monto = "             ".substring(monto.length())+monto;  
-          encabezado+=Campo;
-          encabezado+=Plan;
-          encabezado+=Correlativo;
-          encabezado+=Nit;
-          encabezado+=trans;
-          encabezado+=anio;
-          encabezado+=mes;
-          encabezado+=dias;
-          encabezado+=monto;
-          encabezado+=Id;          
-          encabezado+=descripcion;
-          encabezado+=Esp;
-          encabezado+=nombre;
-          encabezado+=Cuenta;
-          encabezado+="\n";           
+           encabezado+=Campo;
+           encabezado+=Plan;
+           encabezado+=Correlativo;
+           encabezado+=Nit;
+           encabezado+=trans;
+           encabezado+=anio;
+           encabezado+=mes;
+           encabezado+=dias;
+           encabezado+=monto;
+           encabezado+=Id;          
+           encabezado+=descripcion;
+           encabezado+=Esp;
+           encabezado+=nombre;
+           encabezado+=Cuenta;
+           encabezado+="\n";           
           
         encabezado+=detalle;
         return encabezado;
     }
     
-    public String txtDetalle(Planilla pl,int ct)
+    public String txtDetalle(Planilla pl,int ct,String corelativo)
     {
         
           float valor= pl.getLiquido().floatValue()*100;
           DecimalFormat df = new DecimalFormat("###########");
           
-          
-
+          Calendar calendar = Calendar.getInstance();
+          calendar.setTime(pl.getProgramacionPla().getFechaPago());
+          String dia_ = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
           String detalle="";
           String Campo="T";
           String vPlan="4177";
           String Plan = vPlan +"0000".substring(vPlan.length());
-          String vCorrelativo=  "1" ;
+          String vCorrelativo= corelativo ;
           String Correlativo =   "00000".substring(vCorrelativo.length())+vCorrelativo;
           String vNit= pl.getEmpleados().getNumNit();
           String Nit=  vNit+"                    ".substring(vNit.length());
           String vtrans = String.valueOf(ct);
           String trans  = "     ".substring(vtrans.length())+vtrans; 
           String Id=  "     ";
-          String anio= "2013";
-          String vmes= "4";
+          String anio= String.valueOf(pl.getProgramacionPla().getAnio());
+          String vmes= String.valueOf(pl.getProgramacionPla().getMes());
           String mes = "00".substring(vmes.length())+vmes;          
-          String vdias= "2";
-          String dias = "00".substring(vdias.length())+vdias;                              
+          
+          String dias = "00".substring(dia_.length())+dia_;                              
           String vmonto= String.valueOf(df.format(valor)) ;
           String monto = "             ".substring(vmonto.length())+vmonto;                    
-
-          String vdescripcion ="1 quincena junio 2013";
-          vdescripcion = JsfUtil.truncate(vdescripcion,30);
-         
+          String vdescripcion =pl.getProgramacionPla().getNumPlanilla()+"quincena Mes:"+pl.getProgramacionPla().getMes()+"Del "+ pl.getProgramacionPla().getAnio();
+          vdescripcion = JsfUtil.truncate(vdescripcion,30);         
           String descripcion =  vdescripcion+"                              ".substring(vdescripcion.length()); 
           String Esp = " ";
           String vnombre = pl.getEmpleados().getNombres()+pl.getEmpleados().getApellidos();

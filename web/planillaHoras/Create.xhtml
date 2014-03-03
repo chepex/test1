@@ -21,7 +21,7 @@
 
 
                         <p:outputLabel value="#{myBundle.CreatePlanillaHorasLabel_empleados}" for="empleados" />
-                        <p:selectOneMenu id="empleados" filter="true" value="#{planillaHorasController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditPlanillaHorasRequiredMessage_empleados}">
+                        <p:selectOneMenu id="empleados" filter="true" filterMatchMode="contains" value="#{planillaHorasController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditPlanillaHorasRequiredMessage_empleados}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{planillaHorasController.empPuestos}"
                                            var="empleadosItem"
@@ -32,7 +32,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.CreatePlanillaHorasLabel_deducPresta}" for="deducPresta" />
-                        <p:selectOneMenu id="deducPresta" filter="true" value="#{planillaHorasController.selected.deducPresta}" required="true" requiredMessage="#{myBundle.EditPlanillaHorasRequiredMessage_deducPresta}">
+                        <p:selectOneMenu id="deducPresta" filter="true" filterMatchMode="contains" value="#{planillaHorasController.selected.deducPresta}" required="true" requiredMessage="#{myBundle.EditPlanillaHorasRequiredMessage_deducPresta}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{deducPrestaController.items }"
                                            var="deducPrestaItem"

@@ -16,7 +16,15 @@
                     <p:panelGrid  columns="2" rendered="#{detEmpleadoController.selected != null}">
 
                         <h:outputLabel value="#{myBundle.EditDetEmpleadoLabel_detEmpleadoPK_codEmp}" for="detEmpleadoPK_codEmp" />
-                        <h:outputText id="detEmpleadoPK_codEmp" value="#{detEmpleadoController.selected.detEmpleadoPK.codEmp}" />
+                        <p:selectOneMenu id="detEmpleadoPK_codEmp" filterMatchMode="contains"  value="#{detEmpleadoController.selected.detEmpleadoPK.codEmp}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_empleados}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{empleadosController.activos}"
+                                           var="empleadosItem"
+                                           itemValue="#{empleadosItem}"
+                                           itemLabel=" ( #{empleadosItem.codEmpref} ) #{empleadosItem.nombreNit}"
+					   />
+                            <f:converter binding="#{empleadosConverter}"/>
+                        </p:selectOneMenu>                        
 
                         <h:outputLabel value="#{myBundle.EditDetEmpleadoLabel_detEmpleadoPK_codDp}" for="detEmpleadoPK_codDp" />
                         <h:outputText id="detEmpleadoPK_codDp" value="#{detEmpleadoController.selected.deducPresta.descripcion}" />

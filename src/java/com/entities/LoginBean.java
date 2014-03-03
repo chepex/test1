@@ -34,6 +34,17 @@ public class LoginBean {
     private String password;
     public String usuario;
     public Cias codCia1;
+    public String theme;
+
+    public String getTheme() {
+        theme = "home";
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+    
     
     public Cias getCodCia1() {
 	return codCia1;
@@ -91,8 +102,8 @@ public class LoginBean {
             session.setAttribute("SSUSUARIO", username);    
 	    session.setAttribute("SSCIANOM", this.codCia1.getNomComercial() );                           
 	    session.setAttribute("SSCIAVAL", this.codCia1.getCodCia() );   
-	   
-	
+	   String themeExpression = "home";
+	String theme = FacesContext.getCurrentInstance().getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(), themeExpression, String.class);
             if(from != null){
                 FacesContext.getCurrentInstance().getExternalContext().redirect(from);                
             }
@@ -166,7 +177,25 @@ public class LoginBean {
 	    return user ;	
 	    
 	      
-	  }	 
+	  }
+          
+	  public int sspro (){	      
+	      int sspro =0;	      
+	      try
+		{
+		  HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false); 
+		    if(session != null){		    
+			sspro  =  (int) session.getAttribute("SSPROCESO") ;
+		    }
+		}
+	     catch(NullPointerException e){ 
+		return sspro ;	
+	     }
+	      
+	    return sspro ;	
+	    
+	      
+	  }          
 	  
 	  public Date sdate(){
 	     

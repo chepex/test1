@@ -224,7 +224,7 @@ public String borrar(List <PlanillaHoras> planillahoras){
           DeducPresta dp = deducPrestaFacade.findCodDeduc(phpk.getCodDp());
 
           if (dp!=null){
-              if(dp.getCatDp().getDescripcion().equals("Deduciones") || dp.getCatDp().getDescripcion().equals("HorasExtras") || dp.getCatDp().getDescripcion().equals("Comision") )               
+              if(dp.getCatDp().getDescripcion().equals("Deducciones") || dp.getCatDp().getDescripcion().equals("HorasExtras") || dp.getCatDp().getDescripcion().equals("Comision") )               
               {
                 if (resumenAsistenciaFacade.ByEmp(ph)!=null ){                  
                     ph.setEmpleados(emp); 

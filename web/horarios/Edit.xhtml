@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HorariosEditDlg" widgetVar="HorariosEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditHorariosTitle}">
+
+            <h:form id="HorariosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{horariosController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditHorariosLabel_horariosPK_codHorario}" for="horariosPK_codHorario" />
+                        <h:outputText id="horariosPK_codHorario" value="#{horariosController.selected.horariosPK.codHorario}" />
+
+                        <p:outputLabel value="#{myBundle.EditHorariosLabel_entrada}" for="entrada" />
+                        <p:calendar id="entrada" pattern="MM/dd/yyyy HH:mm:ss" value="#{horariosController.selected.entrada}" title="#{myBundle.EditHorariosTitle_entrada}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditHorariosLabel_salida}" for="salida" />
+                        <p:calendar id="salida" pattern="MM/dd/yyyy HH:mm:ss" value="#{horariosController.selected.salida}" title="#{myBundle.EditHorariosTitle_salida}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditHorariosLabel_almuerzoEntrada}" for="almuerzoEntrada" />
+                        <p:calendar id="almuerzoEntrada" pattern="MM/dd/yyyy HH:mm:ss" value="#{horariosController.selected.almuerzoEntrada}" title="#{myBundle.EditHorariosTitle_almuerzoEntrada}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditHorariosLabel_almuerzoSalida}" for="almuerzoSalida" />
+                        <p:calendar id="almuerzoSalida" pattern="MM/dd/yyyy HH:mm:ss" value="#{horariosController.selected.almuerzoSalida}" title="#{myBundle.EditHorariosTitle_almuerzoSalida}"  showOn="button"/>
+
+                    
+                        <h:outputLabel value="#{myBundle.EditHorariosLabel_departamentos}" for="departamentos" />
+                        <h:outputText id="departamentos" value="#{horariosController.selected.departamentos.nomDepto}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{horariosController.save}" value="#{myBundle.Save}" update="display,:HorariosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,HorariosEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="HorariosEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

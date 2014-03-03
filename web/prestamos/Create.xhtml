@@ -22,18 +22,18 @@
 
 			
                         <p:selectOneMenu  id="empleados" value="#{prestamosController.selected.empleados}"  required="true" requiredMessage="#{myBundle.EditPrestamosRequiredMessage_empleados}"
-					   filter="true" >
+					   filter="true" filterMatchMode="contains" >
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{empleadosController.activos}"
                                            var="empleadosItem"
                                            itemValue="#{empleadosItem}"
-                                           itemLabel="#{  empleadosItem.nombreNit }"
+                                            itemLabel=" ( #{empleadosItem.codEmpref} ) #{empleadosItem.nombreNit}"
 					   />
                             <f:converter binding="#{empleadosConverter}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.CreatePrestamosLabel_deducPresta}" for="deducPresta" />
-                        <p:selectOneMenu id="deducPresta" value="#{prestamosController.selected.deducPresta}" required="true"  filter="true" requiredMessage="#{myBundle.EditPrestamosRequiredMessage_deducPresta}">
+                        <p:selectOneMenu id="deducPresta" value="#{prestamosController.selected.deducPresta}" required="true"  filter="true" filterMatchMode="contains" requiredMessage="#{myBundle.EditPrestamosRequiredMessage_deducPresta}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{deducPrestaController.cprestamos}"
                                            var="deducPrestaItem"

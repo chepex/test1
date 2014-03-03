@@ -10,7 +10,7 @@
 <p:panelGrid columns="6" >
 	    Estado
 	    <p:selectOneMenu id="estado" value="#{movDpController.estado }" 
-				       filter="true">
+				       filter="true" filterMatchMode="contains">
 			    <f:selectItem itemLabel="Selecione un status"/>
                             <f:selectItem itemLabel="Programada" itemValue="P"/>			    
 			    <f:selectItem itemLabel="Cerrada" itemValue="C"/>
@@ -19,7 +19,7 @@
 	    
 	    Planillas Programada
 		      <p:selectOneMenu id="programacionPla" value="#{movDpController.programacionpla }" required="true" requiredMessage="#{myBundle.EditResumenAsistenciaRequiredMessage_programacionPla}"
-				       filter="true">
+				       filter="true" filterMatchMode="contains">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{movDpController.programacionplas}"
                                            var="programacionPlaItem"
@@ -57,7 +57,13 @@
 			<h:outputText value="#{myBundle.ListMovDpTitle_empleados}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.empleados.nombreNit}"/>
-		</p:column>	
+		</p:column>
+		<p:column sortBy="#{item.empleados.empleadosPK.codEmp}" filterBy="#{item.empleados.empleadosPK.codEmp}">
+		    <f:facet name="header">
+			<h:outputText value="codEmp"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleados.empleadosPK.codEmp}"/>
+		</p:column>                
 		<p:column sortBy="#{item.deducPresta.descripcion}" filterBy="#{item.deducPresta.descripcion}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListMovDpTitle_deducPresta}"/>

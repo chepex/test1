@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Observaciones.findAll", query = "SELECT o FROM Observaciones o"),
     @NamedQuery(name = "Observaciones.findByCodCia", query = "SELECT o FROM Observaciones o WHERE o.observacionesPK.codCia = :codCia"),
-    @NamedQuery(name = "Observaciones.findById", query = "SELECT o FROM Observaciones o WHERE o.observacionesPK.id = :id"),
+    @NamedQuery(name = "Observaciones.findById", query = "SELECT o FROM Observaciones o WHERE o.observacionesPK.id = :id and o.observacionesPK.codCia = :codCia"),
     @NamedQuery(name = "Observaciones.findByDescripcion", query = "SELECT o FROM Observaciones o WHERE o.descripcion = :descripcion"),
     @NamedQuery(name = "Observaciones.findByAfp", query = "SELECT o FROM Observaciones o WHERE o.afp = :afp"),
     @NamedQuery(name = "Observaciones.findByIsss", query = "SELECT o FROM Observaciones o WHERE o.isss = :isss")})

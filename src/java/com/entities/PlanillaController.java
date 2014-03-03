@@ -21,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
 
 @ManagedBean(name = "planillaController")
@@ -47,11 +48,39 @@ public class PlanillaController extends AbstractController<Planilla> implements 
     List <Empleados> ListEmpleados;
     short anio;
     short mes;
-    
+    int correlativo;
     String todosdptos;  
     String reciboEstado;
     List <ProgramacionPla> reciboProgramacioPlas;
     List <Vplanilla> listvplanilla;
+    
+    Integer progress;  
+   
+
+    public Integer getProgress() {
+        
+        LoginBean lb= new LoginBean();	
+	    int proceso = lb.sspro();
+         
+            progress =  proceso;
+         
+          
+        return progress;
+    }
+
+    public int getCorrelativo() {
+        return correlativo;
+    }
+
+    public void setCorrelativo(int correlativo) {
+        this.correlativo = correlativo;
+    }
+
+    
+    public void setProgress(Integer progress) {
+        this.progress = progress;
+    }
+    
     
 
 
@@ -202,6 +231,7 @@ public class PlanillaController extends AbstractController<Planilla> implements 
             this.ListEmpleados= empleadosFacade.findbytipoPla(programacionpla);
     }     
     
+    
     public String generar(){    
         this.anio= 0;
         this.mes = 0;
@@ -252,7 +282,8 @@ public class PlanillaController extends AbstractController<Planilla> implements 
           response.setHeader ( "Content-disposition", "attachment; filename=\"Reporting-" + 
           new Date().getTime() + ".csv\"" );
           ServletOutputStream output = response.getOutputStream();      
-          String encabezado = sBPlanilla.generarTxt();
+          
+          String encabezado = sBPlanilla.generarTxt(this.getCorrelativo());
           InputStream is = new ByteArrayInputStream( encabezado.getBytes("UTF-8") );
           int nextChar;
            while ((nextChar = is.read()) != -1) 
@@ -309,24 +340,24 @@ public class PlanillaController extends AbstractController<Planilla> implements 
         secuencia = this.getProgramacionpla().getProgramacionPlaPK().getSecuencia();
         params.put("cia",codCia ); 
         params.put("mas",secuencia ); 
-        ListEmpleados = empleadosFacade.findbyPuestos((short)148);
+        ListEmpleados = empleadosFacade.findbyPuestos((short)418);
         for(Empleados emp:  ListEmpleados){
-            params.put("encargadoplanilla",emp.getNombreNit()); 
+            params.put("encargadoplanilla",emp.getNombres()+" "+emp.getApellidos()); 
             params.put("puestoplanilla",emp.getPuestos().getNomPuesto());
         }
         ListEmpleados = empleadosFacade.findbyPuestos((short)325);
         for(Empleados emp:  ListEmpleados){
-            params.put("gerenteConta",emp.getNombreNit());
+            params.put("gerenteConta",emp.getNombres()+" "+emp.getApellidos());
             params.put("puestoconta",emp.getPuestos().getNomPuesto());
         }
         ListEmpleados = empleadosFacade.findbyPuestos((short)57);
         for(Empleados emp:  ListEmpleados){
-            params.put("gerenteRrhh",emp.getNombreNit());
+            params.put("gerenteRrhh",emp.getNombres()+" "+emp.getApellidos());
             params.put("puestorrhh",emp.getPuestos().getNomPuesto() );
         }
         ListEmpleados = empleadosFacade.findbyPuestos((short)111);
         for(Empleados emp:  ListEmpleados){
-            params.put("directorFinanza",emp.getNombreNit());
+            params.put("directorFinanza",emp.getNombres()+" "+emp.getApellidos());
             params.put("puestofinanza",emp.getPuestos().getNomPuesto());
         }
 
@@ -338,7 +369,27 @@ public class PlanillaController extends AbstractController<Planilla> implements 
         return "";           
     } 
 
+    
+    public String reciboPlanilla() throws NamingException, SQLException, JRException, IOException{  
+        HashMap params = new HashMap(); 
+        LoginBean lb= new LoginBean();	
+	long codCia = lb.sscia();
+        long secuencia;
+        secuencia = this.getProgramacionpla().getProgramacionPlaPK().getSecuencia();
+        String suma = "S";
+        String resta = "R";
+        params.put("CIA",codCia ); 
+        params.put("SECUENCIA",secuencia ); 
+        params.put("SUMA",suma ); 
+        params.put("RESTA",resta ); 
 
+        if(this.todosdptos == null || "1".equals(this.todosdptos)){
+            reportes.GenerarReporte("/reportes/BoletaPago_Pla.jasper", params);
+        }else{
+            reportes.GenerarReporte("/reportes/PlanillaEjecutivos.jasper", params);
+        }
+        return "";           
+    } 
  
     public String reporteMail(){
             String a = reportes.mario();
