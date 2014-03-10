@@ -135,6 +135,7 @@
     <br/>
     <br/>
     <br/>
+    <p:panel header="Modificar" toggleable="true" toggleOrientation="horizontal">  
      <h:form id="ResumenAsistenciaEditForm" >
 
          <h:panelGroup id="display" >
@@ -168,10 +169,11 @@
                         </p:selectOneMenu>
                       
                     </p:panelGrid>
+                        <p:hotkey bind="ctrl+g" actionListener="#{resumenAsistenciaController.save}" update=":ResumenAsistenciaListForm:datalist,:growl"/>
                     <p:commandButton actionListener="#{resumenAsistenciaController.save}" value="#{myBundle.Save}" update="display,:ResumenAsistenciaListForm:datalist,:growl" />
                     
                 </h:panelGroup>
 
             </h:form>
-
+    </p:panel>
 </ui:composition>

@@ -35,6 +35,9 @@ public class EmpleadosFacade extends AbstractFacade<Empleados> {
 	super(Empleados.class);
     }
     
+
+    
+    
 public  List<Empleados> findbyNameAndPk( int emp,String apellidos,String nombres){
      LoginBean lb= new LoginBean();	
 	    short codCia = lb.sscia();

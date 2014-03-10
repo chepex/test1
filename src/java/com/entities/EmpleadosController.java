@@ -12,6 +12,8 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name="empleadosController")
 @ViewScoped
 public class EmpleadosController extends AbstractController<Empleados> implements Serializable {
+    @EJB
+    private DetEmpleadoFacade detEmpleadoFacade;
 
 @EJB
 private EmpleadosFacade ejbFacade;
@@ -130,6 +132,20 @@ public List<Empleados> activos;
 	this.activos = activos;
     }
     
+
+   /* public void UpdDetEmpleado(){
+        List<DetEmpleado> ldetm= detEmpleadoFacade.findByEmp(this.getSelected());
+        if(ldetm.isEmpty()){
+            
+        }else{
+            
+            detEmpleadoFacade.remove();
+        }
+        
+       
+        
+    }*/
+            
 
 }    
     

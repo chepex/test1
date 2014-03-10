@@ -116,6 +116,36 @@ public class DeducPrestaFacade extends AbstractFacade<DeducPresta> {
     }       
     
     
+    public List<DeducPresta> findByAfp(){
+	 TypedQuery<DeducPresta> q;
+	 try{
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+		 q = em.createNamedQuery("DeducPresta.findByAfp", DeducPresta.class )
+                  .setParameter("codCia",  codCia );
+         return q.getResultList();
+         }catch(Exception ex){
+             
+             return null;
+             
+         }
+    }       
+        
+    public List<DeducPresta> findByIsss(){
+	 TypedQuery<DeducPresta> q;
+	 try{
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+		 q = em.createNamedQuery("DeducPresta.findByIsss", DeducPresta.class )
+                  .setParameter("codCia",  codCia );
+         return q.getResultList();
+         }catch(Exception ex){
+             
+             return null;
+             
+         }
+    }       
+            
 
         
     public Short Sequence(String seq_name ){	 	 

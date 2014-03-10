@@ -260,7 +260,25 @@ public class PlanillaController extends AbstractController<Planilla> implements 
             JsfUtil.addErrorMessage(ex, "Surgio un error al ejecutar el proceso de cierre");
         }      
         return "";	
+   }    
+    
+    public String negativos(){    
+        this.anio= 0;
+        this.mes = 0;    
+        try{
+            if (sBPlanilla.Negativos().equals("ok")){
+                JsfUtil.addSuccessMessage("Cierre ejecutado con exito");
+            }else{
+                JsfUtil.addErrorMessage("Surgio un error al ejecutar el proceso de cierre");
+            }
+            
+            
+        }catch(Exception ex){
+            JsfUtil.addErrorMessage(ex, "Surgio un error al ejecutar el proceso de cierre");
+        }      
+        return "";	
    }       
+        
     
      public String reportePlanilla2() throws NamingException, SQLException, JRException, IOException{         
         HashMap params = new HashMap();  

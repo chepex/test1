@@ -13,6 +13,29 @@ import javax.faces.event.ActionEvent;
 @ViewScoped
 public class DeducPrestaController extends AbstractController<DeducPresta> implements Serializable {
 public List<DeducPresta> cprestamos;
+public List<DeducPresta> LAfp;
+public List<DeducPresta> LIsss;
+
+    public List<DeducPresta> getLIsss() {
+         LIsss= ejbFacade.findByIsss();
+        return LIsss;
+    }
+
+    public void setLIsss(List<DeducPresta> LIsss) {
+        this.LIsss = LIsss;
+    }
+
+
+    public List<DeducPresta> getLAfp() {
+       LAfp= ejbFacade.findByAfp();
+        return LAfp;
+    }
+
+    public void setLAfp(List<DeducPresta> LAfp) {
+        this.LAfp = LAfp;
+    }
+
+
 
     public List<DeducPresta> getCprestamos() {
         cprestamos = ejbFacade.findByCat("Prestamos");

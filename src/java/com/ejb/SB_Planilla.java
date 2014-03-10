@@ -115,7 +115,7 @@ public class SB_Planilla {
                List<ResumenAsistencia> iterator =  resumenAsistenciaFacade.findBysecuencia(e );
                 ProcesoAcero();
               for( ResumenAsistencia ra : iterator ){ 
-                 System.out.print("Empleado"+ra.getResumenAsistenciaPK().getCodEmp());
+                  actualizarNegativos(ra);
                   if(e.getTiposPlanilla().getPromedio().equals("M")){                      
                      calculos.promedioMensual(ra);    
                   } 
@@ -193,6 +193,19 @@ public class SB_Planilla {
           }            
          return "ok";
      }	    
+    
+    public String Negativos()  {   
+        
+        List<ProgramacionPla> iterador=  programacionPlaFacade.findByEstado("P");        
+        if(iterador.isEmpty()){
+            
+           return  "error";
+        }
+          for( ProgramacionPla e : iterador ){
+            
+          }            
+         return "ok";
+     }	
     
     public String GenerarIsss(ProgramacionPla programacionPla){
             
@@ -724,6 +737,20 @@ public class SB_Planilla {
         return "ok";
     }    
     
+    public void actualizarNegativos(ResumenAsistencia ra){
+    
+       List<MovDp> lmovdp = movDpFacade.findByCodEmp(ra);
+       for( MovDp mov : lmovdp ){ 
+           if(mov.getPendiente() != null){
+               BigDecimal neg = BigDecimal.valueOf(-1);
+               mov.setValor(mov.getValor().add(mov.getPendiente().multiply( neg)));
+               mov.setPendiente(null);
+               movDpFacade.edit(mov);
+               movDpFacade.flush();
+           }
+        }
+                                                                    
+    }
     
     public String generarTxt(int correlativo){
         

@@ -119,6 +119,29 @@
 
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_beneficiario}" for="beneficiario" />
                         <p:inputText id="beneficiario" value="#{empleadosController.selected.beneficiario}" title="#{myBundle.CreateEmpleadosTitle_beneficiario}" />
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_afp}" for="afp" />
+                        <p:selectOneMenu id="afp" value="#{empleadosController.selected.codAfp}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_afp}">                              
+                               <f:selectItems value="#{deducPrestaController.LAfp}"
+                                              var="deducPresta"
+                                              itemValue="#{deducPresta}"
+                                              itemLabel="#{deducPresta.descripcion}"
+                                              />
+                               <f:converter binding="#{deducPrestaConverter}"/>
+                           </p:selectOneMenu>                        
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_isss}" for="isss" />
+                        <p:selectOneMenu id="isss" value="#{empleadosController.selected.codIsss}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_isss}">                              
+                            <f:selectItems value="#{deducPrestaController.LIsss}"
+                                              var="deducPresta"
+                                              itemValue="#{deducPresta}"
+                                              itemLabel="#{deducPresta.descripcion}"
+                                              />
+                               <f:converter binding="#{deducPrestaConverter}"/>
+                           </p:selectOneMenu>                        
+                        
+                        
+                        
                     </p:panelGrid>
                 </p:panel>
                     
@@ -281,6 +304,7 @@
                 </p:panel>
                 </h:panelGroup>
       <p:separator />  
+      <p:hotkey bind="ctrl+g" actionListener="#{empleadosController.save}" update="display,:EmpleadosListForm:datalist,:growl"/>
 <p:commandButton actionListener="#{empleadosController.save}" value="#{myBundle.Save}" update="display,:EmpleadosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EmpleadosCreateDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="EmpleadosCreateDialog.hide()"/>      
             </h:form>

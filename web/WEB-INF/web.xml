@@ -153,9 +153,26 @@
             <description/>
             <url-pattern>/faces/tiposPlanilla/*</url-pattern>
         </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Reportes</web-resource-name>
+            <description/>
+            <url-pattern>/faces/reportesPrint/*</url-pattern>
+        </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>PROGRAMADOR2</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Constraint2</display-name>
+        <web-resource-collection>
+            <web-resource-name>empleados</web-resource-name>
+            <description/>
+            <url-pattern>/faces/empleados/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>RL_RRHH</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>
@@ -169,5 +186,9 @@
     <security-role>
         <description>PROGRAMADOR2</description>
         <role-name>PROGRAMADOR2</role-name>
+    </security-role>
+    <security-role>
+        <description>RL_RRHH</description>
+        <role-name>RL_RRHH</role-name>
     </security-role>
 </web-app>

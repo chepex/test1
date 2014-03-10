@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DeducPresta.findByCatDp", query = "SELECT d FROM DeducPresta d WHERE d.deducPrestaPK.codCia = :codCia and d.catDp.descripcion like :catDp "        ),
     @NamedQuery(name = "DeducPresta.findByCatNull", query = "SELECT d FROM DeducPresta d WHERE d.deducPrestaPK.codCia = :codCia and d.catDp is null "        ),
     @NamedQuery(name = "DeducPresta.findByTipoPla", query = "SELECT d FROM DeducPresta d WHERE d.deducPrestaPK.codCia = :codCia and d.tiposPlanilla.tiposPlanillaPK.codTipopla = :codTipopla  "        ),    
+    @NamedQuery(name = "DeducPresta.findByAfp", query = "SELECT d FROM DeducPresta d WHERE d.deducPrestaPK.codCia = :codCia and d.afp='S'"        ),        
+    @NamedQuery(name = "DeducPresta.findByIsss", query = "SELECT d FROM DeducPresta d WHERE d.deducPrestaPK.codCia = :codCia and d.isss='S'"        ),            
+    
     @NamedQuery(name = "DeducPresta.findByCodDp", query = "SELECT d FROM DeducPresta d WHERE  d.deducPrestaPK.codCia = :codCia and d.deducPrestaPK.codDp = :codDp"),
     @NamedQuery(name = "DeducPresta.findByDescripcion", query = "SELECT d FROM DeducPresta d WHERE d.descripcion = :descripcion"),    
     @NamedQuery(name = "DeducPresta.findByLey", query = "SELECT d FROM DeducPresta d WHERE d.afp = :afp"),

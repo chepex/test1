@@ -91,7 +91,12 @@
 		<f:facet name="footer">		  
 		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PlanillaViewForm" oncomplete="PlanillaViewDialog.show()" disabled="#{empty planillaController.selected}"/>		                        
                     <p:commandButton id="btn-generar" onstart="pbPoll.start();" async="true"  icon="ui-icon-shuffle"  value="Generar" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()" ajax="true" actionListener="#{planillaController.generar() }" update="@form :growl" />                                        
-                    <p:commandButton id="btn-cerrar"   icon="ui-icon-shuffle"  value="Cerrar" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()"   actionListener="#{planillaController.cerrar() }" update="@form :growl" />                                                            
+                    <p:commandButton id="btn-cerrar"   icon="ui-icon-shuffle"  value="Cerrar" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()"   actionListener="#{planillaController.cerrar() }" update="@form :growl" /> 
+                     
+                    
+                    
+
+                    <p:commandButton id="btn-negativos"   icon="ui-icon-shuffle"  value="Negativos" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()"   actionListener="#{planillaController.negativos() }" update="@form :growl" />                                                                                
                     
                     
                     
@@ -102,7 +107,7 @@
 	    </p:dataTable>
             <p:poll async="true" autoStart="true" interval="1" update=":PlanillaListForm:progressBar" widgetVar="pbPoll"/>
 <br/><br/>
- <p:progressBar id="progressBar" value="#{planillaController.progress}" labelTemplate="{value}% #{planillaController.progress}" displayOnly="true"/>  
+ <p:progressBar id="progressBar" value="#{planillaController.progress}" labelTemplate="#{planillaController.progress}%  de  100%  " displayOnly="true"/>  
   
 	</p:panel>
 <h1>Mantenimiento Planilla</h1>
