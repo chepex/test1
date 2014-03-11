@@ -37,7 +37,7 @@ public class SB_Reportes {
         String reporPath = "";          
         reporPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(rep);              
         Context ctx= new InitialContext();
-        DataSource ds = (DataSource)ctx.lookup("jdbc/desa");
+        DataSource ds = (DataSource)ctx.lookup("jdbc/caricai");
         Connection cn = ds.getConnection();            
         JasperPrint jasperprint = JasperFillManager.fillReport(reporPath, params, cn);        
         HttpServletResponse httpserveltresponse= (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -52,9 +52,9 @@ public class SB_Reportes {
     }
     
  
- public String mario(){
-     return "Hola MARIO";
- }
+        public String mario(){
+            return "Hola MARIO";
+        }
      
     }
 

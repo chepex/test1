@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeptosViewDlg" widgetVar="DeptosViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewDeptosTitle}" closeOnEscape="true">
+
+            <h:form id="DeptosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{deptosController.selected != null}">
+                        <h:outputText value="#{myBundle.ViewDeptosLabel_deptosPK_codDepto}"/>
+                        <h:outputText value="#{deptosController.selected.deptosPK.codDepto}" title="#{myBundle.ViewDeptosTitle_deptosPK_codDepto}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeptosLabel_nomDepto}"/>
+                        <h:outputText value="#{deptosController.selected.nomDepto}" title="#{myBundle.ViewDeptosTitle_nomDepto}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeptosLabel_deptosPK_zona}"/>
+                        <h:outputText value="#{deptosController.selected.zonas.descripcion}" title="#{myBundle.ViewDeptosTitle_deptosPK_zona}"/>
+
+                        <h:outputText value="#{myBundle.ViewDeptosLabel_paises}"/>
+                        <h:outputText value="#{deptosController.selected.paises.nombPais}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="DeptosViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

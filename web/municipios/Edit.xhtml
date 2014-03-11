@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MunicipiosEditDlg" widgetVar="MunicipiosEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditMunicipiosTitle}" closeOnEscape="true">
+
+            <h:form id="MunicipiosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{municipiosController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditMunicipiosLabel_municipiosPK_codMuni}" for="municipiosPK_codMuni" />
+                        <h:outputText id="municipiosPK_codMuni" value="#{municipiosController.selected.municipiosPK.codMuni}" />
+
+                        <p:outputLabel value="#{myBundle.EditMunicipiosLabel_nomMuni}" for="nomMuni" />
+                        <p:inputText id="nomMuni" value="#{municipiosController.selected.nomMuni}" title="#{myBundle.EditMunicipiosTitle_nomMuni}" size="30" maxlength="30"/>
+
+                        <h:outputLabel value="#{myBundle.EditMunicipiosLabel_deptos}" for="deptos" />
+                        <h:outputText id="deptos" value="#{municipiosController.selected.deptos.nomDepto}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{municipiosController.save}" value="#{myBundle.Save}" update="display,:MunicipiosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MunicipiosEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="MunicipiosEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

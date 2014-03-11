@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MunicipiosCreateDlg" widgetVar="MunicipiosCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateMunicipiosTitle}" closeOnEscape="true">
+
+            <h:form id="MunicipiosCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="#{myBundle.CreateMunicipiosLabel_municipiosPK_codMuni}" for="municipiosPK_codMuni" />
+                        <p:inputText id="municipiosPK_codMuni" value="#{municipiosController.selected.municipiosPK.codMuni}" title="#{myBundle.CreateMunicipiosTitle_municipiosPK_codMuni}" required="true" requiredMessage="#{myBundle.CreateMunicipiosRequiredMessage_municipiosPK_codMuni}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMunicipiosLabel_nomMuni}" for="nomMuni" />
+                        <p:inputText id="nomMuni" value="#{municipiosController.selected.nomMuni}" title="#{myBundle.CreateMunicipiosTitle_nomMuni}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMunicipiosLabel_deptos}" for="deptos" />
+                        <p:selectOneMenu id="deptos" value="#{municipiosController.selected.deptos}" required="true" requiredMessage="#{myBundle.EditMunicipiosRequiredMessage_deptos}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{deptosController.items}"
+                                           var="deptosItem"
+                                           itemValue="#{deptosItem}"
+                                           itemLabel="#{deptosItem.nomDepto}"
+                                           />
+                            <f:converter binding="#{deptosConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{municipiosController.saveNew}" value="#{myBundle.Save}" update="display,:MunicipiosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MunicipiosCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="MunicipiosCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ZonasCreateDlg" widgetVar="ZonasCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateZonasTitle}" closeOnEscape="true">
+
+            <h:form id="ZonasCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="#{myBundle.CreateZonasLabel_zonasPK_codZona}" for="zonasPK_codZona" />
+                        <p:inputText id="zonasPK_codZona" value="#{zonasController.selected.zonasPK.codZona}" title="#{myBundle.CreateZonasTitle_zonasPK_codZona}" required="true" requiredMessage="#{myBundle.CreateZonasRequiredMessage_zonasPK_codZona}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateZonasLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{zonasController.selected.descripcion}" title="#{myBundle.CreateZonasTitle_descripcion}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreateZonasLabel_paises}" for="paises" />
+                        <p:selectOneMenu id="paises" value="#{zonasController.selected.paises}" required="true" requiredMessage="#{myBundle.EditZonasRequiredMessage_paises}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{paisesController.items}"
+                                           var="paisesItem"
+                                           itemValue="#{paisesItem}"
+                                           itemLabel="#{paisesItem.nombPais}"
+                                           />
+                            <f:converter binding="#{paisesConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{zonasController.saveNew}" value="#{myBundle.Save}" update="display,:ZonasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ZonasCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ZonasCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

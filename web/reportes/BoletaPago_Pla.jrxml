@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a3c6df3-2659-4090-b597-c4127ecd0851">
 	<property name="ireport.zoom" value="1.6105100000000032"/>
-	<property name="ireport.x" value="7"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
 	<parameter name="RESTA" class="java.lang.String">
@@ -42,7 +42,6 @@ and e.cod_emp = p.cod_emp
 AND P.COD_CIA = PP.COD_CIA
 AND P.SECUENCIA = PP.SECUENCIA
 AND P.SECUENCIA= $P{SECUENCIA}
-
 AND T.COD_CIA  = P.COD_CIA
 AND T.COD_TIPOPLA = PP.COD_TIPOPLA
 AND E.COD_CIA= D.COD_CIA
@@ -312,11 +311,6 @@ AND P.COD_EMP =  R.COD_EMP]]>
 				</textElement>
 				<text><![CDATA[CodEmp]]></text>
 			</staticText>
-			<textField>
-				<reportElement uuid="28887a4d-2b2b-42fc-97b0-c45370fcb81a" x="624" y="42" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{COD_EMP}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement uuid="f4daa505-486c-4524-a9fe-44c78cbbb889" x="500" y="36" width="61" height="20"/>
 				<textElement/>

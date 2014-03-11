@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeptosEditDlg" widgetVar="DeptosEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditDeptosTitle}" closeOnEscape="true">
+
+            <h:form id="DeptosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{deptosController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditDeptosLabel_deptosPK_codDepto}" for="deptosPK_codDepto" />
+                        <h:outputText id="deptosPK_codDepto" value="#{deptosController.selected.deptosPK.codDepto}" />
+
+                        <p:outputLabel value="#{myBundle.EditDeptosLabel_nomDepto}" for="nomDepto" />
+                        <p:inputText id="nomDepto" value="#{deptosController.selected.nomDepto}" title="#{myBundle.EditDeptosTitle_nomDepto}" size="30" maxlength="30"/>
+                        
+                        <h:outputLabel value="#{myBundle.EditDeptosLabel_deptosPK_zona}" for="deptosPK_zona" />
+                        <h:outputText id="deptosPK_zona" value="#{deptosController.selected.zonas.descripcion}" />
+                        
+                        <h:outputLabel value="#{myBundle.EditDeptosLabel_paises}" for="paises" />
+                        <h:outputText id="paises" value="#{deptosController.selected.paises.nombPais}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{deptosController.save}" value="#{myBundle.Save}" update="display,:DeptosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DeptosEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DeptosEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaisesEditDlg" widgetVar="PaisesEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditPaisesTitle}" closeOnEscape="true">
+
+            <h:form id="PaisesEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{paisesController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditPaisesLabel_codPais}" for="codPais" />
+                        <h:outputText id="codPais" value="#{paisesController.selected.codPais}" />
+
+                        <p:outputLabel value="#{myBundle.EditPaisesLabel_nombPais}" for="nombPais" />
+                        <p:inputText id="nombPais" value="#{paisesController.selected.nombPais}" title="#{myBundle.EditPaisesTitle_nombPais}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.EditPaisesLabel_monedaSimbolo}" for="monedaSimbolo" />
+                        <p:inputText id="monedaSimbolo" value="#{paisesController.selected.monedaSimbolo}" title="#{myBundle.EditPaisesTitle_monedaSimbolo}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{myBundle.EditPaisesLabel_monedaDescrip}" for="monedaDescrip" />
+                        <p:inputText id="monedaDescrip" value="#{paisesController.selected.monedaDescrip}" title="#{myBundle.EditPaisesTitle_monedaDescrip}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.EditPaisesLabel_local}" for="local" />
+                        <p:inputText id="local" value="#{paisesController.selected.local}" title="#{myBundle.EditPaisesTitle_local}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{myBundle.EditPaisesLabel_tasaCambio}" for="tasaCambio" />
+                        <p:inputText id="tasaCambio" value="#{paisesController.selected.tasaCambio}" title="#{myBundle.EditPaisesTitle_tasaCambio}"/>
+
+                        <p:outputLabel value="#{myBundle.EditPaisesLabel_nacionalidad}" for="nacionalidad" />
+                        <p:inputText id="nacionalidad" value="#{paisesController.selected.nacionalidad}" title="#{myBundle.EditPaisesTitle_nacionalidad}" size="75" maxlength="75"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{paisesController.save}" value="#{myBundle.Save}" update="display,:PaisesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PaisesEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PaisesEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NivelesSeguridadEditDlg" widgetVar="NivelesSeguridadEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditNivelesSeguridadTitle}" closeOnEscape="true">
+
+            <h:form id="NivelesSeguridadEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{nivelesSeguridadController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditNivelesSeguridadLabel_nivelesSeguridadPK_codCia}" for="nivelesSeguridadPK_codCia" />
+                        <h:outputText id="nivelesSeguridadPK_codCia" value="#{nivelesSeguridadController.selected.nivelesSeguridadPK.codCia}" />
+
+                        <h:outputLabel value="#{myBundle.EditNivelesSeguridadLabel_nivelesSeguridadPK_codSeguridad}" for="nivelesSeguridadPK_codSeguridad" />
+                        <h:outputText id="nivelesSeguridadPK_codSeguridad" value="#{nivelesSeguridadController.selected.nivelesSeguridadPK.codSeguridad}" />
+
+                        <p:outputLabel value="#{myBundle.EditNivelesSeguridadLabel_color}" for="color" />
+                        <p:inputText id="color" value="#{nivelesSeguridadController.selected.color}" title="#{myBundle.EditNivelesSeguridadTitle_color}" size="25" maxlength="25"/>
+
+                        <p:outputLabel value="#{myBundle.EditNivelesSeguridadLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{nivelesSeguridadController.selected.descripcion}" title="#{myBundle.EditNivelesSeguridadTitle_descripcion}" size="75" maxlength="75"/>
+
+                        <p:outputLabel value="#{myBundle.EditNivelesSeguridadLabel_backgroundColor}" for="backgroundColor" />
+                        <p:inputText id="backgroundColor" value="#{nivelesSeguridadController.selected.backgroundColor}" title="#{myBundle.EditNivelesSeguridadTitle_backgroundColor}" size="20" maxlength="20"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{nivelesSeguridadController.save}" value="#{myBundle.Save}" update="display,:NivelesSeguridadListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,NivelesSeguridadEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="NivelesSeguridadEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

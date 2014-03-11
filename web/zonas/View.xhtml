@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ZonasViewDlg" widgetVar="ZonasViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewZonasTitle}" closeOnEscape="true">
+
+            <h:form id="ZonasViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{zonasController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewZonasLabel_zonasPK_codZona}"/>
+                        <h:outputText value="#{zonasController.selected.zonasPK.codZona}" title="#{myBundle.ViewZonasTitle_zonasPK_codZona}"/>
+
+                        <h:outputText value="#{myBundle.ViewZonasLabel_descripcion}"/>
+                        <h:outputText value="#{zonasController.selected.descripcion}" title="#{myBundle.ViewZonasTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewZonasLabel_paises}"/>
+                        <h:outputText value="#{zonasController.selected.paises.nombPais}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="ZonasViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

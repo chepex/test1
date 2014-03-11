@@ -183,7 +183,10 @@ public class Empleados implements Serializable {
     private String avisarA;
     @Size(max = 15)
     @Column(name = "CEDULA")
-    private String cedula;    
+    private String cedula;
+    @Size(max = 1)
+    @Column(name = "CHEQUE_DEP")
+    private String chequedep;    
     @Size(max = 15)
     @Column(name = "CTA_BANCARIA")
     private String ctaBancaria;
@@ -244,19 +247,35 @@ public class Empleados implements Serializable {
     private BigInteger vacaciones;
     @Column(name = "PRE_ID")
     private BigInteger preId;
-    @Column(name = "COD_DEPARTAMENTO")
-    private BigInteger codDepartamento;
-    @Column(name = "COD_ZONA")
-    private BigInteger codZona;
-    @Column(name = "COD_MUNI")
-    private BigInteger codMuni;
-    @Column(name = "COD_SEGURIDAD")
-    private Short codSeguridad;
+    @JoinColumns({
+    @JoinColumn(name = "COD_PAIS", referencedColumnName = "COD_PAIS", insertable = false, updatable = false),
+    @JoinColumn(name = "COD_DEPARTAMENTO", referencedColumnName = "COD_DEPTO", insertable = false, updatable = false),
+    @JoinColumn(name = "COD_ZONA", referencedColumnName = "ZONA", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Deptos codDepartamento;
+    @JoinColumns({
+    @JoinColumn(name = "COD_PAIS", referencedColumnName = "COD_PAIS", insertable = false, updatable = false),
+    @JoinColumn(name = "COD_ZONA", referencedColumnName = "COD_ZONA", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Zonas codZona;
+    @JoinColumns({
+    @JoinColumn(name = "COD_PAIS", referencedColumnName = "COD_PAIS", insertable = false, updatable = false),
+    @JoinColumn(name = "COD_DEPARTAMENTO", referencedColumnName = "COD_DEPTO", insertable = false, updatable = false),
+    @JoinColumn(name = "COD_MUNI", referencedColumnName = "COD_MUNI", insertable = false, updatable = false),
+    @JoinColumn(name = "COD_ZONA", referencedColumnName = "COD_ZONA", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private Municipios codMuni;
+    @JoinColumns({
+    @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
+    @JoinColumn(name = "COD_SEGURIDAD", referencedColumnName = "COD_SEGURIDAD", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private NivelesSeguridad codSeguridad;
     @Column(name = "F_EXT_DOC")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fExtDoc;
-    @Column(name = "COD_PAIS")
-    private Short codPais;
+    @JoinColumn(name = "COD_PAIS", referencedColumnName = "COD_PAIS")
+    @ManyToOne(optional = false)
+    private Paises codPais;
     @Column(name = "FEC_REGISTRO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecRegistro;
@@ -516,7 +535,13 @@ public class Empleados implements Serializable {
 	this.cedula = cedula;
     }
 
-  
+    public String getChequedep() {
+        return chequedep;
+    }
+
+    public void setChequedep(String chequedep) {
+        this.chequedep = chequedep;
+    }
 
     public String getCtaBancaria() {
 	return ctaBancaria;
@@ -694,38 +719,39 @@ public class Empleados implements Serializable {
 	this.preId = preId;
     }
 
-    public BigInteger getCodDepartamento() {
-	return codDepartamento;
+
+    public Zonas getCodZona() {
+        return codZona;
     }
 
-    public void setCodDepartamento(BigInteger codDepartamento) {
-	this.codDepartamento = codDepartamento;
+    public void setCodZona(Zonas codZona) {
+        this.codZona = codZona;
     }
 
-    public BigInteger getCodZona() {
-	return codZona;
+    public Deptos getCodDepartamento() {
+        return codDepartamento;
     }
 
-    public void setCodZona(BigInteger codZona) {
-	this.codZona = codZona;
+    public void setCodDepartamento(Deptos codDepartamento) {
+        this.codDepartamento = codDepartamento;
     }
 
-    public BigInteger getCodMuni() {
-	return codMuni;
+    public Municipios getCodMuni() {
+        return codMuni;
     }
 
-    public void setCodMuni(BigInteger codMuni) {
-	this.codMuni = codMuni;
+    public void setCodMuni(Municipios codMuni) {
+        this.codMuni = codMuni;
     }
 
-    public Short getCodSeguridad() {
-	return codSeguridad;
+    public NivelesSeguridad getCodSeguridad() {
+        return codSeguridad;
     }
 
-    public void setCodSeguridad(Short codSeguridad) {
-	this.codSeguridad = codSeguridad;
+    public void setCodSeguridad(NivelesSeguridad codSeguridad) {
+        this.codSeguridad = codSeguridad;
     }
-
+    
     public Date getFExtDoc() {
 	return fExtDoc;
     }
@@ -734,12 +760,12 @@ public class Empleados implements Serializable {
 	this.fExtDoc = fExtDoc;
     }
 
-    public Short getCodPais() {
-	return codPais;
+    public Paises getCodPais() {
+        return codPais;
     }
 
-    public void setCodPais(Short codPais) {
-	this.codPais = codPais;
+    public void setCodPais(Paises codPais) {
+        this.codPais = codPais;
     }
 
     public Date getFecRegistro() {

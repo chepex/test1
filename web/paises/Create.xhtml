@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaisesCreateDlg" widgetVar="PaisesCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreatePaisesTitle}" closeOnEscape="true">
+
+            <h:form id="PaisesCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel value="#{myBundle.CreatePaisesLabel_codPais}" for="codPais" />
+                        <p:inputText id="codPais" value="#{paisesController.selected.codPais}" title="#{myBundle.CreatePaisesTitle_codPais}" required="true" requiredMessage="#{myBundle.CreatePaisesRequiredMessage_codPais}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePaisesLabel_nombPais}" for="nombPais" />
+                        <p:inputText id="nombPais" value="#{paisesController.selected.nombPais}" title="#{myBundle.CreatePaisesTitle_nombPais}" size="40" maxlength="40"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePaisesLabel_monedaSimbolo}" for="monedaSimbolo" />
+                        <p:inputText id="monedaSimbolo" value="#{paisesController.selected.monedaSimbolo}" title="#{myBundle.CreatePaisesTitle_monedaSimbolo}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePaisesLabel_monedaDescrip}" for="monedaDescrip" />
+                        <p:inputText id="monedaDescrip" value="#{paisesController.selected.monedaDescrip}" title="#{myBundle.CreatePaisesTitle_monedaDescrip}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePaisesLabel_local}" for="local" />
+                        <p:inputText id="local" value="#{paisesController.selected.local}" title="#{myBundle.CreatePaisesTitle_local}" size="1" maxlength="1"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePaisesLabel_tasaCambio}" for="tasaCambio" />
+                        <p:inputText id="tasaCambio" value="#{paisesController.selected.tasaCambio}" title="#{myBundle.CreatePaisesTitle_tasaCambio}"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePaisesLabel_nacionalidad}" for="nacionalidad" />
+                        <p:inputText id="nacionalidad" value="#{paisesController.selected.nacionalidad}" title="#{myBundle.CreatePaisesTitle_nacionalidad}" size="75" maxlength="75"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{paisesController.saveNew}" value="#{myBundle.Save}" update="display,:PaisesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PaisesCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PaisesCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -70,8 +70,8 @@
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_empleadosPK_codEmp}" for="empleadosPK_codEmp" />
                         <p:outputLabel id="empleadosPK_codEmp" value="#{empleadosController.selected.empleadosPK.codEmp}" title="#{myBundle.CreateEmpleadosTitle_empleadosPK_codEmp}" />
                         
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codEmpref}" for="codEmpref" />
-                        <p:inputText id="codEmpref" value="#{empleadosController.selected.codEmpref}" title="#{myBundle.CreateEmpleadosTitle_codEmpref}" />
+                        <p:outputLabel value="C&oacute;d Ref" for="codEmpref" />
+                        <p:inputText id="codEmpref" value="#{empleadosController.selected.codEmpref}" title="C&oacute;digo Referencia RRHH" />
                         
 
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_apellidos}" for="apellidos" />
@@ -80,23 +80,22 @@
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_nombres}" for="nombres" />
                         <p:inputText id="nombres" value="#{empleadosController.selected.nombres}" title="#{myBundle.CreateEmpleadosTitle_nombres}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_nombres}"/>
 
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_apCasada}" for="apCasada" />
-                        <p:inputText id="apCasada" value="#{empleadosController.selected.apCasada}" title="#{myBundle.CreateEmpleadosTitle_apCasada}" />
+                        <p:outputLabel value="Apellido Casada" for="apCasada" />
+                        <p:inputText id="apCasada" value="#{empleadosController.selected.apCasada}" title="Apellido de Casada" />
 
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_direccion}" for="direccion" />
-                        <p:inputText id="direccion" value="#{empleadosController.selected.direccion}" title="#{myBundle.CreateEmpleadosTitle_direccion}" />
+                        <p:inputTextarea id="direccion" rows="6" cols="33" maxlength="150" title="Direccion Empleado" value="#{empleadosController.selected.direccion}"/>                      
 
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_telefonos}" for="telefonos" />
-                        <p:inputText id="telefonos" value="#{empleadosController.selected.telefonos}" title="#{myBundle.CreateEmpleadosTitle_telefonos}" />
+                        <p:inputText id="telefonos" value="#{empleadosController.selected.telefonos}" title="Telefonos" />
 
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_fechaNac}" for="fechaNac" />
-                        <p:calendar id="fechaNac" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.fechaNac}" title="#{myBundle.EditEmpleadosTitle_fechaNac}"  showOn="button"/>
+                        <p:outputLabel value="Fecha Nac.:" for="fechaNac" />
+                        <p:calendar id="fechaNac" pattern="dd/MM/yyyy" value="#{empleadosController.selected.fechaNac}" title="Fecha Nacimiento Empleado"  showOn="button"/>
                         
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_avisarA}" for="avisarA" />
-                        <p:inputText id="avisarA" value="#{empleadosController.selected.avisarA}" title="#{myBundle.CreateEmpleadosTitle_avisarA}" />
+                        <p:outputLabel value="En Caso de Emergencia Avisar A:" for="avisarA" />
+                        <p:inputText id="avisarA" value="#{empleadosController.selected.avisarA}" title="En Caso de Emergencia a Visar a:"  size="40" maxlength="250"/>
                         
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_sexo}" for="sexo" />
-                        
                         <p:selectOneMenu id="sexo" value="#{empleadosController.selected.sexo}"  >                            
                                <f:selectItem itemLabel="Femenino" itemValue ="1"/>
                                <f:selectItem itemLabel="Masculino" itemValue="2"/>
@@ -104,10 +103,10 @@
                         
                         
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_numHijos}" for="numHijos" />
-                        <p:inputText id="numHijos" value="#{empleadosController.selected.numHijos}" title="#{myBundle.CreateEmpleadosTitle_numHijos}" />
+                        <p:inputText id="numHijos" value="#{empleadosController.selected.numHijos}" title="N&uacute;mero de Hijos" />
 
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_estadoCivil}" for="estadoCivil" />                                
-                        <p:selectOneMenu id="estadoCivil" value="#{empleadosController.selected.estadoCivil}"  >                            
+                        <p:selectOneMenu id="estadoCivil" value="#{empleadosController.selected.estadoCivil}" >                            
                                <f:selectItem itemLabel="Soltero" itemValue ="S"/>
                                <f:selectItem itemLabel="Viudo" itemValue ="V"/>
                                <f:selectItem itemLabel="Union Libre" itemValue ="U"/>
@@ -117,27 +116,18 @@
                         </p:selectOneMenu>                        
                         
 
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_beneficiario}" for="beneficiario" />
-                        <p:inputText id="beneficiario" value="#{empleadosController.selected.beneficiario}" title="#{myBundle.CreateEmpleadosTitle_beneficiario}" />
+                        <p:outputLabel value="Beneficiario (a):" for="beneficiario" />
+                        <p:inputText id="beneficiario" value="#{empleadosController.selected.beneficiario}" title="Beneficiario (a)" size="40" maxlength="60"/>
+                                        
                         
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_afp}" for="afp" />
-                        <p:selectOneMenu id="afp" value="#{empleadosController.selected.codAfp}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_afp}">                              
-                               <f:selectItems value="#{deducPrestaController.LAfp}"
-                                              var="deducPresta"
-                                              itemValue="#{deducPresta}"
-                                              itemLabel="#{deducPresta.descripcion}"
-                                              />
-                               <f:converter binding="#{deducPrestaConverter}"/>
-                           </p:selectOneMenu>                        
-                        
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_isss}" for="isss" />
+                        <p:outputLabel value="ISSS" for="isss" />
                         <p:selectOneMenu id="isss" value="#{empleadosController.selected.codIsss}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_isss}">                              
                             <f:selectItems value="#{deducPrestaController.LIsss}"
                                               var="deducPresta"
-                                              itemValue="#{deducPresta}"
+                                              itemValue="#{deducPresta.deducPrestaPK.codDp}"
                                               itemLabel="#{deducPresta.descripcion}"
                                               />
-                               <f:converter binding="#{deducPrestaConverter}"/>
+                            
                            </p:selectOneMenu>                        
                         
                         
@@ -147,8 +137,8 @@
                     
                 <p:panel header="Datos de Registro">
                      <p:panelGrid columns="4" rendered="#{empleadosController.selected != null}">
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_departamentos}" for="departamentos" />
-                           <p:selectOneMenu id="departamentos" value="#{empleadosController.selected.departamentos}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_departamentos}">
+                        <p:outputLabel value="Depto." for="departamentos" />
+                           <p:selectOneMenu id="departamentos" value="#{empleadosController.selected.departamentos}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_departamentos}" filter="true" filterMatchMode="contains">
                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                <f:selectItems value="#{departamentosController.items}"
                                               var="departamentosItem"
@@ -169,8 +159,8 @@
                                <f:converter binding="#{puestosConverter}"/>
                            </p:selectOneMenu>
 
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codProfesion}" for="codProfesion" />
-                           <p:selectOneMenu id="codProfesion" value="#{empleadosController.selected.codProfesion}" >
+                           <p:outputLabel value="Profesion" for="codProfesion" />
+                           <p:selectOneMenu id="codProfesion" value="#{empleadosController.selected.codProfesion}" filter="true" filterMatchMode="contains">
                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                                <f:selectItems value="#{profesionesController.items}"
                                               var="codProfesionItem"
@@ -182,59 +172,96 @@
 
                            
 
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_numIgss}" for="numIgss" />
-                           <p:inputText id="numIgss" value="#{empleadosController.selected.numIgss}" title="#{myBundle.CreateEmpleadosTitle_numIgss}" />
+                           <p:outputLabel value="No. Seg. Social" for="numIgss" />
+                           <p:inputText id="numIgss" value="#{empleadosController.selected.numIgss}" title="N&uacute;mero de Seguro Social" />
 
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_numNit}" for="numNit" />
-                           <p:inputText id="numNit" value="#{empleadosController.selected.numNit}" title="#{myBundle.CreateEmpleadosTitle_numNit}" />
+                           <p:outputLabel value="Nombre Seg Soc." for="nombreIsss" />
+                           <p:inputText id="nombreIsss" value="#{empleadosController.selected.nombreIsss}" title="Nombre seg&uacute;n ISSS" size="40" maxlength="100"/>
 
+                           <p:outputLabel value="No. NIT" for="numNit" />
+                           <p:inputText id="numNit" value="#{empleadosController.selected.numNit}" title="N&uacute;mero de Identificaci&oacute;n Tributaria" />
 
+                           <p:outputLabel value="Nombre NIT" for="nombreNit" />
+                           <p:inputText id="nombreNit" value="#{empleadosController.selected.nombreNit}" title="Nombre Seg&uacute;n NIT" size="40" maxlength="100" />
 
+                           <p:outputLabel value="No. DUI" for="cedula" />
+                           <p:inputText id="cedula" value="#{empleadosController.selected.cedula}" title="Documento &Uacute;nico de Identidad" />
 
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_cedula}" for="cedula" />
-                           <p:inputText id="cedula" value="#{empleadosController.selected.cedula}" title="#{myBundle.CreateEmpleadosTitle_cedula}" />
-
-
-
-
-
-
-
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_nupAfp}" for="nupAfp" />
-                           <p:inputText id="nupAfp" value="#{empleadosController.selected.nupAfp}" title="#{myBundle.CreateEmpleadosTitle_nupAfp}" />
-
-
-
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_nombreIsss}" for="nombreIsss" />
-                           <p:inputText id="nombreIsss" value="#{empleadosController.selected.nombreIsss}" title="#{myBundle.CreateEmpleadosTitle_nombreIsss}" />
-
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_comision}" for="comision" />
-                           <p:inputText id="comision" value="#{empleadosController.selected.comision}" title="#{myBundle.CreateEmpleadosTitle_comision}" />
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_fechaIngresoHist}" for="fechaIngresoHist" />
-                           <p:calendar id="fechaIngresoHist" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.fechaIngresoHist}" title="#{myBundle.EditEmpleadosTitle_fechaIngresoHist}"  showOn="button"/>
-
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_nombreNit}" for="nombreNit" />
-                           <p:inputText id="nombreNit" value="#{empleadosController.selected.nombreNit}" title="#{myBundle.CreateEmpleadosTitle_nombreNit}" />
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codZona}" for="codZona" />
-                           <p:inputText id="codZona" value="#{empleadosController.selected.codZona}" title="#{myBundle.CreateEmpleadosTitle_codZona}" />
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codMuni}" for="codMuni" />
-                           <p:inputText id="codMuni" value="#{empleadosController.selected.codMuni}" title="#{myBundle.CreateEmpleadosTitle_codMuni}" />
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codSeguridad}" for="codSeguridad" />
-                           <p:inputText id="codSeguridad" value="#{empleadosController.selected.codSeguridad}" title="#{myBundle.CreateEmpleadosTitle_codSeguridad}" />
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_FExtDoc}" for="FExtDoc" />
-                           <p:calendar id="FExtDoc" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.FExtDoc}" title="#{myBundle.EditEmpleadosTitle_FExtDoc}"  showOn="button"/>
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codPais}" for="codPais" />
-                           <p:inputText id="codPais" value="#{empleadosController.selected.codPais}" title="#{myBundle.CreateEmpleadosTitle_codPais}" />
+                           <p:outputLabel value="#F.DUI Expedici&oacute;n" for="FExtDoc" />
+                           <p:calendar id="FExtDoc" pattern="dd/MM/yyyy" value="#{empleadosController.selected.FExtDoc}" title="Fecha de Expedici&oacute;n de Documento &Uacute;nico de Identidad"  showOn="button"/>
+                           
+                           <p:outputLabel value="AFP" for="afp" />
+                            <p:selectOneMenu id="afp" filter="true" filterMatchMode="contains" value="#{empleadosController.selected.codAfp}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_afp}" >                              
+                               <f:selectItems value="#{deducPrestaController.LAfp}"
+                                              var="deducPresta"
+                                              itemValue="#{deducPresta.deducPrestaPK.codDp}"
+                                              itemLabel="#{deducPresta.descripcion}"
+                                              />
+                              
+                           </p:selectOneMenu> 
+                           
+                           <p:outputLabel value="NUP" for="nupAfp" />
+                           <p:inputText id="nupAfp" value="#{empleadosController.selected.nupAfp}" title="#N&uacute;mero de AFP" />
+                           
+                           <p:outputLabel value="Fecha Ant. Ingreso" for="fechaIngresoHist" />
+                           <p:calendar id="fechaIngresoHist" pattern="dd/MM/yyyy" value="#{empleadosController.selected.fechaIngresoHist}" title="En Caso que el Empleado Reingrese se Coloca la fecha Anterior de Ingreso"  showOn="button"/>
+                         
+                           <p:outputLabel value="Nacionalidad" for="codPais" />
+                           <p:selectOneMenu id="codPais" value="#{empleadosController.selected.codPais}" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{paisesController.items}"
+                                           var="paisesItem"
+                                           itemValue="#{paisesItem}"
+                                           itemLabel="#{paisesItem.nacionalidad}"
+                                           />
+                                <f:converter binding="#{paisesConverter}"/>
+                            </p:selectOneMenu>
+                           
+                           <p:outputLabel value="Zona Geografica" for="codZona" />
+                           <p:selectOneMenu id="codZona" value="#{empleadosController.selected.codZona}" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{zonasController.items}"
+                                           var="zonasItem"
+                                           itemValue="#{zonasItem}"
+                                           itemLabel="#{zonasItem.descripcion}"
+                                           />
+                                <f:converter binding="#{zonasConverter}"/>
+                            </p:selectOneMenu>
+                           
+                           <p:outputLabel value="Depto Geografico" for="codDepartamento" />
+                           <p:selectOneMenu id="codDepartamento" value="#{empleadosController.selected.codDepartamento}" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{deptosController.items}"
+                                           var="deptosItem"
+                                           itemValue="#{deptosItem}"
+                                           itemLabel="#{deptosItem.nomDepto}"
+                                           />
+                                <f:converter binding="#{deptosConverter}"/>
+                            </p:selectOneMenu>
+                           
+                           <p:outputLabel value="Municipios" for="codMuni" />
+                            <p:selectOneMenu id="codMuni" value="#{empleadosController.selected.codMuni}" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{municipiosController.items}"
+                                           var="municipiosItem"
+                                           itemValue="#{municipiosItem}"
+                                           itemLabel="#{municipiosItem.nomMuni}"
+                                           />
+                                <f:converter binding="#{municipiosConverter}"/>
+                            </p:selectOneMenu>
+                           
+                           <p:outputLabel value="Nivel Seguridad" for="codSeguridad" />
+                           <p:selectOneMenu id="codSeguridad" value="#{empleadosController.selected.codSeguridad}" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{nivelesSeguridadController.items}"
+                                           var="nivelesSeguridadItem"
+                                           itemValue="#{nivelesSeguridadItem}"
+                                           itemLabel="#{nivelesSeguridadItem.color}"
+                                           />
+                                <f:converter binding="#{nivelesSeguridadConverter}"/>
+                            </p:selectOneMenu>
+                          
+                           
                     
                      </p:panelGrid>
                      </p:panel>
@@ -242,64 +269,75 @@
                         <p:panelGrid columns="8" rendered="#{empleadosController.selected != null}">
                             
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_status}" for="status" />                        
-                        <p:selectOneMenu id="status" value="#{empleadosController.selected.status}"  >                            
-                               <f:selectItem itemLabel="Retirado" itemValue ="R"/>
+                        <p:selectOneMenu id="status" value="#{empleadosController.selected.status}"  > 
                                <f:selectItem itemLabel="Activo" itemValue="A"/>
+                               <f:selectItem itemLabel="Retirado" itemValue ="R"/>
                                <f:selectItem itemLabel="Marcacion" itemValue="M"/>
                         </p:selectOneMenu>
                             
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_fecIngreso}" for="fecIngreso" />
-                        <p:calendar id="fecIngreso" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.fecIngreso}" title="#{myBundle.EditEmpleadosTitle_fecIngreso}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_fecIngreso}" showOn="button"/>
+                        <p:outputLabel value="F. Ingreso" for="fecIngreso" />
+                        <p:calendar id="fecIngreso" pattern="dd/MM/yyyy" value="#{empleadosController.selected.fecIngreso}" title="Fecha de Ingreso del Empleado" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_fecIngreso}" showOn="button"/>
 
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_fecSalida}" for="fecSalida" />
-                        <p:calendar id="fecSalida" pattern="MM/dd/yyyy HH:mm:ss" value="#{empleadosController.selected.fecSalida}" title="#{myBundle.EditEmpleadosTitle_fecSalida}"  showOn="button"/>
+                        <p:outputLabel value="F. Retiro" for="fecSalida" />
+                        <p:calendar id="fecSalida" pattern="dd/MM/yyyy" value="#{empleadosController.selected.fecSalida}" title="Fecha de Retiro del Empleado"  showOn="button"/>
 
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_motSalida}" for="motSalida" />
-                        <p:inputText id="motSalida" value="#{empleadosController.selected.motSalida}" title="#{myBundle.CreateEmpleadosTitle_motSalida}" />
-
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_observacion}" for="observacion" />
-                        <p:inputText id="observacion" value="#{empleadosController.selected.observacion}" title="#{myBundle.CreateEmpleadosTitle_observacion}" />
-                            
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_promedio}" for="promedio" />
-                        <p:inputText id="promedio" value="#{empleadosController.selected.promedio}" title="#{myBundle.CreateEmpleadosTitle_promedio}" />
-                        
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_tipoContra}" for="tipoContra" />                        
+                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_tipoContra}" for="tipoContra" />                        
                         <p:selectOneMenu id="tipoContra" value="#{empleadosController.selected.tipoContra}"  >                            
                                <f:selectItem itemLabel="Permanenete" itemValue ="P"/>
                                <f:selectItem itemLabel="Eventual" itemValue="E"/>                               
-                        </p:selectOneMenu>                        
-                            
+                        </p:selectOneMenu>         
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_promedio}" for="promedio" />
+                        <p:inputText id="promedio" value="#{empleadosController.selected.promedio}" title="#{myBundle.CreateEmpleadosTitle_promedio}" />
+                                       
+                        
+                        <p:outputLabel value="Motivo Salida" for="motSalida" />
+                        <p:inputTextarea id="motSalida" rows="6" cols="33" maxlength="150" title="Motivo de Salida del Empleado" value="#{empleadosController.selected.motSalida}"/>                      
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_observacion}" for="observacion" />
+                        <p:inputTextarea id="observacion" rows="6" cols="33" maxlength="150" title="Observaciones, comentario,etc" value="#{empleadosController.selected.observacion}"/>                         
+                        
+                        
                         </p:panelGrid>
                     </p:panel>
                      <p:panel header="Datos de Registro">
                         <p:panelGrid columns="8" rendered="#{empleadosController.selected != null}">
                             
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_ctaBancaria}" for="ctaBancaria" />
-                           <p:inputText id="ctaBancaria" value="#{empleadosController.selected.ctaBancaria}" title="#{myBundle.CreateEmpleadosTitle_ctaBancaria}" />
-
-                                                <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codBanco}" for="codBanco" />
-                           <p:inputText id="codBanco" value="#{empleadosController.selected.codBanco}" title="#{myBundle.CreateEmpleadosTitle_codBanco}" />
-
-                           <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_codArea}" for="codArea" />
-                           <p:inputText id="codArea" value="#{empleadosController.selected.codArea}" title="#{myBundle.CreateEmpleadosTitle_codArea}" />
-
-                           
-                       
-
+                       <p:outputLabel value="Salario Base" for="salarioBase" />
+                        <p:inputText id="salarioBase" value="#{empleadosController.selected.salarioBase}" title="Salario Base del Empleado" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_salarioBase}"/>     
+                            
+                        <p:outputLabel value="Banco" for="codBanco" />
+                        <p:selectOneMenu id="codBanco" value="#{empleadosController.selected.codBanco}">  
+                            <f:selectItem itemLabel="CREDOMATIC" itemValue ="14"/>
+                            <f:selectItem itemLabel="CITI" itemValue ="01"/>                           
+                        </p:selectOneMenu>  
+                        
+                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_comision}" for="comision" />
+                        <p:selectOneMenu id="comision" value="#{empleadosController.selected.comision}">                            
+                            <f:selectItem itemLabel="SI" itemValue ="S"/>
+                            <f:selectItem itemLabel="NO" itemValue ="N"/>                             
+                        </p:selectOneMenu>  
 
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_salario}" for="salario" />
                         <p:inputText id="salario" value="#{empleadosController.selected.salario}" title="#{myBundle.CreateEmpleadosTitle_salario}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_salario}"/>
 
-
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_bonificacion}" for="bonificacion" />
-                        <p:inputText id="bonificacion" value="#{empleadosController.selected.bonificacion}" title="#{myBundle.CreateEmpleadosTitle_bonificacion}" />
-
-                        <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_salarioBase}" for="salarioBase" />
-                        <p:inputText id="salarioBase" value="#{empleadosController.selected.salarioBase}" title="#{myBundle.CreateEmpleadosTitle_salarioBase}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_salarioBase}"/>
-
+                        <p:outputLabel value="Forma de Pago" for="comision" />
+                        <p:selectOneMenu id="chequedep" value="#{empleadosController.selected.chequedep}">                            
+                            <f:selectItem itemLabel="DEPOSITO" itemValue ="D"/>
+                            <f:selectItem itemLabel="CHEQUE" itemValue ="C"/>                             
+                        </p:selectOneMenu> 
                         
-                    
-                    
+                        <p:outputLabel value="Tipo Cuenta" for="tipoCta" />
+                        <p:selectOneMenu id="tipoCta" value="#{empleadosController.selected.tipoCta}">                            
+                            <f:selectItem itemLabel="De Ahorro" itemValue ="AH"/>
+                            <f:selectItem itemLabel="CTA. Corriente o Pago" itemValue ="CO"/>                             
+                        </p:selectOneMenu> 
+                        
+                       <p:outputLabel value="No. Cuenta" for="ctaBancaria" />
+                       <p:inputText id="ctaBancaria" value="#{empleadosController.selected.ctaBancaria}" title="Cuenta Bancaria en Que se le Paga al Empleado" />
+  
+                       
+                      
                         </p:panelGrid>
                 </p:panel>
                 </h:panelGroup>

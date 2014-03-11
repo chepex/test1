@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaisesViewDlg" widgetVar="PaisesViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewPaisesTitle}" closeOnEscape="true">
+
+            <h:form id="PaisesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{paisesController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPaisesLabel_codPais}"/>
+                        <h:outputText value="#{paisesController.selected.codPais}" title="#{myBundle.ViewPaisesTitle_codPais}"/>
+
+                        <h:outputText value="#{myBundle.ViewPaisesLabel_nombPais}"/>
+                        <h:outputText value="#{paisesController.selected.nombPais}" title="#{myBundle.ViewPaisesTitle_nombPais}"/>
+
+                        <h:outputText value="#{myBundle.ViewPaisesLabel_monedaSimbolo}"/>
+                        <h:outputText value="#{paisesController.selected.monedaSimbolo}" title="#{myBundle.ViewPaisesTitle_monedaSimbolo}"/>
+
+                        <h:outputText value="#{myBundle.ViewPaisesLabel_monedaDescrip}"/>
+                        <h:outputText value="#{paisesController.selected.monedaDescrip}" title="#{myBundle.ViewPaisesTitle_monedaDescrip}"/>
+
+                        <h:outputText value="#{myBundle.ViewPaisesLabel_local}"/>
+                        <h:outputText value="#{paisesController.selected.local}" title="#{myBundle.ViewPaisesTitle_local}"/>
+
+                        <h:outputText value="#{myBundle.ViewPaisesLabel_tasaCambio}"/>
+                        <h:outputText value="#{paisesController.selected.tasaCambio}" title="#{myBundle.ViewPaisesTitle_tasaCambio}"/>
+
+                        <h:outputText value="#{myBundle.ViewPaisesLabel_nacionalidad}"/>
+                        <h:outputText value="#{paisesController.selected.nacionalidad}" title="#{myBundle.ViewPaisesTitle_nacionalidad}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PaisesViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

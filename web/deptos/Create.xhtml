@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DeptosCreateDlg" widgetVar="DeptosCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateDeptosTitle}" closeOnEscape="true">
+
+            <h:form id="DeptosCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="#{myBundle.CreateDeptosLabel_deptosPK_codDepto}" for="deptosPK_codDepto" />
+                        <p:inputText id="deptosPK_codDepto" value="#{deptosController.selected.deptosPK.codDepto}" title="#{myBundle.CreateDeptosTitle_deptosPK_codDepto}" required="true" requiredMessage="#{myBundle.CreateDeptosRequiredMessage_deptosPK_codDepto}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDeptosLabel_nomDepto}" for="nomDepto" />
+                        <p:inputText id="nomDepto" value="#{deptosController.selected.nomDepto}" title="#{myBundle.CreateDeptosTitle_nomDepto}" size="30" maxlength="30"/>
+
+                        <p:outputLabel value="#{myBundle.CreateDeptosLabel_deptosPK_zona}" for="deptosPK_zona" />
+                        <p:selectOneMenu id="deptosPK_zona" value="#{deptosController.selected.deptosPK.zona}" required="true" requiredMessage="#{myBundle.CreateDeptosRequiredMessage_deptosPK_zona}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{zonasController.items}"
+                                           var="zonasItem"
+                                           itemValue="#{zonasItem}"
+                                           itemLabel="#{zonasItem.descripcion}"
+                                           />
+                            <f:converter binding="#{zonasConverter}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{myBundle.CreateDeptosLabel_paises}" for="paises" />
+                        <p:selectOneMenu id="paises" value="#{deptosController.selected.paises}" required="true" requiredMessage="#{myBundle.EditDeptosRequiredMessage_paises}">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{paisesController.items}"
+                                           var="paisesItem"
+                                           itemValue="#{paisesItem}"
+                                           itemLabel="#{paisesItem.nombPais}"
+                                           />
+                            <f:converter binding="#{paisesConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{deptosController.saveNew}" value="#{myBundle.Save}" update="display,:DeptosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,DeptosCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="DeptosCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

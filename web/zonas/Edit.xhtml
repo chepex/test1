@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ZonasEditDlg" widgetVar="ZonasEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditZonasTitle}" closeOnEscape="true">
+
+            <h:form id="ZonasEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{zonasController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditZonasLabel_zonasPK_codZona}" for="zonasPK_codZona" />
+                        <h:outputText id="zonasPK_codZona" value="#{zonasController.selected.zonasPK.codZona}" />
+
+                        <p:outputLabel value="#{myBundle.EditZonasLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{zonasController.selected.descripcion}" title="#{myBundle.EditZonasTitle_descripcion}" size="30" maxlength="30"/>
+
+                        <h:outputLabel value="#{myBundle.EditZonasLabel_paises}" for="paises" />
+                        <h:outputText id="paises" value="#{zonasController.selected.paises.nombPais}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{zonasController.save}" value="#{myBundle.Save}" update="display,:ZonasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ZonasEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="ZonasEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

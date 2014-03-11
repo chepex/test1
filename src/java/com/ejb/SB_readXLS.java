@@ -14,6 +14,8 @@ import com.entities.PrestamosFacade;
 import com.entities.PrestamosPK;
 import com.entities.ProgramacionPla;
 import com.entities.ProgramacionPlaFacade;
+import com.entities.Pruebas;
+import com.entities.PruebasFacade;
 import com.entities.ResumenAsistencia;
 import com.entities.ResumenAsistenciaFacade;
 import com.entities.util.JsfUtil;
@@ -32,6 +34,9 @@ import jxl.read.biff.BiffException;
 
 @Stateless
 public class SB_readXLS {
+    @EJB
+    private PruebasFacade pruebasFacade;
+    
     @EJB
     private PrestamosFacade prestamosFacade;
     @EJB
@@ -73,6 +78,24 @@ private MovDpFacade movDpFacade;
    }   
         return "ok " +mensaje;  
  }
+ 
+    
+ @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)  
+ public String prueba(String mas, ProgramacionPla programacionPla) throws IOException, BiffException  {        
+      String mensaje;
+      try{
+           this.inputWorkbook= new File(mas);
+           Workbook w=null;       
+           w = Workbook.getWorkbook(inputWorkbook);     
+           Sheet sheet = w.getSheet(0);      
+          mensaje=VPrueba(sheet);
+            
+      }   
+      catch(Exception ex){
+        return "error";          
+   }   
+        return "ok " +mensaje;  
+ } 
   
     public String ConSecuencia(Sheet sheet,ProgramacionPla programacionPla){
         int xx=0; 
@@ -156,6 +179,44 @@ private MovDpFacade movDpFacade;
     return "Cantida de registros insertados "+xx+" de "+total;
     }
 
+  public String VPrueba(Sheet sheet){   
+      int xx=0; 
+      int total=0; 
+        String valor="";
+        String codEmp  =""; 
+        String codDp ="";      
+        
+        LoginBean lb= new LoginBean();
+        for (int i = 0; i < sheet.getRows(); i++) { 
+         total++;
+ 
+            for (int j = 0; j < sheet.getColumns(); j++) {              
+                xx=xx+1;
+                Cell cell = sheet.getCell(j, i);
+                if(j==0){
+                  codEmp =  String.valueOf(cell.getContents());
+                }          
+                if(j==1){
+                  codDp =String.valueOf(cell.getContents());
+                }          
+                if(j==2){
+                  valor = String.valueOf(cell.getContents());
+                }                                
+            }
+             try{ 
+                Pruebas pruebas  = new Pruebas();
+                pruebas.setV1(codEmp);
+                pruebas.setV2(String.valueOf(codDp));
+                pruebas.setV3(String.valueOf(valor));
+                pruebasFacade.edit(pruebas);
+                
+            }catch(Exception ex){
+                JsfUtil.logs(ex , "Surgio un error", "Proceso upload Linea"+i,SB_readXLS.class,"ERROR");            
+            }
+        }
+
+    return "Cantida de registros insertados "+xx+" de "+total;
+    }    
     
     public String SinSecuencia(Sheet sheet){   
       int xx=0; 

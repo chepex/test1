@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NivelesSeguridadViewDlg" widgetVar="NivelesSeguridadViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewNivelesSeguridadTitle}" closeOnEscape="true">
+
+            <h:form id="NivelesSeguridadViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{nivelesSeguridadController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewNivelesSeguridadLabel_nivelesSeguridadPK_codCia}"/>
+                        <h:outputText value="#{nivelesSeguridadController.selected.nivelesSeguridadPK.codCia}" title="#{myBundle.ViewNivelesSeguridadTitle_nivelesSeguridadPK_codCia}"/>
+
+                        <h:outputText value="#{myBundle.ViewNivelesSeguridadLabel_nivelesSeguridadPK_codSeguridad}"/>
+                        <h:outputText value="#{nivelesSeguridadController.selected.nivelesSeguridadPK.codSeguridad}" title="#{myBundle.ViewNivelesSeguridadTitle_nivelesSeguridadPK_codSeguridad}"/>
+
+                        <h:outputText value="#{myBundle.ViewNivelesSeguridadLabel_color}"/>
+                        <h:outputText value="#{nivelesSeguridadController.selected.color}" title="#{myBundle.ViewNivelesSeguridadTitle_color}"/>
+
+                        <h:outputText value="#{myBundle.ViewNivelesSeguridadLabel_descripcion}"/>
+                        <h:outputText value="#{nivelesSeguridadController.selected.descripcion}" title="#{myBundle.ViewNivelesSeguridadTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewNivelesSeguridadLabel_backgroundColor}"/>
+                        <h:outputText value="#{nivelesSeguridadController.selected.backgroundColor}" title="#{myBundle.ViewNivelesSeguridadTitle_backgroundColor}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="NivelesSeguridadViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
