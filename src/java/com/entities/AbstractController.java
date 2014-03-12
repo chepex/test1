@@ -96,6 +96,7 @@ public abstract class AbstractController<T> {
     public void save(ActionEvent event) {
         String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
         persist(AbstractController.PersistAction.UPDATE, msg);
+        
     }
 
     public void saveNew(ActionEvent event) {

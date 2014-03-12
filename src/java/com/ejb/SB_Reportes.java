@@ -46,7 +46,7 @@ public class SB_Reportes {
         JasperExportManager.exportReportToPdfStream(jasperprint, servletOutputStream);
         FacesContext.getCurrentInstance().responseComplete();  
      }catch( NamingException | SQLException | JRException | IOException ex){
-         System.out.println("Error");
+         System.out.println("Error"+ex);
      }
       return "";
     }

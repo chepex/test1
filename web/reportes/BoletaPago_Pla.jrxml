@@ -14,7 +14,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/mmixco/NetBeansProjects/test1/web/reportes/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CIA" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -42,6 +42,7 @@ and e.cod_emp = p.cod_emp
 AND P.COD_CIA = PP.COD_CIA
 AND P.SECUENCIA = PP.SECUENCIA
 AND P.SECUENCIA= $P{SECUENCIA}
+AND P.COD_CIA= $P{CIA}
 AND T.COD_CIA  = P.COD_CIA
 AND T.COD_TIPOPLA = PP.COD_TIPOPLA
 AND E.COD_CIA= D.COD_CIA
@@ -255,34 +256,6 @@ AND P.COD_EMP =  R.COD_EMP]]>
 				<textFieldExpression><![CDATA[$F{NOM_DEPTO}]]></textFieldExpression>
 			</textField>
 			<elementGroup/>
-			<subreport>
-				<reportElement uuid="65103478-cec0-4158-82f5-fbd747229727" x="143" y="115" width="200" height="100"/>
-				<subreportParameter name="COD_EMP">
-					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SUMA_RESTA">
-					<subreportParameterExpression><![CDATA[$P{SUMA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SECUENCIA">
-					<subreportParameterExpression><![CDATA[$P{SECUENCIA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BoletaPago_subreport1.jasper"]]></subreportExpression>
-			</subreport>
-			<subreport>
-				<reportElement uuid="6fdff14a-0f3d-4ca3-9aea-27df38f96318" x="350" y="115" width="200" height="100"/>
-				<subreportParameter name="COD_EMP">
-					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SUMA_RESTA">
-					<subreportParameterExpression><![CDATA[$P{RESTA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="SECUENCIA">
-					<subreportParameterExpression><![CDATA[$P{SECUENCIA}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BoletaPago_subreport1.jasper"]]></subreportExpression>
-			</subreport>
 			<textField pattern="$ #,##0.00">
 				<reportElement uuid="dec0f989-32aa-4985-8586-024820e7ec10" x="82" y="171" width="47" height="20"/>
 				<textElement textAlignment="Right">
@@ -316,6 +289,34 @@ AND P.COD_EMP =  R.COD_EMP]]>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{COD_EMP}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement uuid="f650c8c9-ba55-4f2a-bfb8-3f4945bf9d86" x="350" y="115" width="200" height="100"/>
+				<subreportParameter name="COD_EMP">
+					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUMA_RESTA">
+					<subreportParameterExpression><![CDATA[$P{RESTA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BoletaPago_subreport1.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="9b71ad7f-2fad-477a-8b89-cb995f7aaff2" x="142" y="115" width="200" height="100"/>
+				<subreportParameter name="COD_EMP">
+					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUMA_RESTA">
+					<subreportParameterExpression><![CDATA[$P{SUMA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SECUENCIA">
+					<subreportParameterExpression><![CDATA[$P{SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BoletaPago_subreport1.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 </jasperReport>
