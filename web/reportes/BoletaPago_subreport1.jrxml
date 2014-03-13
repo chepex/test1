@@ -30,6 +30,9 @@ AND C.SUMA_RESTA = $P{SUMA_RESTA}]]>
 	<variable name="VALOR_1" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{VALOR}]]></variableExpression>
 	</variable>
+	<variable name="VALOR_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALOR}]]></variableExpression>
+	</variable>
 	<group name="VALOR">
 		<groupExpression><![CDATA[$F{VALOR}]]></groupExpression>
 	</group>
@@ -67,10 +70,8 @@ AND C.SUMA_RESTA = $P{SUMA_RESTA}]]>
 				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0.00">
-				<reportElement uuid="1a7371d7-3f85-4694-bba0-2437a47daad8" x="141" y="0" width="46" height="12"/>
-				<textElement textAlignment="Left">
-					<font fontName="Times New Roman" size="8" isItalic="true"/>
-				</textElement>
+				<reportElement uuid="e6b37995-7707-4344-9f8c-8240f28c963e" x="141" y="0" width="46" height="12"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[$F{VALOR}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -88,22 +89,18 @@ AND C.SUMA_RESTA = $P{SUMA_RESTA}]]>
 				<reportElement uuid="789bfa05-538c-41e6-be84-abfaa3dbb159" x="19" y="1" width="168" height="1"/>
 			</line>
 			<textField pattern="$ #,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="ac1804fd-5b9b-443c-8b47-4e0246321b11" x="141" y="3" width="46" height="10">
-					<printWhenExpression><![CDATA[$F{VALOR}.floatValue()>0]]></printWhenExpression>
-				</reportElement>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{VALOR_1}]]></textFieldExpression>
+				<reportElement uuid="5708e0a3-5b31-4707-92f9-fde97cb98c9b" x="141" y="2" width="46" height="12"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{VALOR_2}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
 	<noData>
 		<band height="50">
 			<staticText>
-				<reportElement uuid="e7625520-03dd-4eeb-b686-26d095520623" x="66" y="25" width="100" height="20"/>
+				<reportElement uuid="e7625520-03dd-4eeb-b686-26d095520623" x="41" y="0" width="100" height="20"/>
 				<textElement/>
-				<text><![CDATA[Static text]]></text>
+				<text><![CDATA[asdasdas]]></text>
 			</staticText>
 		</band>
 	</noData>

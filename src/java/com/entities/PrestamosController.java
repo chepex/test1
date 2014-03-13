@@ -20,8 +20,7 @@ import org.primefaces.event.FileUploadEvent;
 @ViewScoped
 public class PrestamosController extends AbstractController<Prestamos> implements Serializable {
     @EJB
-    private SB_readXLS sB_readXLS;
-    
+    private SB_readXLS sB_readXLS;    
     @EJB
     private MovDpFacade movDpFacade;
     String estado;
@@ -97,6 +96,16 @@ public class PrestamosController extends AbstractController<Prestamos> implement
 	   // items = null; // Invalidate list of items to trigger re-query.
 	}
     }
+    
+
+      
+    public void cancelar(ActionEvent event) {
+        this.getSelected().setCuotasP(this.getSelected().getCuotas());
+        this.getSelected().setSaldo(BigDecimal.ZERO);
+        ejbFacade.edit(this.getSelected());
+        String msg = "Prestamos cancelado correctamente";
+        JsfUtil.addSuccessMessage(msg);
+    }    
 
     @Override        
     public void save(ActionEvent event) {

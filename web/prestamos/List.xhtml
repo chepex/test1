@@ -30,6 +30,12 @@
                 
                 <p:ajax event="rowSelect" listener="#{prestamosController.consultarCoutas}"  update="createButton viewButton editButton deleteButton @form"/>
 		<p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+		<p:column sortBy="#{item.empleados.empleadosPK.codEmp}" filterBy="#{item.empleados.empleadosPK.codEmp}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_empleadosPK_codEmp}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleados.empleadosPK.codEmp}"/>
+		</p:column>                
 		<p:column sortBy="#{item.empleados.nombreNit}" filterBy="#{item.empleados.nombreNit}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListPrestamosTitle_empleados}"/>
@@ -78,34 +84,24 @@
 		    </f:facet>
 		    <h:outputText value="#{item.cuotasP}"/>
 		</p:column>
-
-
-
 		<f:facet name="footer">
 		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{prestamosController.prepareCreate}" update=":PrestamosCreateForm" oncomplete="PrestamosCreateDialog.show()"/>
 		    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":PrestamosViewForm" oncomplete="PrestamosViewDialog.show()" disabled="#{empty prestamosController.selected}"/>
 		    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":PrestamosEditForm" oncomplete="PrestamosEditDialog.show()" disabled="#{empty prestamosController.selected}"/>
 		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{prestamosController.delete}" update=":growl,datalist" disabled="#{empty prestamosController.selected}"/>
+		    <p:commandButton id="Cancelar" icon="ui-icon-trash"  value="#{myBundle.Cancel}" actionListener="#{prestamosController.cancelar}" update=":growl,datalist" disabled="#{empty prestamosController.selected}"/>                    
 		</f:facet>
-
 	    </p:dataTable>
-
 	</p:panel>
         <p:fileUpload fileUploadListener="#{prestamosController.upload}"  dragDropSupport="false"  
                    update="@form :growl"   />          
         <BR/>
         <BR/>
-        
-        
-<h3>PAGOS REALIZADOS</h3>  
-<p:dataList id="lisCuotas" value="#{prestamosController.listaCuotas}" var="cuotas" itemType="disc">  
-    Codigo: #{ cuotas.movDpPK.codPresta } -  Valor:  $#{cuotas.valor} - Fecha: #{cuotas.fechaReg.toGMTString() }  
-</p:dataList>          
-        
-
+        <h3>PAGOS REALIZADOS</h3>  
+        <p:dataList id="lisCuotas" value="#{prestamosController.listaCuotas}" var="cuotas" itemType="disc">  
+            Codigo: #{ cuotas.movDpPK.codPresta } -  Valor:  $#{cuotas.valor} - Fecha: #{cuotas.fechaReg.toGMTString() }  
+        </p:dataList>                  
     </h:form>
-    
-    
 <br></br>
 NOTA ESTE PROCESO GUARDA INFORMACION SI YA EXISTE UN PRESTAMO DARA UN ERROR Y SI LA FRECUENCIA ES 3 DIVIDIRA LA CUOTA ENTRE 2 QUINCENAS<BR/>
 PROCESO PARA CARGAR ARCHIVO <br></br>

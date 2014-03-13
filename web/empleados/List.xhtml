@@ -50,6 +50,7 @@
 		<f:facet name="footer">
 		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Crear Empleado" actionListener="#{empleadosController.prepareCreate}" update=":EmpleadosCreateForm" />		   
 		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{empleadosController.delete}" update=":growl,datalist" disabled="#{empty empleadosController.selected}"/>
+                    <p:commandButton id="changepassButton"  value="Cambiar Contraseña" update=":EmpChangeForm" oncomplete="EmpChangeDialog.show()" disabled="#{empty empleadosController.selected}"/>                    
 		</f:facet>
 
 	    </p:dataTable>
@@ -65,7 +66,7 @@
                 
                 <p:panel header="Datos Personales">
                 
-                    <p:panelGrid columns="8" rendered="#{empleadosController.selected != null}">
+                    <p:panelGrid columns="6" rendered="#{empleadosController.selected != null}">
 
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_empleadosPK_codEmp}" for="empleadosPK_codEmp" />
                         <p:outputLabel id="empleadosPK_codEmp" value="#{empleadosController.selected.empleadosPK.codEmp}" title="#{myBundle.CreateEmpleadosTitle_empleadosPK_codEmp}" />
@@ -73,12 +74,15 @@
                         <p:outputLabel value="C&oacute;d Ref" for="codEmpref" />
                         <p:inputText id="codEmpref" value="#{empleadosController.selected.codEmpref}" title="C&oacute;digo Referencia RRHH" />
                         
-
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_apellidos}" for="apellidos" />
-                        <p:inputText id="apellidos" value="#{empleadosController.selected.apellidos}" title="#{myBundle.CreateEmpleadosTitle_apellidos}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_apellidos}"/>
+                        <p:inputText id="apellidos" value="#{empleadosController.selected.apellidos}" title="#{myBundle.CreateEmpleadosTitle_apellidos}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_apellidos}">
+                            <p:ajax event="blur" update="nombreIsss, nombreNit" listener="#{empleadosController.handleChangeApellidos}" process="@this"/>
+                        </p:inputText>
 
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_nombres}" for="nombres" />
-                        <p:inputText id="nombres" value="#{empleadosController.selected.nombres}" title="#{myBundle.CreateEmpleadosTitle_nombres}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_nombres}"/>
+                        <p:inputText id="nombres" value="#{empleadosController.selected.nombres}" title="#{myBundle.CreateEmpleadosTitle_nombres}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_nombres}" >
+                            <p:ajax event="blur" update="nombreIsss, nombreNit" listener="#{empleadosController.handleChangeNombres}" process="@this"/>
+                        </p:inputText>
 
                         <p:outputLabel value="Apellido Casada" for="apCasada" />
                         <p:inputText id="apCasada" value="#{empleadosController.selected.apCasada}" title="Apellido de Casada" />
@@ -283,7 +287,7 @@
 
                          <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_tipoContra}" for="tipoContra" />                        
                         <p:selectOneMenu id="tipoContra" value="#{empleadosController.selected.tipoContra}"  >                            
-                               <f:selectItem itemLabel="Permanenete" itemValue ="P"/>
+                               <f:selectItem itemLabel="Permanente" itemValue ="P"/>
                                <f:selectItem itemLabel="Eventual" itemValue="E"/>                               
                         </p:selectOneMenu>         
                         
@@ -304,8 +308,9 @@
                         <p:panelGrid columns="8" rendered="#{empleadosController.selected != null}">
                             
                        <p:outputLabel value="Salario Base" for="salarioBase" />
-                        <p:inputText id="salarioBase" value="#{empleadosController.selected.salarioBase}" title="Salario Base del Empleado" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_salarioBase}"/>     
-                            
+                        <p:inputText id="salarioBase" value="#{empleadosController.selected.salarioBase}" title="Salario Base del Empleado" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_salarioBase}">     
+                            <f:convertNumber pattern="#,##0.00" /> 
+                        </p:inputText>
                         <p:outputLabel value="Banco" for="codBanco" />
                         <p:selectOneMenu id="codBanco" value="#{empleadosController.selected.codBanco}">  
                             <f:selectItem itemLabel="CREDOMATIC" itemValue ="14"/>
@@ -319,7 +324,9 @@
                         </p:selectOneMenu>  
 
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_salario}" for="salario" />
-                        <p:inputText id="salario" value="#{empleadosController.selected.salario}" title="#{myBundle.CreateEmpleadosTitle_salario}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_salario}"/>
+                        <p:inputText id="salario" value="#{empleadosController.selected.salario}" title="#{myBundle.CreateEmpleadosTitle_salario}" required="true" requiredMessage="#{myBundle.CreateEmpleadosRequiredMessage_salario}">
+                            <f:convertNumber pattern="#,##0.00" /> 
+                        </p:inputText>
 
                         <p:outputLabel value="Forma de Pago" for="comision" />
                         <p:selectOneMenu id="chequedep" value="#{empleadosController.selected.chequedep}">                            

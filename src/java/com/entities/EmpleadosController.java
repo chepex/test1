@@ -1,12 +1,18 @@
 package com.entities;
 
+import com.entities.util.JsfUtil;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIOutput;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 
 
 @ManagedBean(name="empleadosController")
@@ -24,7 +30,9 @@ public String apel;
 public int emp;
 public List<Empleados> items2;
 public List<Empleados> activos;
-
+private String userName;
+private String nvaClave;
+private String confClave;
    
 
 
@@ -52,6 +60,31 @@ public List<Empleados> activos;
 	this.selected2 = selected2;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getNvaClave() {
+        return nvaClave;
+    }
+
+    public void setNvaClave(String nvaClave) {
+        this.nvaClave = nvaClave;
+    }
+
+    public String getConfClave() {
+        return confClave;
+    }
+
+    public void setConfClave(String confClave) {
+        this.confClave = confClave;
+    }
+
+    
     public String getNomb() {
 	return nomb;
     }
@@ -145,7 +178,61 @@ public List<Empleados> activos;
        
         
     }*/
-            
+
+    
+  /**
+     * Metodo que actualiza el cambio de contraseña
+     * @param event evento del boton.
+     * @throws Exception error generico.
+     */
+    public void actualizaClave(ActionEvent event) throws Exception {
+        String a = acepta();
+        if(a.equals("ok")) {
+            userName = this.getSelected().getUserName();
+            this.getSelected().setUserName(userName);
+            this.getSelected().setPassword(JsfUtil.EncriptadorMD5(this.nvaClave));
+            String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
+            persist(AbstractController.PersistAction.UPDATE, msg);
+        } else {
+            JsfUtil.addErrorMessage(a);
+        }  
+    }
+    /**
+     * Metodo que ejecuta el cambio de clave
+     * @return un mensaje de exito o fracaso
+     */
+    public String acepta() {
+        String msg="";
+        if (this.nvaClave.equals("") 
+                || this.confClave.equals("")) {
+            msg = "Por favor ingrese la nueva contraseña";
+        } else if (!this.nvaClave.equals(this.confClave)) {
+            msg = "Las contraseñas no coinciden. Por "
+                    + " favor, ingrese de nuevo la nueva contraseña";
+        } else {
+            try {
+                msg = "ok";
+                JsfUtil.addSuccessMessage("Cambio efectuado con exito!!!");
+            } catch (Exception e) {
+                Logger.getLogger(e.getMessage());
+            }
+        }
+        return msg;
+    }    
+
+    
+    public void handleChangeApellidos(AjaxBehaviorEvent vce){
+      String lastname= (String) ((UIOutput) vce.getSource()).getValue();
+      this.getSelected().setNombreIsss(lastname);
+      this.getSelected().setNombreNit(lastname);
+    }
+
+     public void handleChangeNombres(AjaxBehaviorEvent vce){
+        String name= (String) ((UIOutput) vce.getSource()).getValue();
+        this.getSelected().setNombreIsss(this.getSelected().getNombreIsss().concat(" ".concat(name)));
+        this.getSelected().setNombreNit(this.getSelected().getNombreNit().concat(" ".concat(name)));
+    }
+
 
 }    
     
