@@ -26,7 +26,7 @@
                             <f:selectItems value="#{planillaController.reciboProgramacioPlas}"
                                            var="programacionPlaItem"
                                            itemValue="#{programacionPlaItem}"
-                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "					   
+                                           itemLabel="#{programacionPlaItem.anio}/#{programacionPlaItem.mes}/#{programacionPlaItem.tiposPlanilla.nomTipopla }/#{programacionPlaItem.numPlanilla } "					   
 					   
 					   />
                             <p:ajax update="@form" listener="#{planillaController.ChangePlanilla}" />    

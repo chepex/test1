@@ -101,6 +101,30 @@ public class ResumenAsistenciaFacade extends AbstractFacade<ResumenAsistencia> {
         return q.getSingleResult();
     
     }   
+        
+        
+        public ResumenAsistencia ByProgramacionEmp(ProgramacionPla programacionpla, Empleados emp){
+            TypedQuery<ResumenAsistencia> q;
+            try{
+                
+	 
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+		 q = em.createNamedQuery("ResumenAsistencia.findByEmp", ResumenAsistencia.class )		    
+		    .setParameter("codCia",  codCia )
+                     .setParameter("codEmp",   emp.getEmpleadosPK().getCodEmp() )
+		    .setParameter("secuencia",  programacionpla.programacionPlaPK.getSecuencia() );
+             q.getSingleResult();/*para q de error si es nulo*/
+            }
+            catch(Exception ex){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL,"Surgio un error", "El empleado "+emp.getEmpleadosPK().getCodEmp()+" No pertenece a esta planilla"));  
+                return null;
+            }
+        return q.getSingleResult();
+    
+    }
+        
    
         public ResumenAsistencia ByEmp(PlanillaHoras ph){
             TypedQuery<ResumenAsistencia> q;

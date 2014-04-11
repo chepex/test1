@@ -24,12 +24,12 @@
                             <f:selectItems value="#{movDpController.programacionplas}"
                                            var="programacionPlaItem"
                                            itemValue="#{programacionPlaItem}"
-                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "					   
+                                           itemLabel="#{programacionPlaItem.anio}/#{programacionPlaItem.mes}/#{programacionPlaItem.tiposPlanilla.nomTipopla }/#{programacionPlaItem.numPlanilla } "					   
 					   
 					   />
                             <f:converter binding="#{programacionPlaConverter}"/>
                         </p:selectOneMenu>
-			<p:commandButton id="btn-consultar"   icon="ui-icon-refresh"  value="Consultar" actionListener="#{movDpController.consultar() }" update="@form :growl" />
+			<p:commandButton id="btn-consultar"   icon="ui-icon-refresh"  value="Consultar" actionListener="#{movDpController.consultar() }" update="@form, :growl" />
 			
 			
 			

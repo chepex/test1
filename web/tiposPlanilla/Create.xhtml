@@ -46,7 +46,13 @@
                         <p:inputText id="adicional" value="#{tiposPlanillaController.selected.adicional}" title="#{myBundle.CreateTiposPlanillaTitle_adicional}" required="true" requiredMessage="#{myBundle.CreateTiposPlanillaRequiredMessage_adicional}"/>
 
                         <p:outputLabel value="#{myBundle.CreateTiposPlanillaLabel_promedio}" for="promedio" />
-                        <p:inputText id="promedio" value="#{tiposPlanillaController.selected.promedio}" title="#{myBundle.CreateTiposPlanillaTitle_promedio}" />
+                           <p:selectOneMenu id="promedio" value="#{tiposPlanillaController.selected.promedio}"  >  
+                               <f:selectItem itemLabel="Sin Promedio" itemValue ="N"/>
+                                <f:selectItem itemLabel="Quincenal" itemValue ="Q"/>
+                               <f:selectItem itemLabel="Mensual" itemValue="M"/>
+                               <f:selectItem itemLabel="Vacacion" itemValue="V"/>
+                        </p:selectOneMenu>
+                       
 
                         <p:outputLabel value="#{myBundle.CreateTiposPlanillaLabel_deducPresta}" for="deducPresta" />
                         <p:selectOneMenu id="deducPresta" value="#{tiposPlanillaController.selected.deducPresta}" >

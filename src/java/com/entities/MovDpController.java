@@ -1,12 +1,14 @@
 package com.entities;
 
 
+import com.ejb.SB_Calculos;
 import com.ejb.SB_Planilla_horas;
 import com.ejb.SB_ProgramacionPla;
 import com.ejb.SB_readXLS;
 import com.entities.util.JsfUtil;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -21,6 +23,10 @@ import org.primefaces.event.FileUploadEvent;
 @ViewScoped
 public class MovDpController extends AbstractController<MovDp> implements Serializable {
     @EJB
+    private ResumenAsistenciaFacade resumenAsistenciaFacade;
+    @EJB
+    private SB_Calculos sB_Calculos;
+    @EJB
     private SB_Planilla_horas sB_Planilla_horas;    
     @EJB
     private SB_ProgramacionPla sB_ProgramacionPla;    
@@ -30,6 +36,7 @@ public class MovDpController extends AbstractController<MovDp> implements Serial
     private MovDpFacade ejbFacade;
     @EJB
     private ProgramacionPlaFacade programacionPlaFacade;    
+    
     
 
     
@@ -155,6 +162,7 @@ public class MovDpController extends AbstractController<MovDp> implements Serial
 	mensaje    = sB_ProgramacionPla.validarEstado(programacionpla);
 	
 	if (mensaje.equals("ok")){
+            calcular_horas();
 	    mensaje = "Registro Modificado Correctamente ";	    	    
 	    
 	    persist(AbstractController.PersistAction.UPDATE, mensaje);
@@ -167,10 +175,12 @@ public class MovDpController extends AbstractController<MovDp> implements Serial
     public void saveNew(ActionEvent event) {
 	//this.getSelected().getPlanillaHorasPK().setCodEmp(this.getSelected().getEmpleados().getEmpleadosPK().getCodEmp() );
 	//this.getSelected().getPlanillaHorasPK().setCodDp(this.getSelected().getDeducPresta().getDeducPrestaPK().getCodDp());
-        
+  
 	mensaje = sB_ProgramacionPla.validarEstado(programacionpla);
 	
 	if (mensaje.equals("ok")){
+                  calcular_horas();
+                  
 	    mensaje = "Registro Creado Correctamente ";	    	    
 	    
 	    persist(AbstractController.PersistAction.CREATE, mensaje);
@@ -181,6 +191,22 @@ public class MovDpController extends AbstractController<MovDp> implements Serial
 	
 	
 	
-    }     
+    }   
+    
+   public void calcular_horas(){
+       if(this.getSelected().getDeducPresta().getCatDp().getDescripcion().equals("HorasExtras"))
+       {
+        BigDecimal valor = new BigDecimal(0);
+        setEmbeddableKeys();
+        ResumenAsistencia ra = resumenAsistenciaFacade.ByProgramacionEmp(programacionpla, this.getSelected().getEmpleados());
+        System.out.println(this.getSelected());
+        sB_Calculos.inicializar( ra );
+        this.getSelected().setValor(this.getSelected().getCantidad());
+        sB_Calculos.movdp= this.getSelected();        
+        valor = BigDecimal.valueOf( sB_Calculos.HoraExtra(this.getSelected()));
+        this.getSelected().setValor(valor);
+       }       
+   } 
+    
     
 }

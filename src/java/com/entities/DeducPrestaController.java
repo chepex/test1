@@ -1,5 +1,6 @@
 package com.entities;
 
+import com.ejb.SB_auditoria;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -12,6 +13,8 @@ import javax.faces.event.ActionEvent;
 @ManagedBean(name = "deducPrestaController")
 @ViewScoped
 public class DeducPrestaController extends AbstractController<DeducPresta> implements Serializable {
+    @EJB
+    private SB_auditoria sB_auditoria;
 public List<DeducPresta> cprestamos;
 public List<DeducPresta> LAfp;
 public List<DeducPresta> LIsss;
@@ -81,5 +84,12 @@ public List<DeducPresta> LIsss;
             items = null; // Invalidate list of items to trigger re-query.
         }
     }      
+    
+      
+    @Override  
+    public void postCreate(){
+      sB_auditoria.registrar_audit(this.getAccion() , this.getSelected().toString(), this.getSelected().getClass().getName());
+    }   
+    
     
 }

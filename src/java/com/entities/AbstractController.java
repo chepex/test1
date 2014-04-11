@@ -21,7 +21,8 @@ public abstract class AbstractController<T> {
     public Class<T> itemClass;
     private T selected;
     public List<T> items;
-
+    private String accion;
+    
     public enum PersistAction {
 
         CREATE,
@@ -88,8 +89,16 @@ public abstract class AbstractController<T> {
         }
         return items;
     }
+
+    public String getAccion() {
+        return accion;
+    }
+
+    public void setAccion(String accion) {
+        this.accion = accion;
+    }
     
-         
+      
  
 
 
@@ -126,7 +135,10 @@ public abstract class AbstractController<T> {
                 } else {
                     this.ejbFacade.remove(selected);
                 }
+                this.accion = persistAction.toString();
+                postCreate();
                 JsfUtil.addSuccessMessage(successMessage);
+                
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = JsfUtil.getRootCause(ex.getCause());
@@ -156,6 +168,8 @@ public abstract class AbstractController<T> {
                     
                     this.ejbFacade.remove(selected);                  
                 }
+                this.accion = persistAction.toString();
+                postCreate();
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
                 String msg = "";
@@ -200,7 +214,10 @@ public abstract class AbstractController<T> {
     public boolean isValidationFailed() {
         return JsfUtil.isValidationFailed();
     }
-
+    
+    public void postCreate() {
+        
+    }    
     public void inicializar() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         LoginBean lb = new LoginBean();
         /*
@@ -215,4 +232,6 @@ public abstract class AbstractController<T> {
         creacion.setAccessible(true);
         creacion.set(this.selected, lb.sdate());
     }
+    
+    
 }

@@ -53,7 +53,7 @@ public class PlanillaIsssFacade extends AbstractFacade<PlanillaIsss> {
     
     }  
     
-    public List <PlanillaIsss> findByAnioMes(short vanio, short vmes){
+    public List <PlanillaIsss> findByAnioMes(short vanio, short vmes,short vcorelativo){
         TypedQuery<PlanillaIsss> q;	 
         try{
 	 
@@ -62,7 +62,8 @@ public class PlanillaIsssFacade extends AbstractFacade<PlanillaIsss> {
 		 q = em.createNamedQuery("PlanillaIsss.findByAnioMes", PlanillaIsss.class )		    
                     .setParameter("codCia",  codCia )
                     .setParameter("anio", vanio )                                             
-                    .setParameter("mes",  vmes ) ;                                                                                        
+                    .setParameter("mes",  vmes ) 
+                    .setParameter("correlativo", vcorelativo ) ;     
                  
                    return  q.getResultList();
         }

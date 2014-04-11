@@ -14,6 +14,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
@@ -23,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empleados.findByTipoPla", query = "SELECT e FROM Empleados e JOIN e.departamentos d  WHERE e.empleadosPK.codCia = :codCia and e.status like :status and d.codTipopla = :codTipopla"),
     @NamedQuery(name = "Empleados.findByVac", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and e.status like :status and e.vacaciones = :vacaciones "),    
     @NamedQuery(name = "Empleados.findByFiltros", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia like :codCia  and  e.apellidos like :apellidos and e.nombres like :nombres"),
-    @NamedQuery(name = "Empleados.findByPk2", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and e.status = 'A' and e.empleadosPK.codEmp = :codEmp"),        
+    @NamedQuery(name = "Empleados.findByPk2", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia  and e.empleadosPK.codEmp = :codEmp"),        
     @NamedQuery(name = "Empleados.findByPk3", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and e.status = 'A' and e.codEmpref = :codEmpref"),            
     @NamedQuery(name = "Empleados.findByDeptos", query = "SELECT e FROM Empleados e  WHERE  e.empleadosPK.codCia = :codCia and e.status like :status"	
 	+ " and e.departamentos.departamentosPK.codDepto in :departamentos  "),    
@@ -103,8 +105,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Empleados.findByPuesto", query = "SELECT e FROM Empleados e WHERE e.empleadosPK.codCia = :codCia and e.status like :status" 
                      + " and e.puestos.puestosPK.codPuesto = :puesto")
 })
+
+
 public class Empleados implements Serializable {
-    
+
+  
+ 
+	
+
+        
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleados")
     private List<DetEmpleado> detEmpleadoList;
     private static final long serialVersionUID = 1L;
@@ -132,14 +141,14 @@ public class Empleados implements Serializable {
     @Column(name = "FECHA_NAC")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaNac;
-    @Size(max = 12)
+    @Size(max = 9)
     @Column(name = "NUM_IGSS")
     private String numIgss;
     @Size(max = 12)
     @Column(name = "NUM_IRTRA")
     private String numIrtra;
-    @Size(max = 20)
-    @Column(name = "NUM_NIT")
+    @Size(max = 14)
+    @Column(name = "NUM_NIT",unique=true)
     private String numNit;
     @Basic(optional = false)
     @NotNull
@@ -249,8 +258,8 @@ public class Empleados implements Serializable {
     private BigInteger preId;
     @JoinColumns({
     @JoinColumn(name = "COD_PAIS", referencedColumnName = "COD_PAIS", insertable = false, updatable = false),
-    @JoinColumn(name = "COD_DEPARTAMENTO", referencedColumnName = "COD_DEPTO", insertable = false, updatable = false),
-    @JoinColumn(name = "COD_ZONA", referencedColumnName = "ZONA", insertable = false, updatable = false)})
+    @JoinColumn(name = "COD_ZONA", referencedColumnName = "ZONA", insertable = false, updatable = false),
+    @JoinColumn(name = "COD_DEPARTAMENTO", referencedColumnName = "COD_DEPTO", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Deptos codDepartamento;
     @JoinColumns({
@@ -259,21 +268,21 @@ public class Empleados implements Serializable {
     @ManyToOne(optional = false)
     private Zonas codZona;
     @JoinColumns({
-    @JoinColumn(name = "COD_PAIS", referencedColumnName = "COD_PAIS", insertable = false, updatable = false),
-    @JoinColumn(name = "COD_DEPARTAMENTO", referencedColumnName = "COD_DEPTO", insertable = false, updatable = false),
-    @JoinColumn(name = "COD_MUNI", referencedColumnName = "COD_MUNI", insertable = false, updatable = false),
-    @JoinColumn(name = "COD_ZONA", referencedColumnName = "COD_ZONA", insertable = false, updatable = false)})
+    @JoinColumn(name = "COD_PAIS", referencedColumnName = "COD_PAIS", insertable = true, updatable = true),
+    @JoinColumn(name = "COD_DEPARTAMENTO", referencedColumnName = "COD_DEPTO", insertable = true, updatable = true),
+    @JoinColumn(name = "COD_MUNI", referencedColumnName = "COD_MUNI", insertable = true, updatable = true),
+    @JoinColumn(name = "COD_ZONA", referencedColumnName = "COD_ZONA", insertable = true, updatable = true)})
     @ManyToOne(optional = false)
     private Municipios codMuni;
     @JoinColumns({
     @JoinColumn(name = "COD_CIA", referencedColumnName = "COD_CIA", insertable = false, updatable = false),
-    @JoinColumn(name = "COD_SEGURIDAD", referencedColumnName = "COD_SEGURIDAD", insertable = false, updatable = false)})
+    @JoinColumn(name = "COD_SEGURIDAD", referencedColumnName = "COD_SEGURIDAD", insertable = true, updatable = true)})
     @ManyToOne(optional = false)
     private NivelesSeguridad codSeguridad;
     @Column(name = "F_EXT_DOC")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fExtDoc;
-    @JoinColumn(name = "COD_PAIS", referencedColumnName = "COD_PAIS")
+    @JoinColumn(name = "COD_PAIS", referencedColumnName = "COD_PAIS",insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Paises codPais;
     @Column(name = "FEC_REGISTRO")
@@ -358,6 +367,7 @@ public class Empleados implements Serializable {
         this.planillaIsssList = planillaIsssList;
     }
 
+    
     
     public EmpleadosPK getEmpleadosPK() {
 	return empleadosPK;

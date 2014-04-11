@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Planilla.findByStatus", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and  p.programacionPla.status = :status"),
     @NamedQuery(name = "Planilla.findByAnioMes", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes and p.programacionPla.status = 'C'"),    
     @NamedQuery(name = "Planilla.findByAnioMes2", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes and p.programacionPla.status = 'C' and p.planillaPK.codEmp = :codEmp"),        
+        @NamedQuery(name = "Planilla.findByAnioMes3", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes  and p.planillaPK.codEmp = :codEmp"),  
     @NamedQuery(name = "Planilla.findByMes", query = "SELECT p FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.programacionPla.anio = :anio and p.programacionPla.mes = :mes and p.planillaPK.codEmp = :codEmp"),        
     @NamedQuery(name = "Planilla.findByPk", query = "SELECT p  FROM Planilla p WHERE p.planillaPK.codCia = :codCia and p.planillaPK.secuencia = :secuencia"),
     @NamedQuery(name = "Planilla.findBySecuencia", query = "SELECT p FROM Planilla p WHERE p.planillaPK.secuencia = :secuencia"),

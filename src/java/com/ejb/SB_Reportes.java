@@ -38,6 +38,7 @@ public class SB_Reportes {
         reporPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath(rep);              
         Context ctx= new InitialContext();
         DataSource ds = (DataSource)ctx.lookup("jdbc/caricai");
+       // DataSource ds = (DataSource)ctx.lookup("jdbc/desa2");
         Connection cn = ds.getConnection();            
         JasperPrint jasperprint = JasperFillManager.fillReport(reporPath, params, cn);        
         HttpServletResponse httpserveltresponse= (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();

@@ -1,5 +1,6 @@
 package com.entities;
 
+import com.ejb.SB_auditoria;
 import com.entities.util.JsfUtil;
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +19,9 @@ import javax.faces.event.AjaxBehaviorEvent;
 @ManagedBean(name="empleadosController")
 @ViewScoped
 public class EmpleadosController extends AbstractController<Empleados> implements Serializable {
+    @EJB
+    private SB_auditoria sB_auditoria;
+
     @EJB
     private DetEmpleadoFacade detEmpleadoFacade;
 
@@ -193,6 +197,7 @@ private String confClave;
             this.getSelected().setPassword(JsfUtil.EncriptadorMD5(this.nvaClave));
             String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
             persist(AbstractController.PersistAction.UPDATE, msg);
+            this.ejbFacade.edit(selected2);
         } else {
             JsfUtil.addErrorMessage(a);
         }  
@@ -227,13 +232,69 @@ private String confClave;
       this.getSelected().setNombreNit(lastname);
     }
 
+
      public void handleChangeNombres(AjaxBehaviorEvent vce){
         String name= (String) ((UIOutput) vce.getSource()).getValue();
         this.getSelected().setNombreIsss(this.getSelected().getNombreIsss().concat(" ".concat(name)));
         this.getSelected().setNombreNit(this.getSelected().getNombreNit().concat(" ".concat(name)));
     }
 
-
+    @Override 
+       public void saveNew(ActionEvent event) {
+        this.getSelected().setStatus("M");
+        Empleados emp = this.ejbFacade.find(this.getSelected().getEmpleadosPK());
+        if(emp==null){
+           
+        
+        String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Created");
+        persist(AbstractController.PersistAction.CREATE, msg);
+        if (!isValidationFailed()) {
+            items = null; 
+        }
+        
+        }else{
+         JsfUtil.addErrorMessage("Operacion no Autorizada");
+        }
+    }
+     
+    @Override  
+    public void postCreate(){
+      deduc_ley();
+      sB_auditoria.registrar_audit(this.getAccion() , this.getSelected().toString(), this.getSelected().getClass().getName());
+    }
+    
+    @Override     
+    public void save(ActionEvent event) {
+       
+        
+        String msg = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Updated");
+        persist(AbstractController.PersistAction.UPDATE, msg);
+        
+    }
+    
+    public void deduc_ley(){
+        short isss = this.getSelected().getCodIsss();
+        short afp = this.getSelected().getCodIsss();
+        short renta = 9;
+        DetEmpleado visss = null;
+        DetEmpleado vafp = null;
+        DetEmpleado vrenta = null;
+        if(isss>0){
+             visss = new DetEmpleado(this.getSelected().getEmpleadosPK().getCodCia(),this.getSelected().getEmpleadosPK().getCodEmp(),isss);            
+        }
+        if(afp>0){
+             vafp = new DetEmpleado(this.getSelected().getEmpleadosPK().getCodCia(),this.getSelected().getEmpleadosPK().getCodEmp(),afp);            
+        }  
+        if(renta>0){
+             vrenta = new DetEmpleado(this.getSelected().getEmpleadosPK().getCodCia(),this.getSelected().getEmpleadosPK().getCodEmp(),renta);            
+        }          
+        detEmpleadoFacade.edit(visss);
+        detEmpleadoFacade.edit(vafp);
+        detEmpleadoFacade.edit(vrenta);
+                
+        
+    }
+   
 }    
     
 

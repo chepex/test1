@@ -37,6 +37,12 @@
 
 		<p:ajax event="rowSelect"   update="viewButton"/>
 		<p:ajax event="rowUnselect" update="viewButton"/>
+		<p:column sortBy="#{item.empleados.empleadosPK.codEmp}" filterMatchMode="contains" filterBy="#{item.empleados.empleadosPK.codEmp}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListPlanillaTitle_empleados}"/>
+		    </f:facet>
+		    <h:outputText value=" #{item.empleados.empleadosPK.codEmp}"/>
+		</p:column>                
 		<p:column sortBy="#{item.empleados.nombreNit}" filterMatchMode="contains" filterBy="#{item.empleados.nombreNit}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListPlanillaTitle_empleados}"/>
@@ -96,7 +102,7 @@
                     
                     
 
-                    <p:commandButton id="btn-negativos"   icon="ui-icon-shuffle"  value="Negativos" onclick="statusDialog.show()"  oncomplete="statusDialog.hide()"   actionListener="#{planillaController.negativos() }" update="@form :growl" />                                                                                
+                                                                                          
                     
                     
                     
@@ -105,8 +111,9 @@
 		</f:facet>
  
 	    </p:dataTable>
-            <p:poll async="true" autoStart="true" interval="1" update=":PlanillaListForm:progressBar" widgetVar="pbPoll"/>
+            <p:poll async="true" autoStart="true" interval="1" update=":PlanillaListForm:progressBar,:PlanillaListForm:textpro" widgetVar="pbPoll"/>
 <br/><br/>
+<h:outputText id="textpro" value="#{planillaController.nompla}"/>
  <p:progressBar id="progressBar" value="#{planillaController.progress}" labelTemplate="#{planillaController.progress}%  de  100%  " displayOnly="true"/>  
   
 	</p:panel>

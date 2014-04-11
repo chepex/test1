@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a3c6df3-2659-4090-b597-c4127ecd0851">
+	<property name="ireport.zoom" value="0.7710865788590633"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
+	<parameter name="SECUENCIA" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CIA" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIODO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PERIODOVAC" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select e.cod_emp,
+e.cod_empref,
+e.nombres||' '||e.apellidos as nombres, 
+p.bruto,
+p.horasextras +p.llegadatarde+ p.bonos AS bonos,
+p.neto,
+p.deducciones,
+p.liquido,
+p.neto,
+PP.MES,
+PP.ANIO,
+T.NOM_TIPOPLA, 
+PP.NUM_PLANILLA , 
+D.NOM_DEPTO, 
+R.DIAS,
+p.secuencia,
+nvl((e.salario_base),0) as sal_d
+from planilla p, empleados e, PROGRAMACION_PLA PP, TIPOS_PLANILLA T , DEPARTAMENTOS D, RESUMEN_ASISTENCIA R
+where e.cod_cia= p.cod_cia
+and e.cod_emp = p.cod_emp
+AND P.COD_CIA = PP.COD_CIA
+AND P.SECUENCIA = PP.SECUENCIA
+AND P.SECUENCIA= $P{SECUENCIA}
+AND P.COD_CIA= $P{CIA}
+AND T.COD_CIA  = P.COD_CIA
+AND T.COD_TIPOPLA = PP.COD_TIPOPLA
+AND E.COD_CIA= D.COD_CIA
+AND E.COD_DEPTO = D.COD_DEPTO
+AND P.COD_CIA = R.COD_CIA
+AND P.SECUENCIA = R.SECUENCIA
+AND P.COD_EMP =  R.COD_EMP
+order by D.NOM_DEPTO,e.apellidos, e.nombres]]>
+	</queryString>
+	<field name="COD_EMP" class="java.math.BigDecimal"/>
+	<field name="COD_EMPREF" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="BRUTO" class="java.math.BigDecimal"/>
+	<field name="BONOS" class="java.math.BigDecimal"/>
+	<field name="NETO" class="java.math.BigDecimal"/>
+	<field name="DEDUCCIONES" class="java.math.BigDecimal"/>
+	<field name="LIQUIDO" class="java.math.BigDecimal"/>
+	<field name="MES" class="java.math.BigDecimal"/>
+	<field name="ANIO" class="java.math.BigDecimal"/>
+	<field name="NOM_TIPOPLA" class="java.lang.String"/>
+	<field name="NUM_PLANILLA" class="java.math.BigDecimal"/>
+	<field name="NOM_DEPTO" class="java.lang.String"/>
+	<field name="DIAS" class="java.lang.String"/>
+	<field name="SECUENCIA" class="java.math.BigDecimal"/>
+	<field name="SAL_D" class="java.math.BigDecimal"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="577" splitType="Prevent">
+			<rectangle>
+				<reportElement uuid="cbe7f803-b491-4732-93cb-425feab178b0" x="10" y="125" width="121" height="141"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="4b96fac4-0b2c-4119-8ae1-c6880a180d45" style="Heading 4" x="206" y="96" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Prestaciones]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="179eb9ce-5071-4610-a970-fb53fd915c0d" x="372" y="116" width="200" height="2"/>
+			</line>
+			<staticText>
+				<reportElement uuid="c337b3e4-deff-4fd0-8ea9-a422926d1e5d" x="2" y="281" width="283" height="20"/>
+				<textElement/>
+				<text><![CDATA[Su salario ha sido abonado a su cuenta #3124654564 ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="856e10e4-be7e-4e4d-8e84-b790ff391040" x="12" y="128" width="64" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Dias Laborados]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="93d3673a-5b17-4fed-bdb8-016aabd4dbb8" x="74" y="202" width="52" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DEDUCCIONES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="08b2390f-cfc5-4299-b7bb-7762077f2573" x="53" y="235" width="74" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LIQUIDO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ca563459-2306-41f2-a529-af17d7c1e69d" x="10" y="202" width="76" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Deducciones]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b4264e84-2163-42a9-986b-cef037533c28" x="86" y="128" width="45" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIAS}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="0340f6f2-4798-4113-ae87-b3ac3351326b" x="142" y="117" width="215" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="d6ed93cc-69c6-41c7-a29a-4b2270cf5279" x="10" y="230" width="41" height="36"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total a Pagar]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="f0333059-b654-4b1a-8e5d-32cac95b2017" x="13" y="222" width="113" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="cf831b2f-ecce-42f2-8713-5fbe1407de4c" x="12" y="148" width="76" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Devengado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9de60493-de03-4736-be37-e99b73ff0fb7" x="12" y="168" width="62" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Prestaciones (+)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f6eb7883-d2f7-4c84-977b-4f203695d1e5" style="Heading 4" x="415" y="98" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="14"/>
+				</textElement>
+				<text><![CDATA[Deducciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f89db89f-5bb8-4c67-8aae-e91aa20e810c" style="Heading 4" x="10" y="65" width="50" height="13"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Planilla:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="93a5a768-ceb4-465d-99f8-d2947aadc44c" style="Heading 4" x="123" y="13" width="277" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[INDUSTRIAS CARICIA S.A. DE C.V.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7362cbca-0c6b-4e2e-9303-b12d7b9af960" x="60" y="65" width="100" height="13"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOM_TIPOPLA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="e95b237b-cf5e-4454-a9a2-cf836bde997b" x="74" y="148" width="55" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BRUTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5433bda9-f101-41de-8be7-1aa7739aadf8" x="285" y="65" width="86" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b193f051-ed3b-466a-943c-072e0a8b2993" x="381" y="65" width="176" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{NOM_DEPTO}]]></textFieldExpression>
+			</textField>
+			<elementGroup/>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="7144c3e3-4e05-4c80-b04b-b93e8096faca" x="59" y="168" width="69" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BONOS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="acf64fbf-857f-477e-829e-97c3f8039157" style="Heading 4" x="406" y="80" width="44" height="13"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Codigo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f4daa505-486c-4524-a9fe-44c78cbbb889" x="511" y="80" width="46" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{COD_EMP}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="15d36c6f-5cb2-45d8-9cf8-ac6ac5b868d7" x="11" y="103" width="65" height="12"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salario Base]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="25f0ee99-e2b1-46a8-85d6-237db93ce8cc" x="76" y="103" width="47" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SAL_D}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="1c342344-8a66-4eef-92a4-534f842ab4db" x="13" y="116" width="116" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8271f637-26a8-4d05-b550-c8d774a1ad51" x="2" y="301" width="131" height="20"/>
+				<textElement/>
+				<text><![CDATA[San Salvador, Soyapango]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="f0c715bf-e8c6-47e3-a205-1e891701c29d" x="408" y="309" width="100" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="e9e022a6-46ab-4500-8c05-e74f67c9edec" x="408" y="310" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[RECIBI CONFORME]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="21a28d3b-e418-41de-a690-5d9c85e212c7" x="455" y="80" width="43" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{COD_EMPREF}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6722db4f-b164-429f-8fdc-85f30df008eb" x="500" y="80" width="11" height="13"/>
+				<textElement/>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9d16a2ed-1464-46f2-95ce-37a58b5b6d72" x="12" y="184" width="46" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total Dev.]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="65b7bcfe-6134-4fed-9f41-dce7b187e392" x="60" y="184" width="68" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NETO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f0333059-b654-4b1a-8e5d-32cac95b2017" x="14" y="182" width="113" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="209f0408-bdca-475b-9f5d-0816be7102fd" x="14" y="80" width="64" height="13"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f2e44e75-5c78-4ce0-bcb6-484ffa6c5a63" x="86" y="80" width="294" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9f13ecd6-28a6-4c2d-8cd7-909f16215537" x="176" y="43" width="181" height="12"/>
+				<textElement/>
+				<text><![CDATA[(Valores expresados en Doláres)]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1ab3aae0-fdbc-4a6e-a16e-57c9564009fc" x="549" y="17" width="23" height="15"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d21895c5-02a5-406f-b485-55a51448116f" x="123" y="28" width="307" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{PERIODO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement uuid="b6bbd878-7636-4acb-90bf-6324ec252540" x="150" y="127" width="200" height="100"/>
+				<subreportParameter name="COD_EMP">
+					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SECUENCIA">
+					<subreportParameterExpression><![CDATA[$F{SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_CIA">
+					<subreportParameterExpression><![CDATA[$P{CIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["BoletaPago_presta.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="4264cc7d-2043-499b-9bf7-7e8fc93b4c23" x="374" y="128" width="200" height="100"/>
+				<subreportParameter name="COD_EMP">
+					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SECUENCIA">
+					<subreportParameterExpression><![CDATA[$F{SECUENCIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COD_CIA">
+					<subreportParameterExpression><![CDATA[$P{CIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BoletaPago_deduc.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement uuid="a938f65c-e5e0-42e4-9921-db43b1ad4f66" x="3" y="349" width="569" height="228"/>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="CIA">
+					<subreportParameterExpression><![CDATA[$P{CIA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PERIODO">
+					<subreportParameterExpression><![CDATA[$P{PERIODO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="vanio">
+					<subreportParameterExpression><![CDATA[$F{ANIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="vmes">
+					<subreportParameterExpression><![CDATA[$F{MES}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="vcod_emp">
+					<subreportParameterExpression><![CDATA[$F{COD_EMP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PERIODOVAC">
+					<subreportParameterExpression><![CDATA[$P{PERIODOVAC}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "BoletaPago_Vac2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

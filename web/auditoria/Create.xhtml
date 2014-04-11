@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AuditoriaCreateDlg" widgetVar="AuditoriaCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateAuditoriaTitle}">
+
+            <h:form id="AuditoriaCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{auditoriaController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateAuditoriaLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{auditoriaController.selected.id}" title="#{myBundle.CreateAuditoriaTitle_id}" required="true" requiredMessage="#{myBundle.CreateAuditoriaRequiredMessage_id}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateAuditoriaLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{auditoriaController.selected.usuario}" title="#{myBundle.CreateAuditoriaTitle_usuario}" />
+
+                        <p:outputLabel value="#{myBundle.CreateAuditoriaLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy HH:mm:ss" value="#{auditoriaController.selected.fecha}" title="#{myBundle.EditAuditoriaTitle_fecha}"  showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateAuditoriaLabel_objecto}" for="objecto" />
+                        <p:inputText id="objecto" value="#{auditoriaController.selected.objecto}" title="#{myBundle.CreateAuditoriaTitle_objecto}" />
+
+                        <p:outputLabel value="#{myBundle.CreateAuditoriaLabel_accion}" for="accion" />
+                        <p:inputText id="accion" value="#{auditoriaController.selected.accion}" title="#{myBundle.CreateAuditoriaTitle_accion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{auditoriaController.saveNew}" value="#{myBundle.Save}" update="display,:AuditoriaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AuditoriaCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="AuditoriaCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -7,8 +7,10 @@ package com.entities;
 
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -193,13 +195,33 @@ public class LoginBean {
 	     }
 	      
 	    return sspro ;	
-	    
-	      
+	     
 	  }          
 	  
+          
+        public String ssnompla (){	      
+                    String sspro ="";	      
+                    try
+                      {
+                        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false); 
+                          if(session != null){		    
+                              sspro  =  (String) session.getAttribute("SSNOMPLA") ;
+                          }
+                      }
+                   catch(NullPointerException e){ 
+                      return "" ;	
+                   }
+
+                  return sspro ;	
+
+                } 
+  
 	  public Date sdate(){
 	     
 	      Calendar currentDate = Calendar.getInstance();
 	      return currentDate.getTime();
 	  }	  
+          
+          
+        
 }

@@ -29,6 +29,9 @@
                         
                         <p:outputLabel value="#{myBundle.EditMovDpLabel_generado}" for="generado" />
                         <p:inputText id="generado" value="#{movDpController.selected.generado}" title="#{myBundle.EditMovDpTitle_generado}" />
+                        
+ <p:outputLabel value="#{myBundle.EditMovDpLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{movDpController.selected.cantidad}" title="#{myBundle.EditMovDpTitle_cantidad}" />                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{movDpController.save}" value="#{myBundle.Save}" update="display,:MovDpListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MovDpEditDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="MovDpEditDialog.hide()"/>

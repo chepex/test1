@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AuditoriaViewDlg" widgetVar="AuditoriaViewDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.ViewAuditoriaTitle}">
+
+            <h:form id="AuditoriaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{auditoriaController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewAuditoriaLabel_id}"/>
+                        <h:outputText value="#{auditoriaController.selected.id}" title="#{myBundle.ViewAuditoriaTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewAuditoriaLabel_usuario}"/>
+                        <h:outputText value="#{auditoriaController.selected.usuario}" title="#{myBundle.ViewAuditoriaTitle_usuario}"/>
+
+                        <h:outputText value="#{myBundle.ViewAuditoriaLabel_fecha}"/>
+                        <h:outputText value="#{auditoriaController.selected.fecha}" title="#{myBundle.ViewAuditoriaTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewAuditoriaLabel_objecto}"/>
+                        <h:outputText value="#{auditoriaController.selected.objecto}" title="#{myBundle.ViewAuditoriaTitle_objecto}"/>
+
+                        <h:outputText value="#{myBundle.ViewAuditoriaLabel_accion}"/>
+                        <h:outputText value="#{auditoriaController.selected.accion}" title="#{myBundle.ViewAuditoriaTitle_accion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="AuditoriaViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -201,4 +201,47 @@ public static double Redondear2(float numero,int digitos)
         // clave encriptada
         return h.toString();
     }
+    
+    public String  String_fecha(String aa){
+	       /*SimpleDateFormat formateador = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es_ES"));
+	        Date fechaDate = new Date();*/
+                 String fecha="AA";
+	      return fecha;
+   }	
+    
+    public static String Meses(short mes){
+        String vmes= "";
+         switch (mes) {
+               case 1:  vmes = "ENERO";
+                     break;
+               case 2:  vmes = "FEBRERO";
+                     break;   
+               case 3:  vmes = "MARZO";
+                     break;   
+               case 4:  vmes = "ABRIL";
+                     break;   
+               case 5:  vmes = "MAYO";
+                     break;   
+               case 6:  vmes = "JUNIO";
+                     break;   
+               case 7:  vmes = "JULIO";
+                     break;   
+               case 8:  vmes = "AGOSTO";
+                     break;   
+               case 9:  vmes = "SEPTIEMBRE";
+                     break;   
+               case 10:  vmes = "OCTUBRE";
+                     break; 
+               case 11:  vmes = "NOVIEMBRE";
+                     break;   
+               case 12:  vmes = "DICIEMBRE";
+                     break;                       
+             default: vmes = "error";
+                     break;
+         }
+                
+        return vmes;
+    }
+    
+    
 }

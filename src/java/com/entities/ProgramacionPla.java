@@ -75,6 +75,8 @@ public class ProgramacionPla implements Serializable {
     private Short anio;
     @Column(name = "MES")
     private Short mes;
+    @Column(name = "SEGMENTAR")
+    private Short segmentar;    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programacionPla")
     private List<PlanillaHoras> planillaHorasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "programacionPla")
@@ -100,6 +102,14 @@ public class ProgramacionPla implements Serializable {
     }    
     public ProgramacionPla() {	
 	
+    }
+
+    public Short getSegmentar() {
+        return segmentar;
+    }
+
+    public void setSegmentar(Short segmentar) {
+        this.segmentar = segmentar;
     }
 
     public String getRecalculo() {

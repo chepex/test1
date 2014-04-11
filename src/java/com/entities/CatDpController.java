@@ -1,6 +1,7 @@
 package com.entities;
 
 
+import com.ejb.SB_auditoria;
 import com.ejb.SB_readXLS;
 import com.entities.util.JsfUtil;
 import java.io.IOException;
@@ -15,6 +16,8 @@ import org.primefaces.event.FileUploadEvent;
 @ManagedBean(name = "catDpController")
 @ViewScoped
 public class CatDpController extends AbstractController<CatDp> implements Serializable {
+    @EJB
+    private SB_auditoria sB_auditoria;
     @EJB
     private SB_readXLS sB_readXLS;
 
@@ -37,20 +40,9 @@ public class CatDpController extends AbstractController<CatDp> implements Serial
         this.getSelected().setCatDpPK(new com.entities.CatDpPK());
     }
     
-    public void upload(FileUploadEvent event) throws IOException, BiffException  {      
-     
-        ReadXls a = new ReadXls();
-        String destination = "/opt/lib/"+event.getFile().getFileName();
-        a.copyFile(event.getFile().getFileName(), event.getFile().getInputstream()); 
-        String Mensaje ="";
-        
-        
-            Mensaje=sB_readXLS.prueba(destination,null);        
-        
-        
-        
-     
-     JsfUtil.addSuccessMessage( Mensaje); 
-     
-    }    
+    @Override  
+    public void postCreate(){
+      sB_auditoria.registrar_audit(this.getAccion() , this.getSelected().toString(), this.getSelected().getClass().getName());
+    }   
+    
 }

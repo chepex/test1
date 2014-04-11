@@ -1,37 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BoletaPago_subreport1" pageWidth="572" pageHeight="752" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5f19fbd5-3953-41b8-9a4e-857668f2f452">
-	<property name="ireport.zoom" value="2.5937424601000036"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="3.7974983358324197"/>
+	<property name="ireport.x" value="3"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
 	<style name="Heading 3" fontSize="14" isBold="true"/>
 	<parameter name="COD_EMP" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUMA_RESTA" class="java.lang.String">
+	<parameter name="SECUENCIA" class="java.math.BigDecimal">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SECUENCIA" class="java.lang.Long">
+	<parameter name="COD_CIA" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT D.DESCRIPCION,M.VALOR 
+		<![CDATA[SELECT D.DESCRIPCION,M.VALOR , ABS ( M.PENDIENTE) AS PENDIENTE
 FROM MOV_DP M, DEDUC_PRESTA D, CAT_DP C
-WHERE M.COD_CIA = D.COD_CIA
+WHERE  M.COD_CIA = $P{COD_CIA}
+AND M.COD_CIA = D.COD_CIA
 AND M.COD_DP = D.COD_DP
 AND D.COD_CIA  = C.COD_CIA
 AND D.COD_CAT = C.COD_CAT
 AND M.COD_EMP = $P{COD_EMP}
 AND M.SECUENCIA= $P{SECUENCIA}
-AND C.SUMA_RESTA = $P{SUMA_RESTA}]]>
+AND C.SUMA_RESTA = 'R'
+AND M.VALOR<>0]]>
 	</queryString>
 	<field name="DESCRIPCION" class="java.lang.String"/>
 	<field name="VALOR" class="java.math.BigDecimal"/>
+	<field name="PENDIENTE" class="java.math.BigDecimal"/>
 	<variable name="VALOR_1" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{VALOR}]]></variableExpression>
 	</variable>
 	<variable name="VALOR_2" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{VALOR}]]></variableExpression>
+	</variable>
+	<variable name="PENDIENTE_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{PENDIENTE}]]></variableExpression>
+	</variable>
+	<variable name="PENDIENTE_2" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{PENDIENTE}]]></variableExpression>
 	</variable>
 	<group name="VALOR">
 		<groupExpression><![CDATA[$F{VALOR}]]></groupExpression>
@@ -45,63 +54,72 @@ AND C.SUMA_RESTA = $P{SUMA_RESTA}]]>
 	<columnHeader>
 		<band height="16" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="0c3899f1-19f5-4485-aabf-81eece304c96" x="19" y="2" width="100" height="10"/>
+				<reportElement uuid="0c3899f1-19f5-4485-aabf-81eece304c96" x="6" y="2" width="100" height="10"/>
 				<textElement>
 					<font fontName="Times New Roman" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="10524c3f-46f0-465b-9fee-5322fcd438cb" x="141" y="2" width="100" height="10"/>
+				<reportElement uuid="10524c3f-46f0-465b-9fee-5322fcd438cb" x="106" y="2" width="48" height="10"/>
 				<textElement>
 					<font fontName="Times New Roman" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[VALOR]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="00e7cfe3-5af9-45b1-b484-dad873283100" x="6" y="12" width="200" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="10524c3f-46f0-465b-9fee-5322fcd438cb" x="155" y="2" width="48" height="10"/>
+				<textElement>
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PENDIENTE]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField>
-				<reportElement uuid="0c5d37bc-7df0-4fa3-9a72-3893cc889921" x="19" y="0" width="100" height="12"/>
+				<reportElement uuid="0c5d37bc-7df0-4fa3-9a72-3893cc889921" x="6" y="0" width="100" height="12"/>
 				<textElement>
-					<font fontName="Times New Roman" size="8" isItalic="true"/>
+					<font fontName="Times New Roman" size="8" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DESCRIPCION}]]></textFieldExpression>
 			</textField>
-			<textField pattern="$ #,##0.00">
-				<reportElement uuid="e6b37995-7707-4344-9f8c-8240f28c963e" x="141" y="0" width="46" height="12"/>
-				<textElement/>
+			<textField pattern=" #,##0.00">
+				<reportElement uuid="e6b37995-7707-4344-9f8c-8240f28c963e" x="106" y="0" width="48" height="12"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{VALOR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1c7b4eab-8655-46d9-b295-0c302dfcc913" x="155" y="0" width="48" height="12"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{PENDIENTE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<summary>
 		<band height="16" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="1c647797-f8f1-417e-b832-bf8badc688a7" style="Heading 3" x="19" y="4" width="100" height="10"/>
+				<reportElement uuid="1c647797-f8f1-417e-b832-bf8badc688a7" style="Heading 3" x="6" y="4" width="100" height="10"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="789bfa05-538c-41e6-be84-abfaa3dbb159" x="19" y="1" width="168" height="1"/>
+				<reportElement uuid="789bfa05-538c-41e6-be84-abfaa3dbb159" x="6" y="1" width="200" height="1"/>
 			</line>
-			<textField pattern="$ #,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="5708e0a3-5b31-4707-92f9-fde97cb98c9b" x="141" y="2" width="46" height="12"/>
-				<textElement/>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="5708e0a3-5b31-4707-92f9-fde97cb98c9b" x="106" y="2" width="48" height="12"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{VALOR_2}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
 	<noData>
-		<band height="50">
-			<staticText>
-				<reportElement uuid="e7625520-03dd-4eeb-b686-26d095520623" x="41" y="0" width="100" height="20"/>
-				<textElement/>
-				<text><![CDATA[asdasdas]]></text>
-			</staticText>
-		</band>
+		<band height="50"/>
 	</noData>
 </jasperReport>

@@ -36,7 +36,7 @@
                             <f:selectItems value="#{vplanillaController.programacionplas}"
                                            var="programacionPlaItem"
                                            itemValue="#{programacionPlaItem}"
-                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "					   
+                                           itemLabel="#{programacionPlaItem.anio}/#{programacionPlaItem.mes}/#{programacionPlaItem.tiposPlanilla.nomTipopla }/#{programacionPlaItem.numPlanilla } "					   
 					   
 					   />
                             <f:converter binding="#{programacionPlaConverter}"/>

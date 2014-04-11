@@ -297,15 +297,9 @@ public class MovDpFacade extends AbstractFacade<MovDp> {
                                                 " and P.STATUS = 'C'" +
                                                 " and m.cod_cia = ?" +
                                                 " and m.cod_emp = ?" +
-                                                " and P.FECHA_PAGO between  "+
-                                                "TO_DATE('01/'||to_char(add_months(?,-6),'mm')||'/'||to_char(add_months(?,-6),'yyyy'),'DD/MM/YYYY') "+        
-                                                " and last_day(add_months (?,-1))");		                        
+                                                " and P.FECHA_CORTE between add_months(TRUNC(SYSDATE),-6) and TRUNC(SYSDATE)");		                        
             q.setParameter(1, codCia);  
             q.setParameter(2, empleado.getEmpleadosPK().getCodEmp());                  
-            q.setParameter(3, resumenAsistencia.getProgramacionPla().getFechaPago());                  
-            q.setParameter(4, resumenAsistencia.getProgramacionPla().getFechaPago());       
-            q.setParameter(5, resumenAsistencia.getProgramacionPla().getFechaPago());  
-            
             val= (BigDecimal)q.getSingleResult();
         
          }

@@ -84,6 +84,8 @@ public class DeducPresta implements Serializable {
     @Size(max = 100)
     @Column(name = "PROCESO")
     private String proceso;
+    @Column(name = "SEGMENTAR")
+    private String segmentar;    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deducPresta")
     private List<PlanillaHoras> planillaHorasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "deducPresta")
@@ -113,6 +115,15 @@ public class DeducPresta implements Serializable {
     public DeducPresta() {
     }
 
+    public String getSegmentar() {
+        return segmentar;
+    }
+
+    public void setSegmentar(String segmentar) {
+        this.segmentar = segmentar;
+    }
+
+    
     public String getRenta() {
         return renta;
     }

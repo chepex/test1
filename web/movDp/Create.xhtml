@@ -18,23 +18,26 @@
                         <p:outputLabel value="#{myBundle.CreateMovDpLabel_valor}" for="valor" />
                         <p:inputText id="valor" value="#{movDpController.selected.valor}" title="#{myBundle.CreateMovDpTitle_valor}" />
 
+                         <p:outputLabel value="#{myBundle.CreateMovDpLabel_cantidad}" for="cantidad" />
+                        <p:inputText id="cantidad" value="#{movDpController.selected.cantidad}" title="#{myBundle.CreateMovDpTitle_cantidad}" />
+                       
                         <p:outputLabel value="#{myBundle.CreateMovDpLabel_codPresta}" for="codPresta" />
                         <p:inputText id="codPresta" value="#{movDpController.selected.movDpPK.codPresta}" title="#{myBundle.CreateMovDpTitle_codPresta}" />
 			
 			
                         <p:outputLabel value="#{myBundle.CreateMovDpLabel_programacionPla}" for="programacionPla" />
-                        <p:selectOneMenu id="programacionPla" value="#{movDpController.selected.programacionPla}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_programacionPla}">
+                        <p:selectOneMenu id="programacionPla"  filter="true" filterMatchMode="contains" value="#{movDpController.selected.programacionPla}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_programacionPla}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{programacionPlaController.items}"
                                            var="programacionPlaItem"
                                            itemValue="#{programacionPlaItem}"
-                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "
+                                           itemLabel="#{programacionPlaItem.anio}/#{programacionPlaItem.mes}/#{programacionPlaItem.tiposPlanilla.nomTipopla }/#{programacionPlaItem.numPlanilla } "
 					   />
                             <f:converter binding="#{programacionPlaConverter}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.CreateMovDpLabel_empleados}" for="empleados" />
-                        <p:selectOneMenu id="empleados"   filterMatchMode="contains" value="#{movDpController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_empleados}">
+                        <p:selectOneMenu id="empleados"   filter="true" filterMatchMode="contains" value="#{movDpController.selected.empleados}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_empleados}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{empleadosController.activos}"
                                            var="empleadosItem"
@@ -45,7 +48,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="#{myBundle.CreateMovDpLabel_deducPresta}" for="deducPresta" />
-                        <p:selectOneMenu id="deducPresta" value="#{movDpController.selected.deducPresta}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_deducPresta}">
+                        <p:selectOneMenu id="deducPresta"   filter="true" filterMatchMode="contains" value="#{movDpController.selected.deducPresta}" required="true" requiredMessage="#{myBundle.EditMovDpRequiredMessage_deducPresta}">
                             <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
                             <f:selectItems value="#{deducPrestaController.items}"
                                            var="deducPrestaItem"

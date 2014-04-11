@@ -30,6 +30,11 @@
                         <p:outputLabel value="#{myBundle.EditDeducPrestaLabel_nogravado}" for="nogravado" />
                         <p:inputText id="nogravado" value="#{deducPrestaController.selected.nogravado}" title="#{myBundle.EditDeducPrestaTitle_nogravado}" />
 
+                        <p:outputLabel value="#{myBundle.EditDeducPrestaLabel_segmentar}" for="segmentar" />
+                        <p:selectOneMenu id="segmentar" value="#{deducPrestaController.selected.segmentar}"  >                            
+                               <f:selectItem itemLabel="No" itemValue =""/>
+                               <f:selectItem itemLabel="Si" itemValue="S"/>
+                        </p:selectOneMenu>                           
                         
                         <p:outputLabel value="#{myBundle.EditDeducPrestaLabel_renta}" for="renta" />
                         <p:inputText id="renta" value="#{deducPrestaController.selected.renta}" title="#{myBundle.EditDeducPrestaTitle_renta}" />

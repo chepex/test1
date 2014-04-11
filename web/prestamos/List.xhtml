@@ -35,7 +35,13 @@
 			<h:outputText value="#{myBundle.ListEmpleadosTitle_empleadosPK_codEmp}"/>
 		    </f:facet>
 		    <h:outputText value="#{item.empleados.empleadosPK.codEmp}"/>
-		</p:column>                
+		</p:column>  
+		<p:column sortBy="#{item.empleados.codEmpref}" filterBy="#{item.empleados.codEmpref}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_codEmpref}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.empleados.codEmpref}"/>
+		</p:column>                   
 		<p:column sortBy="#{item.empleados.nombreNit}" filterBy="#{item.empleados.nombreNit}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListPrestamosTitle_empleados}"/>
@@ -99,7 +105,7 @@
         <BR/>
         <h3>PAGOS REALIZADOS</h3>  
         <p:dataList id="lisCuotas" value="#{prestamosController.listaCuotas}" var="cuotas" itemType="disc">  
-            Codigo: #{ cuotas.movDpPK.codPresta } -  Valor:  $#{cuotas.valor} - Fecha: #{cuotas.fechaReg.toGMTString() }  
+            Codigo: #{ cuotas.movDpPK.codPresta } -  Valor:  $#{cuotas.valor} - Año #{cuotas.programacionPla.anio} - Mes #{cuotas.programacionPla.mes} 
         </p:dataList>                  
     </h:form>
 <br></br>

@@ -52,7 +52,7 @@
                         <p:inputText id="correlativo" value="#{planillaIsssController.selected.correlativo}" title="#{myBundle.EditPlanillaIsssTitle_correlativo}" />
 
                         <h:outputLabel value="#{myBundle.EditPlanillaIsssLabel_empleados}" for="empleados" />
-                        <h:outputText id="empleados" value="#{planillaIsssController.selected.empleados.empleadosPK}"/>
+                        <h:outputText id="empleados" value="#{planillaIsssController.selected.empleados.nombres}"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{planillaIsssController.save}" value="#{myBundle.Save}" update="display,:PlanillaIsssListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PlanillaIsssEditDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="PlanillaIsssEditDialog.hide()"/>

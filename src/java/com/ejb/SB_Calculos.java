@@ -200,6 +200,7 @@ public class SB_Calculos {
         try{
             inicializar(resumenAsistenciax);
             double pres= prestaciones();
+            
             if( Integer.parseInt(resumenAsistenciax.getDias())>0 || pres>0  ){
                 List<Prestamos>   iterador =   prestamosFacade.findByEmpleado(this.empleado);
                 for( Prestamos e : iterador ){ 
@@ -207,10 +208,9 @@ public class SB_Calculos {
                   if(ValidarCuota(e).equals("ok")){
                     MovDp mdp = movDpFacade.findByPresta(e, resumenAsistencia);
                         if(mdp==null){
-                            if(e.getVcuota().floatValue()>e.getSaldo().floatValue()){
-                                
+                            if(e.getVcuota().floatValue()>e.getSaldo().floatValue()){                                
                                 crear_movdp(e.getSaldo().floatValue(),e );
-                            }else{
+                            }else{                                
                                 crear_movdp(e.getVcuota().floatValue(),e );
                             }
                             
@@ -224,6 +224,51 @@ public class SB_Calculos {
         }
     }    
 
+  /**
+    *  crea los prestamos aun no cancelados por el empleado para luego guardarlos en la tabla mov_dp
+    * ejemplo: <br>
+    *   emp:2526 <br>
+    *       prestamos where cuotas_p!=cuotas    <br>
+    * @author       Mario J. Mixco
+    * @version	1.0.012014 
+    * @exception    Indica la excepción que puede generar            
+     */
+    public void CalcularPrestamosSegmento(ResumenAsistencia resumenAsistenciax, ProgramacionPla pl)   { 
+        try{
+            inicializar(resumenAsistenciax);
+            double pres= prestaciones();
+            float vac= resumenAsistenciax.getEmpleados().getVacaciones().floatValue();
+            float cuota =0;
+            if( Integer.parseInt(resumenAsistenciax.getDias())>0 || pres>0  ){
+                List<Prestamos>   iterador =   prestamosFacade.findByEmpleadoVac(this.empleado);
+                for( Prestamos e : iterador ){ 
+                  this.deducPresta = e.getDeducPresta();  
+                  if(ValidarCuota(e).equals("ok")){
+                    MovDp mdp = movDpFacade.findByPresta(e, resumenAsistencia);
+                        if(mdp==null){
+                            if(vac==1){
+                             cuota = (e.getVcuota().floatValue() * pl.getSegmentar())/100;
+                            }
+                            if(vac==0){
+                             cuota = e.getVcuota().floatValue() ;
+                            }
+                            
+                            if(cuota>e.getSaldo().floatValue()){                                
+                                crear_movdp(e.getSaldo().floatValue(),e );
+                            }else{                                
+                                crear_movdp(cuota,e );
+                            }
+                            
+                        }
+                  }
+
+                }  
+            }
+        }catch(Exception ex){         
+                 JsfUtil.logs(ex , "Surgio un error", "Proceso CalcularPrestamos Empleado"+resumenAsistenciax.getEmpleados().getNombreIsss(),SB_Calculos.class,"ERROR"); 
+        }
+    }     
+    
     /**
     * Verifica si es necesario carga o no las cuotas en la planilla esto depende de la frecuancia del prestamo
     * ejemplo: <br>
@@ -275,15 +320,22 @@ public class SB_Calculos {
      */
     public double LiqRecibir(ResumenAsistencia resumenAsistenciax)   { 
         double liquido =0;
+        double neto =0;
         try{
             inicializar(resumenAsistenciax);
-             liquido = devengado()+NOGRAVADO() -deducciones();
-            if(liquido<0){
-                liquido = negativos(liquido );
-                liquido=(float)0.1;
-            }
-            if(liquido ==0){
-                liquido=(float)0.1;
+            neto = devengado()+NOGRAVADO();
+            if(neto>0){
+                    liquido = neto -deducciones();
+                   if(liquido<0){
+                       liquido = negativos(liquido );
+                       liquido=(float)0.01;
+                   }
+                   if(liquido ==0){
+                       liquido=(float)0.01;
+                   }
+            }else{
+                borra_deducciones();
+                liquido=(float)0.00;
             }
                   return liquido;        
         }catch(Exception ex){           
@@ -312,29 +364,35 @@ public class SB_Calculos {
     * @return      
     */
     public double negativos(double negativo ) {      
-        try{            
+        try{           
+            negativo=(negativo-0.01)*-1;
             List<MovDp> mov= this.movDpFacade.findByPkPrioridad(this.empleado, "R", this.resumenAsistencia);
              for( MovDp m : mov ){ 
                 BigDecimal real = m.getValor();
                 double pendiente ;
-                 if(negativo > m.getValor().floatValue()){
-                    negativo= negativo + m.getValor().floatValue();
-                    pendiente = negativo -real.floatValue();
-                    m.setPendiente( BigDecimal.valueOf(pendiente));                                              
-                    this.movDpFacade.edit(m);                                      
-                 }else{
-                     negativo = m.getValor().floatValue() + negativo;
-                     pendiente = negativo -real.floatValue();
-                     if(negativo<0.01){                         
-                         m.setValor(BigDecimal.ZERO );                                
-                         m.setPendiente(real);
-                     }else{                         
-                         m.setValor(BigDecimal.valueOf(negativo) );
-                         m.setPendiente( BigDecimal.valueOf(pendiente));
-                         return negativo;
-                     }                     
-                     this.movDpFacade.edit(m);                      
-                 }                 
+                if(negativo>0){  
+                    if(negativo > m.getValor().floatValue()){
+                        pendiente = m.getValor().floatValue();
+                        negativo= negativo - m.getValor().floatValue();                       
+                        m.setValor(BigDecimal.ZERO );                           
+                        m.setPendiente( BigDecimal.valueOf(pendiente));                                              
+                       this.movDpFacade.edit(m);                                      
+                    }
+                    if(negativo < m.getValor().floatValue()){
+                        pendiente = negativo;
+                        m.setPendiente( BigDecimal.valueOf(pendiente)); 
+                        m.setValor(BigDecimal.valueOf(m.getValor().floatValue()-negativo) );
+                        negativo=0;                       
+                        this.movDpFacade.edit(m);                      
+                    }
+                    if(negativo == m.getValor().floatValue()){
+                        pendiente = negativo;
+                         m.setPendiente( BigDecimal.valueOf(pendiente)); 
+                        m.setValor(BigDecimal.ZERO) ;
+                        negativo=0;                       
+                        this.movDpFacade.edit(m);      
+                    }
+                }
              }
             return 0;
         }catch(Exception ex){  
@@ -393,7 +451,20 @@ public class SB_Calculos {
         
     }
         
-    
+        public float devengadom2( ) {      
+        try{
+           List<Planilla> listpp = planillaFacade.findByAnioMes3(this.resumenAsistencia);
+           float total = 0;
+              for( Planilla p : listpp ){ 
+                  total = total+ p.getNeto().floatValue();
+              }
+            return total;	
+        }catch(Exception ex){ 
+           JsfUtil.logs(ex , "Surgio un error", "Proceso devengadom Empleado "+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR");              
+            return (float)0;       
+        }
+        
+    }
     
     /**
     *  Obtiene el total de deduciones no gravadas (parametro en deduc_presta) de la planilla en proceso
@@ -472,7 +543,24 @@ public class SB_Calculos {
       return valor;	
     }    
      
-
+    public double borra_deducciones( ) {   
+       double valor=0;
+       try{        
+        List<MovDp> deduc =  movDpFacade.findByTotal(this.empleado, "R", this.programacionPla);
+            if(!deduc.isEmpty()){
+                for( MovDp m : deduc ){ 
+                m.setValor(BigDecimal.ZERO);
+                movDpFacade.edit(m);
+                }
+                
+            }      	       
+       }catch(Exception ex){                    
+       JsfUtil.logs(ex , "Surgio un error", "Proceso deducciones Empleado"+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR"); 
+        return 0;
+       }
+      return valor;	
+    } 
+    
     /**
     *  Obtiene el total de las prestaciones por empleado que existen en la tabla mov_dp en una planilla especifica<br>
     *  Formula:<br>
@@ -613,14 +701,17 @@ public class SB_Calculos {
             /* */
             double valor2= tmovdp(this.deducPresta.getDeducPrestaPK().getCodDp());
             if(this.programacionPla.getTiposPlanilla().getFrecuencia().equals("Q")){
-                if(this.programacionPla.getNumPlanilla()==2){                    
+                if(this.programacionPla.getNumPlanilla()==2 ){                    
                     vtope = this.deducPresta.getTope().floatValue();
                     if(valor>vtope){
                         valor=vtope;
                         valor = valor-valor2;
                     }else{
                         valor = valor-valor2;
-                    }   
+                    }
+                    if(valor+valor2>vtope){
+                       valor= vtope;
+                    }
                 }else{
                     vtope = this.deducPresta.getTope().floatValue() / 2;
                     if(valor>vtope){
@@ -632,6 +723,17 @@ public class SB_Calculos {
                 if(valor>vtope){
                    valor=vtope; 
                 }   
+            }
+            if(!this.programacionPla.getTiposPlanilla().getPromedio().equals("N")){
+                if(this.empleado.getEmpleadosPK().getCodEmp()==1260 ){
+                    if(this.deducPresta.getDeducPrestaPK().getCodDp()==3){
+                        valor= 6.98;
+                    }
+                }
+                    
+                if(valor>(vtope/2)){
+                   valor=(vtope/2); 
+                }
             }
             return valor;
         }catch(Exception ex){ 
@@ -742,6 +844,24 @@ public class SB_Calculos {
         }
     }
     
+   public double devengado_renta_mensual(){
+        try{            
+            double devengado = devengadom();            
+            DetEmpleado   afp = detEmpleadoFacade.findByAfp(this.empleado)  ; 
+            float factorAfp =1;
+            if(afp != null){              
+                factorAfp= afp.getDeducPresta().getFactor().floatValue();
+                double devengadoafp = devengado * factorAfp;
+                devengadoafp=  tope( devengadoafp, afp.getDeducPresta() );
+                devengado = devengado - devengadoafp;                                 
+            }          
+
+            return devengado; 
+        }catch(Exception ex){             
+           JsfUtil.logs(ex , "Surgio un error", "Proceso devengado_renta Empleado "+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR");            
+            return 0;             
+        }
+    }    
     /**
     * Obtiene la renta quincenal por empleado (devengado_renta = devengado - afp)<br>
     *  Formula:<br>
@@ -757,16 +877,42 @@ public class SB_Calculos {
     public void renta(){
         try{
             double devengado= devengado_renta();
+            int mas= 0;
             Renta renta= new Renta();
+            double rentam=0;
             if(devengado>0){
                 devengado= (float) JsfUtil.Redondear((double)devengado,2);
-                if(this.programacionPla.getTiposPlanilla().getFrecuencia().equals("Q")){
-                   renta= rentaFacade.findByValor(devengado, (short)2);
+                if(this.programacionPla.getTiposPlanilla().getPromedio().equals("N")){
+                    if(this.programacionPla.getTiposPlanilla().getFrecuencia().equals("Q")){
+                       renta= rentaFacade.findByValor(devengado, (short)2);
+                    }
+                    if(this.programacionPla.getTiposPlanilla().getFrecuencia().equals("M")){
+                       renta= rentaFacade.findByValor(devengado, (short)1);
+                    }    
+                }else{
+                     if(this.programacionPla.getNumPlanilla()==2){
+                       devengado = devengado()+devengado_renta_mensual();                   
+                       renta= rentaFacade.findByValor(devengado, (short)1);                      
+                       mas = 1;
+                    }
+                     if(this.programacionPla.getNumPlanilla()==1){
+                       renta= rentaFacade.findByValor(devengado, (short)2);
+                     }
                 }
-                if(this.programacionPla.getTiposPlanilla().getFrecuencia().equals("M")){
-                   renta= rentaFacade.findByValor(devengado, (short)1);
-                }                                
+                
                 double valor = (((( devengado -renta.getExceso().floatValue()) * renta.getPorcentaje().floatValue())/100) )+renta.getValorFijo().floatValue();
+                if(mas== 1){
+                List<MovDp> mp = movDpFacade.findBymovdp(empleado,resumenAsistencia,9);
+                   
+                         for( MovDp m : mp ){ 
+                            rentam =rentam+ m.getValor().doubleValue();
+                             
+                            }
+                         valor= valor-rentam;
+                }
+                    
+                       
+                         
                Logs( "renta",String.valueOf(valor) ,String.valueOf(this.empleado),String.valueOf(devengado) );            
                 crear_movdp(valor);   
             } 
@@ -820,10 +966,17 @@ public class SB_Calculos {
         try{
             double devengado= devengado();
             float dias_mes = 30; 
+            float vpromedio =0;
+            float salario = 0;
+            
             float dias_laborados = Float.valueOf( this.resumenAsistencia.getDias());	       
-            BigDecimal promedio = movDpFacade.PromComision(empleado, resumenAsistencia);                
-            float vpromedio = (promedio.floatValue()/6);
-            double valor = (((devengado + vpromedio )/dias_mes)*dias_laborados ) *  this.deducPresta.getFactor().floatValue();        
+            salario= (empleado.getSalarioBase().floatValue()/30) * dias_laborados;
+            BigDecimal promedio = movDpFacade.PromComision(empleado, resumenAsistencia);    
+            if(promedio.floatValue()>0){
+                vpromedio= ((promedio.floatValue()/6)/30)*dias_laborados;
+            }
+            
+            double valor = (salario + vpromedio ) *  this.deducPresta.getFactor().floatValue();        
             crear_movdp(valor);           
         }catch(Exception ex){           
            JsfUtil.logs(ex , "Surgio un error", "Proceso vacc Empleado"+this.empleado.getNombreIsss(),SB_Calculos.class,"ERROR");            
@@ -884,6 +1037,34 @@ public class SB_Calculos {
         }
     }      
 
+ 
+    
+    /**
+    * Calcula el valor del promedio comision<br>
+    *  Formula:<br>
+    *       monto = suma ultimos 6 meses<br>
+    *  ejemplo:<br>
+    *   codemp: 2526<br>
+    *       monto = ((600)/6)/2<br>
+    *       monto = $30<br>
+    * @author       Mario J. Mixco
+    * @version	1.0.012014   
+    * @exception    Indica la excepción que puede generar 
+     */
+    public void promedioVacacion(ResumenAsistencia resumenAsistenciax){
+        try{  
+            inicializar(resumenAsistenciax);   
+            short m = 69;
+             float dias_laborados = Float.valueOf( this.resumenAsistencia.getDias());	  
+            DeducPresta m2= deducPrestaFacade.findCodDeduc( m );
+            this.deducPresta = m2;
+            BigDecimal promedio = movDpFacade.PromComision(empleado, resumenAsistencia);
+            float vpromedio = (((promedio.floatValue())/6)/30)*dias_laborados;        
+            crear_movdp(vpromedio);      
+        }catch(Exception ex){          
+           JsfUtil.logs(ex , "Surgio un error", "Proceso promedioQuincenal Empleado"+resumenAsistenciax.getEmpleados().getNombreIsss() ,SB_Calculos.class,"ERROR");            
+        }
+    }     
     
   /**
     * Calcula el valor del promedio comision<br>

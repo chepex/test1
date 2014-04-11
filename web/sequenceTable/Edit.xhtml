@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SequenceTableEditDlg" widgetVar="SequenceTableEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditSequenceTableTitle}">
+
+            <h:form id="SequenceTableEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{sequenceTableController.selected != null}">
+
+                        <h:outputLabel value="#{myBundle.EditSequenceTableLabel_sequenceTablePK_seqName}" for="sequenceTablePK_seqName" />
+                        <h:outputText id="sequenceTablePK_seqName" value="#{sequenceTableController.selected.sequenceTablePK.seqName}" />
+
+                        <h:outputLabel value="#{myBundle.EditSequenceTableLabel_sequenceTablePK_codCia}" for="sequenceTablePK_codCia" />
+                        <h:outputText id="sequenceTablePK_codCia" value="#{sequenceTableController.selected.sequenceTablePK.codCia}" />
+
+                        <p:outputLabel value="#{myBundle.EditSequenceTableLabel_seqCount}" for="seqCount" />
+                        <p:inputText id="seqCount" value="#{sequenceTableController.selected.seqCount}" title="#{myBundle.EditSequenceTableTitle_seqCount}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sequenceTableController.save}" value="#{myBundle.Save}" update="display,:SequenceTableListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,SequenceTableEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="SequenceTableEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

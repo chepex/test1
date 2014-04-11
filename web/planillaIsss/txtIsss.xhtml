@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PlanillaIsssTxtDlg" widgetVar="PlanillaIsssTxtDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditPlanillaIsssTitle}">
+
+            <h:form id="PlanillaIsssTxtForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" >
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaIsssLabel_planillaIsssPK_anio}" for="planillaIsssPK_anio" />
+                        <h:outputText id="planillaIsssPK_anio" value="#{planillaIsssController.selected.planillaIsssPK.anio}" />
+
+                        <h:outputLabel value="#{myBundle.EditPlanillaIsssLabel_planillaIsssPK_mes}" for="planillaIsssPK_mes" />
+                        <h:outputText id="planillaIsssPK_mes" value="#{planillaIsssController.selected.planillaIsssPK.mes}" />
+
+                        <p:outputLabel value="#{myBundle.EditPlanillaIsssLabel_correlativo}" for="correlativo" />
+                        <p:inputText id="correlativo" value="#{planillaIsssController.selected.correlativo}" title="#{myBundle.EditPlanillaIsssTitle_correlativo}" />
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{planillaIsssController.Gcvs}" value="Generar" ajax="false" update="@form :growl"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PlanillaIsssTxtDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

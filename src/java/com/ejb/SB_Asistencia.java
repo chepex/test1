@@ -146,12 +146,16 @@ public class SB_Asistencia {
            try{
             LoginBean lb= new LoginBean();		 
 	    short codCia = lb.sscia();	    
-            
+            //float meses = 6;
+          
+
 	    List<Empleados>   iterador =    empleadosFacade.findbytipoPla(   programacionpla );		    
             Observaciones obs= observacionesFacade.findbyID((short)1);
             
 	    for( Empleados e : iterador ){        
-                BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
+                BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);   
+                 
+                    
 		ResumenAsistencia hj = new ResumenAsistencia();
 		ResumenAsistenciaPK resumenAsistenciaPK = new ResumenAsistenciaPK(codCia,programacionpla.getProgramacionPlaPK().getSecuencia(),e.getEmpleadosPK().getCodEmp() );
 		String dias= diasNormal( programacionpla, e);
@@ -159,9 +163,11 @@ public class SB_Asistencia {
 		hj.setEmpleados(e);
 		hj.setProgramacionPla(programacionpla);
 		hj.setResumenAsistenciaPK(resumenAsistenciaPK);	   
-                hj.setPromedio(promedio);
+                hj.setPromedio(prom(promedio));
                 hj.setObservaciones(obs);
-		resumenAsistenciaFacade.edit(hj);			
+		resumenAsistenciaFacade.edit(hj);
+                resumenAsistenciaFacade.flush();
+                
 	    }
                return "ok";
             }catch(Exception ex){
@@ -181,11 +187,14 @@ public class SB_Asistencia {
     public String vacc(ProgramacionPla programacionpla){
            try{
             LoginBean lb= new LoginBean();		 
-	    short codCia = lb.sscia();	    
+	    short codCia = lb.sscia();	 
+                
 	    List<Empleados>   iterador =    empleadosFacade.findbyVacc(   programacionpla );		    
             Observaciones obs= observacionesFacade.findbyID((short)1);
 	    for( Empleados e : iterador ){ 
-                BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
+                BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);   
+                
+                    
 		ResumenAsistencia hj = new ResumenAsistencia();
 		ResumenAsistenciaPK resumenAsistenciaPK = new ResumenAsistenciaPK(codCia,programacionpla.getProgramacionPlaPK().getSecuencia(),e.getEmpleadosPK().getCodEmp() );
 		String dias= diasVacc( programacionpla, e);
@@ -193,9 +202,10 @@ public class SB_Asistencia {
 		hj.setEmpleados(e);
 		hj.setProgramacionPla(programacionpla);
 		hj.setResumenAsistenciaPK(resumenAsistenciaPK);	
-                hj.setPromedio(promedio);  
+              hj.setPromedio(prom(promedio));
                 hj.setObservaciones(obs);
-		resumenAsistenciaFacade.edit(hj);			
+		resumenAsistenciaFacade.edit(hj);
+                resumenAsistenciaFacade.flush();
 	    }
                 return "ok";      
             }catch(Exception ex){
@@ -214,11 +224,13 @@ public class SB_Asistencia {
     public String vaca(ProgramacionPla programacionpla){
            try{
             LoginBean lb= new LoginBean();		 
-	    short codCia = lb.sscia();	    
+	    short codCia = lb.sscia();	   
+           
 	    List<Empleados>   iterador =   null;
             Observaciones obs= observacionesFacade.findbyID((short)1);
                 for( Empleados e : iterador ){        
-                    BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
+                    BigDecimal promedio = movDpFacade.PromComision(e, programacionpla); 
+                  
                     ResumenAsistencia hj = new ResumenAsistencia();
                     ResumenAsistenciaPK resumenAsistenciaPK = new ResumenAsistenciaPK(codCia,programacionpla.getProgramacionPlaPK().getSecuencia(),e.getEmpleadosPK().getCodEmp() );
                     String dias= diasVaca( programacionpla, e);
@@ -226,10 +238,11 @@ public class SB_Asistencia {
                     hj.setEmpleados(e);
                     hj.setProgramacionPla(programacionpla);
                     hj.setResumenAsistenciaPK(resumenAsistenciaPK);	    	    
-                    hj.setPromedio(promedio);  
+                    hj.setPromedio(prom(promedio));
                     hj.setObservaciones(obs);
                     resumenAsistenciaFacade.edit(hj);
-                    
+                    resumenAsistenciaFacade.flush();
+                    resumenAsistenciaFacade.refresh(hj);
                 }
                 return "ok";
             }catch(Exception ex){
@@ -248,10 +261,14 @@ public class SB_Asistencia {
            try{
             LoginBean lb= new LoginBean();		 
 	    short codCia = lb.sscia();	
+          
+            
             Observaciones obs= observacionesFacade.findbyID((short)1);
 	    List<Empleados>   iterador =    empleadosFacade.activos();			    
                 for( Empleados e : iterador ){        
-                    BigDecimal promedio = movDpFacade.PromComision(e, programacionpla);                
+                    BigDecimal promedio = movDpFacade.PromComision(e, programacionpla); 
+                   
+                    
                     ResumenAsistencia hj = new ResumenAsistencia();
                     ResumenAsistenciaPK resumenAsistenciaPK = new ResumenAsistenciaPK(codCia,programacionpla.getProgramacionPlaPK().getSecuencia(),e.getEmpleadosPK().getCodEmp() );
                     String dias= diasAgui( programacionpla, e);
@@ -259,9 +276,10 @@ public class SB_Asistencia {
                     hj.setEmpleados(e);
                     hj.setProgramacionPla(programacionpla);
                     hj.setResumenAsistenciaPK(resumenAsistenciaPK);
-                    hj.setPromedio(promedio);   
+                    hj.setPromedio(prom(promedio));
                     hj.setObservaciones(obs);
-                    resumenAsistenciaFacade.edit(hj);			
+                    resumenAsistenciaFacade.edit(hj);	
+                    resumenAsistenciaFacade.flush();
                 }
                 return "ok";
             }catch(Exception ex){
@@ -362,5 +380,16 @@ public class SB_Asistencia {
     return Dias;
     }  
    
-
+        public BigDecimal prom (BigDecimal pro)
+        {
+            float pp= 0;
+            if(pro.floatValue()>0){
+                pp= pro.floatValue()/6;
+            }
+            ;
+            BigDecimal promedio = new BigDecimal(pp);
+            promedio.setScale(2, BigDecimal.ROUND_HALF_UP);
+            return promedio;
+            
+        }
 }

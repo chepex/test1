@@ -59,6 +59,14 @@
                             <f:selectItem itemLabel="No" itemValue="N"/>
                         </p:selectOneMenu>  
                         
+                        
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_segmentar}" for="segmentar" />
+                        <p:selectOneMenu id="segmentar" value="#{programacionPlaController.selected.segmentar}" >
+                            <f:selectItem itemLabel="0" itemValue="0"/>
+                            <f:selectItem itemLabel="50%" itemValue="50"/>    
+                        </p:selectOneMenu>   
+                        
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{programacionPlaController.save}" value="#{myBundle.Save}" update="display,:ProgramacionPlaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ProgramacionPlaEditDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="ProgramacionPlaEditDialog.hide()"/>

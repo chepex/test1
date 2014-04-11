@@ -24,12 +24,12 @@
                             <f:selectItems value="#{resumenAsistenciaController.programacionplas}"
                                            var="programacionPlaItem"
                                            itemValue="#{programacionPlaItem}"
-                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "					   
+                                           itemLabel="#{programacionPlaItem.anio}/#{programacionPlaItem.mes}/#{programacionPlaItem.tiposPlanilla.nomTipopla }/#{programacionPlaItem.numPlanilla } "					   
 					   
 					   />
                             <f:converter binding="#{programacionPlaConverter}"/>
                         </p:selectOneMenu>
-			<p:commandButton id="btn-generar"   icon="ui-icon-refresh"  value="Generar" actionListener="#{resumenAsistenciaController.generar() }" update="@form :growl" />
+			<p:commandButton id="btn-generar"   icon="ui-icon-refresh"  value="Consultar/Generar" actionListener="#{resumenAsistenciaController.generar() }" update=":growl,datalist" />
 			<p:commandButton id="btn-eliminar"  icon="ui-icon-transferthick-e-w"  value="Eliminar" actionListener="#{resumenAsistenciaController.eliminar() }" update="@form :growl" />
 			
 	</p:panelGrid>
@@ -118,7 +118,7 @@
 		<f:facet name="footer">
 		    
 		    
-		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Crear Asistencia" actionListener="#{resumenAsistenciaController.prepareCreate}" update=":ResumenAsistenciaEditForm" />
+		    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Crear Asistencia" actionListener="#{resumenAsistenciaController.prepareCreate}" update="@form" />
 		    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{resumenAsistenciaController.delete}" update=":growl,datalist" disabled="#{empty resumenAsistenciaController.selected}"/>
 		    
 		    
@@ -169,8 +169,8 @@
                         </p:selectOneMenu>
                       
                     </p:panelGrid>
-                        <p:hotkey bind="ctrl+g" actionListener="#{resumenAsistenciaController.save}" update=":ResumenAsistenciaListForm:datalist,:growl"/>
-                    <p:commandButton actionListener="#{resumenAsistenciaController.save}" value="#{myBundle.Save}" update="display,:ResumenAsistenciaListForm:datalist,:growl" />
+                        <p:hotkey bind="ctrl+g" actionListener="#{resumenAsistenciaController.save}" update=":ResumenAsistenciaListForm,:growl"/>
+                    <p:commandButton actionListener="#{resumenAsistenciaController.save}" value="#{myBundle.Save}" update="display,:ResumenAsistenciaListForm,:growl" />
                     
                 </h:panelGroup>
 

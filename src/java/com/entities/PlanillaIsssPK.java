@@ -4,6 +4,7 @@
  */
 package com.entities;
 
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -34,12 +35,6 @@ public class PlanillaIsssPK implements Serializable {
     private int codEmp;
 
     public PlanillaIsssPK() {
-    
-	if( this.codCia == 0 ){
-	    LoginBean lb= new LoginBean();	
-	    this.codCia = lb.sscia();
-	}		
-    
     }
 
     public PlanillaIsssPK(short codCia, short anio, short mes, int codEmp) {

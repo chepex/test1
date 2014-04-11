@@ -115,6 +115,19 @@ public class PlanillaFacade extends AbstractFacade<Planilla> {
     
     }      
     
+    
+    public  List<Planilla>  findByAnioMes3(ResumenAsistencia ra){
+	 TypedQuery<Planilla> q;	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+		 q = em.createNamedQuery("Planilla.findByAnioMes3", Planilla.class )		    
+                    .setParameter("anio", ra.getProgramacionPla().getAnio() )
+                    .setParameter("mes",  ra.getProgramacionPla().getMes() )                    
+                    .setParameter("codEmp", ra.getResumenAsistenciaPK().getCodEmp())  
+		    .setParameter("codCia",  codCia );
+    return q.getResultList();
+    
+    }       
     public  List<Planilla>  findByMes(ResumenAsistencia ra ){
 	 TypedQuery<Planilla> q;	 
 	    LoginBean lb= new LoginBean();	

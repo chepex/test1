@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpleadosEditDlg" widgetVar="EmpleadosEditDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.EditEmpleadosTitle}">
+
+            <h:form id="EmpleadosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="4" rendered="#{empleadosController.selected != null}">
+
+                      <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_empleadosPK_codEmp}" for="empleadosPK_codEmp" />
+                        <p:outputLabel id="empleadosPK_codEmp" value="#{empleadosController.selected.empleadosPK.codEmp}" title="#{myBundle.CreateEmpleadosTitle_empleadosPK_codEmp}" />
+                        
+                        <p:outputLabel value="C&oacute;d Ref" for="codEmpref" />
+                        <p:inputText id="codEmpref" value="#{empleadosController.selected.codEmpref}" title="C&oacute;digo Referencia RRHH" />
+                        
+                        <p:outputLabel value="F. Ingreso" for="fecIngreso" />
+                        <p:calendar id="fecIngreso" pattern="dd/MM/yyyy" value="#{empleadosController.selected.fecIngreso}" title="Fecha de Ingreso del Empleado" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_fecIngreso}" showOn="button"/>
+                        
+                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_tipoContra}" for="tipoContra" />                        
+                        <p:selectOneMenu id="tipoContra" value="#{empleadosController.selected.tipoContra}"  >                            
+                               <f:selectItem itemLabel="Permanente" itemValue ="P"/>
+                               <f:selectItem itemLabel="Eventual" itemValue="E"/>                               
+                        </p:selectOneMenu>  
+                         
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{empleadosController.save}" value="#{myBundle.Save}" update="display,:EmpleadosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EmpleadosEditDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="EmpleadosEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

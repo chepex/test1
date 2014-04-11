@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 @ManagedBean(name = "planillaIsssController")
 @ViewScoped
 public class PlanillaIsssController extends AbstractController<PlanillaIsss> implements Serializable {
+    @EJB
+    private PlanillaFacade planillaFacade;
     @EJB
     private SB_Planilla sB_Planilla;
 
@@ -46,8 +49,9 @@ public class PlanillaIsssController extends AbstractController<PlanillaIsss> imp
     
      public String Gcvs()  {                
         try{
-            short Anio = 2014;
-            short Mes =1; 
+            short Anio = this.getSelected().getPlanillaIsssPK().getAnio();
+            short Mes = this.getSelected().getPlanillaIsssPK().getMes();
+            short corelativo = this.getSelected().getCorrelativo();
           FacesContext fc = FacesContext.getCurrentInstance();
           HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
           response.setContentType("text/csv"); 
@@ -55,7 +59,7 @@ public class PlanillaIsssController extends AbstractController<PlanillaIsss> imp
           response.setHeader ( "Content-disposition", "attachment; filename=\"Reporting-" + 
           new Date().getTime() + ".csv\"" );
           ServletOutputStream output = response.getOutputStream();      
-          String encabezado = sB_Planilla.generarTxtISSS(Anio, Mes);
+          String encabezado = sB_Planilla.generarTxtISSS(Anio, Mes, corelativo);
           InputStream is = new ByteArrayInputStream( encabezado.getBytes("UTF-8") );
           int nextChar;
            while ((nextChar = is.read()) != -1) 
@@ -70,4 +74,13 @@ public class PlanillaIsssController extends AbstractController<PlanillaIsss> imp
             }
         return "";           
     }     
+     
+     public String procesar(){
+        List<Planilla> lpla  =   planillaFacade.findByAnioMes( (short)2014,(short)3);
+        for( Planilla pla : lpla ){ 
+             sB_Planilla.CalculoIsss(pla);            
+        }
+        
+     return "";
+     }
 }

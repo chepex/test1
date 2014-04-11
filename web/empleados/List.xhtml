@@ -27,6 +27,12 @@
 		    </f:facet>
 		    <h:outputText value="#{item.empleadosPK.codEmp}"/>
 		</p:column>
+		<p:column sortBy="#{item.codEmpref}" filterBy="#{item.codEmpref}">
+		    <f:facet name="header">
+			<h:outputText value="#{myBundle.ListEmpleadosTitle_empleadosPK_codEmp}"/>
+		    </f:facet>
+		    <h:outputText value="#{item.codEmpref}"/>
+		</p:column>                
 		<p:column sortBy="#{item.apellidos}" filterBy="#{item.apellidos}">
 		    <f:facet name="header">
 			<h:outputText value="#{myBundle.ListEmpleadosTitle_apellidos}"/>
@@ -126,6 +132,8 @@
                         
                         <p:outputLabel value="ISSS" for="isss" />
                         <p:selectOneMenu id="isss" value="#{empleadosController.selected.codIsss}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_isss}">                              
+                            
+                            <f:selectItem itemLabel="" itemValue ="0"/>
                             <f:selectItems value="#{deducPrestaController.LIsss}"
                                               var="deducPresta"
                                               itemValue="#{deducPresta.deducPrestaPK.codDp}"
@@ -185,6 +193,9 @@
                            <p:outputLabel value="No. NIT" for="numNit" />
                            <p:inputText id="numNit" value="#{empleadosController.selected.numNit}" title="N&uacute;mero de Identificaci&oacute;n Tributaria" />
 
+
+                          
+                           
                            <p:outputLabel value="Nombre NIT" for="nombreNit" />
                            <p:inputText id="nombreNit" value="#{empleadosController.selected.nombreNit}" title="Nombre Seg&uacute;n NIT" size="40" maxlength="100" />
 
@@ -196,7 +207,8 @@
                            
                            <p:outputLabel value="AFP" for="afp" />
                             <p:selectOneMenu id="afp" filter="true" filterMatchMode="contains" value="#{empleadosController.selected.codAfp}" required="true" requiredMessage="#{myBundle.EditEmpleadosRequiredMessage_afp}" >                              
-                               <f:selectItems value="#{deducPrestaController.LAfp}"
+                                 <f:selectItem itemLabel="" itemValue ="0"/>
+                                <f:selectItems value="#{deducPrestaController.LAfp}"
                                               var="deducPresta"
                                               itemValue="#{deducPresta.deducPrestaPK.codDp}"
                                               itemLabel="#{deducPresta.descripcion}"
@@ -301,6 +313,12 @@
                         <p:outputLabel value="#{myBundle.CreateEmpleadosLabel_observacion}" for="observacion" />
                         <p:inputTextarea id="observacion" rows="6" cols="33" maxlength="150" title="Observaciones, comentario,etc" value="#{empleadosController.selected.observacion}"/>                         
                         
+                        <p:outputLabel value="Vacaciones Colectivas" for="vacaciones" />
+                        <p:selectOneMenu id="vacaciones" value="#{empleadosController.selected.vacaciones}"  >                            
+                               <f:selectItem itemLabel="No" itemValue ="0"/>
+                               <f:selectItem itemLabel="Si" itemValue="1"/>                               
+                        </p:selectOneMenu>  
+                                               
                         
                         </p:panelGrid>
                     </p:panel>

@@ -26,7 +26,7 @@
                             <f:selectItems value="#{planillaController.programacionplas}"
                                            var="programacionPlaItem"
                                            itemValue="#{programacionPlaItem}"
-                                           itemLabel="#{programacionPlaItem.anio} || #{programacionPlaItem.mes} || #{programacionPlaItem.tiposPlanilla.nomTipopla } ||  #{programacionPlaItem.numPlanilla } "					   
+                                           itemLabel="#{programacionPlaItem.anio}/#{programacionPlaItem.mes}/#{programacionPlaItem.tiposPlanilla.nomTipopla }/#{programacionPlaItem.numPlanilla } "					   
 					   
 					   />
                             <f:converter binding="#{programacionPlaConverter}"/>
@@ -39,13 +39,20 @@
             
             <h:outputText value="Corelativo BAC" />              
             <p:inputText id="correlativo" value="#{planillaController.correlativo }"  />
+            
+            <h:outputText value="Periodo" />              
+            <p:inputTextarea id="periodo" rows="2" cols="55" maxlength="150"  value="#{planillaController.periodo}"/>                                     
+             <h:outputText value="PeriodoVac" />              
+            <p:inputTextarea id="periodoVac" rows="2" cols="55" maxlength="150"  value="#{planillaController.periodoVac}"/>      
+            
          </p:panelGrid>   
-        <p:panelGrid columns="3" style="margin: 0 auto;">
+        <p:panelGrid columns="4" style="margin: 0 auto;">
             <p:commandButton id="btnprint"   icon="ui-icon ui-icon-print"  value="Reporte" actionListener="#{planillaController.reportePlanilla}" ajax="false" update="@form :growl" />
             <p:commandButton id="btnrecibos"   icon="ui-icon ui-icon-print"  value="Recibos" actionListener="#{planillaController.reciboPlanilla}" ajax="false" update="@form :growl" />            
-            <p:commandButton id="CreateCVS" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.Gcvs()}" ajax="false" value="Generar CVS" update="@form :growl"/>                                
+            <p:commandButton id="btnrecibosVAC"   icon="ui-icon ui-icon-print"  value="Recibos VAC" actionListener="#{planillaController.reciboPlanillaVAC}" ajax="false" update="@form :growl" />            
+            <p:commandButton id="CreateCVS" icon="ui-icon-circle-arrow-s" actionListener="#{planillaController.Gcvs()}" ajax="false" value="Generar CVS" update="@form :growl"/>   
+            
 	</p:panelGrid> 		
-	                
-    </h:form>
+     </h:form>
 
 </ui:composition>

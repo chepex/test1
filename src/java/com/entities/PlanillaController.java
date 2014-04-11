@@ -48,14 +48,48 @@ public class PlanillaController extends AbstractController<Planilla> implements 
     List <Empleados> ListEmpleados;
     short anio;
     short mes;
+    String periodo;
+    String periodoVac;
     int correlativo;
     String todosdptos;  
     String reciboEstado;
     List <ProgramacionPla> reciboProgramacioPlas;
     List <Vplanilla> listvplanilla;
     
-    Integer progress;  
-   
+    Integer progress; 
+    String nompla;
+
+    public String getPeriodoVac() {
+        return periodoVac;
+    }
+
+    public void setPeriodoVac(String periodoVac) {
+        this.periodoVac = periodoVac;
+    }
+
+    
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
+    public String getNompla() {
+        
+           LoginBean lb= new LoginBean();	
+	    String proceso = lb.ssnompla();
+         
+            nompla =  proceso;
+        return nompla;
+    }
+
+    public void setNompla(String nompla) {
+        this.nompla = nompla;
+    }
+
+
 
     public Integer getProgress() {
         
@@ -301,12 +335,13 @@ public class PlanillaController extends AbstractController<Planilla> implements 
           new Date().getTime() + ".csv\"" );
           ServletOutputStream output = response.getOutputStream();      
           
-          String encabezado = sBPlanilla.generarTxt(this.getCorrelativo());
+          String encabezado = sBPlanilla.generarTxt(this.getCorrelativo(),this.getProgramacionpla());
           InputStream is = new ByteArrayInputStream( encabezado.getBytes("UTF-8") );
           int nextChar;
            while ((nextChar = is.read()) != -1) 
            {
               output.write(nextChar);
+              
            }
            output.flush();
            output.close();
@@ -380,7 +415,13 @@ public class PlanillaController extends AbstractController<Planilla> implements 
         }
 
         if(this.todosdptos == null || "1".equals(this.todosdptos)){
-            reportes.GenerarReporte("/reportes/Planilla.jasper", params);
+            if(this.getProgramacionpla().getTiposPlanilla().getDeducPresta() != null ){
+                reportes.GenerarReporte("/reportes/Planilla_Vaca.jasper", params);
+            }else{
+                reportes.GenerarReporte("/reportes/Planilla.jasper", params);
+            }
+            
+            
         }else{
             reportes.GenerarReporte("/reportes/PlanillaEjecutivos.jasper", params);
         }
@@ -394,12 +435,11 @@ public class PlanillaController extends AbstractController<Planilla> implements 
 	long codCia = lb.sscia();
         long secuencia;
         secuencia = this.getProgramacionpla().getProgramacionPlaPK().getSecuencia();
-        String suma = "S";
-        String resta = "R";
+        
         params.put("CIA",codCia ); 
         params.put("SECUENCIA",secuencia ); 
-        params.put("SUMA",suma ); 
-        params.put("RESTA",resta ); 
+        params.put("PERIODO",this.getPeriodo()); 
+
 
         if(this.todosdptos == null || "1".equals(this.todosdptos)){
             reportes.GenerarReporte("/reportes/BoletaPago_Pla.jasper", params);
@@ -408,6 +448,24 @@ public class PlanillaController extends AbstractController<Planilla> implements 
         }
         return "";           
     } 
+    
+    public String reciboPlanillaVAC() throws NamingException, SQLException, JRException, IOException{  
+        HashMap params = new HashMap(); 
+        LoginBean lb= new LoginBean();	
+	long codCia = lb.sscia();
+        long secuencia;
+        secuencia = this.getProgramacionpla().getProgramacionPlaPK().getSecuencia();
+        
+        params.put("CIA",codCia );  
+        params.put("PERIODO",this.getPeriodo()); 
+        params.put("PERIODOVAC",this.getPeriodoVac()); 
+        params.put("SECUENCIA",secuencia ); 
+
+            reportes.GenerarReporte("/reportes/BoletaPago_Vac.jasper", params);
+     
+        return "";           
+    }     
+    
  
     public String reporteMail(){
             String a = reportes.mario();

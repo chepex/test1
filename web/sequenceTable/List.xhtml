@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="SequenceTableListForm">
+
+        <p:panel header="#{myBundle.ListSequenceTableTitle}">
+
+            <p:dataTable id="datalist" value="#{sequenceTableController.items}" var="item"
+                         selectionMode="single" selection="#{sequenceTableController.selected}"
+                         rowKey="#{item.sequenceTablePK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.sequenceTablePK.seqName}" filterBy="#{item.sequenceTablePK.seqName}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSequenceTableTitle_sequenceTablePK_seqName}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.sequenceTablePK.seqName}"/>
+                </p:column>
+                <p:column sortBy="#{item.sequenceTablePK.codCia}" filterBy="#{item.sequenceTablePK.codCia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSequenceTableTitle_sequenceTablePK_codCia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.sequenceTablePK.codCia}"/>
+                </p:column>
+                <p:column sortBy="#{item.seqCount}" filterBy="#{item.seqCount}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSequenceTableTitle_seqCount}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.seqCount}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{sequenceTableController.prepareCreate}" update=":SequenceTableCreateForm" oncomplete="SequenceTableCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{myBundle.View}" update=":SequenceTableViewForm" oncomplete="SequenceTableViewDialog.show()" disabled="#{empty sequenceTableController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":SequenceTableEditForm" oncomplete="SequenceTableEditDialog.show()" disabled="#{empty sequenceTableController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{sequenceTableController.delete}" update=":growl,datalist" disabled="#{empty sequenceTableController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

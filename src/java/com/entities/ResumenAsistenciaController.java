@@ -172,18 +172,38 @@ public class ResumenAsistenciaController extends AbstractController<ResumenAsist
 	
     }      
     
-    @Override      
-    public void delete(ActionEvent event) {
+       
+    public void delete2() {
 	 msg = sB_ProgramacionPla.validarEstado(programacionpla);
 
         if (msg.equals("ok")  ){
 
 	    
-	    persist(AbstractController.PersistAction.DELETE, msg);
-	    consultar();
+	String msg2 = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Deleted");
+        
+        this.ejbFacade.remove(this.getSelected());
+         JsfUtil.addSuccessMessage(msg2);  
+           consultar();
+        /*if (!isValidationFailed()) {
+            this.setSelected(null);
+            items = null; // Invalidate list of items to trigger re-query.
+        }*/
+	 
+            
 	 }else{	    
 	    JsfUtil.addSuccessMessage(msg);    
 	}
-    }        
+    } 
+    
+    public void delete(ActionEvent event) {
+        String msg2 = ResourceBundle.getBundle("/MyBundle").getString(itemClass.getSimpleName() + "Deleted");
+       this.ejbFacade.remove(this.getSelected());
+       this.ejbFacade.flush();
+        JsfUtil.addSuccessMessage(msg2); 
+            this.setSelected(null); 
+            items = null;
+       
+        consultar();
+    }    
     
 }

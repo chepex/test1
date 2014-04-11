@@ -57,22 +57,24 @@ public  List<Empleados> findbyNameAndPk( int emp,String apellidos,String nombres
     }   
 
 public  Empleados findbyCodemp( int emp){
-    try{
-     LoginBean lb= new LoginBean();	
-	    short codCia = lb.sscia();
-            
- 	     TypedQuery<Empleados> q;     
+        try{
 
-		    q = em.createNamedQuery("Empleados.findByPk2", Empleados.class )		    
-		    .setParameter("codCia",  codCia)			 
-		    .setParameter("codEmp",  emp);
-            System.out.print("Empleado "+ emp);
-         return q.getSingleResult();
-    }catch(Exception ex){
-           JsfUtil.logs(ex , "Surgio un error", "Proceso findbyCodemp codigo empleado : " +emp,EmpleadosFacade.class,"ERROR");             
-                
-        return null;
-    }
+            /*SE MODIFICO Y SE QUITO STATUS =A xq daba un error ala hora de generar el cierre*/
+         LoginBean lb= new LoginBean();	
+                short codCia = lb.sscia();
+
+                 TypedQuery<Empleados> q;     
+
+                        q = em.createNamedQuery("Empleados.findByPk2", Empleados.class )		    
+                        .setParameter("codCia",  codCia)			 
+                        .setParameter("codEmp",  emp);
+                System.out.print("Empleado "+ emp);
+             return q.getSingleResult();
+        }catch(Exception ex){
+               JsfUtil.logs(ex , "Surgio un error", "Proceso findbyCodemp codigo empleado : " +emp,EmpleadosFacade.class,"ERROR");             
+
+            return null;
+        }
     }  
 
 public  Empleados findbyCodempref( String emp){

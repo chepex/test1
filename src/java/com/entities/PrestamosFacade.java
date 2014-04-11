@@ -81,6 +81,22 @@ public class PrestamosFacade extends AbstractFacade<Prestamos> {
     
     }     
     
+    public List<Prestamos> findByEmpleadoVac(Empleados empleado){
+	 TypedQuery<Prestamos> q;
+	 
+	    LoginBean lb= new LoginBean();	
+	    short codCia = lb.sscia();	
+	    
+	    
+		q = em.createNamedQuery("Prestamos.findByCodEmpVac", Prestamos.class )		    
+                    .setParameter("codEmp",  empleado.getEmpleadosPK().getCodEmp() )                    
+		    .setParameter("codCia",  codCia );
+	    
+		 
+         return q.getResultList();
+    
+    }  
+    
     public Prestamos findByPk(MovDp movdp){
 	 TypedQuery<Prestamos> q;
 	 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SequenceTableCreateDlg" widgetVar="SequenceTableCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{myBundle.CreateSequenceTableTitle}">
+
+            <h:form id="SequenceTableCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sequenceTableController.selected != null}">
+
+                        <p:outputLabel value="#{myBundle.CreateSequenceTableLabel_sequenceTablePK_seqName}" for="sequenceTablePK_seqName" />
+                        <p:inputText id="sequenceTablePK_seqName" value="#{sequenceTableController.selected.sequenceTablePK.seqName}" title="#{myBundle.CreateSequenceTableTitle_sequenceTablePK_seqName}" required="true" requiredMessage="#{myBundle.CreateSequenceTableRequiredMessage_sequenceTablePK_seqName}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateSequenceTableLabel_sequenceTablePK_codCia}" for="sequenceTablePK_codCia" />
+                        <p:inputText id="sequenceTablePK_codCia" value="#{sequenceTableController.selected.sequenceTablePK.codCia}" title="#{myBundle.CreateSequenceTableTitle_sequenceTablePK_codCia}" required="true" requiredMessage="#{myBundle.CreateSequenceTableRequiredMessage_sequenceTablePK_codCia}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateSequenceTableLabel_seqCount}" for="seqCount" />
+                        <p:inputText id="seqCount" value="#{sequenceTableController.selected.seqCount}" title="#{myBundle.CreateSequenceTableTitle_seqCount}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sequenceTableController.saveNew}" value="#{myBundle.Save}" update="display,:SequenceTableListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,SequenceTableCreateDialog);"/>
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="SequenceTableCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

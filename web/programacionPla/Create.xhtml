@@ -17,11 +17,7 @@
 
                         
 
-                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_status}" for="status" />
-                        <p:selectOneMenu id="status" value="#{programacionPlaController.selected.status}" required="true" requiredMessage="#{myBundle.CreateProgramacionPlaRequiredMessage_status}">
-                            <f:selectItem itemLabel="Cerrada" itemValue="C"/>                     
-                            <f:selectItem itemLabel="Programada" itemValue="P"/>
-                        </p:selectOneMenu>                         
+                                       
                         
 
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_fechaPago}" for="fechaPago" />
@@ -52,9 +48,20 @@
                       
                         <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_recalculo}" for="recalculo" />
                         <p:selectOneMenu id="recalculo" value="#{programacionPlaController.selected.recalculo}" >
-                            <f:selectItem itemLabel="Si" itemValue="S"/>                     
                             <f:selectItem itemLabel="No" itemValue="N"/>
+                            <f:selectItem itemLabel="Si" itemValue="S"/>    
                         </p:selectOneMenu> 
+           
+                        <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_segmentar}" for="segmentar" />
+                        <p:selectOneMenu id="segmentar" value="#{programacionPlaController.selected.segmentar}" >
+                            <f:selectItem itemLabel="0" itemValue="0"/>
+                            <f:selectItem itemLabel="50%" itemValue="50"/>    
+                        </p:selectOneMenu>                         
+                    
+                    <p:outputLabel value="#{myBundle.CreateProgramacionPlaLabel_status}" for="status" />
+                        <p:selectOneMenu id="status" value="#{programacionPlaController.selected.status}" required="true" requiredMessage="#{myBundle.CreateProgramacionPlaRequiredMessage_status}">                          
+                            <f:selectItem itemLabel="Programada" itemValue="P"/>
+                        </p:selectOneMenu>     
                     </p:panelGrid>
                     <p:commandButton actionListener="#{programacionPlaController.saveNew}" value="#{myBundle.Save}" update="display,:ProgramacionPlaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ProgramacionPlaCreateDialog);"/>
                     <p:commandButton value="#{myBundle.Cancel}" onclick="ProgramacionPlaCreateDialog.hide()"/>

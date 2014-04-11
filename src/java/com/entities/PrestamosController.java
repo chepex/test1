@@ -68,7 +68,7 @@ public class PrestamosController extends AbstractController<Prestamos> implement
         if(this.getSelected().getFrecuencia()==3){
             float cutaq= this.getSelected().getVcuota().floatValue()/2;
             this.getSelected().setVcuota(BigDecimal.valueOf(cutaq) );      
-            int cuotas= getSelected().getCuotas().shortValue() *2;
+            int cuotas= getSelected().getCuotas() *2;
             this.getSelected().setCuotas(  (short)cuotas);
         }
             

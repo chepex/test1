@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Prestamos.findByPendiente", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codCia = :codCia and p.saldo > 0"),    
     @NamedQuery(name = "Prestamos.findByCodCia", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codCia = :codCia"),
     @NamedQuery(name = "Prestamos.findByCodEmp", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codEmp = :codEmp and p.prestamosPK.codCia = :codCia  and p.saldo>0"),
+    @NamedQuery(name = "Prestamos.findByCodEmpVac", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codEmp = :codEmp and p.prestamosPK.codCia = :codCia  and p.saldo>0 and p.deducPresta.segmentar = 'S' "),    
     @NamedQuery(name = "Prestamos.findByPK", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codEmp = :codEmp and p.prestamosPK.codCia = :codCia and p.prestamosPK.codDp = :codDp and p.prestamosPK.codPresta = :codPresta"),
     @NamedQuery(name = "Prestamos.findByCodDp", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codDp = :codDp"),
     @NamedQuery(name = "Prestamos.findByNumRef", query = "SELECT p FROM Prestamos p WHERE p.prestamosPK.codPresta = :codPresta"),
@@ -53,9 +54,9 @@ public class Prestamos implements Serializable {
     @Column(name = "SALDO")
     private BigDecimal saldo;
     @Column(name = "CUOTAS")
-    private Short cuotas;
+    private int cuotas;
     @Column(name = "CUOTAS_P")
-    private Short cuotasP;
+    private int cuotasP;
     @Column(name = "VALOR_CUOTA")
     private BigDecimal Vcuota;
     @Basic(optional = false)
@@ -154,19 +155,19 @@ public class Prestamos implements Serializable {
 	this.saldo = saldo;
     }
 
-    public Short getCuotas() {
+    public int getCuotas() {
 	return cuotas;
     }
 
-    public void setCuotas(Short cuotas) {
+    public void setCuotas(int cuotas) {
 	this.cuotas = cuotas;
     }
 
-    public Short getCuotasP() {
+    public int getCuotasP() {
 	return cuotasP;
     }
 
-    public void setCuotasP(Short cuotasP) {
+    public void setCuotasP(int cuotasP) {
 	this.cuotasP = cuotasP;
     }
 

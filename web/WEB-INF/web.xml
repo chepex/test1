@@ -158,6 +158,11 @@
             <description/>
             <url-pattern>/faces/reportesPrint/*</url-pattern>
         </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>empleadosrh</web-resource-name>
+            <description/>
+            <url-pattern>/faces/empleados_rh/*</url-pattern>
+        </web-resource-collection>
         <auth-constraint>
             <description/>
             <role-name>PROGRAMADOR2</role-name>
@@ -168,7 +173,7 @@
         <web-resource-collection>
             <web-resource-name>empleados</web-resource-name>
             <description/>
-            <url-pattern>/faces/empleados/*</url-pattern>
+            <url-pattern>/faces/empleados_rh/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
@@ -191,4 +196,5 @@
         <description>RL_RRHH</description>
         <role-name>RL_RRHH</role-name>
     </security-role>
+   
 </web-app>
